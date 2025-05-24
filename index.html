@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi-Tool Web App</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="header-content">
+                <h1 class="app-title">
+                    <i class="fas fa-tools"></i>
+                    Multi-Tool Web App
+                </h1>
+                <nav class="tool-nav">
+                    <button class="nav-btn active" data-tool="text-transformer">
+                        <i class="fas fa-font"></i>
+                        Text Transformer
+                    </button>
+                    <!-- Future tools will be added here -->
+                </nav>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="app-main">
+            <!-- Text Transformer Tool -->
+            <div id="text-transformer" class="tool-container active">
+                <div class="tool-header">
+                    <h2><i class="fas fa-font"></i> Text Transformer Playground</h2>
+                    <p>Transform your text with various formatting options and see live results</p>
+                </div>
+
+                <div class="tool-content">
+                    <!-- Controls Panel -->
+                    <div class="controls-panel">
+                        <div class="control-group">
+                            <h3>Transformations</h3>
+                            <div class="checkbox-grid">
+                                <label class="checkbox-item">
+                                    <input type="checkbox" id="uppercase" data-transform="uppercase">
+                                    <span class="checkmark"></span>
+                                    UPPERCASE
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" id="lowercase" data-transform="lowercase">
+                                    <span class="checkmark"></span>
+                                    lowercase
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" id="titlecase" data-transform="titlecase">
+                                    <span class="checkmark"></span>
+                                    Title Case
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" id="reverse" data-transform="reverse">
+                                    <span class="checkmark"></span>
+                                    Reverse Text
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" id="removeDuplicates" data-transform="removeDuplicates">
+                                    <span class="checkmark"></span>
+                                    Remove Duplicate Lines
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" id="trimWhitespace" data-transform="trimWhitespace">
+                                    <span class="checkmark"></span>
+                                    Trim Whitespace
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" id="sortLines" data-transform="sortLines">
+                                    <span class="checkmark"></span>
+                                    Sort Lines
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <h3>Actions</h3>
+                            <div class="button-group">
+                                <button id="clearInput" class="btn btn-secondary">
+                                    <i class="fas fa-eraser"></i>
+                                    Clear Input
+                                </button>
+                                <button id="copyOutput" class="btn btn-primary">
+                                    <i class="fas fa-copy"></i>
+                                    Copy Output
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Stats Panel -->
+                        <div class="stats-panel">
+                            <h3>Statistics</h3>
+                            <div class="stats-grid">
+                                <div class="stat-item">
+                                    <span class="stat-label">Characters:</span>
+                                    <span id="charCount" class="stat-value">0</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-label">Words:</span>
+                                    <span id="wordCount" class="stat-value">0</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-label">Lines:</span>
+                                    <span id="lineCount" class="stat-value">0</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Text Areas -->
+                    <div class="text-areas">
+                        <div class="text-area-container">
+                            <label for="inputText" class="text-area-label">
+                                <i class="fas fa-edit"></i>
+                                Input Text
+                            </label>
+                            <textarea 
+                                id="inputText" 
+                                class="text-area" 
+                                placeholder="Enter your text here..."
+                                rows="15"
+                            ></textarea>
+                        </div>
+
+                        <div class="text-area-container">
+                            <label for="outputText" class="text-area-label">
+                                <i class="fas fa-eye"></i>
+                                Output Text
+                            </label>
+                            <textarea 
+                                id="outputText" 
+                                class="text-area output" 
+                                placeholder="Transformed text will appear here..."
+                                readonly
+                                rows="15"
+                            ></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="app-footer">
+            <p>&copy; 2024 Multi-Tool Web App. Built for productivity and convenience.</p>
+        </footer>
+
+        <!-- Toast Notification -->
+        <div id="toast" class="toast">
+            <i class="fas fa-check-circle"></i>
+            <span id="toastMessage">Text copied to clipboard!</span>
+        </div>
+    </div>
+
+    <script src="assets/js/app.js"></script>
+    <script src="assets/js/text-transformer.js"></script>
+</body>
+</html>
