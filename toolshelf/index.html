@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ToolShelf - Your Digital Productivity Toolkit</title>
+    <meta name="description"
+        content="ToolShelf - A comprehensive collection of productivity tools including text transformers, formatters, and more. All tools work offline in your browser.">
+
+    <!-- CSS Modules -->
+    <link rel="stylesheet" href="assets/css/variables.css">
+    <link rel="stylesheet" href="assets/css/base.css">
+    <link rel="stylesheet" href="assets/css/components.css">
+    <link rel="stylesheet" href="assets/css/layout.css">
+    <link rel="stylesheet" href="assets/css/responsive.css">
+
+    <!-- External Resources -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛠️</text></svg>">
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="header-content">
+                <div class="brand">
+                    <h1 class="app-title">
+                        <i class="fas fa-toolbox"></i>
+                        ToolShelf
+                    </h1>
+                    <span class="tagline">Your Digital Productivity Toolkit</span>
+                </div>
+                <nav class="tool-nav">
+                    <button class="nav-btn active" data-tool="text-transformer">
+                        <i class="fas fa-font"></i>
+                        <span>Text Transformer</span>
+                        <span class="nav-badge">Popular</span>
+                    </button>
+                    <!-- Help button for instructions -->
+                    <button class="help-btn" id="helpBtn" title="Show instructions">
+                        <i class="fas fa-question-circle"></i>
+                    </button>
+                </nav>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="app-main">
+            <!-- Text Transformer Tool -->
+            <div id="text-transformer" class="tool-container active">
+                <!-- Two-column layout: Controls + Text Areas -->
+                <div class="tool-workspace">
+                    <!-- Left Sidebar: Transformation Controls -->
+                    <div class="controls-sidebar">
+                        <div class="controls-header">
+                            <h3><i class="fas fa-sliders-h"></i> Text Transformations</h3>
+                            <button id="resetAll" class="btn-reset" title="Reset all transformations">
+                                <i class="fas fa-undo-alt"></i>
+                            </button>
+                        </div>
+
+                        <div class="transform-groups">
+                            <!-- Case Transformations -->
+                            <div class="transform-group" data-group="case">
+                                <div class="group-header">
+                                    <h4><i class="fas fa-text-height"></i> Case</h4>
+                                    <button class="btn-section-reset" data-reset="case"
+                                        title="Reset case transformations">
+                                        <i class="fas fa-undo"></i>
+                                    </button>
+                                </div>
+                                <div class="transform-options">
+                                    <label class="transform-option" data-group="case">
+                                        <input type="radio" name="case-transform" value="uppercase"
+                                            data-transform="uppercase">
+                                        <div class="option-content">
+                                            <span class="option-label">UPPERCASE</span>
+                                            <span class="option-example">hello → HELLO</span>
+                                        </div>
+                                    </label>
+
+                                    <label class="transform-option" data-group="case">
+                                        <input type="radio" name="case-transform" value="lowercase"
+                                            data-transform="lowercase">
+                                        <div class="option-content">
+                                            <span class="option-label">lowercase</span>
+                                            <span class="option-example">HELLO → hello</span>
+                                        </div>
+                                    </label>
+
+                                    <label class="transform-option" data-group="case">
+                                        <input type="radio" name="case-transform" value="titlecase"
+                                            data-transform="titlecase">
+                                        <div class="option-content">
+                                            <span class="option-label">Title Case</span>
+                                            <span class="option-example">hello world → Hello World</span>
+                                        </div>
+                                    </label>
+
+                                    <label class="transform-option" data-group="case">
+                                        <input type="radio" name="case-transform" value="sentencecase"
+                                            data-transform="sentencecase">
+                                        <div class="option-content">
+                                            <span class="option-label">Sentence case</span>
+                                            <span class="option-example">hello. world → Hello. World</span>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Text Operations -->
+                            <div class="transform-group" data-group="operations">
+                                <div class="group-header">
+                                    <h4><i class="fas fa-tools"></i> Operations</h4>
+                                    <button class="btn-section-reset" data-reset="operations"
+                                        title="Reset text operations">
+                                        <i class="fas fa-undo"></i>
+                                    </button>
+                                </div>
+                                <div class="transform-options">
+                                    <label class="transform-option">
+                                        <input type="checkbox" data-transform="reverse" data-section="operations">
+                                        <div class="option-content">
+                                            <span class="option-label">Reverse Text</span>
+                                            <span class="option-example">hello → olleh</span>
+                                        </div>
+                                    </label>
+
+                                    <label class="transform-option">
+                                        <input type="checkbox" data-transform="trimWhitespace"
+                                            data-section="operations">
+                                        <div class="option-content">
+                                            <span class="option-label">Trim Whitespace</span>
+                                            <span class="option-example">Remove extra spaces</span>
+                                        </div>
+                                    </label>
+
+                                    <label class="transform-option">
+                                        <input type="checkbox" data-transform="removeEmptyLines"
+                                            data-section="operations">
+                                        <div class="option-content">
+                                            <span class="option-label">Remove Empty Lines</span>
+                                            <span class="option-example">Clean up formatting</span>
+                                        </div>
+                                    </label>
+
+                                    <label class="transform-option">
+                                        <input type="checkbox" data-transform="removeDuplicates"
+                                            data-section="operations">
+                                        <div class="option-content">
+                                            <span class="option-label">Remove Duplicates</span>
+                                            <span class="option-example">Keep unique lines only</span>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Line Operations -->
+                            <div class="transform-group" data-group="lines">
+                                <div class="group-header">
+                                    <h4><i class="fas fa-list-ol"></i> Lines</h4>
+                                    <button class="btn-section-reset" data-reset="lines" title="Reset line operations">
+                                        <i class="fas fa-undo"></i>
+                                    </button>
+                                </div>
+                                <div class="transform-options">
+                                    <label class="transform-option" data-group="sort">
+                                        <input type="radio" name="sort-transform" value="sortLines"
+                                            data-transform="sortLines" data-section="lines">
+                                        <div class="option-content">
+                                            <span class="option-label">Sort A→Z</span>
+                                            <span class="option-example">Alphabetical order</span>
+                                        </div>
+                                    </label>
+
+                                    <label class="transform-option" data-group="sort">
+                                        <input type="radio" name="sort-transform" value="sortLinesDesc"
+                                            data-transform="sortLinesDesc" data-section="lines">
+                                        <div class="option-content">
+                                            <span class="option-label">Sort Z→A</span>
+                                            <span class="option-example">Reverse alphabetical</span>
+                                        </div>
+                                    </label>
+
+                                    <label class="transform-option">
+                                        <input type="checkbox" data-transform="reverseLines" data-section="lines">
+                                        <div class="option-content">
+                                            <span class="option-label">Reverse Line Order</span>
+                                            <span class="option-example">Last line becomes first</span>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right: Text Areas -->
+                    <div class="text-workspace">
+                        <div class="text-panel input-panel">
+                            <div class="panel-header">
+                                <div class="panel-title">
+                                    <i class="fas fa-edit"></i>
+                                    <span>Input Text</span>
+                                </div>
+                                <div class="panel-actions">
+                                    <button id="pasteBtn" class="icon-btn" title="Paste from clipboard">
+                                        <i class="fas fa-paste"></i>
+                                    </button>
+                                    <button id="clearInputOnly" class="icon-btn" title="Clear input">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <textarea id="inputText" class="text-area" placeholder="Start typing or paste your text here...
+
+Try this sample:
+hello WORLD
+This is a Test
+apple
+ZEBRA
+banana
+this is a test" spellcheck="false" autocomplete="off"></textarea>
+                            <div class="panel-footer">
+                                <div class="stats-row">
+                                    <div class="stats-section">
+                                        <span class="stat-item">
+                                            <i class="fas fa-font"></i>
+                                            <span id="charCount">0</span> chars
+                                        </span>
+                                        <span class="stat-item">
+                                            <i class="fas fa-align-left"></i>
+                                            <span id="wordCount">0</span> words
+                                        </span>
+                                        <span class="stat-item">
+                                            <i class="fas fa-list"></i>
+                                            <span id="lineCount">0</span> lines
+                                        </span>
+                                    </div>
+                                    <div class="status-section">
+                                        <span id="transformStatus" class="transform-status">No transformations
+                                            applied</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="text-panel output-panel">
+                            <div class="panel-header">
+                                <div class="panel-title">
+                                    <i class="fas fa-magic"></i>
+                                    <span>Transformed Text</span>
+                                </div>
+                                <div class="panel-actions">
+                                    <button id="copyOutputTop" class="icon-btn" title="Copy to clipboard" disabled>
+                                        <i class="fas fa-copy"></i>
+                                    </button>
+                                    <button id="downloadBtn" class="icon-btn" title="Download as text file" disabled>
+                                        <i class="fas fa-download"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <textarea id="outputText" class="text-area output" placeholder="Transformed text will appear here instantly...
+
+✨ Select transformations from the left sidebar
+📋 Copy results with one click
+💾 Download as text file" readonly spellcheck="false"></textarea>
+                            <div class="panel-footer">
+                                <div class="stats-row">
+                                    <div class="stats-section">
+                                        <span class="stat-item">
+                                            <i class="fas fa-font"></i>
+                                            <span id="outputCharCount">0</span> chars
+                                        </span>
+                                        <span class="stat-item">
+                                            <i class="fas fa-align-left"></i>
+                                            <span id="outputWordCount">0</span> words
+                                        </span>
+                                        <span class="stat-item">
+                                            <i class="fas fa-list"></i>
+                                            <span id="outputLineCount">0</span> lines
+                                        </span>
+                                    </div>
+                                    <div class="status-section">
+                                        <span class="change-indicator" id="changeIndicator">
+                                            <i class="fas fa-equals"></i> No changes
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer class="app-footer">
+            <div class="footer-content">
+                <span><strong>ToolShelf</strong> - Your Digital Productivity Toolkit</span>
+                <span>© 2024 ToolShelf. All tools work offline.</span>
+            </div>
+        </footer>
+
+        <!-- Help Modal (hidden by default) -->
+        <div id="helpModal" class="help-modal">
+            <div class="help-content">
+                <div class="help-header">
+                    <h3><i class="fas fa-info-circle"></i> How to Use Text Transformer</h3>
+                    <button class="help-close" id="helpClose">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="help-body">
+                    <div class="help-section">
+                        <h4>Quick Start:</h4>
+                        <ol>
+                            <li>Type or paste your text in the <strong>Input Text</strong> area</li>
+                            <li>Select transformation options from the left sidebar</li>
+                            <li>See instant results in the <strong>Transformed Text</strong> area</li>
+                            <li>Copy or download your results when ready</li>
+                        </ol>
+                    </div>
+                    <div class="help-section">
+                        <h4>Tips:</h4>
+                        <ul>
+                            <li>Use section reset buttons to clear specific transformation groups</li>
+                            <li>Case transformations are mutually exclusive (only one at a time)</li>
+                            <li>You can combine multiple operations and line transformations</li>
+                            <li>Statistics show the difference between input and output</li>
+                        </ul>
+                    </div>
+                    <div class="help-section">
+                        <h4>Keyboard Shortcuts:</h4>
+                        <ul>
+                            <li><kbd>Ctrl+L</kbd> - Clear input</li>
+                            <li><kbd>Ctrl+Enter</kbd> - Copy output</li>
+                            <li><kbd>Ctrl+D</kbd> - Download output</li>
+                            <li><kbd>Ctrl+R</kbd> - Reset all transformations</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="toast" class="toast">
+            <div class="toast-content">
+                <i class="toast-icon fas fa-check-circle"></i>
+                <span id="toastMessage">Text copied to clipboard!</span>
+            </div>
+            <button class="toast-close" onclick="this.parentElement.classList.remove('show')">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- JavaScript Modules -->
+    <script src="assets/config/constants.js"></script>
+    <script src="assets/js/core/utils.js"></script>
+    <script src="assets/js/core/events.js"></script>
+    <script src="assets/js/components/toast.js"></script>
+    <script src="assets/js/components/keyboard.js"></script>
+    <script src="assets/js/tools/shared/base-tool.js"></script>
+    <script src="assets/js/tools/text-transformer/transforms.js"></script>
+    <script src="assets/js/tools/text-transformer/ui-handlers.js"></script>
+    <script src="assets/js/tools/text-transformer/transformer.js"></script>
+    <script src="assets/js/core/app.js"></script>
+</body>
+
+</html>
