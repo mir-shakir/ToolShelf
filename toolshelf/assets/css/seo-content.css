@@ -1,0 +1,365 @@
+/* SEO Content Styling - Hidden by default, good UX */
+
+/* SEO Introduction Section - Minimal and Collapsible */
+.seo-content {
+    background: linear-gradient(135deg, var(--primary-light), var(--surface-color));
+    padding: var(--spacing-lg) var(--spacing-xl);
+    margin-bottom: var(--spacing-lg);
+    border-radius: var(--radius-lg);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    max-height: 120px;
+    transition: max-height 0.3s ease;
+}
+
+.seo-content.expanded {
+    max-height: 800px;
+}
+
+.seo-intro {
+    position: relative;
+}
+
+.seo-intro h1 {
+    font-size: 1.75rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-sm);
+    line-height: 1.3;
+}
+
+.lead {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    margin-bottom: var(--spacing-lg);
+    line-height: 1.5;
+    display: none;
+    /* Hidden by default */
+}
+
+.seo-content.expanded .lead {
+    display: block;
+}
+
+.features-highlight {
+    display: none;
+    /* Hidden by default */
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+}
+
+.seo-content.expanded .features-highlight {
+    display: grid;
+}
+
+.feature-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-xs);
+    padding: var(--spacing-md);
+    background: var(--surface-color);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    transition: transform var(--transition-normal);
+}
+
+.feature-item:hover {
+    transform: translateY(-2px);
+}
+
+.feature-item i {
+    font-size: 1.5rem;
+    color: var(--primary-color);
+}
+
+.feature-item span {
+    font-weight: 500;
+    color: var(--text-primary);
+    text-align: center;
+    font-size: 0.85rem;
+}
+
+/* Expand/Collapse Button */
+.seo-toggle {
+    background: none;
+    border: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: var(--radius-md);
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all var(--transition-normal);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    margin: var(--spacing-md) auto 0;
+}
+
+.seo-toggle:hover {
+    background: var(--surface-elevated);
+    border-color: var(--primary-color);
+    color: var(--text-primary);
+}
+
+.seo-toggle i {
+    transition: transform var(--transition-normal);
+}
+
+.seo-content.expanded .seo-toggle i {
+    transform: rotate(180deg);
+}
+
+/* CTA Button - More Subtle */
+.cta-button {
+    background: var(--primary-color);
+    color: white;
+    padding: var(--spacing-md) var(--spacing-lg);
+    border: none;
+    border-radius: var(--radius-md);
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all var(--transition-normal);
+    display: none;
+    /* Hidden by default */
+    align-items: center;
+    gap: var(--spacing-sm);
+    text-decoration: none;
+    margin: var(--spacing-md) auto 0;
+}
+
+.seo-content.expanded .cta-button {
+    display: inline-flex;
+}
+
+.cta-button:hover {
+    background: var(--primary-hover);
+    transform: translateY(-1px);
+}
+
+/* SEO Footer Content - Hidden by Default */
+.seo-footer-content {
+    background: var(--surface-color);
+    padding: var(--spacing-xl);
+    margin-top: var(--spacing-2xl);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border-color);
+    display: none;
+    /* Hidden by default */
+}
+
+.seo-footer-content.visible {
+    display: block;
+}
+
+.seo-footer-toggle {
+    text-align: center;
+    margin-top: var(--spacing-xl);
+}
+
+.footer-toggle-btn {
+    background: none;
+    border: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    padding: var(--spacing-sm) var(--spacing-lg);
+    border-radius: var(--radius-md);
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all var(--transition-normal);
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.footer-toggle-btn:hover {
+    background: var(--surface-elevated);
+    border-color: var(--primary-color);
+    color: var(--text-primary);
+}
+
+.footer-toggle-btn i {
+    transition: transform var(--transition-normal);
+}
+
+.seo-footer-content.visible~.seo-footer-toggle .footer-toggle-btn i {
+    transform: rotate(180deg);
+}
+
+/* Content Grid - More Compact */
+.content-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--spacing-xl);
+    margin-bottom: var(--spacing-xl);
+}
+
+.content-section h2 {
+    color: var(--text-primary);
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: var(--spacing-md);
+    border-bottom: 2px solid var(--primary-color);
+    padding-bottom: var(--spacing-xs);
+}
+
+.content-section ul {
+    list-style: none;
+    padding: 0;
+}
+
+.content-section li {
+    margin-bottom: var(--spacing-sm);
+    padding-left: var(--spacing-md);
+    position: relative;
+    line-height: 1.5;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+.content-section li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: var(--success-color);
+    font-weight: bold;
+    font-size: 0.8rem;
+}
+
+.content-section strong {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+/* FAQ Section - More Compact */
+.faq-section {
+    border-top: 1px solid var(--border-color);
+    padding-top: var(--spacing-xl);
+}
+
+.faq-section h2 {
+    text-align: center;
+    color: var(--text-primary);
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: var(--spacing-xl);
+}
+
+.faq-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--spacing-lg);
+}
+
+.faq-item {
+    background: var(--surface-elevated);
+    padding: var(--spacing-lg);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-color);
+}
+
+.faq-item h3 {
+    color: var(--text-primary);
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: var(--spacing-sm);
+}
+
+.faq-item p {
+    color: var(--text-secondary);
+    line-height: 1.5;
+    margin: 0;
+    font-size: 0.9rem;
+}
+
+/* Footer Links */
+.footer-links {
+    display: flex;
+    gap: var(--spacing-md);
+    justify-content: center;
+    margin-top: var(--spacing-sm);
+}
+
+.footer-links a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 0.8rem;
+    transition: color var(--transition-normal);
+}
+
+.footer-links a:hover {
+    color: var(--primary-color);
+}
+
+/* Screen Reader Only Content */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .seo-content {
+        max-height: 100px;
+        padding: var(--spacing-md);
+    }
+
+    .seo-content.expanded {
+        max-height: 600px;
+    }
+
+    .seo-intro h1 {
+        font-size: 1.5rem;
+    }
+
+    .lead {
+        font-size: 0.95rem;
+    }
+
+    .features-highlight {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .content-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .faq-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .seo-content {
+        max-height: 80px;
+        padding: var(--spacing-sm);
+    }
+
+    .seo-intro h1 {
+        font-size: 1.25rem;
+    }
+
+    .features-highlight {
+        grid-template-columns: 1fr;
+    }
+
+    .feature-item {
+        padding: var(--spacing-sm);
+    }
+}
+
+/* Hide SEO content completely on very small screens if needed */
+@media (max-width: 360px) {
+    .seo-content {
+        display: none;
+    }
+}
