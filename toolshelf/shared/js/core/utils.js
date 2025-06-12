@@ -24,7 +24,7 @@ window.ToolShelf.Utils = {
      */
     throttle(func, limit) {
         let inThrottle;
-        return function(...args) {
+        return function (...args) {
             if (!inThrottle) {
                 func.apply(this, args);
                 inThrottle = true;
@@ -60,7 +60,7 @@ window.ToolShelf.Utils = {
     checkTextLimits(text) {
         const { MAX_TEXT_LENGTH, MAX_LINES } = window.ToolShelf.Constants;
         const lineCount = text.split('\n').length;
-        
+
         return {
             valid: text.length <= MAX_TEXT_LENGTH && lineCount <= MAX_LINES,
             textLength: text.length,
@@ -79,7 +79,7 @@ window.ToolShelf.Utils = {
             if (navigator.clipboard && window.isSecureContext) {
                 await navigator.clipboard.writeText(text);
                 return true;
-            } 
+            }
             // Fallback for older browsers
             else {
                 return this.fallbackCopyToClipboard(text);
@@ -102,15 +102,15 @@ window.ToolShelf.Utils = {
             textArea.style.top = '-9999px';
             textArea.setAttribute('readonly', '');
             textArea.setAttribute('aria-hidden', 'true');
-            
+
             document.body.appendChild(textArea);
             textArea.focus();
             textArea.select();
             textArea.setSelectionRange(0, 99999);
-            
+
             const successful = document.execCommand('copy');
             document.body.removeChild(textArea);
-            
+
             return successful;
         } catch (err) {
             console.error('❌ Fallback copy failed:', err);
@@ -125,19 +125,19 @@ window.ToolShelf.Utils = {
         try {
             const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
             const url = URL.createObjectURL(blob);
-            
+
             const link = document.createElement('a');
             link.href = url;
             link.download = this.sanitizeFilename(filename);
             link.style.display = 'none';
-            
+
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
-            
+
             // Clean up
             setTimeout(() => URL.revokeObjectURL(url), 100);
-            
+
             return true;
         } catch (error) {
             console.error('❌ Download failed:', error);
@@ -219,7 +219,7 @@ window.ToolShelf.Utils = {
             url: window.location.href,
             userAgent: navigator.userAgent
         };
-        
+
         // Store in localStorage for debugging
         try {
             const errors = this.storage.get('errors', []);
@@ -229,7 +229,7 @@ window.ToolShelf.Utils = {
         } catch (e) {
             console.warn('Could not store error data:', e);
         }
-        
+
         return errorData;
     }
 };

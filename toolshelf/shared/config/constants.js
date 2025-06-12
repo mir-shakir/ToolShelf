@@ -8,28 +8,28 @@ window.ToolShelf.Constants = {
     APP_NAME: 'ToolShelf',
     APP_VERSION: '1.0.0',
     BUILD_DATE: '2024-05-24',
-    
+
     // Performance thresholds
     SLOW_OPERATION_THRESHOLD: 100, // milliseconds
     DEBOUNCE_DELAY: 100,
     TOAST_DEFAULT_DURATION: 3000,
-    
+
     // Storage keys
     STORAGE_PREFIX: 'toolshelf_',
     ERROR_LOG_KEY: 'toolshelf_errors',
     USER_PREFERENCES_KEY: 'toolshelf_preferences',
-    
+
     // Limits
     MAX_TEXT_LENGTH: 1000000, // 1MB of text
     MAX_LINES: 100000,
     MAX_ERRORS_STORED: 10,
-    
+
     // Transform groups for conflict resolution
     TRANSFORM_GROUPS: {
         case: ['uppercase', 'lowercase', 'titlecase', 'sentencecase'],
         sort: ['sortLines', 'sortLinesDesc']
     },
-    
+
     // Transform order for consistent application
     TRANSFORM_ORDER: [
         'trimWhitespace',
@@ -44,11 +44,11 @@ window.ToolShelf.Constants = {
         'sentencecase',
         'reverse'
     ],
-    
+
     // Display names for transforms
     TRANSFORM_DISPLAY_NAMES: {
         'uppercase': 'UPPERCASE',
-        'lowercase': 'lowercase', 
+        'lowercase': 'lowercase',
         'titlecase': 'Title Case',
         'sentencecase': 'Sentence case',
         'reverse': 'Reverse',
@@ -59,7 +59,7 @@ window.ToolShelf.Constants = {
         'sortLinesDesc': 'Sort Z→A',
         'reverseLines': 'Reverse Lines'
     },
-    
+
     // Keyboard shortcuts
     KEYBOARD_SHORTCUTS: {
         'Ctrl+L': 'Clear input',
@@ -69,7 +69,7 @@ window.ToolShelf.Constants = {
         'Ctrl+K': 'Focus search',
         'Escape': 'Clear focus'
     },
-    
+
     // Toast types
     TOAST_TYPES: {
         SUCCESS: 'success',

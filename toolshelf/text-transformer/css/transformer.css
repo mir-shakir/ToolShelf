@@ -1,0 +1,7 @@
+.help-modal {
+    display: none;
+}
+
+.help-modal.show {
+    display: flex;
+}

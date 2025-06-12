@@ -14,10 +14,10 @@ window.ToolShelf.BaseTool = class BaseTool {
             totalProcessingTime: 0,
             lastOperationTime: 0
         };
-        
+
         console.log(`🔧 Base tool created: ${toolId}`);
     }
-    
+
     /**
      * Initialize the tool - to be overridden by subclasses
      */
@@ -25,7 +25,7 @@ window.ToolShelf.BaseTool = class BaseTool {
         this.isInitialized = true;
         console.log(`✅ Tool initialized: ${this.toolId}`);
     }
-    
+
     /**
      * Clean up resources when tool is destroyed
      */
@@ -34,7 +34,7 @@ window.ToolShelf.BaseTool = class BaseTool {
         this.isInitialized = false;
         console.log(`🗑️ Tool destroyed: ${this.toolId}`);
     }
-    
+
     /**
      * Add event listener with automatic tracking
      */
@@ -43,22 +43,22 @@ window.ToolShelf.BaseTool = class BaseTool {
         this.eventListeners.push({ element, event, handler, listenerId });
         return listenerId;
     }
-    
+
     /**
      * Remove specific event listener
      */
     removeEventListener(element, event, handler) {
         window.ToolShelf.EventManager.off(element, event, handler);
-        
+
         // Remove from tracking
-        const index = this.eventListeners.findIndex(l => 
+        const index = this.eventListeners.findIndex(l =>
             l.element === element && l.event === event && l.handler === handler
         );
         if (index !== -1) {
             this.eventListeners.splice(index, 1);
         }
     }
-    
+
     /**
      * Remove all event listeners for this tool
      */
@@ -68,7 +68,7 @@ window.ToolShelf.BaseTool = class BaseTool {
         });
         this.eventListeners = [];
     }
-    
+
     /**
      * Register keyboard shortcuts for this tool
      */
@@ -77,7 +77,7 @@ window.ToolShelf.BaseTool = class BaseTool {
             window.ToolShelf.Keyboard.register(key, callback, description, this.toolId);
         });
     }
-    
+
     /**
      * Unregister all shortcuts for this tool
      */
@@ -87,7 +87,7 @@ window.ToolShelf.BaseTool = class BaseTool {
             window.ToolShelf.Keyboard.unregister(key, this.toolId);
         });
     }
-    
+
     /**
      * Show toast notification
      */
@@ -96,7 +96,7 @@ window.ToolShelf.BaseTool = class BaseTool {
             window.ToolShelf.Toast.show(message, type, duration);
         }
     }
-    
+
     /**
      * Handle errors with proper logging and user feedback
      */
@@ -105,37 +105,37 @@ window.ToolShelf.BaseTool = class BaseTool {
             tool: this.toolId,
             ...context
         });
-        
+
         console.error(`❌ Error in ${this.toolId}:`, errorData);
         this.showToast(userMessage, 'error', 5000);
-        
+
         return errorData;
     }
-    
+
     /**
      * Measure performance of operations
      */
     measurePerformance(operationName, operation) {
         const startTime = performance.now();
-        
+
         try {
             const result = operation();
             const endTime = performance.now();
             const duration = endTime - startTime;
-            
+
             this.updatePerformanceMetrics(duration);
-            
+
             if (duration > window.ToolShelf.Constants.SLOW_OPERATION_THRESHOLD) {
                 console.warn(`⚠️ Slow operation in ${this.toolId}.${operationName}: ${duration.toFixed(2)}ms`);
             }
-            
+
             return result;
         } catch (error) {
             this.handleError(error, `Operation failed: ${operationName}`);
             throw error;
         }
     }
-    
+
     /**
      * Update performance metrics
      */
@@ -144,13 +144,13 @@ window.ToolShelf.BaseTool = class BaseTool {
         this.performanceMetrics.totalProcessingTime += duration;
         this.performanceMetrics.lastOperationTime = duration;
     }
-    
+
     /**
      * Get performance statistics
      */
     getPerformanceStats() {
         const { operationsCount, totalProcessingTime } = this.performanceMetrics;
-        
+
         return {
             operationsCount,
             totalProcessingTime: Math.round(totalProcessingTime),
@@ -158,21 +158,21 @@ window.ToolShelf.BaseTool = class BaseTool {
             lastOperationTime: Math.round(this.performanceMetrics.lastOperationTime)
         };
     }
-    
+
     /**
      * Called when tool becomes visible - to be overridden
      */
     onShow() {
         console.log(`👁️ Tool shown: ${this.toolId}`);
     }
-    
+
     /**
      * Called when tool becomes hidden - to be overridden
      */
     onHide() {
         console.log(`🙈 Tool hidden: ${this.toolId}`);
     }
-    
+
     /**
      * Export tool state - to be overridden
      */
@@ -184,14 +184,14 @@ window.ToolShelf.BaseTool = class BaseTool {
             timestamp: new Date().toISOString()
         };
     }
-    
+
     /**
      * Import tool state - to be overridden
      */
     importState(state) {
         console.log(`📥 Importing state for ${this.toolId}:`, state);
     }
-    
+
     /**
      * Validate tool configuration
      */
@@ -201,7 +201,7 @@ window.ToolShelf.BaseTool = class BaseTool {
         }
         return true;
     }
-    
+
     /**
      * Get tool metadata
      */

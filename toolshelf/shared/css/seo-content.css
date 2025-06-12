@@ -1,0 +1,199 @@
+/* SEO Content Styles */
+.seo-content {
+    background: var(--background-secondary);
+    padding: var(--space-8) 0;
+    text-align: center;
+    border-bottom: 1px solid var(--border-light);
+  }
+  
+  .seo-intro {
+    max-width: var(--max-width-lg);
+    margin: 0 auto;
+    padding: 0 var(--space-6);
+  }
+  
+  .seo-intro h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: var(--space-4);
+  }
+  
+  .lead {
+    font-size: 1.25rem;
+    color: var(--text-secondary);
+    margin-bottom: var(--space-8);
+    line-height: 1.6;
+  }
+  
+  .features-highlight {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--space-4);
+    margin-bottom: var(--space-8);
+  }
+  
+  .feature-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-4);
+    background: var(--background-card);
+    border-radius: var(--radius-xl);
+    border: 1px solid var(--border-light);
+  }
+  
+  .feature-item i {
+    color: var(--primary-color);
+    font-size: 1.5rem;
+  }
+  
+  .feature-item span {
+    font-weight: 500;
+    color: var(--text-primary);
+    font-size: 0.875rem;
+  }
+  
+  .cta-button {
+    background: var(--primary-color);
+    color: white;
+    padding: var(--space-3) var(--space-6);
+    border-radius: var(--radius-xl);
+    text-decoration: none;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    transition: all var(--transition-fast);
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+  }
+  
+  .cta-button:hover {
+    background: var(--primary-dark);
+    transform: translateY(-1px);
+  }
+  
+  .seo-toggle {
+    background: transparent;
+    border: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    padding: var(--space-2) var(--space-4);
+    border-radius: var(--radius-lg);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    margin-top: var(--space-6);
+  }
+  
+  .seo-toggle:hover {
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+  }
+  
+  /* Footer content */
+  .seo-footer-content {
+    display: none;
+    padding: var(--space-12) 0;
+    background: var(--background-secondary);
+  }
+  
+  .seo-footer-content.visible {
+    display: block;
+  }
+  
+  .content-grid {
+    max-width: var(--max-width-xl);
+    margin: 0 auto;
+    padding: 0 var(--space-6);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--space-8);
+  }
+  
+  .content-section h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: var(--space-4);
+  }
+  
+  .content-section ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .content-section li {
+    margin-bottom: var(--space-3);
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+  
+  .faq-section {
+    max-width: var(--max-width-xl);
+    margin: var(--space-12) auto 0;
+    padding: 0 var(--space-6);
+  }
+  
+  .faq-section h2 {
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    text-align: center;
+    margin-bottom: var(--space-8);
+  }
+  
+  .faq-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--space-6);
+  }
+  
+  .faq-item {
+    background: var(--background-card);
+    padding: var(--space-6);
+    border-radius: var(--radius-xl);
+    border: 1px solid var(--border-light);
+  }
+  
+  .faq-item h3 {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: var(--space-3);
+  }
+  
+  .faq-item p {
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin: 0;
+  }
+  
+  .seo-footer-toggle {
+    text-align: center;
+    padding: var(--space-6) 0;
+    border-bottom: 1px solid var(--border-light);
+  }
+  
+  .footer-toggle-btn {
+    background: transparent;
+    border: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    padding: var(--space-3) var(--space-6);
+    border-radius: var(--radius-xl);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: 0.875rem;
+  }
+  
+  .footer-toggle-btn:hover {
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+  }
