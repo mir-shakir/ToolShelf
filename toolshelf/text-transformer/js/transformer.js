@@ -673,3 +673,38 @@ window.ToolShelf.TextTransformer = class TextTransformer extends window.ToolShel
         });
     }
 };
+function toggleSeoContent() {
+    const seoContent = document.getElementById('seo-content');
+    seoContent.classList.toggle('expanded');
+}
+
+function toggleFooterContent() {
+    const footerContent = document.getElementById('seo-footer');
+    footerContent.classList.toggle('visible');
+}
+
+// Simple analytics placeholder
+function trackEvent(event, data) {
+    console.log('Event:', event, data);
+}
+
+// Footer link handlers
+function showPrivacyInfo() {
+    alert('ToolShelf respects your privacy. All text processing happens locally in your browser. No data is collected or sent to any servers.');
+}
+
+function showTermsInfo() {
+    alert('ToolShelf is provided as-is for free use. Use responsibly and at your own risk.');
+}
+
+function showContactInfo() {
+    alert('For questions or feedback, please visit our GitHub repository or create an issue.');
+}
+
+// Track page views (placeholder for real analytics)
+if (typeof gtag !== 'undefined') {
+    gtag('config', 'G-GBY4766X5D', {
+        page_title: 'ToolShelf - Text Transformer',
+        page_location: window.location.href
+    });
+}

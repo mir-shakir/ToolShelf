@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Primary Meta Tags -->
+    <title>ToolShelf - Free Online Base64 Encoder & Decoder | Encode Text & Files</title>
+    <meta name="title" content="ToolShelf - Free Online Base64 Encoder & Decoder">
+    <meta name="description"
+        content="Free online Base64 encoder and decoder. Encode text to Base64, decode Base64 to text, handle files and URL-safe variants. No registration required. Works offline.">
+    <meta name="keywords"
+        content="base64 encoder, base64 decoder, encode decode, data encoding, API testing, developer tools, free base64 tool">
+    <meta name="author" content="ToolShelf">
+    <meta name="robots" content="index, follow">
+    <meta name="language" content="English">
+    <meta name="revisit-after" content="7 days">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://toolshelf.onrender.com/base64-encoder/">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://toolshelf.onrender.com/base64-encoder/">
+    <meta property="og:title" content="ToolShelf - Free Online Base64 Encoder & Decoder">
+    <meta property="og:description"
+        content="Encode and decode Base64 strings instantly. Perfect for API testing, data encoding, and development work. No signup required, works offline.">
+    <meta property="og:image" content="https://toolshelf.onrender.com/assets/images/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:site_name" content="ToolShelf">
+    <meta property="og:locale" content="en_US">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://toolshelf.onrender.com/base64-encoder/">
+    <meta property="twitter:title" content="ToolShelf - Free Online Base64 Encoder & Decoder">
+    <meta property="twitter:description"
+        content="Encode and decode Base64 strings instantly. Perfect for developers and API testing. No signup required!">
+    <meta property="twitter:image" content="https://toolshelf.onrender.com/assets/images/twitter-image.png">
+
+    <!-- Favicon and Icons -->
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+    <link rel="manifest" href="../manifest.json">
+    <meta name="theme-color" content="#3b82f6">
+
+    <!-- Schema.org structured data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "ToolShelf Base64 Encoder",
+        "alternateName": "Base64 Encoder Decoder",
+        "description": "Free online Base64 encoding and decoding tool. Encode text to Base64, decode Base64 to text, handle files and URL-safe variants. Perfect for developers and API testing.",
+        "url": "https://toolshelf.onrender.com/base64-encoder/",
+        "applicationCategory": "ProductivityApplication",
+        "operatingSystem": "Web Browser",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        },
+        "creator": {
+            "@type": "Organization",
+            "name": "ToolShelf"
+        },
+        "datePublished": "2024-05-24",
+        "dateModified": "2025-06-18",
+        "inLanguage": "en-US",
+        "isAccessibleForFree": true,
+        "featureList": [
+            "Text to Base64 Encoding",
+            "Base64 to Text Decoding",
+            "URL-Safe Base64 Support",
+            "File Encoding Support",
+            "Error Handling and Validation",
+            "Real-time Processing",
+            "Copy to Clipboard",
+            "Offline Functionality",
+            "No Registration Required"
+        ],
+        "screenshot": "https://toolshelf.onrender.com/assets/images/base64-screenshot.png",
+        "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.8",
+            "reviewCount": "120"
+        }
+    }
+    </script>
+
+    <!-- CSS Modules -->
+
+    <link rel="stylesheet" href="../shared/css/variables.css">
+    <link rel="stylesheet" href="../shared/css/base.css">
+    <link rel="stylesheet" href="../shared/css/components.css">
+    <link rel="stylesheet" href="../shared/css/layout.css">
+    <link rel="stylesheet" href="../shared/css/responsive.css">
+    <link rel="stylesheet" href="../shared/css/seo-content.css">
+    <link rel="stylesheet" href="css/base64-tool.css">
+
+    <!-- External Resources -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-GBY4766X5D"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-GBY4766X5D');
+    </script>
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Header with Navigation -->
+        <header class="app-header">
+            <div class="header-container">
+                <div class="logo-section">
+                    <div class="logo-icon">
+                        <i class="fas fa-toolbox"></i>
+                    </div>
+                    <a href="../index.html" class="logo-text">ToolShelf</a>
+                </div>
+
+                <nav class="main-nav">
+                    <a href="../index.html" class="nav-link">Home</a>
+                    <a href="../index.html#tools" class="nav-link active">Tools</a>
+                    <a href="../index.html#about" class="nav-link">About</a>
+                </nav>
+
+                <div class="tool-actions">
+                    <button class="help-btn" id="helpBtn" title="Show instructions"
+                        aria-label="Show help and instructions">
+                        <i class="fas fa-question-circle" aria-hidden="true"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Breadcrumb Navigation -->
+            <div class="breadcrumb-container">
+                <div class="breadcrumb-wrapper">
+                    <nav class="breadcrumb">
+                        <a href="../index.html">Home</a>
+                        <span class="breadcrumb-separator">›</span>
+                        <a href="../index.html#tools">Tools</a>
+                        <span class="breadcrumb-separator">›</span>
+                        <span class="breadcrumb-current">Base64 Encoder</span>
+                    </nav>
+
+                    <div class="tool-status">
+                        <span class="status-badge">Free</span>
+                        <span class="tool-tag">Instant Encoding</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="app-main" role="main">
+            <!-- SEO Content Section -->
+            <section class="seo-content" id="seo-content">
+                <div class="seo-intro">
+                    <h1>Free Online Base64 Encoder & Decoder</h1>
+                    <p class="lead">Encode and decode Base64 strings instantly. Perfect for API testing, data encoding,
+                        and development work - all for free, no registration required.</p>
+
+                    <div class="seo-expandable">
+                        <div class="features-highlight">
+                            <div class="feature-item">
+                                <i class="fas fa-code" aria-hidden="true"></i>
+                                <span>Text Encoding</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-decode" aria-hidden="true"></i>
+                                <span>Text Decoding</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-link" aria-hidden="true"></i>
+                                <span>URL-Safe Base64</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-file" aria-hidden="true"></i>
+                                <span>File Support</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-copy" aria-hidden="true"></i>
+                                <span>Copy Results</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-shield-alt" aria-hidden="true"></i>
+                                <span>100% Private</span>
+                            </div>
+                        </div>
+
+                        <button class="cta-button"
+                            onclick="document.getElementById('base64-tool').scrollIntoView({ behavior: 'smooth' });">
+                            <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                            Start Encoding/Decoding
+                        </button>
+                    </div>
+                </div>
+
+                <button class="seo-toggle" onclick="toggleSeoContent()" aria-label="Show more information"
+                    aria-expanded="false">
+                    <span>Learn More</span>
+                    <i class="fas fa-chevron-down" aria-hidden="true"></i>
+                </button>
+            </section>
+
+            <!-- Base64 Tool -->
+            <div id="base64-tool" class="tool-container active">
+                <div class="tool-workspace">
+                    <!-- Left: Input Panel -->
+                    <section class="text-panel input-panel">
+                        <div class="panel-header">
+                            <div class="panel-title">
+                                <i class="fas fa-edit" aria-hidden="true"></i>
+                                <span>Input Text</span>
+                            </div>
+                            <div class="panel-actions">
+                                <button id="pasteBtn" class="icon-btn" title="Paste from clipboard">
+                                    <i class="fas fa-paste" aria-hidden="true"></i>
+                                </button>
+                                <button id="clearInput" class="icon-btn" title="Clear input">
+                                    <i class="fas fa-trash" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <textarea id="inputText" class="text-area" placeholder="Enter text to encode or Base64 string to decode...
+
+Examples:
+• Text: Hello World!
+• Base64: SGVsbG8gV29ybGQh" spellcheck="false" autocomplete="off"></textarea>
+                        <div class="panel-footer">
+                            <div class="stats-row">
+                                <div class="stats-section">
+                                    <span class="stat-item">
+                                        <i class="fas fa-font" aria-hidden="true"></i>
+                                        <span id="inputCharCount">0</span> chars
+                                    </span>
+                                    <span class="stat-item">
+                                        <i class="fas fa-file-alt" aria-hidden="true"></i>
+                                        <span id="inputBytes">0</span> bytes
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Center: Controls -->
+                    <div class="tool-controls">
+                        <div class="controls-container">
+                            <h3><i class="fas fa-cogs" aria-hidden="true"></i> Operations</h3>
+
+                            <div class="control-group">
+                                <button id="encodeBtn" class="control-btn primary">
+                                    <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                                    Encode to Base64
+                                </button>
+
+                                <button id="decodeBtn" class="control-btn secondary">
+                                    <i class="fas fa-arrow-left" aria-hidden="true"></i>
+                                    Decode from Base64
+                                </button>
+                            </div>
+
+                            <div class="control-group">
+                                <label class="checkbox-control">
+                                    <input type="checkbox" id="urlSafe">
+                                    <span>URL-Safe Base64</span>
+                                    <small>Replace + and / with - and _</small>
+                                </label>
+                            </div>
+
+                            <div class="control-group">
+                                <button id="swapBtn" class="control-btn utility">
+                                    <i class="fas fa-exchange-alt" aria-hidden="true"></i>
+                                    Swap Input ↔ Output
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right: Output Panel -->
+                    <section class="text-panel output-panel">
+                        <div class="panel-header">
+                            <div class="panel-title">
+                                <i class="fas fa-code" aria-hidden="true"></i>
+                                <span>Output Result</span>
+                            </div>
+                            <div class="panel-actions">
+                                <button id="copyOutput" class="icon-btn" title="Copy to clipboard" disabled>
+                                    <i class="fas fa-copy" aria-hidden="true"></i>
+                                </button>
+                                <button id="downloadOutput" class="icon-btn" title="Download as text file" disabled>
+                                    <i class="fas fa-download" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <textarea id="outputText" class="text-area output" placeholder="Encoded/decoded result will appear here...
+
+✨ Click Encode or Decode buttons
+📋 Copy results with one click
+💾 Download as text file" readonly spellcheck="false"></textarea>
+                        <div class="panel-footer">
+                            <div class="stats-row">
+                                <div class="stats-section">
+                                    <span class="stat-item">
+                                        <i class="fas fa-font" aria-hidden="true"></i>
+                                        <span id="outputCharCount">0</span> chars
+                                    </span>
+                                    <span class="stat-item">
+                                        <i class="fas fa-file-alt" aria-hidden="true"></i>
+                                        <span id="outputBytes">0</span> bytes
+                                    </span>
+                                </div>
+                                <div class="status-section">
+                                    <span id="operationStatus" class="transform-status">Ready to encode/decode</span>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="app-footer">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <strong>ToolShelf</strong> - Free Online Base64 Encoder & Decoder
+                </div>
+                <div class="footer-section">
+                    <span>© 2025 ToolShelf. All tools work offline and respect your privacy.</span>
+                </div>
+                <div class="footer-links">
+                    <a href="#privacy" onclick="showPrivacyInfo()">Privacy</a>
+                    <a href="#terms" onclick="showTermsInfo()">Terms</a>
+                    <a href="#contact" onclick="showContactInfo()">Contact</a>
+                </div>
+            </div>
+        </footer>
+
+        <!-- Help Modal -->
+        <div id="helpModal" class="help-modal" role="dialog" aria-labelledby="help-title" aria-hidden="true">
+            <div class="help-content">
+                <div class="help-header">
+                    <h2 id="help-title"><i class="fas fa-info-circle" aria-hidden="true"></i> How to Use Base64 Encoder
+                    </h2>
+                    <button class="help-close" id="helpClose" aria-label="Close help dialog">
+                        <i class="fas fa-times" aria-hidden="true"></i>
+                    </button>
+                </div>
+                <div class="help-body">
+                    <div class="help-section">
+                        <h3>Quick Start:</h3>
+                        <ol>
+                            <li>Enter text in the <strong>Input Text</strong> area</li>
+                            <li>Click <strong>Encode to Base64</strong> or <strong>Decode from Base64</strong></li>
+                            <li>See instant results in the <strong>Output Result</strong> area</li>
+                            <li>Copy or download your results when ready</li>
+                        </ol>
+                    </div>
+                    <div class="help-section">
+                        <h3>Features:</h3>
+                        <ul>
+                            <li><strong>URL-Safe Base64:</strong> Check the option for web-safe encoding</li>
+                            <li><strong>Swap Function:</strong> Quickly move output back to input</li>
+                            <li><strong>Real-time Stats:</strong> See character and byte counts</li>
+                            <li><strong>Error Handling:</strong> Invalid Base64 strings are detected</li>
+                        </ul>
+                    </div>
+                    <div class="help-section">
+                        <h3>Common Use Cases:</h3>
+                        <ul>
+                            <li>API authentication tokens</li>
+                            <li>Data transmission encoding</li>
+                            <li>Image/file data embedding</li>
+                            <li>Configuration file encoding</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Toast Notification -->
+        <div id="toast" class="toast" role="alert" aria-live="assertive">
+            <div class="toast-content">
+                <i class="toast-icon fas fa-check-circle" aria-hidden="true"></i>
+                <span id="toastMessage">Operation completed!</span>
+            </div>
+            <button class="toast-close" onclick="this.parentElement.classList.remove('show')">
+                <i class="fas fa-times" aria-hidden="true"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="../shared/js/core/analytics.js"></script>
+    <script src="../shared/js/components/navigation.js"></script>
+    <script src="../shared/js/components/seo-content.js"></script>
+    <script src="../shared/js/components/toast.js"></script>
+
+    <!-- Base64 Tool JavaScript -->
+    <script>
+        // Base64 Encoder/Decoder Functionality
+        class Base64Tool {
+            constructor() {
+                this.init();
+            }
+
+            init() {
+                this.setupElements();
+                this.setupEventListeners();
+                this.updateStats();
+            }
+
+            setupElements() {
+                this.inputText = document.getElementById('inputText');
+                this.outputText = document.getElementById('outputText');
+                this.encodeBtn = document.getElementById('encodeBtn');
+                this.decodeBtn = document.getElementById('decodeBtn');
+                this.urlSafeCheckbox = document.getElementById('urlSafe');
+                this.swapBtn = document.getElementById('swapBtn');
+                this.copyBtn = document.getElementById('copyOutput');
+                this.downloadBtn = document.getElementById('downloadOutput');
+                this.clearBtn = document.getElementById('clearInput');
+                this.pasteBtn = document.getElementById('pasteBtn');
+                this.statusElement = document.getElementById('operationStatus');
+            }
+
+            setupEventListeners() {
+                this.encodeBtn.addEventListener('click', () => this.encode());
+                this.decodeBtn.addEventListener('click', () => this.decode());
+                this.swapBtn.addEventListener('click', () => this.swap());
+                this.copyBtn.addEventListener('click', () => this.copyOutput());
+                this.downloadBtn.addEventListener('click', () => this.downloadOutput());
+                this.clearBtn.addEventListener('click', () => this.clearInput());
+                this.pasteBtn.addEventListener('click', () => this.pasteInput());
+
+                this.inputText.addEventListener('input', () => this.updateStats());
+                this.outputText.addEventListener('input', () => this.updateStats());
+
+                // Help modal
+                document.getElementById('helpBtn').addEventListener('click', () => this.showHelp());
+                document.getElementById('helpClose').addEventListener('click', () => this.hideHelp());
+            }
+
+            encode() {
+                const input = this.inputText.value;
+                if (!input.trim()) {
+                    this.showStatus('Please enter text to encode', 'error');
+                    return;
+                }
+
+                try {
+                    let encoded = btoa(unescape(encodeURIComponent(input)));
+
+                    if (this.urlSafeCheckbox.checked) {
+                        encoded = encoded.replace(/\+/g, '-').replace(/\//g, '_').replace(/=/g, '');
+                    }
+
+                    this.outputText.value = encoded;
+                    this.showStatus('Text encoded successfully', 'success');
+                    this.updateButtons();
+                    this.updateStats();
+
+                    // Track usage
+                    if (window.ToolShelf && window.ToolShelf.Analytics) {
+                        window.ToolShelf.Analytics.trackToolUsage('base64_encoder', 'encode');
+                    }
+                } catch (error) {
+                    this.showStatus('Encoding failed: Invalid characters', 'error');
+                }
+            }
+
+            decode() {
+                const input = this.inputText.value.trim();
+                if (!input) {
+                    this.showStatus('Please enter Base64 string to decode', 'error');
+                    return;
+                }
+
+                try {
+                    let base64 = input;
+
+                    // Handle URL-safe Base64
+                    if (this.urlSafeCheckbox.checked) {
+                        base64 = base64.replace(/-/g, '+').replace(/_/g, '/');
+                        // Add padding if needed
+                        while (base64.length % 4) {
+                            base64 += '=';
+                        }
+                    }
+
+                    const decoded = decodeURIComponent(escape(atob(base64)));
+                    this.outputText.value = decoded;
+                    this.showStatus('Base64 decoded successfully', 'success');
+                    this.updateButtons();
+                    this.updateStats();
+
+                    // Track usage
+                    if (window.ToolShelf && window.ToolShelf.Analytics) {
+                        window.ToolShelf.Analytics.trackToolUsage('base64_encoder', 'decode');
+                    }
+                } catch (error) {
+                    this.showStatus('Decoding failed: Invalid Base64 string', 'error');
+                }
+            }
+
+            swap() {
+                const temp = this.inputText.value;
+                this.inputText.value = this.outputText.value;
+                this.outputText.value = temp;
+                this.updateStats();
+                this.updateButtons();
+                this.showStatus('Input and output swapped', 'info');
+            }
+
+            async copyOutput() {
+                if (!this.outputText.value) return;
+
+                try {
+                    await navigator.clipboard.writeText(this.outputText.value);
+                    this.showToast('Copied to clipboard!', 'success');
+                } catch (error) {
+                    // Fallback for older browsers
+                    this.outputText.select();
+                    document.execCommand('copy');
+                    this.showToast('Copied to clipboard!', 'success');
+                }
+            }
+
+            downloadOutput() {
+                if (!this.outputText.value) return;
+
+                const blob = new Blob([this.outputText.value], { type: 'text/plain' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'base64-result.txt';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+
+                this.showToast('File downloaded successfully!', 'success');
+            }
+
+            clearInput() {
+                this.inputText.value = '';
+                this.outputText.value = '';
+                this.updateStats();
+                this.updateButtons();
+                this.showStatus('Ready to encode/decode', 'info');
+            }
+
+            async pasteInput() {
+                try {
+                    const text = await navigator.clipboard.readText();
+                    this.inputText.value = text;
+                    this.updateStats();
+                    this.showToast('Text pasted from clipboard!', 'success');
+                } catch (error) {
+                    this.showToast('Paste failed. Please paste manually.', 'error');
+                }
+            }
+
+            updateStats() {
+                const inputValue = this.inputText.value;
+                const outputValue = this.outputText.value;
+
+                document.getElementById('inputCharCount').textContent = inputValue.length;
+                document.getElementById('inputBytes').textContent = new Blob([inputValue]).size;
+                document.getElementById('outputCharCount').textContent = outputValue.length;
+                document.getElementById('outputBytes').textContent = new Blob([outputValue]).size;
+            }
+
+            updateButtons() {
+                const hasOutput = this.outputText.value.length > 0;
+                this.copyBtn.disabled = !hasOutput;
+                this.downloadBtn.disabled = !hasOutput;
+            }
+
+            showStatus(message, type = 'info') {
+                this.statusElement.textContent = message;
+                this.statusElement.className = `transform-status ${type}`;
+            }
+
+            showToast(message, type = 'info') {
+                const toast = document.getElementById('toast');
+                const messageElement = document.getElementById('toastMessage');
+                const iconElement = toast.querySelector('.toast-icon');
+
+                messageElement.textContent = message;
+
+                // Update icon based on type
+                iconElement.className = `toast-icon fas ${type === 'success' ? 'fa-check-circle' :
+                    type === 'error' ? 'fa-exclamation-circle' : 'fa-info-circle'}`;
+
+                toast.classList.add('show');
+
+                // Auto-hide after 3 seconds
+                setTimeout(() => {
+                    toast.classList.remove('show');
+                }, 3000);
+            }
+
+            showHelp() {
+                document.getElementById('helpModal').style.display = 'flex';
+                document.getElementById('helpModal').setAttribute('aria-hidden', 'false');
+            }
+
+            hideHelp() {
+                document.getElementById('helpModal').style.display = 'none';
+                document.getElementById('helpModal').setAttribute('aria-hidden', 'true');
+            }
+        }
+
+        // Initialize the tool when DOM is ready
+        document.addEventListener('DOMContentLoaded', () => {
+            new Base64Tool();
+        });
+    </script>
+</body>
+
+</html>

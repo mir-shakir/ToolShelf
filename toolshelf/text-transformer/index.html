@@ -39,25 +39,27 @@
     <meta property="twitter:description"
         content="Transform text instantly with our free online tools. Convert case, sort lines, remove duplicates and more. No signup required!">
     <meta property="twitter:image" content="https://toolshelf.onrender.com/assets/images/twitter-image.png">
-
     <!-- Favicon and Icons -->
+
+
     <link rel="icon" type="image/x-icon" href="../favicon.ico">
-    <link rel="icon" type="image/png" sizes="32x32" href="../assets/images/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon-16x16.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="../assets/images/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
     <link rel="manifest" href="../manifest.json">
     <meta name="theme-color" content="#3b82f6">
-    <meta name="msapplication-TileColor" content="#3b82f6">
+    <meta name="msapplication-TileColor" content="#2563eb">
+
 
     <!-- Schema.org structured data -->
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
         "@type": "WebApplication",
-        "name": "ToolShelf Text Transformer",
+        "name": "ToolShelf",
         "alternateName": "ToolShelf Text Transformer",
         "description": "Free online text transformation tools including case converter, line sorter, duplicate remover and more. Perfect for developers and content creators.",
-        "url": "https://toolshelf.onrender.com/text-transformer/",
+        "url": "https://toolshelf.onrender.com/",
         "applicationCategory": "ProductivityApplication",
         "operatingSystem": "Web Browser",
         "offers": {
@@ -70,7 +72,7 @@
             "name": "ToolShelf"
         },
         "datePublished": "2024-05-24",
-        "dateModified": "2025-06-11",
+        "dateModified": "2025-06-10",
         "inLanguage": "en-US",
         "isAccessibleForFree": true,
         "featureList": [
@@ -94,12 +96,14 @@
     }
     </script>
 
-    <!-- CSS Modules - Updated Paths -->
+    <!-- CSS Modules -->
+
     <link rel="stylesheet" href="../shared/css/variables.css">
     <link rel="stylesheet" href="../shared/css/base.css">
     <link rel="stylesheet" href="../shared/css/components.css">
     <link rel="stylesheet" href="../shared/css/layout.css">
     <link rel="stylesheet" href="../shared/css/responsive.css">
+    <link rel="stylesheet" href="css/transformer.css">
     <link rel="stylesheet" href="../shared/css/seo-content.css">
 
     <!-- External Resources -->
@@ -127,34 +131,49 @@
 
 <body>
     <div class="app-container">
-        <!-- Header with SEO-friendly navigation - Updated for Homepage Consistency -->
+        <!-- Header with SEO-friendly navigation -->
+        <!-- Consistent Header with Homepage -->
         <header class="app-header">
-            <div class="header-content">
-                <div class="brand">
-                    <h1 class="app-title">
-                        <a href="../index.html"
-                            style="color: inherit; text-decoration: none; display: flex; align-items: center; gap: var(--space-2);">
-                            <i class="fas fa-toolbox" aria-hidden="true"></i>
-                            ToolShelf
-                        </a>
-                    </h1>
-                    <span class="tagline">Free Online Text Transformer & Productivity Tools</span>
+            <div class="header-container">
+                <div class="logo-section">
+                    <div class="logo-icon">
+                        <i class="fas fa-toolbox"></i>
+                    </div>
+                    <a href="../index.html" class="logo-text">ToolShelf</a>
                 </div>
-                <nav class="tool-nav" role="navigation" aria-label="Main navigation">
-                    <a href="../index.html" class="nav-btn" title="Back to Home">
-                        <i class="fas fa-home" aria-hidden="true"></i>
-                        <span>Home</span>
-                    </a>
-                    <button class="nav-btn active" data-tool="text-transformer" aria-current="page">
-                        <i class="fas fa-font" aria-hidden="true"></i>
-                        <span>Text Transformer</span>
-                        <span class="nav-badge">Free</span>
-                    </button>
+
+                <nav class="main-nav">
+                    <a href="../index.html" class="nav-link">Home</a>
+                    <a href="../index.html#tools" class="nav-link active">Tools</a>
+                    <a href="../index.html#about" class="nav-link">About</a>
+                </nav>
+
+                <!-- Tool-specific controls -->
+                <div class="tool-actions">
                     <button class="help-btn" id="helpBtn" title="Show instructions"
                         aria-label="Show help and instructions">
                         <i class="fas fa-question-circle" aria-hidden="true"></i>
                     </button>
-                </nav>
+                </div>
+            </div>
+
+            <!-- Breadcrumb Navigation -->
+            <div class="breadcrumb-container">
+                <div class="breadcrumb-wrapper">
+                    <nav class="breadcrumb">
+                        <a href="../index.html">Home</a>
+                        <span class="breadcrumb-separator">›</span>
+                        <a href="../index.html#tools">Tools</a>
+                        <span class="breadcrumb-separator">›</span>
+                        <span class="breadcrumb-current">Text Transformer</span>
+                    </nav>
+
+                    <!-- Tool status badge -->
+                    <div class="tool-status">
+                        <span class="status-badge">Free</span>
+                        <span class="tool-tag">Real-time Processing</span>
+                    </div>
+                </div>
             </div>
         </header>
 
@@ -167,41 +186,44 @@
                     <p class="lead">Transform your text with powerful online tools. Convert case, sort lines, remove
                         duplicates, and more - all for free, no registration required.</p>
 
-                    <div class="features-highlight">
-                        <div class="feature-item">
-                            <i class="fas fa-text-height" aria-hidden="true"></i>
-                            <span>Case Conversion</span>
+                    <div class="seo-expandable">
+                        <div class="features-highlight">
+                            <div class="feature-item">
+                                <i class="fas fa-text-height" aria-hidden="true"></i>
+                                <span>Case Conversion</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-sort-alpha-down" aria-hidden="true"></i>
+                                <span>Line Sorting</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-copy" aria-hidden="true"></i>
+                                <span>Remove Duplicates</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-magic" aria-hidden="true"></i>
+                                <span>Text Operations</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-download" aria-hidden="true"></i>
+                                <span>Export Results</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-shield-alt" aria-hidden="true"></i>
+                                <span>100% Private</span>
+                            </div>
                         </div>
-                        <div class="feature-item">
-                            <i class="fas fa-sort-alpha-down" aria-hidden="true"></i>
-                            <span>Line Sorting</span>
-                        </div>
-                        <div class="feature-item">
-                            <i class="fas fa-copy" aria-hidden="true"></i>
-                            <span>Remove Duplicates</span>
-                        </div>
-                        <div class="feature-item">
-                            <i class="fas fa-magic" aria-hidden="true"></i>
-                            <span>Text Operations</span>
-                        </div>
-                        <div class="feature-item">
-                            <i class="fas fa-download" aria-hidden="true"></i>
-                            <span>Export Results</span>
-                        </div>
-                        <div class="feature-item">
-                            <i class="fas fa-shield-alt" aria-hidden="true"></i>
-                            <span>100% Private</span>
-                        </div>
-                    </div>
 
-                    <button class="cta-button"
-                        onclick="document.getElementById('text-transformer').scrollIntoView({ behavior: 'smooth' }); document.getElementById('seo-content').classList.remove('expanded');">
-                        <i class="fas fa-arrow-right" aria-hidden="true"></i>
-                        Start Transforming Text
-                    </button>
+                        <button class="cta-button"
+                            onclick="document.getElementById('text-transformer').scrollIntoView({ behavior: 'smooth' }); document.getElementById('seo-content').classList.remove('expanded');">
+                            <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                            Start Transforming Text
+                        </button>
+                    </div>
                 </div>
 
-                <button class="seo-toggle" onclick="toggleSeoContent()" aria-label="Show more information">
+                <button class="seo-toggle" onclick="toggleSeoContent()" aria-label="Show more information"
+                    aria-expanded="false">
                     <span>Learn More</span>
                     <i class="fas fa-chevron-down" aria-hidden="true"></i>
                 </button>
@@ -557,32 +579,31 @@ this is a test" spellcheck="false" autocomplete="off"
 
             <div class="seo-footer-toggle">
                 <button class="footer-toggle-btn" onclick="toggleFooterContent()"
-                    aria-label="Show more information about ToolShelf">
+                    aria-label="Show more information about ToolShelf" aria-expanded="false">
                     <span>More Info & FAQ</span>
                     <i class="fas fa-chevron-down" aria-hidden="true"></i>
                 </button>
+                <!-- <button class="footer-toggle-btn" onclick="toggleFooterContent()"
+                    aria-label="Show more information about ToolShelf">
+                    <span>More Info & FAQ</span>
+                    <i class="fas fa-chevron-down" aria-hidden="true"></i>
+                </button> -->
             </div>
         </main>
 
         <footer class="app-footer">
             <div class="footer-content">
-                <div class="footer-logo">
-                    <div class="logo-icon">
-                        <i class="fas fa-toolbox"></i>
-                    </div>
-                    <strong style="color: var(--text-primary);">ToolShelf</strong>
+                <div class="footer-section">
+                    <strong>ToolShelf</strong> - Free Online Text Transformer & Productivity Tools
                 </div>
-                <p class="footer-description">
-                    Free online tools that respect your privacy. Built for developers and professionals worldwide.
-                </p>
+                <div class="footer-section">
+                    <span>© 2025 ToolShelf. All tools work offline and respect your privacy.</span>
+                </div>
                 <div class="footer-links">
                     <a href="#privacy" onclick="showPrivacyInfo()">Privacy</a>
                     <a href="#terms" onclick="showTermsInfo()">Terms</a>
                     <a href="#contact" onclick="showContactInfo()">Contact</a>
                 </div>
-                <p class="footer-copyright">
-                    © 2025 ToolShelf. All tools work offline and respect your privacy.
-                </p>
             </div>
         </footer>
 
@@ -641,57 +662,20 @@ this is a test" spellcheck="false" autocomplete="off"
         </div>
     </div>
 
-    <!-- JavaScript Modules - Updated Paths -->
+    <!-- JavaScript Modules -->
     <script src="../shared/config/constants.js"></script>
     <script src="../shared/js/core/utils.js"></script>
     <script src="../shared/js/core/events.js"></script>
+    <script src="../shared/js/core/analytics.js"></script>
     <script src="../shared/js/components/toast.js"></script>
+    <script src="../shared/js/components/navigation.js"></script>
+    <script src="../shared/js/components/seo-content.js"></script>
     <script src="../shared/js/components/keyboard.js"></script>
     <script src="../shared/js/tools/base-tool.js"></script>
     <script src="js/transforms.js"></script>
     <script src="js/ui-handlers.js"></script>
     <script src="js/transformer.js"></script>
     <script src="../shared/js/core/app.js"></script>
-
-    <!-- SEO JavaScript -->
-    <script>
-        // Toggle SEO content visibility
-        function toggleSeoContent() {
-            const seoContent = document.getElementById('seo-content');
-            seoContent.classList.toggle('expanded');
-        }
-
-        function toggleFooterContent() {
-            const footerContent = document.getElementById('seo-footer');
-            footerContent.classList.toggle('visible');
-        }
-
-        // Simple analytics placeholder
-        function trackEvent(event, data) {
-            console.log('Event:', event, data);
-        }
-
-        // Footer link handlers
-        function showPrivacyInfo() {
-            alert('ToolShelf respects your privacy. All text processing happens locally in your browser. No data is collected or sent to any servers.');
-        }
-
-        function showTermsInfo() {
-            alert('ToolShelf is provided as-is for free use. Use responsibly and at your own risk.');
-        }
-
-        function showContactInfo() {
-            alert('For questions or feedback, please visit our GitHub repository or create an issue.');
-        }
-
-        // Track page views (placeholder for real analytics)
-        if (typeof gtag !== 'undefined') {
-            gtag('config', 'G-GBY4766X5D', {
-                page_title: 'ToolShelf - Text Transformer',
-                page_location: window.location.href
-            });
-        }
-    </script>
 </body>
 
 </html>
