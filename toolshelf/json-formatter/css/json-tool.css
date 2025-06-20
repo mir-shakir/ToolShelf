@@ -1,0 +1,997 @@
+/* JSON Formatter Tool Styles - Following ToolShelf Design System */
+
+/* Tool-specific workspace adjustments */
+.tool-workspace {
+    max-width: var(--max-width-2xl);
+    margin: 0 auto;
+    padding: var(--space-6);
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    gap: var(--space-6);
+    min-height: calc(100vh - 160px);
+}
+
+/* Controls sidebar for JSON formatter */
+.controls-sidebar {
+    background: var(--background-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-2xl);
+    padding: var(--space-5);
+    height: fit-content;
+    position: sticky;
+    top: calc(120px + var(--space-4));
+    box-shadow: var(--shadow-sm);
+    overflow-y: auto;
+    max-height: calc(100vh - 140px);
+}
+
+/* JSON-specific control groups */
+.control-group {
+    margin-bottom: var(--space-5);
+}
+
+.control-group:last-child {
+    margin-bottom: 0;
+}
+
+.control-group-title {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: var(--space-3);
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+}
+
+/* Quick action buttons */
+.quick-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-2);
+    margin-bottom: var(--space-4);
+}
+
+.quick-action-btn {
+    padding: var(--space-2) var(--space-3);
+    border: 1px solid var(--border-color);
+    background: var(--background-primary);
+    border-radius: var(--radius-lg);
+    color: var(--text-primary);
+    font-weight: 500;
+    font-size: 0.75rem;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    display: flex;
+    align-items: center;
+    gap: var(--space-1);
+    justify-content: center;
+}
+
+/* Enhanced tooltips */
+.quick-action-btn[title] {
+    position: relative;
+}
+
+.quick-action-btn[title]:hover::after {
+    content: attr(title);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--text-primary);
+    color: var(--background-primary);
+    padding: var(--space-2) var(--space-3);
+    border-radius: var(--radius-md);
+    font-size: 0.75rem;
+    white-space: nowrap;
+    z-index: 1000;
+    margin-bottom: var(--space-1);
+    box-shadow: var(--shadow-lg);
+    max-width: 200px;
+    white-space: normal;
+    text-align: center;
+    line-height: 1.3;
+}
+
+.quick-action-btn[title]:hover::before {
+    content: '';
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 4px solid transparent;
+    border-top-color: var(--text-primary);
+    z-index: 1000;
+}
+
+.quick-action-btn:hover:not(:disabled) {
+    border-color: var(--primary-color);
+    background: var(--primary-subtle);
+    color: var(--primary-color);
+}
+
+.quick-action-btn.primary {
+    background: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+    font-weight: 600;
+}
+
+.quick-action-btn.primary:hover:not(:disabled) {
+    background: var(--primary-dark);
+    border-color: var(--primary-dark);
+}
+
+.quick-action-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Formatting options */
+.format-options {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+}
+
+.format-option {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-2);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-md);
+    transition: all var(--transition-fast);
+    cursor: pointer;
+}
+
+.format-option:hover {
+    border-color: var(--primary-light);
+    background: var(--primary-subtle);
+}
+
+.format-option input[type="radio"] {
+    margin: 0;
+    width: 14px;
+    height: 14px;
+    accent-color: var(--primary-color);
+}
+
+.format-option-label {
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: var(--text-primary);
+    flex: 1;
+}
+
+/* Advanced options collapsible */
+.advanced-section {
+    border-top: 1px solid var(--border-light);
+    margin-top: var(--space-4);
+    padding-top: var(--space-4);
+}
+
+.advanced-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: var(--space-2) 0;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--text-secondary);
+    font-size: 0.8125rem;
+    font-weight: 500;
+}
+
+.advanced-toggle:hover {
+    color: var(--primary-color);
+}
+
+.advanced-toggle i {
+    transition: transform var(--transition-fast);
+}
+
+.advanced-section.expanded .advanced-toggle i {
+    transform: rotate(180deg);
+}
+
+.advanced-content {
+    display: none;
+    margin-top: var(--space-3);
+}
+
+.advanced-section.expanded .advanced-content {
+    display: block;
+}
+
+/* JSONPath query section */
+.jsonpath-section {
+    margin-top: var(--space-4);
+    padding: var(--space-3);
+    background: var(--background-secondary);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border-light);
+}
+
+.jsonpath-input {
+    width: 100%;
+    padding: var(--space-2);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    font-family: var(--font-family-mono);
+    font-size: 0.75rem;
+    margin-bottom: var(--space-2);
+}
+
+.jsonpath-input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px var(--primary-subtle);
+}
+
+.jsonpath-examples {
+    font-size: 0.625rem;
+    color: var(--text-muted);
+    margin-top: var(--space-1);
+}
+
+.jsonpath-examples button {
+    background: none;
+    border: none;
+    color: var(--primary-color);
+    cursor: pointer;
+    text-decoration: underline;
+    font-size: inherit;
+    margin-right: var(--space-2);
+}
+
+.jsonpath-examples button:hover {
+    color: var(--primary-dark);
+}
+
+/* JSON validation status */
+.validation-status {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-2) var(--space-3);
+    border-radius: var(--radius-md);
+    font-size: 0.75rem;
+    font-weight: 500;
+    margin-top: var(--space-3);
+}
+
+.validation-status.valid {
+    background: var(--success-color);
+    color: white;
+}
+
+.validation-status.invalid {
+    background: var(--error-color);
+    color: white;
+}
+
+.validation-status.pending {
+    background: var(--warning-color);
+    color: white;
+}
+
+.validation-status.neutral {
+    background: var(--background-secondary);
+    color: var(--text-secondary);
+    border: 1px solid var(--border-color);
+}
+
+/* Error display */
+.error-display {
+    margin: 0;
+    padding: var(--space-3) var(--space-5);
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+    color: white;
+    font-family: var(--font-family-mono);
+    font-size: 0.8125rem;
+    line-height: 1.5;
+    display: none;
+    border-bottom: 1px solid var(--border-light);
+    position: relative;
+}
+
+.error-display.show {
+    display: block;
+    animation: slideDownError 0.3s ease-out;
+}
+
+@keyframes slideDownError {
+    from {
+        height: 0;
+        opacity: 0;
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+
+    to {
+        height: auto;
+        opacity: 1;
+        padding-top: var(--space-3);
+        padding-bottom: var(--space-3);
+    }
+}
+
+.error-display-title {
+    font-weight: 700;
+    margin-bottom: var(--space-2);
+    font-size: 0.875rem;
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+}
+
+.error-display-title::before {
+    content: "⚠️";
+    font-size: 1rem;
+}
+
+.error-display-message {
+    margin-bottom: var(--space-2);
+    font-weight: 500;
+}
+
+.error-display-location {
+    font-size: 0.75rem;
+    opacity: 0.9;
+    margin-bottom: var(--space-1);
+    font-weight: 400;
+}
+
+.error-display-suggestion {
+    font-size: 0.75rem;
+    opacity: 0.95;
+    background: rgba(255, 255, 255, 0.1);
+    padding: var(--space-2);
+    border-radius: var(--radius-md);
+    border-left: 3px solid rgba(255, 255, 255, 0.3);
+    margin-top: var(--space-2);
+}
+
+/* Better syntax highlighting state management */
+
+.syntax-highlighted {
+    position: relative;
+}
+
+.syntax-highlighted .text-area {
+    position: relative;
+    transition: color 0.15s ease;
+}
+
+.syntax-highlighted .text-area.has-content {
+    color: transparent !important;
+    caret-color: var(--text-primary);
+}
+
+.syntax-highlighted .text-area:not(.has-content) {
+    color: var(--text-muted) !important;
+}
+
+/* Ensure placeholder is always visible when empty */
+.text-area:placeholder-shown {
+    color: var(--text-muted) !important;
+}
+
+/* Force text visibility when not using syntax highlighting */
+.text-area:not(.syntax-highlighted .text-area) {
+    color: var(--text-primary) !important;
+}
+
+.syntax-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: var(--space-5);
+    font-family: var(--font-family-mono);
+    font-size: 0.875rem;
+    line-height: 1.6;
+    overflow: auto;
+    pointer-events: none;
+    z-index: 1;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    display: none;
+    transition: opacity 0.15s ease;
+}
+
+/* Debug helper - can remove later */
+.syntax-overlay[data-debug="true"] {
+    background: rgba(255, 0, 0, 0.1);
+    border: 1px solid red;
+}
+
+/* JSON-specific syntax colors */
+.json-string {
+    color: var(--success-color);
+}
+
+.json-number {
+    color: var(--info-color);
+}
+
+.json-boolean {
+    color: var(--warning-color);
+}
+
+.json-null {
+    color: var(--text-muted);
+}
+
+.json-key {
+    color: var(--primary-color);
+    font-weight: 500;
+}
+
+.json-punctuation {
+    color: var(--text-secondary);
+}
+
+/* Statistics specific to JSON */
+.json-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-2);
+    margin-top: var(--space-2);
+}
+
+.json-stat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: var(--space-2);
+    background: var(--background-secondary);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-light);
+}
+
+.json-stat-value {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+.json-stat-label {
+    font-size: 0.625rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.025em;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+    .tool-workspace {
+        grid-template-columns: 1fr;
+        gap: var(--space-4);
+        padding: var(--space-4);
+    }
+
+    .controls-sidebar {
+        position: static;
+        order: 2;
+        max-height: none;
+    }
+
+    .text-workspace {
+        order: 1;
+    }
+
+    .quick-actions {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .tool-workspace {
+        padding: var(--space-3);
+    }
+
+    .json-stats {
+        grid-template-columns: 1fr;
+    }
+
+    .format-options {
+        gap: var(--space-1);
+    }
+
+    .format-option {
+        padding: var(--space-1);
+    }
+}
+
+/* JSONPath Results Styling */
+.jsonpath-result {
+    width: 100%;
+    min-height: 80px;
+    max-height: 200px;
+    padding: var(--space-2);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    font-family: var(--font-family-mono);
+    font-size: 0.75rem;
+    line-height: 1.4;
+    background: var(--background-secondary);
+    color: var(--text-primary);
+    resize: vertical;
+    margin-top: var(--space-2);
+}
+
+.jsonpath-result:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px var(--primary-subtle);
+}
+
+/* Example buttons styling */
+.jsonpath-example-btn {
+    background: none;
+    border: 1px solid var(--border-light);
+    color: var(--primary-color);
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 0.65rem;
+    padding: var(--space-1);
+    margin: var(--space-1) var(--space-1) 0 0;
+    border-radius: var(--radius-sm);
+    font-family: var(--font-family-mono);
+    transition: all var(--transition-fast);
+}
+
+.jsonpath-example-btn:hover {
+    background: var(--primary-subtle);
+    border-color: var(--primary-color);
+}
+
+/* Help modal improvements */
+.shortcuts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--space-2);
+    margin-top: var(--space-2);
+}
+
+.shortcut-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--space-1) var(--space-2);
+    background: var(--background-secondary);
+    border-radius: var(--radius-md);
+    font-size: 0.8125rem;
+}
+
+.shortcut-item kbd {
+    background: var(--background-card);
+    border: 1px solid var(--border-color);
+    padding: 2px 6px;
+    border-radius: var(--radius-sm);
+    font-size: 0.75rem;
+    font-family: var(--font-family-mono);
+}
+
+.jsonpath-help {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+}
+
+.jsonpath-example {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--space-1) var(--space-2);
+    background: var(--background-secondary);
+    border-radius: var(--radius-md);
+    font-size: 0.8125rem;
+}
+
+.jsonpath-example code {
+    font-family: var(--font-family-mono);
+    color: var(--primary-color);
+    font-weight: 500;
+}
+
+/* SEO content improvements */
+.use-cases-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: var(--space-4);
+    margin-top: var(--space-3);
+}
+
+.use-case {
+    padding: var(--space-3);
+    background: var(--background-card);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border-light);
+}
+
+.use-case h4 {
+    color: var(--primary-color);
+    margin-bottom: var(--space-2);
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+}
+
+.benefits-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: var(--space-4);
+    margin-top: var(--space-3);
+}
+
+.benefit {
+    text-align: center;
+    padding: var(--space-3);
+}
+
+.benefit i {
+    font-size: 2rem;
+    color: var(--primary-color);
+    margin-bottom: var(--space-2);
+}
+
+.jsonpath-examples-section {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    margin-top: var(--space-3);
+}
+
+.example-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--space-2) var(--space-3);
+    background: var(--background-card);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-light);
+}
+
+.example-item code {
+    font-family: var(--font-family-mono);
+    color: var(--primary-color);
+    font-weight: 500;
+}
+
+/* Add only these to your existing json-tool.css */
+
+/* Advanced options styling improvements */
+.advanced-section {
+    border-top: 1px solid var(--border-light);
+    margin-top: var(--space-4);
+    padding-top: var(--space-4);
+}
+
+.advanced-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: var(--space-3) var(--space-4);
+    background: var(--background-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    cursor: pointer;
+    color: var(--text-primary);
+    font-size: 0.875rem;
+    font-weight: 600;
+    transition: all var(--transition-fast);
+}
+
+.advanced-toggle:hover {
+    border-color: var(--primary-color);
+    background: var(--primary-subtle);
+    color: var(--primary-color);
+}
+
+.advanced-toggle i {
+    transition: transform var(--transition-fast);
+    color: var(--text-secondary);
+}
+
+.advanced-section.expanded .advanced-toggle i {
+    transform: rotate(180deg);
+    color: var(--primary-color);
+}
+
+.advanced-content {
+    display: none;
+    margin-top: var(--space-4);
+    padding: var(--space-4);
+    background: var(--background-primary);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border-light);
+}
+
+.advanced-section.expanded .advanced-content {
+    display: block;
+}
+
+.checkbox-option {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-3);
+    padding: var(--space-3);
+    margin-bottom: var(--space-3);
+    background: var(--background-card);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-light);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.checkbox-option:last-child {
+    margin-bottom: 0;
+}
+
+.checkbox-option:hover {
+    border-color: var(--primary-color);
+    background: var(--primary-subtle);
+}
+
+.checkbox-option input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    margin: 0;
+    accent-color: var(--primary-color);
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.checkbox-option-content {
+    flex: 1;
+}
+
+.checkbox-option-label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: var(--space-1);
+    cursor: pointer;
+}
+
+.checkbox-option-desc {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    line-height: 1.4;
+}
+
+/* JSONPath Results Styling */
+.jsonpath-result {
+    width: 100%;
+    min-height: 80px;
+    max-height: 200px;
+    padding: var(--space-2);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    font-family: var(--font-family-mono);
+    font-size: 0.75rem;
+    line-height: 1.4;
+    background: var(--background-secondary);
+    color: var(--text-primary);
+    resize: vertical;
+    margin-top: var(--space-2);
+}
+
+.jsonpath-result:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px var(--primary-subtle);
+}
+
+/* Example buttons styling */
+.jsonpath-example-btn {
+    background: none;
+    border: 1px solid var(--border-light);
+    color: var(--primary-color);
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 0.65rem;
+    padding: var(--space-1);
+    margin: var(--space-1) var(--space-1) 0 0;
+    border-radius: var(--radius-sm);
+    font-family: var(--font-family-mono);
+    transition: all var(--transition-fast);
+}
+
+.jsonpath-example-btn:hover {
+    background: var(--primary-subtle);
+    border-color: var(--primary-color);
+}
+
+/* Add to existing css */
+
+/* Input error highlighting */
+.text-area.input-error {
+    border-color: var(--error-color) !important;
+    box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.2) !important;
+    background-color: rgba(239, 68, 68, 0.05);
+}
+
+/* Error display improvements */
+.error-display {
+    margin-top: var(--space-3);
+    padding: var(--space-4);
+    background: linear-gradient(135deg, var(--error-color), #dc2626);
+    color: white;
+    border-radius: var(--radius-lg);
+    font-family: var(--font-family-mono);
+    font-size: 0.8125rem;
+    line-height: 1.5;
+    display: none;
+    box-shadow: var(--shadow-md);
+}
+
+.error-display.show {
+    display: block;
+    animation: slideInError 0.3s ease-out;
+}
+
+@keyframes slideInError {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.error-display-title {
+    font-weight: 700;
+    margin-bottom: var(--space-2);
+    font-size: 0.875rem;
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+}
+
+.error-display-title::before {
+    content: "⚠️";
+    font-size: 1rem;
+}
+
+.error-display-message {
+    margin-bottom: var(--space-2);
+    font-weight: 500;
+}
+
+.error-display-location {
+    font-size: 0.75rem;
+    opacity: 0.9;
+    margin-bottom: var(--space-1);
+    font-weight: 400;
+}
+
+.error-display-suggestion {
+    font-size: 0.75rem;
+    opacity: 0.95;
+    background: rgba(255, 255, 255, 0.1);
+    padding: var(--space-2);
+    border-radius: var(--radius-md);
+    border-left: 3px solid rgba(255, 255, 255, 0.3);
+}
+
+/* Overlay issue fix */
+.text-area:placeholder-shown {
+    color: var(--text-muted);
+}
+
+.text-area:not(:placeholder-shown) {
+    color: var(--text-primary);
+}
+
+/* Syntax overlay positioning fix */
+.syntax-highlighted .text-area:not(:placeholder-shown) {
+    color: transparent;
+    caret-color: var(--text-primary);
+}
+
+.syntax-highlighted .text-area:placeholder-shown {
+    color: var(--text-muted);
+}
+
+/* Fix syntax highlighting overlay issues */
+.syntax-highlighted .text-area {
+    position: relative;
+}
+
+.syntax-highlighted .text-area.has-content {
+    color: transparent;
+    caret-color: var(--text-primary);
+}
+
+.syntax-highlighted .text-area:not(.has-content) {
+    color: var(--text-muted);
+}
+
+.syntax-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: var(--space-5);
+    font-family: var(--font-family-mono);
+    font-size: 0.875rem;
+    line-height: 1.6;
+    overflow: auto;
+    pointer-events: none;
+    z-index: 1;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    display: none;
+}
+
+
+
+/* Add help modal styles to existing CSS */
+
+/* Tool explanations grid */
+.tool-explanations {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: var(--space-4);
+    margin-top: var(--space-3);
+}
+
+.tool-explanation {
+    padding: var(--space-3);
+    background: var(--background-secondary);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-light);
+}
+
+.tool-explanation h4 {
+    color: var(--primary-color);
+    margin-bottom: var(--space-2);
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: 1rem;
+}
+
+.tool-explanation p {
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+    line-height: 1.5;
+    margin: 0;
+}
+
+/* Help modal animations */
+.help-modal {
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.help-modal.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.help-modal.show .help-content {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.help-content {
+    transform: translateY(-20px);
+    opacity: 0;
+    transition: all 0.3s ease;
+}

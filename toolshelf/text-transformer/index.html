@@ -113,6 +113,12 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <!-- Preload critical resources -->
+    <link rel="preload" href="../shared/css/variables.css" as="style">
+    <link rel="preload" href="../shared/css/base.css" as="style">
+    <link rel="dns-prefetch" href="//fonts.googleapis.com">
+    <link rel="dns-prefetch" href="//cdnjs.cloudflare.com">
+
+
     <link rel="preload" href="../shared/js/core/app.js" as="script">
     <link rel="preload" href="../shared/css/layout.css" as="style">
 
@@ -663,6 +669,7 @@ this is a test" spellcheck="false" autocomplete="off"
     </div>
 
     <!-- JavaScript Modules -->
+    <script src="../shared/js/components/help-modal.js"></script>
     <script src="../shared/config/constants.js"></script>
     <script src="../shared/js/core/utils.js"></script>
     <script src="../shared/js/core/events.js"></script>

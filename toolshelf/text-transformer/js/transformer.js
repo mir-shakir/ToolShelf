@@ -79,6 +79,10 @@ window.ToolShelf.TextTransformer = class TextTransformer extends window.ToolShel
             throw new Error('Required DOM elements not found');
         }
 
+        if (window.ToolShelf.HelpModal) {
+            window.ToolShelf.HelpModal.init();
+        }
+
         console.log('🎯 DOM elements initialized');
     }
 

@@ -76,5 +76,44 @@ window.ToolShelf.Constants = {
         ERROR: 'error',
         INFO: 'info',
         WARNING: 'warning'
-    }
+    },
+
+    // Json Formatter specific constants 
+    JSON_INDENTATION_OPTIONS: {
+        2: '2 spaces',
+        4: '4 spaces',
+        8: '8 spaces',
+        '\t': 'Tab characters'
+    },
+
+    JSON_OPERATIONS: {
+        'format': 'Format/Prettify',
+        'minify': 'Minify/Compact',
+        'validate': 'Validate Only',
+        'sort': 'Sort Keys',
+        'escape': 'Escape Strings',
+        'unescape': 'Unescape Strings'
+    },
+
+    JSON_ERROR_TYPES: {
+        'syntax': 'Syntax Error',
+        'structure': 'Structure Error',
+        'value': 'Value Error',
+        'reference': 'Reference Error'
+    },
+
+    // JSONPath expressions for testing
+    COMMON_JSONPATH_EXAMPLES: [
+        '$.store.book[*].author',
+        '$.store.book[?(@.price < 10)]',
+        '$..author',
+        '$.store.book[0,1]',
+        '$.store.book[-1]'
+    ],
+
+    // Schema validation keywords
+    JSON_SCHEMA_KEYWORDS: [
+        'type', 'properties', 'required', 'items', 'minimum', 'maximum',
+        'minLength', 'maxLength', 'pattern', 'enum', 'format'
+    ]   
 };

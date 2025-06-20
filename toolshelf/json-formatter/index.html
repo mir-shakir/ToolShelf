@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Primary Meta Tags -->
+    <title>ToolShelf - Free Online JSON Formatter & Validator | Format, Validate & Query JSON</title>
+    <meta name="title" content="ToolShelf - Free Online JSON Formatter & Validator">
+    <meta name="description"
+        content="Free online JSON formatter, validator, and query tool. Format, minify, validate JSON with syntax highlighting, JSONPath queries, and error detection. Perfect for developers and API testing.">
+    <meta name="keywords"
+        content="json formatter, json validator, json minifier, jsonpath, json parser, api testing, developer tools, json beautifier, free json tool">
+    <meta name="author" content="ToolShelf">
+    <meta name="robots" content="index, follow">
+    <meta name="language" content="English">
+    <meta name="revisit-after" content="7 days">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://toolshelf.onrender.com/json-formatter/">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://toolshelf.onrender.com/json-formatter/">
+    <meta property="og:title" content="ToolShelf - Free Online JSON Formatter & Validator">
+    <meta property="og:description"
+        content="Format, validate, and query JSON instantly. Real-time validation, syntax highlighting, JSONPath queries, and comprehensive error reporting. Perfect for developers and API testing.">
+    <meta property="og:image" content="https://toolshelf.onrender.com/assets/images/og-image-json.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:site_name" content="ToolShelf">
+    <meta property="og:locale" content="en_US">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://toolshelf.onrender.com/json-formatter/">
+    <meta property="twitter:title" content="ToolShelf - Free Online JSON Formatter & Validator">
+    <meta property="twitter:description"
+        content="Format, validate, and query JSON with real-time feedback. Syntax highlighting, JSONPath queries, and detailed error reporting for developers.">
+    <meta property="twitter:image" content="https://toolshelf.onrender.com/assets/images/twitter-image-json.png">
+
+    <!-- Favicon and Icons -->
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+    <link rel="manifest" href="../manifest.json">
+    <meta name="theme-color" content="#3b82f6">
+
+    <!-- Schema.org structured data -->
+    <script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "WebApplication",
+        "name": "ToolShelf JSON Formatter",
+        "alternateName": "JSON Formatter and Validator",
+        "description": "Free online JSON formatting, validation, and query tool with real-time feedback, syntax highlighting, JSONPath queries, and comprehensive error reporting. Perfect for developers, API testing, and data processing.",
+        "url": "https://toolshelf.onrender.com/json-formatter/",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Web Browser",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        },
+        "creator": {
+            "@type": "Organization",
+            "name": "ToolShelf"
+        },
+        "datePublished": "2025-06-19",
+        "dateModified": "2025-06-19",
+        "inLanguage": "en-US",
+        "isAccessibleForFree": true,
+        "featureList": [
+            "JSON Formatting and Prettifying",
+            "JSON Validation with Error Detection",
+            "JSON Minification and Compression",
+            "Syntax Highlighting",
+            "JSONPath Query Support",
+            "Real-time Processing",
+            "Key Sorting",
+            "Comprehensive Statistics",
+            "Copy to Clipboard",
+            "Download Results",
+            "Keyboard Shortcuts",
+            "File Drag & Drop",
+            "Offline Functionality",
+            "Mobile Responsive"
+        ],
+        "screenshot": "https://toolshelf.onrender.com/assets/images/json-formatter-screenshot.png"
+    }
+    </script>
+
+    <!-- CSS Modules -->
+    <link rel="stylesheet" href="../shared/css/variables.css">
+    <link rel="stylesheet" href="../shared/css/base.css">
+    <link rel="stylesheet" href="../shared/css/components.css">
+    <link rel="stylesheet" href="../shared/css/tool-layout.css">
+    <link rel="stylesheet" href="../shared/css/responsive.css">
+    <link rel="stylesheet" href="../shared/css/seo-content.css">
+    <link rel="stylesheet" href="css/json-tool.css">
+
+    <!-- External Resources -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <link rel="preload" href="../shared/css/variables.css" as="style">
+    <link rel="preload" href="../shared/css/base.css" as="style">
+    <link rel="dns-prefetch" href="//fonts.googleapis.com">
+    <link rel="dns-prefetch" href="//cdnjs.cloudflare.com">
+    <!-- JSONPath Plus Library (lightweight) -->
+    <!-- <script src="https://unpkg.com/jsonpath-plus@7.2.0/dist/index-browser-umd.min.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/jsonpath-plus@7.2.0/dist/index-browser-umd.min.js"></script>
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-GBY4766X5D"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-GBY4766X5D');
+    </script>
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Header with Navigation -->
+        <header class="app-header">
+            <div class="header-container">
+                <div class="logo-section">
+                    <div class="logo-icon">
+                        <i class="fas fa-toolbox"></i>
+                    </div>
+                    <a href="../index.html" class="logo-text">ToolShelf</a>
+                </div>
+
+                <nav class="main-nav">
+                    <a href="../index.html" class="nav-link">Home</a>
+                    <a href="../index.html#tools" class="nav-link active">Tools</a>
+                    <a href="../index.html#about" class="nav-link">About</a>
+                </nav>
+
+                <div class="tool-actions">
+                    <button class="help-btn" id="helpBtn" title="Show instructions"
+                        aria-label="Show help and instructions">
+                        <i class="fas fa-question-circle" aria-hidden="true"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Breadcrumb Navigation -->
+            <div class="breadcrumb-container">
+                <div class="breadcrumb-wrapper">
+                    <nav class="breadcrumb">
+                        <a href="../index.html">Home</a>
+                        <span class="breadcrumb-separator">›</span>
+                        <a href="../index.html#tools">Tools</a>
+                        <span class="breadcrumb-separator">›</span>
+                        <span class="breadcrumb-current">JSON Formatter</span>
+                    </nav>
+
+                    <div class="tool-status">
+                        <span class="status-badge">Free</span>
+                        <span class="tool-tag">Real-time</span>
+                        <span class="validation-indicator" id="validationIndicator">
+                            <i class="fas fa-check-circle" aria-hidden="true"></i>
+                            Validator
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="app-main" role="main">
+            <!-- SEO Content Section -->
+            <section class="seo-content" id="seo-content">
+                <div class="seo-intro">
+                    <h1>Free Online JSON Formatter & Validator</h1>
+                    <p class="lead">Format, validate, and query JSON with real-time feedback. Features syntax
+                        highlighting, JSONPath queries, comprehensive error reporting, and powerful formatting options -
+                        all free with no registration required.</p>
+
+                    <div class="seo-expandable">
+                        <div class="features-highlight">
+                            <div class="feature-item">
+                                <i class="fas fa-check-double" aria-hidden="true"></i>
+                                <span>Real-time Validation</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-paint-brush" aria-hidden="true"></i>
+                                <span>Syntax Highlighting</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-compress-alt" aria-hidden="true"></i>
+                                <span>Format & Minify</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-search" aria-hidden="true"></i>
+                                <span>JSONPath Queries</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-sort-alpha-down" aria-hidden="true"></i>
+                                <span>Key Sorting</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-chart-line" aria-hidden="true"></i>
+                                <span>JSON Statistics</span>
+                            </div>
+                        </div>
+
+                        <button class="cta-button"
+                            onclick="document.getElementById('json-tool').scrollIntoView({ behavior: 'smooth' });">
+                            <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                            Start Formatting JSON
+                        </button>
+                    </div>
+                </div>
+
+                <button class="seo-toggle" onclick="toggleSeoContent()" aria-label="Show more information"
+                    aria-expanded="false">
+                    <span>Learn More</span>
+                    <i class="fas fa-chevron-down" aria-hidden="true"></i>
+                </button>
+            </section>
+
+            <!-- JSON Formatter Tool -->
+            <div id="json-tool" class="tool-container active">
+                <div class="tool-workspace">
+                    <!-- Left Sidebar: Controls -->
+                    <aside class="controls-sidebar" role="complementary" aria-label="JSON formatting options">
+                        <div class="controls-header">
+                            <h2><i class="fas fa-sliders-h" aria-hidden="true"></i> JSON Controls</h2>
+                            <button id="resetAll" class="btn-reset" title="Reset all settings"
+                                aria-label="Reset all JSON settings">
+                                <i class="fas fa-undo-alt" aria-hidden="true"></i>
+                            </button>
+                        </div>
+
+                        <!-- Quick Actions -->
+                        <div class="control-group">
+                            <div class="control-group-title">
+                                <i class="fas fa-bolt" aria-hidden="true"></i>
+                                Quick Actions
+                            </div>
+                            <!-- Update the quick action buttons with better descriptions -->
+                            <div class="quick-actions">
+                                <button id="formatBtn" class="quick-action-btn primary"
+                                    title="Format JSON with proper indentation and line breaks for readability">
+                                    <i class="fas fa-indent" aria-hidden="true"></i>
+                                    Format
+                                </button>
+                                <button id="minifyBtn" class="quick-action-btn"
+                                    title="Minify JSON by removing all unnecessary whitespace to reduce file size">
+                                    <i class="fas fa-compress-alt" aria-hidden="true"></i>
+                                    Minify
+                                </button>
+                                <button id="validateBtn" class="quick-action-btn"
+                                    title="Validate JSON syntax and show detailed error information if invalid">
+                                    <i class="fas fa-check-circle" aria-hidden="true"></i>
+                                    Validate
+                                </button>
+                                <button id="sortKeysBtn" class="quick-action-btn"
+                                    title="Sort all object keys alphabetically throughout the JSON structure">
+                                    <i class="fas fa-sort-alpha-down" aria-hidden="true"></i>
+                                    Sort Keys
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Indentation Options -->
+                        <div class="control-group">
+                            <div class="control-group-title">
+                                <i class="fas fa-text-width" aria-hidden="true"></i>
+                                Indentation
+                            </div>
+                            <div class="format-options">
+                                <label class="format-option">
+                                    <input type="radio" name="json-indentation" value="2" checked>
+                                    <span class="format-option-label">2 spaces</span>
+                                </label>
+                                <label class="format-option">
+                                    <input type="radio" name="json-indentation" value="4">
+                                    <span class="format-option-label">4 spaces</span>
+                                </label>
+                                <label class="format-option">
+                                    <input type="radio" name="json-indentation" value="8">
+                                    <span class="format-option-label">8 spaces</span>
+                                </label>
+                                <label class="format-option">
+                                    <input type="radio" name="json-indentation" value="tab">
+                                    <span class="format-option-label">Tab characters</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- JSON Statistics -->
+                        <div class="control-group">
+                            <div class="control-group-title">
+                                <i class="fas fa-chart-bar" aria-hidden="true"></i>
+                                JSON Statistics
+                            </div>
+                            <div class="json-stats">
+                                <div class="json-stat-item">
+                                    <div class="json-stat-value" id="jsonDepth">0</div>
+                                    <div class="json-stat-label">Depth</div>
+                                </div>
+                                <div class="json-stat-item">
+                                    <div class="json-stat-value" id="jsonKeys">0</div>
+                                    <div class="json-stat-label">Keys</div>
+                                </div>
+                                <div class="json-stat-item">
+                                    <div class="json-stat-value" id="jsonArrays">0</div>
+                                    <div class="json-stat-label">Arrays</div>
+                                </div>
+                                <div class="json-stat-item">
+                                    <div class="json-stat-value" id="jsonObjects">0</div>
+                                    <div class="json-stat-label">Objects</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- JSONPath Query -->
+                        <div class="control-group">
+                            <div class="control-group-title">
+                                <i class="fas fa-search" aria-hidden="true"></i>
+                                JSONPath Query
+                            </div>
+                            <div class="jsonpath-section">
+                                <input type="text" id="jsonPathInput" class="jsonpath-input"
+                                    placeholder="$.store.book[*].author" aria-label="JSONPath query input">
+                                <div class="jsonpath-examples">
+                                    <!-- Examples will be populated by JavaScript -->
+                                </div>
+                                <textarea id="jsonPathResult" class="jsonpath-result"
+                                    placeholder="Query results will appear here..." readonly></textarea>
+                            </div>
+                        </div>
+
+                        
+                        <!-- Advanced Options - Updated Structure -->
+                        <div class="control-group advanced-section" id="advancedSection">
+                            <button class="advanced-toggle" id="advancedToggle" type="button">
+                                <span>Advanced Options</span>
+                                <i class="fas fa-chevron-down"></i>
+                            </button>
+                            <div class="advanced-content">
+                                <label class="checkbox-option">
+                                    <input type="checkbox" id="enableSyntaxHighlighting" class="advanced-option" checked>
+                                    <div class="checkbox-option-content">
+                                        <span class="checkbox-option-label">Syntax highlighting</span>
+                                        <div class="checkbox-option-desc">
+                                            Apply color coding to JSON elements for better readability
+                                        </div>
+                                    </div>
+                                </label>
+                        
+                                <label class="checkbox-option">
+                                    <input type="checkbox" id="autoValidate" class="advanced-option" checked>
+                                    <div class="checkbox-option-content">
+                                        <span class="checkbox-option-label">Auto-validation</span>
+                                        <div class="checkbox-option-desc">
+                                            Automatically validate JSON as you type
+                                        </div>
+                                    </div>
+                                </label>
+                        
+                                <label class="checkbox-option">
+                                    <input type="checkbox" id="compactArrays" class="advanced-option">
+                                    <div class="checkbox-option-content">
+                                        <span class="checkbox-option-label">Compact arrays</span>
+                                        <div class="checkbox-option-desc">
+                                            Display short arrays on single lines when formatting
+                                        </div>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Validation Status -->
+                        <div class="validation-status neutral" id="validationStatus">
+                            <i class="fas fa-info-circle" aria-hidden="true"></i>
+                            <span>Ready to process JSON</span>
+                        </div>
+
+                        <!-- Error Display -->
+                    </aside>
+
+                    <!-- Right: Text Areas -->
+                    <div class="text-workspace">
+                        <!-- Input Panel -->
+                        <section class="text-panel input-panel">
+                            <div class="panel-header">
+                                <div class="panel-title">
+                                    <i class="fas fa-edit" aria-hidden="true"></i>
+                                    <span>Input JSON</span>
+                                </div>
+                                <div class="panel-actions">
+                                    <button id="pasteBtn" class="icon-btn" title="Paste from clipboard"
+                                        aria-label="Paste JSON from clipboard">
+                                        <i class="fas fa-paste" aria-hidden="true"></i>
+                                    </button>
+                                    <button id="clearInput" class="icon-btn" title="Clear input"
+                                        aria-label="Clear input area">
+                                        <i class="fas fa-trash" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Move error display here for better visibility -->
+                            <div class="error-display" id="errorDisplay">
+                                <!-- Error details will be populated by JavaScript -->
+                            </div>
+                            
+                            <textarea id="inputText" class="text-area" placeholder="Paste your JSON here...
+
+Examples:
+{
+  &quot;name&quot;: &quot;John Doe&quot;,
+  &quot;age&quot;: 30,
+  &quot;skills&quot;: [&quot;JavaScript&quot;, &quot;Python&quot;, &quot;JSON&quot;],
+  &quot;active&quot;: true
+}
+
+✨ Real-time validation enabled
+🎨 Syntax highlighting available  
+🔍 JSONPath queries supported
+⌨️ Keyboard shortcuts: Ctrl+F (format), Ctrl+M (minify)" spellcheck="false" autocomplete="off"
+                                aria-label="JSON input area - paste or type JSON data here"></textarea>
+                            <div class="panel-footer">
+                                <div class="stats-row">
+                                    <div class="stats-section">
+                                        <span class="stat-item">
+                                            <i class="fas fa-font" aria-hidden="true"></i>
+                                            <span id="inputCharCount">0</span> chars
+                                        </span>
+                                        <span class="stat-item">
+                                            <i class="fas fa-file-alt" aria-hidden="true"></i>
+                                            <span id="inputBytes">0</span> bytes
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- Output Panel -->
+                        <section class="text-panel output-panel">
+                            <div class="panel-header">
+                                <div class="panel-title">
+                                    <i class="fas fa-code" aria-hidden="true"></i>
+                                    <span>Formatted Result</span>
+                                </div>
+                                <div class="panel-actions">
+                                    <button id="copyOutput" class="icon-btn" title="Copy to clipboard" disabled
+                                        aria-label="Copy formatted JSON to clipboard">
+                                        <i class="fas fa-copy" aria-hidden="true"></i>
+                                    </button>
+                                    <button id="downloadOutput" class="icon-btn" title="Download as JSON file" disabled
+                                        aria-label="Download formatted JSON as file">
+                                        <i class="fas fa-download" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <textarea id="outputText" class="text-area output" placeholder="Formatted JSON will appear here...
+
+✅ Real-time processing
+🎨 Syntax highlighting  
+📊 Comprehensive statistics
+📋 One-click copy
+💾 Download as file
+🔍 JSONPath query support
+
+Try pasting JSON in the input area to see it formatted instantly!" readonly spellcheck="false"
+                                aria-label="JSON output area - shows formatted results"></textarea>
+                            <div class="panel-footer">
+                                <div class="stats-row">
+                                    <div class="stats-section">
+                                        <span class="stat-item">
+                                            <i class="fas fa-font" aria-hidden="true"></i>
+                                            <span id="outputCharCount">0</span> chars
+                                        </span>
+                                        <span class="stat-item">
+                                            <i class="fas fa-file-alt" aria-hidden="true"></i>
+                                            <span id="outputBytes">0</span> bytes
+                                        </span>
+                                    </div>
+                                    <div class="status-section">
+                                        <span id="operationStatus" class="operation-status info">Ready to format
+                                            JSON</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SEO Content - Expanded Section -->
+            <!-- Replace the seo-expanded section with properly structured content -->
+            <section class="seo-expanded" id="seo-expanded">
+                <div class="content-grid">
+                    <div class="content-section">
+                        <h2>What is JSON Formatting?</h2>
+                        <p>JSON (JavaScript Object Notation) formatting involves organizing JSON data in a human-readable structure
+                            with proper indentation, line breaks, and spacing. Our JSON formatter automatically validates your JSON
+                            syntax, highlights errors, and presents your data in a clean, readable format.</p>
+            
+                        <h3>Key Features:</h3>
+                        <ul>
+                            <li>Real-time Validation: Instant feedback as you type with detailed error messages</li>
+                            <li>Syntax Highlighting: Color-coded JSON elements for better readability</li>
+                            <li>Format & Minify: Switch between readable and compact formats</li>
+                            <li>JSONPath Queries: Extract specific data using powerful query expressions</li>
+                            <li>Key Sorting: Alphabetically organize object properties</li>
+                            <li>Comprehensive Statistics: Analyze JSON structure depth, keys, and complexity</li>
+                        </ul>
+                    </div>
+            
+                    <div class="content-section">
+                        <h2>Common Use Cases</h2>
+                        <div class="use-cases-grid">
+                            <div class="use-case">
+                                <h4><i class="fas fa-api"></i> API Development</h4>
+                                <p>Format API responses, validate request payloads, and debug JSON data in REST APIs and web
+                                    services.</p>
+                            </div>
+                            <div class="use-case">
+                                <h4><i class="fas fa-database"></i> Data Processing</h4>
+                                <p>Clean and organize JSON data for databases, analytics, and data migration tasks.</p>
+                            </div>
+                            <div class="use-case">
+                                <h4><i class="fas fa-cog"></i> Configuration Files</h4>
+                                <p>Format configuration files for applications, validate settings, and ensure proper JSON structure.
+                                </p>
+                            </div>
+                            <div class="use-case">
+                                <h4><i class="fas fa-bug"></i> Debugging</h4>
+                                <p>Identify JSON syntax errors, validate data structures, and troubleshoot parsing issues in
+                                    applications.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            
+                <div class="faq-section">
+                    <h2>JSONPath Query Examples</h2>
+                    <div class="faq-grid">
+                        <div class="faq-item">
+                            <h3><code>$.store.book[*].author</code></h3>
+                            <p>Get all book authors from a store object</p>
+                        </div>
+                        <div class="faq-item">
+                            <h3><code>$.store.book[?(@.price &lt; 10)]</code></h3>
+                            <p>Find books with price less than 10</p>
+                        </div>
+                        <div class="faq-item">
+                            <h3><code>$..author</code></h3>
+                            <p>Recursively find all author properties</p>
+                        </div>
+                        <div class="faq-item">
+                            <h3><code>$.store.book[0,1]</code></h3>
+                            <p>Get first two books from the array</p>
+                        </div>
+                    </div>
+                </div>
+            
+                <div class="content-grid">
+                    <div class="content-section">
+                        <h2>Why Choose ToolShelf JSON Formatter?</h2>
+                        <div class="benefits-grid">
+                            <div class="benefit">
+                                <i class="fas fa-shield-alt"></i>
+                                <h4>100% Private & Secure</h4>
+                                <p>All processing happens in your browser. Your JSON data never leaves your device.</p>
+                            </div>
+                            <div class="benefit">
+                                <i class="fas fa-bolt"></i>
+                                <h4>Lightning Fast</h4>
+                                <p>Real-time processing with instant validation and formatting as you type.</p>
+                            </div>
+                            <div class="benefit">
+                                <i class="fas fa-mobile-alt"></i>
+                                <h4>Mobile Friendly</h4>
+                                <p>Fully responsive design that works perfectly on phones, tablets, and desktops.</p>
+                            </div>
+                            <div class="benefit">
+                                <i class="fas fa-graduation-cap"></i>
+                                <h4>Developer Focused</h4>
+                                <p>Built by developers for developers with keyboard shortcuts and power-user features.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        <!-- Footer -->
+        <footer class="app-footer">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <strong>ToolShelf</strong> - Free Online JSON Formatter & Validator
+                </div>
+                <div class="footer-section">
+                    <span>© 2025 ToolShelf. All tools work offline and respect your privacy.</span>
+                </div>
+                <div class="footer-links">
+                    <a href="#privacy" onclick="showPrivacyInfo()">Privacy</a>
+                    <a href="#terms" onclick="showTermsInfo()">Terms</a>
+                    <a href="#contact" onclick="showContactInfo()">Contact</a>
+                </div>
+            </div>
+        </footer>
+
+        <!-- Replace the existing help modal section with this improved version -->
+        <div id="helpModal" class="help-modal" role="dialog" aria-labelledby="help-title" aria-hidden="true">
+            <div class="help-content">
+                <div class="help-header">
+                    <h2 id="help-title"><i class="fas fa-info-circle" aria-hidden="true"></i> JSON Formatter Guide</h2>
+                    <button class="help-close" id="helpClose" aria-label="Close help dialog">
+                        <i class="fas fa-times" aria-hidden="true"></i>
+                    </button>
+                </div>
+                <div class="help-body">
+                    <div class="help-section">
+                        <h3>Quick Start:</h3>
+                        <ol>
+                            <li>Paste your JSON in the <strong>Input JSON</strong> area</li>
+                            <li>See real-time validation and formatting automatically</li>
+                            <li>Use <strong>Format</strong> to prettify or <strong>Minify</strong> to compress</li>
+                            <li>Copy or download your results when ready</li>
+                        </ol>
+                    </div>
+        
+                    <div class="help-section">
+                        <h3>Main Features:</h3>
+                        <ul>
+                            <li><strong>Real-time Validation:</strong> Instant error detection with detailed feedback</li>
+                            <li><strong>Syntax Highlighting:</strong> Color-coded JSON for better readability</li>
+                            <li><strong>Format Options:</strong> Choose between 2, 4, 8 spaces, or tabs for indentation</li>
+                            <li><strong>Sort Keys:</strong> Alphabetically organize object properties</li>
+                            <li><strong>JSONPath Queries:</strong> Extract specific data using query expressions</li>
+                            <li><strong>Statistics:</strong> View JSON structure depth, keys, arrays, and objects</li>
+                        </ul>
+                    </div>
+        
+                    <div class="help-section">
+                        <h3>Keyboard Shortcuts:</h3>
+                        <div class="shortcuts-grid">
+                            <div class="shortcut-item">
+                                <kbd>Ctrl+F</kbd>
+                                <span>Format JSON</span>
+                            </div>
+                            <div class="shortcut-item">
+                                <kbd>Ctrl+M</kbd>
+                                <span>Minify JSON</span>
+                            </div>
+                            <div class="shortcut-item">
+                                <kbd>Ctrl+V</kbd>
+                                <span>Paste from clipboard</span>
+                            </div>
+                            <div class="shortcut-item">
+                                <kbd>Ctrl+Shift+V</kbd>
+                                <span>Validate JSON</span>
+                            </div>
+                            <div class="shortcut-item">
+                                <kbd>Ctrl+K</kbd>
+                                <span>Toggle sort keys</span>
+                            </div>
+                            <div class="shortcut-item">
+                                <kbd>Ctrl+L</kbd>
+                                <span>Clear input</span>
+                            </div>
+                            <div class="shortcut-item">
+                                <kbd>Ctrl+Enter</kbd>
+                                <span>Copy output</span>
+                            </div>
+                            <div class="shortcut-item">
+                                <kbd>Ctrl+D</kbd>
+                                <span>Download result</span>
+                            </div>
+                            <div class="shortcut-item">
+                                <kbd>Ctrl+R</kbd>
+                                <span>Reset all</span>
+                            </div>
+                            <div class="shortcut-item">
+                                <kbd>Esc</kbd>
+                                <span>Close this help</span>
+                            </div>
+                            </ul>
+                        </div>
+        
+                        <div class="help-section">
+                            <h3>JSONPath Query Guide:</h3>
+                            <div class="jsonpath-help">
+                                <div class="jsonpath-example">
+                                    <code>$</code>
+                                    <span>Root object</span>
+                                </div>
+                                <div class="jsonpath-example">
+                                    <code>$.property</code>
+                                    <span>Access property</span>
+                                </div>
+                                <div class="jsonpath-example">
+                                    <code>$.array[*]</code>
+                                    <span>All array elements</span>
+                                </div>
+                                <div class="jsonpath-example">
+                                    <code>$.array[0]</code>
+                                    <span>First array element</span>
+                                </div>
+                                <div class="jsonpath-example">
+                                    <code>$.array[-1]</code>
+                                    <span>Last array element</span>
+                                </div>
+                                <div class="jsonpath-example">
+                                    <code>$..property</code>
+                                    <span>Recursive search</span>
+                                </div>
+                                <div class="jsonpath-example">
+                                    <code>$.array[?(@.price &lt; 10)]</code>
+                                    <span>Filter by condition</span>
+                                </div>
+                            </div>
+                        </div>
+        
+                        <div class="help-section">
+                            <h3>Common JSON Errors:</h3>
+                            <ul>
+                                <li><strong>Missing quotes:</strong> Property names must be in double quotes</li>
+                                <li><strong>Trailing commas:</strong> Remove commas after the last item in objects/arrays</li>
+                                <li><strong>Single quotes:</strong> Use double quotes for strings, not single quotes</li>
+                                <li><strong>Unescaped characters:</strong> Escape special characters like quotes and backslashes
+                                </li>
+                                <li><strong>Missing brackets:</strong> Ensure all opening brackets have matching closing
+                                    brackets</li>
+                            </ul>
+                        </div>
+        
+                        <div class="help-section">
+                            <h3>Tool Explanations:</h3>
+                            <div class="tool-explanations">
+                                <div class="tool-explanation">
+                                    <h4><i class="fas fa-indent"></i> Format</h4>
+                                    <p>Makes JSON human-readable by adding proper indentation, line breaks, and spacing. Perfect
+                                        for viewing and editing JSON data.</p>
+                                </div>
+                                <div class="tool-explanation">
+                                    <h4><i class="fas fa-compress-alt"></i> Minify</h4>
+                                    <p>Removes all unnecessary whitespace to create the smallest possible JSON file. Ideal for
+                                        APIs and production environments where file size matters.</p>
+                                </div>
+                                <div class="tool-explanation">
+                                    <h4><i class="fas fa-check-circle"></i> Validate</h4>
+                                    <p>Checks if your JSON syntax is correct and provides detailed error messages if issues are
+                                        found. Also displays comprehensive statistics about your JSON structure.</p>
+                                </div>
+                                <div class="tool-explanation">
+                                    <h4><i class="fas fa-sort-alpha-down"></i> Sort Keys</h4>
+                                    <p>Alphabetically sorts all object property keys throughout the entire JSON structure.
+                                        Useful for comparing JSON files or maintaining consistent formatting.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        <!-- Toast Notification -->
+        <div id="toast" class="toast" role="alert" aria-live="assertive">
+            <div class="toast-content">
+                <i class="toast-icon fas fa-check-circle" aria-hidden="true"></i>
+                <span id="toastMessage">Operation completed!</span>
+            </div>
+            <button class="toast-close" onclick="this.parentElement.classList.remove('show')"
+                aria-label="Close notification">
+                <i class="fas fa-times" aria-hidden="true"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="../shared/config/constants.js"></script>
+    <script src="../shared/js/core/utils.js"></script>
+    <script src="../shared/js/core/events.js"></script>
+    <script src="../shared/js/core/analytics.js"></script>
+    <script src="../shared/js/components/toast.js"></script>
+    <script src="../shared/js/components/navigation.js"></script>
+    <script src="../shared/js/components/seo-content.js"></script>
+    <script src="../shared/js/components/keyboard.js"></script>
+    <script src="../shared/js/tools/base-tool.js"></script>
+    <script src="../shared/js/components/help-modal.js"></script>
+
+    <!-- JSON Formatter Modules -->
+    <script src="js/json-validator.js"></script>
+    <script src="js/json-syntax-highlighter.js"></script>
+    <script src="js/json-operations.js"></script>
+    <script src="js/json-path-handler.js"></script>
+    <script src="js/json-ui-handlers.js"></script>
+    <script src="js/json-formatter.js"></script>
+
+    <!-- Initialize JSON Formatter -->
+    <script>
+        // Initialize the JSON Formatter when DOM is ready
+        document.addEventListener('DOMContentLoaded', () => {
+            window.ToolShelf = window.ToolShelf || {};
+
+            try {
+                // Initialize Toast system first
+                if (window.ToolShelf.Toast && !window.ToolShelf.Toast.element) {
+                    const toastInitialized = window.ToolShelf.Toast.init();
+                    if (!toastInitialized) {
+                        console.warn('⚠️ Toast system failed to initialize');
+                    }
+                }
+
+                // Initialize Help Modal
+                if (window.ToolShelf.HelpModal) {
+                    window.ToolShelf.HelpModal.init();
+                }
+
+                // Create and initialize JSON Formatter
+                const jsonFormatter = new window.ToolShelf.JSONFormatter();
+                window.ToolShelf.currentTool = jsonFormatter;
+
+                console.log('🎉 JSON Formatter initialized successfully');
+
+                // Show welcome message for first-time users (simplified)
+                setTimeout(() => {
+                    const hasVisited = localStorage.getItem('toolshelf-json-visited');
+                    if (!hasVisited) {
+                        localStorage.setItem('toolshelf-json-visited', 'true');
+                        if (window.ToolShelf.Toast) {
+                            window.ToolShelf.Toast.show(
+                                '💡 Tip: Paste JSON and see real-time validation and formatting!',
+                                'info',
+                                4000
+                            );
+                        }
+                    }
+                }, 2000);
+
+            } catch (error) {
+                console.error('❌ Failed to initialize JSON Formatter:', error);
+
+                // Show fallback error message
+                if (window.ToolShelf.Toast) {
+                    window.ToolShelf.Toast.show('Failed to initialize JSON Formatter. Please refresh the page.', 'error');
+                } else {
+                    console.error('Toast system not available for error display');
+                }
+            }
+        });
+
+        // Page-specific functions
+        function toggleSeoContent() {
+            const seoContent = document.getElementById('seo-content');
+            const seoExpanded = document.getElementById('seo-expanded');
+            const isExpanded = seoContent.classList.contains('expanded');
+
+            if (isExpanded) {
+                seoContent.classList.remove('expanded');
+                if (seoExpanded) seoExpanded.style.display = 'none';
+            } else {
+                seoContent.classList.add('expanded');
+                if (seoExpanded) seoExpanded.style.display = 'block';
+            }
+
+            // Update button
+            const toggle = seoContent?.querySelector('.seo-toggle');
+            if (toggle) {
+                const icon = toggle.querySelector('i');
+                const text = toggle.querySelector('span');
+
+                if (icon && text) {
+                    if (isExpanded) {
+                        icon.className = 'fas fa-chevron-down';
+                        text.textContent = 'Learn More';
+                    } else {
+                        icon.className = 'fas fa-chevron-up';
+                        text.textContent = 'Show Less';
+                    }
+                }
+            }
+        }
+
+        function showPrivacyInfo() {
+            const message = `🔒 ToolShelf respects your privacy:
+        
+        • All JSON processing happens locally in your browser
+        • No data is sent to any servers
+        • No cookies or tracking beyond basic analytics
+        • Your JSON data never leaves your device
+        • Works completely offline once loaded`;
+
+            alert(message);
+        }
+
+        function showTermsInfo() {
+            const message = `📋 Terms of Use:
+        
+        • ToolShelf is provided free of charge
+        • Use responsibly and at your own risk
+        • No warranty or guarantee of accuracy
+        • Report bugs or issues via our contact
+        • Commercial use is allowed`;
+
+            alert(message);
+        }
+
+        function showContactInfo() {
+            const message = `📧 Contact & Support:
+        
+        • GitHub: github.com/toolshelf/issues
+        • Email: support@toolshelf.dev
+        • Feature requests welcome
+        • Bug reports appreciated
+        • Feedback helps us improve`;
+
+            alert(message);
+        }
+    </script>
+</body>
+
+</html>

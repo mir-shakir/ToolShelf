@@ -13,7 +13,7 @@ window.ToolShelf.TextTransformerUI = {
     init(elements) {
         this.elements = elements;
         this.setupEventListeners();
-        this.setupHelpModal();
+        // this.setupHelpModal();
         console.log('🎨 Text Transformer UI handlers initialized');
     },
 
@@ -95,35 +95,35 @@ window.ToolShelf.TextTransformerUI = {
     /**
      * Set up help modal
      */
-    setupHelpModal() {
-        const helpBtn = document.getElementById('helpBtn');
-        const helpModal = document.getElementById('helpModal');
-        const helpClose = document.getElementById('helpClose');
+    // setupHelpModal() {
+    //     const helpBtn = document.getElementById('helpBtn');
+    //     const helpModal = document.getElementById('helpModal');
+    //     const helpClose = document.getElementById('helpClose');
 
-        if (helpBtn && helpModal && helpClose) {
-            helpBtn.addEventListener('click', () => {
-                helpModal.classList.add('show');
-            });
+    //     if (helpBtn && helpModal && helpClose) {
+    //         helpBtn.addEventListener('click', () => {
+    //             helpModal.classList.add('show');
+    //         });
 
-            helpClose.addEventListener('click', () => {
-                helpModal.classList.remove('show');
-            });
+    //         helpClose.addEventListener('click', () => {
+    //             helpModal.classList.remove('show');
+    //         });
 
-            // Close on backdrop click
-            helpModal.addEventListener('click', (e) => {
-                if (e.target === helpModal) {
-                    helpModal.classList.remove('show');
-                }
-            });
+    //         // Close on backdrop click
+    //         helpModal.addEventListener('click', (e) => {
+    //             if (e.target === helpModal) {
+    //                 helpModal.classList.remove('show');
+    //             }
+    //         });
 
-            // Close on escape key
-            document.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape' && helpModal.classList.contains('show')) {
-                    helpModal.classList.remove('show');
-                }
-            });
-        }
-    },
+    //         // Close on escape key
+    //         document.addEventListener('keydown', (e) => {
+    //             if (e.key === 'Escape' && helpModal.classList.contains('show')) {
+    //                 helpModal.classList.remove('show');
+    //             }
+    //         });
+    //     }
+    // },
 
     /**
      * Handle input text changes
