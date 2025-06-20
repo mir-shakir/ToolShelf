@@ -112,8 +112,11 @@
     <link rel="dns-prefetch" href="//fonts.googleapis.com">
     <link rel="dns-prefetch" href="//cdnjs.cloudflare.com">
     <!-- JSONPath Plus Library (lightweight) -->
-    <!-- <script src="https://unpkg.com/jsonpath-plus@7.2.0/dist/index-browser-umd.min.js"></script> -->
-    <script src="https://cdn.jsdelivr.net/npm/jsonpath-plus@7.2.0/dist/index-browser-umd.min.js"></script>
+    <script src="https://unpkg.com/jsonpath-plus@9.0.0/dist/index-browser-umd.min.cjs"></script>
+
+
+
+
 
     <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-GBY4766X5D"></script>
@@ -340,7 +343,7 @@
                             </div>
                         </div>
 
-                        
+
                         <!-- Advanced Options - Updated Structure -->
                         <div class="control-group advanced-section" id="advancedSection">
                             <button class="advanced-toggle" id="advancedToggle" type="button">
@@ -349,7 +352,8 @@
                             </button>
                             <div class="advanced-content">
                                 <label class="checkbox-option">
-                                    <input type="checkbox" id="enableSyntaxHighlighting" class="advanced-option" checked>
+                                    <input type="checkbox" id="enableSyntaxHighlighting" class="advanced-option"
+                                        checked>
                                     <div class="checkbox-option-content">
                                         <span class="checkbox-option-label">Syntax highlighting</span>
                                         <div class="checkbox-option-desc">
@@ -357,7 +361,7 @@
                                         </div>
                                     </div>
                                 </label>
-                        
+
                                 <label class="checkbox-option">
                                     <input type="checkbox" id="autoValidate" class="advanced-option" checked>
                                     <div class="checkbox-option-content">
@@ -367,7 +371,7 @@
                                         </div>
                                     </div>
                                 </label>
-                        
+
                                 <label class="checkbox-option">
                                     <input type="checkbox" id="compactArrays" class="advanced-option">
                                     <div class="checkbox-option-content">
@@ -414,7 +418,7 @@
                             <div class="error-display" id="errorDisplay">
                                 <!-- Error details will be populated by JavaScript -->
                             </div>
-                            
+
                             <textarea id="inputText" class="text-area" placeholder="Paste your JSON here...
 
 Examples:
@@ -504,10 +508,12 @@ Try pasting JSON in the input area to see it formatted instantly!" readonly spel
                 <div class="content-grid">
                     <div class="content-section">
                         <h2>What is JSON Formatting?</h2>
-                        <p>JSON (JavaScript Object Notation) formatting involves organizing JSON data in a human-readable structure
-                            with proper indentation, line breaks, and spacing. Our JSON formatter automatically validates your JSON
+                        <p>JSON (JavaScript Object Notation) formatting involves organizing JSON data in a
+                            human-readable structure
+                            with proper indentation, line breaks, and spacing. Our JSON formatter automatically
+                            validates your JSON
                             syntax, highlights errors, and presents your data in a clean, readable format.</p>
-            
+
                         <h3>Key Features:</h3>
                         <ul>
                             <li>Real-time Validation: Instant feedback as you type with detailed error messages</li>
@@ -518,13 +524,14 @@ Try pasting JSON in the input area to see it formatted instantly!" readonly spel
                             <li>Comprehensive Statistics: Analyze JSON structure depth, keys, and complexity</li>
                         </ul>
                     </div>
-            
+
                     <div class="content-section">
                         <h2>Common Use Cases</h2>
                         <div class="use-cases-grid">
                             <div class="use-case">
                                 <h4><i class="fas fa-api"></i> API Development</h4>
-                                <p>Format API responses, validate request payloads, and debug JSON data in REST APIs and web
+                                <p>Format API responses, validate request payloads, and debug JSON data in REST APIs and
+                                    web
                                     services.</p>
                             </div>
                             <div class="use-case">
@@ -533,18 +540,20 @@ Try pasting JSON in the input area to see it formatted instantly!" readonly spel
                             </div>
                             <div class="use-case">
                                 <h4><i class="fas fa-cog"></i> Configuration Files</h4>
-                                <p>Format configuration files for applications, validate settings, and ensure proper JSON structure.
+                                <p>Format configuration files for applications, validate settings, and ensure proper
+                                    JSON structure.
                                 </p>
                             </div>
                             <div class="use-case">
                                 <h4><i class="fas fa-bug"></i> Debugging</h4>
-                                <p>Identify JSON syntax errors, validate data structures, and troubleshoot parsing issues in
+                                <p>Identify JSON syntax errors, validate data structures, and troubleshoot parsing
+                                    issues in
                                     applications.</p>
                             </div>
                         </div>
                     </div>
                 </div>
-            
+
                 <div class="faq-section">
                     <h2>JSONPath Query Examples</h2>
                     <div class="faq-grid">
@@ -566,7 +575,7 @@ Try pasting JSON in the input area to see it formatted instantly!" readonly spel
                         </div>
                     </div>
                 </div>
-            
+
                 <div class="content-grid">
                     <div class="content-section">
                         <h2>Why Choose ToolShelf JSON Formatter?</h2>
@@ -589,304 +598,318 @@ Try pasting JSON in the input area to see it formatted instantly!" readonly spel
                             <div class="benefit">
                                 <i class="fas fa-graduation-cap"></i>
                                 <h4>Developer Focused</h4>
-                                <p>Built by developers for developers with keyboard shortcuts and power-user features.</p>
+                                <p>Built by developers for developers with keyboard shortcuts and power-user features.
+                                </p>
                             </div>
                         </div>
                     </div>
                 </div>
             </section>
 
-        <!-- Footer -->
-        <footer class="app-footer">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <strong>ToolShelf</strong> - Free Online JSON Formatter & Validator
+            <!-- Footer -->
+            <footer class="app-footer">
+                <div class="footer-content">
+                    <div class="footer-section">
+                        <strong>ToolShelf</strong> - Free Online JSON Formatter & Validator
+                    </div>
+                    <div class="footer-section">
+                        <span>© 2025 ToolShelf. All tools work offline and respect your privacy.</span>
+                    </div>
+                    <div class="footer-links">
+                        <a href="#privacy" onclick="showPrivacyInfo()">Privacy</a>
+                        <a href="#terms" onclick="showTermsInfo()">Terms</a>
+                        <a href="#contact" onclick="showContactInfo()">Contact</a>
+                    </div>
                 </div>
-                <div class="footer-section">
-                    <span>© 2025 ToolShelf. All tools work offline and respect your privacy.</span>
-                </div>
-                <div class="footer-links">
-                    <a href="#privacy" onclick="showPrivacyInfo()">Privacy</a>
-                    <a href="#terms" onclick="showTermsInfo()">Terms</a>
-                    <a href="#contact" onclick="showContactInfo()">Contact</a>
-                </div>
-            </div>
-        </footer>
+            </footer>
 
-        <!-- Replace the existing help modal section with this improved version -->
-        <div id="helpModal" class="help-modal" role="dialog" aria-labelledby="help-title" aria-hidden="true">
-            <div class="help-content">
-                <div class="help-header">
-                    <h2 id="help-title"><i class="fas fa-info-circle" aria-hidden="true"></i> JSON Formatter Guide</h2>
-                    <button class="help-close" id="helpClose" aria-label="Close help dialog">
+            <!-- Replace the existing help modal section with this improved version -->
+            <div id="helpModal" class="help-modal" role="dialog" aria-labelledby="help-title" aria-hidden="true">
+                <div class="help-content">
+                    <div class="help-header">
+                        <h2 id="help-title"><i class="fas fa-info-circle" aria-hidden="true"></i> JSON Formatter Guide
+                        </h2>
+                        <button class="help-close" id="helpClose" aria-label="Close help dialog">
+                            <i class="fas fa-times" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                    <div class="help-body">
+                        <div class="help-section">
+                            <h3>Quick Start:</h3>
+                            <ol>
+                                <li>Paste your JSON in the <strong>Input JSON</strong> area</li>
+                                <li>See real-time validation and formatting automatically</li>
+                                <li>Use <strong>Format</strong> to prettify or <strong>Minify</strong> to compress</li>
+                                <li>Copy or download your results when ready</li>
+                            </ol>
+                        </div>
+
+                        <div class="help-section">
+                            <h3>Main Features:</h3>
+                            <ul>
+                                <li><strong>Real-time Validation:</strong> Instant error detection with detailed
+                                    feedback</li>
+                                <li><strong>Syntax Highlighting:</strong> Color-coded JSON for better readability</li>
+                                <li><strong>Format Options:</strong> Choose between 2, 4, 8 spaces, or tabs for
+                                    indentation</li>
+                                <li><strong>Sort Keys:</strong> Alphabetically organize object properties</li>
+                                <li><strong>JSONPath Queries:</strong> Extract specific data using query expressions
+                                </li>
+                                <li><strong>Statistics:</strong> View JSON structure depth, keys, arrays, and objects
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="help-section">
+                            <h3>Keyboard Shortcuts:</h3>
+                            <div class="shortcuts-grid">
+                                <div class="shortcut-item">
+                                    <kbd>Ctrl+F</kbd>
+                                    <span>Format JSON</span>
+                                </div>
+                                <div class="shortcut-item">
+                                    <kbd>Ctrl+M</kbd>
+                                    <span>Minify JSON</span>
+                                </div>
+                                <div class="shortcut-item">
+                                    <kbd>Ctrl+V</kbd>
+                                    <span>Paste from clipboard</span>
+                                </div>
+                                <div class="shortcut-item">
+                                    <kbd>Ctrl+Shift+V</kbd>
+                                    <span>Validate JSON</span>
+                                </div>
+                                <div class="shortcut-item">
+                                    <kbd>Ctrl+K</kbd>
+                                    <span>Toggle sort keys</span>
+                                </div>
+                                <div class="shortcut-item">
+                                    <kbd>Ctrl+L</kbd>
+                                    <span>Clear input</span>
+                                </div>
+                                <div class="shortcut-item">
+                                    <kbd>Ctrl+Enter</kbd>
+                                    <span>Copy output</span>
+                                </div>
+                                <div class="shortcut-item">
+                                    <kbd>Ctrl+D</kbd>
+                                    <span>Download result</span>
+                                </div>
+                                <div class="shortcut-item">
+                                    <kbd>Ctrl+R</kbd>
+                                    <span>Reset all</span>
+                                </div>
+                                <div class="shortcut-item">
+                                    <kbd>Esc</kbd>
+                                    <span>Close this help</span>
+                                </div>
+                                </ul>
+                            </div>
+
+                            <div class="help-section">
+                                <h3>JSONPath Query Guide:</h3>
+                                <div class="jsonpath-help">
+                                    <div class="jsonpath-example">
+                                        <code>$</code>
+                                        <span>Root object</span>
+                                    </div>
+                                    <div class="jsonpath-example">
+                                        <code>$.property</code>
+                                        <span>Access property</span>
+                                    </div>
+                                    <div class="jsonpath-example">
+                                        <code>$.array[*]</code>
+                                        <span>All array elements</span>
+                                    </div>
+                                    <div class="jsonpath-example">
+                                        <code>$.array[0]</code>
+                                        <span>First array element</span>
+                                    </div>
+                                    <div class="jsonpath-example">
+                                        <code>$.array[-1]</code>
+                                        <span>Last array element</span>
+                                    </div>
+                                    <div class="jsonpath-example">
+                                        <code>$..property</code>
+                                        <span>Recursive search</span>
+                                    </div>
+                                    <div class="jsonpath-example">
+                                        <code>$.array[?(@.price &lt; 10)]</code>
+                                        <span>Filter by condition</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="help-section">
+                                <h3>Common JSON Errors:</h3>
+                                <ul>
+                                    <li><strong>Missing quotes:</strong> Property names must be in double quotes</li>
+                                    <li><strong>Trailing commas:</strong> Remove commas after the last item in
+                                        objects/arrays</li>
+                                    <li><strong>Single quotes:</strong> Use double quotes for strings, not single quotes
+                                    </li>
+                                    <li><strong>Unescaped characters:</strong> Escape special characters like quotes and
+                                        backslashes
+                                    </li>
+                                    <li><strong>Missing brackets:</strong> Ensure all opening brackets have matching
+                                        closing
+                                        brackets</li>
+                                </ul>
+                            </div>
+
+                            <div class="help-section">
+                                <h3>Tool Explanations:</h3>
+                                <div class="tool-explanations">
+                                    <div class="tool-explanation">
+                                        <h4><i class="fas fa-indent"></i> Format</h4>
+                                        <p>Makes JSON human-readable by adding proper indentation, line breaks, and
+                                            spacing. Perfect
+                                            for viewing and editing JSON data.</p>
+                                    </div>
+                                    <div class="tool-explanation">
+                                        <h4><i class="fas fa-compress-alt"></i> Minify</h4>
+                                        <p>Removes all unnecessary whitespace to create the smallest possible JSON file.
+                                            Ideal for
+                                            APIs and production environments where file size matters.</p>
+                                    </div>
+                                    <div class="tool-explanation">
+                                        <h4><i class="fas fa-check-circle"></i> Validate</h4>
+                                        <p>Checks if your JSON syntax is correct and provides detailed error messages if
+                                            issues are
+                                            found. Also displays comprehensive statistics about your JSON structure.</p>
+                                    </div>
+                                    <div class="tool-explanation">
+                                        <h4><i class="fas fa-sort-alpha-down"></i> Sort Keys</h4>
+                                        <p>Alphabetically sorts all object property keys throughout the entire JSON
+                                            structure.
+                                            Useful for comparing JSON files or maintaining consistent formatting.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Toast Notification -->
+                <div id="toast" class="toast" role="alert" aria-live="assertive">
+                    <div class="toast-content">
+                        <i class="toast-icon fas fa-check-circle" aria-hidden="true"></i>
+                        <span id="toastMessage">Operation completed!</span>
+                    </div>
+                    <button class="toast-close" onclick="this.parentElement.classList.remove('show')"
+                        aria-label="Close notification">
                         <i class="fas fa-times" aria-hidden="true"></i>
                     </button>
                 </div>
-                <div class="help-body">
-                    <div class="help-section">
-                        <h3>Quick Start:</h3>
-                        <ol>
-                            <li>Paste your JSON in the <strong>Input JSON</strong> area</li>
-                            <li>See real-time validation and formatting automatically</li>
-                            <li>Use <strong>Format</strong> to prettify or <strong>Minify</strong> to compress</li>
-                            <li>Copy or download your results when ready</li>
-                        </ol>
-                    </div>
-        
-                    <div class="help-section">
-                        <h3>Main Features:</h3>
-                        <ul>
-                            <li><strong>Real-time Validation:</strong> Instant error detection with detailed feedback</li>
-                            <li><strong>Syntax Highlighting:</strong> Color-coded JSON for better readability</li>
-                            <li><strong>Format Options:</strong> Choose between 2, 4, 8 spaces, or tabs for indentation</li>
-                            <li><strong>Sort Keys:</strong> Alphabetically organize object properties</li>
-                            <li><strong>JSONPath Queries:</strong> Extract specific data using query expressions</li>
-                            <li><strong>Statistics:</strong> View JSON structure depth, keys, arrays, and objects</li>
-                        </ul>
-                    </div>
-        
-                    <div class="help-section">
-                        <h3>Keyboard Shortcuts:</h3>
-                        <div class="shortcuts-grid">
-                            <div class="shortcut-item">
-                                <kbd>Ctrl+F</kbd>
-                                <span>Format JSON</span>
-                            </div>
-                            <div class="shortcut-item">
-                                <kbd>Ctrl+M</kbd>
-                                <span>Minify JSON</span>
-                            </div>
-                            <div class="shortcut-item">
-                                <kbd>Ctrl+V</kbd>
-                                <span>Paste from clipboard</span>
-                            </div>
-                            <div class="shortcut-item">
-                                <kbd>Ctrl+Shift+V</kbd>
-                                <span>Validate JSON</span>
-                            </div>
-                            <div class="shortcut-item">
-                                <kbd>Ctrl+K</kbd>
-                                <span>Toggle sort keys</span>
-                            </div>
-                            <div class="shortcut-item">
-                                <kbd>Ctrl+L</kbd>
-                                <span>Clear input</span>
-                            </div>
-                            <div class="shortcut-item">
-                                <kbd>Ctrl+Enter</kbd>
-                                <span>Copy output</span>
-                            </div>
-                            <div class="shortcut-item">
-                                <kbd>Ctrl+D</kbd>
-                                <span>Download result</span>
-                            </div>
-                            <div class="shortcut-item">
-                                <kbd>Ctrl+R</kbd>
-                                <span>Reset all</span>
-                            </div>
-                            <div class="shortcut-item">
-                                <kbd>Esc</kbd>
-                                <span>Close this help</span>
-                            </div>
-                            </ul>
-                        </div>
-        
-                        <div class="help-section">
-                            <h3>JSONPath Query Guide:</h3>
-                            <div class="jsonpath-help">
-                                <div class="jsonpath-example">
-                                    <code>$</code>
-                                    <span>Root object</span>
-                                </div>
-                                <div class="jsonpath-example">
-                                    <code>$.property</code>
-                                    <span>Access property</span>
-                                </div>
-                                <div class="jsonpath-example">
-                                    <code>$.array[*]</code>
-                                    <span>All array elements</span>
-                                </div>
-                                <div class="jsonpath-example">
-                                    <code>$.array[0]</code>
-                                    <span>First array element</span>
-                                </div>
-                                <div class="jsonpath-example">
-                                    <code>$.array[-1]</code>
-                                    <span>Last array element</span>
-                                </div>
-                                <div class="jsonpath-example">
-                                    <code>$..property</code>
-                                    <span>Recursive search</span>
-                                </div>
-                                <div class="jsonpath-example">
-                                    <code>$.array[?(@.price &lt; 10)]</code>
-                                    <span>Filter by condition</span>
-                                </div>
-                            </div>
-                        </div>
-        
-                        <div class="help-section">
-                            <h3>Common JSON Errors:</h3>
-                            <ul>
-                                <li><strong>Missing quotes:</strong> Property names must be in double quotes</li>
-                                <li><strong>Trailing commas:</strong> Remove commas after the last item in objects/arrays</li>
-                                <li><strong>Single quotes:</strong> Use double quotes for strings, not single quotes</li>
-                                <li><strong>Unescaped characters:</strong> Escape special characters like quotes and backslashes
-                                </li>
-                                <li><strong>Missing brackets:</strong> Ensure all opening brackets have matching closing
-                                    brackets</li>
-                            </ul>
-                        </div>
-        
-                        <div class="help-section">
-                            <h3>Tool Explanations:</h3>
-                            <div class="tool-explanations">
-                                <div class="tool-explanation">
-                                    <h4><i class="fas fa-indent"></i> Format</h4>
-                                    <p>Makes JSON human-readable by adding proper indentation, line breaks, and spacing. Perfect
-                                        for viewing and editing JSON data.</p>
-                                </div>
-                                <div class="tool-explanation">
-                                    <h4><i class="fas fa-compress-alt"></i> Minify</h4>
-                                    <p>Removes all unnecessary whitespace to create the smallest possible JSON file. Ideal for
-                                        APIs and production environments where file size matters.</p>
-                                </div>
-                                <div class="tool-explanation">
-                                    <h4><i class="fas fa-check-circle"></i> Validate</h4>
-                                    <p>Checks if your JSON syntax is correct and provides detailed error messages if issues are
-                                        found. Also displays comprehensive statistics about your JSON structure.</p>
-                                </div>
-                                <div class="tool-explanation">
-                                    <h4><i class="fas fa-sort-alpha-down"></i> Sort Keys</h4>
-                                    <p>Alphabetically sorts all object property keys throughout the entire JSON structure.
-                                        Useful for comparing JSON files or maintaining consistent formatting.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
 
-        <!-- Toast Notification -->
-        <div id="toast" class="toast" role="alert" aria-live="assertive">
-            <div class="toast-content">
-                <i class="toast-icon fas fa-check-circle" aria-hidden="true"></i>
-                <span id="toastMessage">Operation completed!</span>
-            </div>
-            <button class="toast-close" onclick="this.parentElement.classList.remove('show')"
-                aria-label="Close notification">
-                <i class="fas fa-times" aria-hidden="true"></i>
-            </button>
-        </div>
-    </div>
+            <!-- JavaScript -->
+            <script src="../shared/config/constants.js"></script>
+            <script src="../shared/js/core/utils.js"></script>
+            <script src="../shared/js/core/events.js"></script>
+            <script src="../shared/js/core/analytics.js"></script>
+            <script src="../shared/js/components/toast.js"></script>
+            <script src="../shared/js/components/navigation.js"></script>
+            <script src="../shared/js/components/seo-content.js"></script>
+            <script src="../shared/js/components/keyboard.js"></script>
+            <script src="../shared/js/tools/base-tool.js"></script>
+            <script src="../shared/js/components/help-modal.js"></script>
 
-    <!-- JavaScript -->
-    <script src="../shared/config/constants.js"></script>
-    <script src="../shared/js/core/utils.js"></script>
-    <script src="../shared/js/core/events.js"></script>
-    <script src="../shared/js/core/analytics.js"></script>
-    <script src="../shared/js/components/toast.js"></script>
-    <script src="../shared/js/components/navigation.js"></script>
-    <script src="../shared/js/components/seo-content.js"></script>
-    <script src="../shared/js/components/keyboard.js"></script>
-    <script src="../shared/js/tools/base-tool.js"></script>
-    <script src="../shared/js/components/help-modal.js"></script>
+            <!-- JSON Formatter Modules -->
+            <script src="js/json-validator.js"></script>
+            <script src="js/json-syntax-highlighter.js"></script>
+            <script src="js/json-operations.js"></script>
+            <script src="js/json-path-handler.js"></script>
+            <script src="js/json-ui-handlers.js"></script>
+            <script src="js/json-formatter.js"></script>
 
-    <!-- JSON Formatter Modules -->
-    <script src="js/json-validator.js"></script>
-    <script src="js/json-syntax-highlighter.js"></script>
-    <script src="js/json-operations.js"></script>
-    <script src="js/json-path-handler.js"></script>
-    <script src="js/json-ui-handlers.js"></script>
-    <script src="js/json-formatter.js"></script>
+            <!-- Initialize JSON Formatter -->
+            <script>
+                // Initialize the JSON Formatter when DOM is ready
+                document.addEventListener('DOMContentLoaded', () => {
+                    window.ToolShelf = window.ToolShelf || {};
 
-    <!-- Initialize JSON Formatter -->
-    <script>
-        // Initialize the JSON Formatter when DOM is ready
-        document.addEventListener('DOMContentLoaded', () => {
-            window.ToolShelf = window.ToolShelf || {};
+                    try {
+                        // Initialize Toast system first
+                        if (window.ToolShelf.Toast && !window.ToolShelf.Toast.element) {
+                            const toastInitialized = window.ToolShelf.Toast.init();
+                            if (!toastInitialized) {
+                                console.warn('⚠️ Toast system failed to initialize');
+                            }
+                        }
 
-            try {
-                // Initialize Toast system first
-                if (window.ToolShelf.Toast && !window.ToolShelf.Toast.element) {
-                    const toastInitialized = window.ToolShelf.Toast.init();
-                    if (!toastInitialized) {
-                        console.warn('⚠️ Toast system failed to initialize');
-                    }
-                }
+                        // Initialize Help Modal
+                        if (window.ToolShelf.HelpModal) {
+                            window.ToolShelf.HelpModal.init();
+                        }
 
-                // Initialize Help Modal
-                if (window.ToolShelf.HelpModal) {
-                    window.ToolShelf.HelpModal.init();
-                }
+                        // Create and initialize JSON Formatter
+                        const jsonFormatter = new window.ToolShelf.JSONFormatter();
+                        window.ToolShelf.currentTool = jsonFormatter;
 
-                // Create and initialize JSON Formatter
-                const jsonFormatter = new window.ToolShelf.JSONFormatter();
-                window.ToolShelf.currentTool = jsonFormatter;
+                        console.log('🎉 JSON Formatter initialized successfully');
 
-                console.log('🎉 JSON Formatter initialized successfully');
+                        // Show welcome message for first-time users (simplified)
+                        setTimeout(() => {
+                            const hasVisited = localStorage.getItem('toolshelf-json-visited');
+                            if (!hasVisited) {
+                                localStorage.setItem('toolshelf-json-visited', 'true');
+                                if (window.ToolShelf.Toast) {
+                                    window.ToolShelf.Toast.show(
+                                        '💡 Tip: Paste JSON and see real-time validation and formatting!',
+                                        'info',
+                                        4000
+                                    );
+                                }
+                            }
+                        }, 2000);
 
-                // Show welcome message for first-time users (simplified)
-                setTimeout(() => {
-                    const hasVisited = localStorage.getItem('toolshelf-json-visited');
-                    if (!hasVisited) {
-                        localStorage.setItem('toolshelf-json-visited', 'true');
+                    } catch (error) {
+                        console.error('❌ Failed to initialize JSON Formatter:', error);
+
+                        // Show fallback error message
                         if (window.ToolShelf.Toast) {
-                            window.ToolShelf.Toast.show(
-                                '💡 Tip: Paste JSON and see real-time validation and formatting!',
-                                'info',
-                                4000
-                            );
+                            window.ToolShelf.Toast.show('Failed to initialize JSON Formatter. Please refresh the page.', 'error');
+                        } else {
+                            console.error('Toast system not available for error display');
                         }
                     }
-                }, 2000);
+                });
 
-            } catch (error) {
-                console.error('❌ Failed to initialize JSON Formatter:', error);
+                // Page-specific functions
+                function toggleSeoContent() {
+                    const seoContent = document.getElementById('seo-content');
+                    const seoExpanded = document.getElementById('seo-expanded');
+                    const isExpanded = seoContent.classList.contains('expanded');
 
-                // Show fallback error message
-                if (window.ToolShelf.Toast) {
-                    window.ToolShelf.Toast.show('Failed to initialize JSON Formatter. Please refresh the page.', 'error');
-                } else {
-                    console.error('Toast system not available for error display');
-                }
-            }
-        });
-
-        // Page-specific functions
-        function toggleSeoContent() {
-            const seoContent = document.getElementById('seo-content');
-            const seoExpanded = document.getElementById('seo-expanded');
-            const isExpanded = seoContent.classList.contains('expanded');
-
-            if (isExpanded) {
-                seoContent.classList.remove('expanded');
-                if (seoExpanded) seoExpanded.style.display = 'none';
-            } else {
-                seoContent.classList.add('expanded');
-                if (seoExpanded) seoExpanded.style.display = 'block';
-            }
-
-            // Update button
-            const toggle = seoContent?.querySelector('.seo-toggle');
-            if (toggle) {
-                const icon = toggle.querySelector('i');
-                const text = toggle.querySelector('span');
-
-                if (icon && text) {
                     if (isExpanded) {
-                        icon.className = 'fas fa-chevron-down';
-                        text.textContent = 'Learn More';
+                        seoContent.classList.remove('expanded');
+                        if (seoExpanded) seoExpanded.style.display = 'none';
                     } else {
-                        icon.className = 'fas fa-chevron-up';
-                        text.textContent = 'Show Less';
+                        seoContent.classList.add('expanded');
+                        if (seoExpanded) seoExpanded.style.display = 'block';
+                    }
+
+                    // Update button
+                    const toggle = seoContent?.querySelector('.seo-toggle');
+                    if (toggle) {
+                        const icon = toggle.querySelector('i');
+                        const text = toggle.querySelector('span');
+
+                        if (icon && text) {
+                            if (isExpanded) {
+                                icon.className = 'fas fa-chevron-down';
+                                text.textContent = 'Learn More';
+                            } else {
+                                icon.className = 'fas fa-chevron-up';
+                                text.textContent = 'Show Less';
+                            }
+                        }
                     }
                 }
-            }
-        }
 
-        function showPrivacyInfo() {
-            const message = `🔒 ToolShelf respects your privacy:
+                function showPrivacyInfo() {
+                    const message = `🔒 ToolShelf respects your privacy:
         
         • All JSON processing happens locally in your browser
         • No data is sent to any servers
@@ -894,11 +917,11 @@ Try pasting JSON in the input area to see it formatted instantly!" readonly spel
         • Your JSON data never leaves your device
         • Works completely offline once loaded`;
 
-            alert(message);
-        }
+                    alert(message);
+                }
 
-        function showTermsInfo() {
-            const message = `📋 Terms of Use:
+                function showTermsInfo() {
+                    const message = `📋 Terms of Use:
         
         • ToolShelf is provided free of charge
         • Use responsibly and at your own risk
@@ -906,11 +929,11 @@ Try pasting JSON in the input area to see it formatted instantly!" readonly spel
         • Report bugs or issues via our contact
         • Commercial use is allowed`;
 
-            alert(message);
-        }
+                    alert(message);
+                }
 
-        function showContactInfo() {
-            const message = `📧 Contact & Support:
+                function showContactInfo() {
+                    const message = `📧 Contact & Support:
         
         • GitHub: github.com/toolshelf/issues
         • Email: support@toolshelf.dev
@@ -918,9 +941,9 @@ Try pasting JSON in the input area to see it formatted instantly!" readonly spel
         • Bug reports appreciated
         • Feedback helps us improve`;
 
-            alert(message);
-        }
-    </script>
+                    alert(message);
+                }
+            </script>
 </body>
 
 </html>

@@ -547,44 +547,44 @@ Auto-detection is enabled by default - just paste and see results!" spellcheck="
     <script>
         // Initialize the Base64 tool when DOM is ready
         document.addEventListener('DOMContentLoaded', () => {
-                window.ToolShelf = window.ToolShelf || {};
+            window.ToolShelf = window.ToolShelf || {};
 
-                try {
-                    // Initialize Toast system first
-                    if (window.ToolShelf.Toast && !window.ToolShelf.Toast.element) {
-                        const toastInitialized = window.ToolShelf.Toast.init();
-                        if (!toastInitialized) {
-                            console.warn('⚠️ Toast system failed to initialize');
-                        }
+            try {
+                // Initialize Toast system first
+                if (window.ToolShelf.Toast && !window.ToolShelf.Toast.element) {
+                    const toastInitialized = window.ToolShelf.Toast.init();
+                    if (!toastInitialized) {
+                        console.warn('⚠️ Toast system failed to initialize');
                     }
-
-                    // Create and initialize Base64 tool
-                    const base64Tool = new window.ToolShelf.Base64Tool();
-                    window.ToolShelf.currentTool = base64Tool;
-
-                    console.log('🎉 Base64 Encoder initialized successfully');
-                } catch (error) {
-                    console.error('❌ Failed to initialize Base64 Encoder:', error);
                 }
-            });
 
-            // Page-specific functions
-            function toggleSeoContent() {
-                const seoContent = document.getElementById('seo-content');
-                seoContent.classList.toggle('expanded');
-            }
+                // Create and initialize Base64 tool
+                const base64Tool = new window.ToolShelf.Base64Tool();
+                window.ToolShelf.currentTool = base64Tool;
 
-            function showPrivacyInfo() {
-                alert('ToolShelf respects your privacy. All Base64 processing happens locally in your browser. No data is collected or sent to any servers.');
+                console.log('🎉 Base64 Encoder initialized successfully');
+            } catch (error) {
+                console.error('❌ Failed to initialize Base64 Encoder:', error);
             }
+        });
 
-            function showTermsInfo() {
-                alert('ToolShelf is provided as-is for free use. Use responsibly and at your own risk.');
-            }
+        // Page-specific functions
+        function toggleSeoContent() {
+            const seoContent = document.getElementById('seo-content');
+            seoContent.classList.toggle('expanded');
+        }
 
-            function showContactInfo() {
-                alert('For questions or feedback, please visit our GitHub repository or create an issue.');
-            }
+        function showPrivacyInfo() {
+            alert('ToolShelf respects your privacy. All Base64 processing happens locally in your browser. No data is collected or sent to any servers.');
+        }
+
+        function showTermsInfo() {
+            alert('ToolShelf is provided as-is for free use. Use responsibly and at your own risk.');
+        }
+
+        function showContactInfo() {
+            alert('For questions or feedback, please visit our GitHub repository or create an issue.');
+        }
     </script>
 </body>
 
