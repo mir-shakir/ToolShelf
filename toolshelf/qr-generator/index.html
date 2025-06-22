@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Primary Meta Tags -->
+    <title>ToolShelf - Free QR Code Generator & Scanner | Create Custom QR Codes Online</title>
+    <meta name="title" content="ToolShelf - Free QR Code Generator & Scanner">
+    <meta name="description"
+        content="Generate custom QR codes for URLs, WiFi, contact cards, SMS, email & more. Bulk generation, logo embedding, multiple formats (PNG, SVG). Free QR code maker with no registration required.">
+    <meta name="keywords"
+        content="qr code generator, qr scanner, free qr code, wifi qr code, bulk qr generator, custom qr code, qr code with logo, url shortener">
+    <meta name="author" content="ToolShelf">
+    <meta name="robots" content="index, follow">
+    <meta name="language" content="English">
+    <meta name="revisit-after" content="7 days">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://toolshelf.onrender.com/qr-generator/">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://toolshelf.onrender.com/qr-generator/">
+    <meta property="og:title" content="ToolShelf - Free QR Code Generator & Scanner">
+    <meta property="og:description"
+        content="Generate custom QR codes instantly. Support for URLs, WiFi, contacts, bulk generation with CSV upload, logo embedding, and multiple export formats. Privacy-focused and completely free.">
+    <meta property="og:image" content="https://toolshelf.onrender.com/assets/images/og-image-qr.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:site_name" content="ToolShelf">
+    <meta property="og:locale" content="en_US">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://toolshelf.onrender.com/qr-generator/">
+    <meta property="twitter:title" content="ToolShelf - Free QR Code Generator & Scanner">
+    <meta property="twitter:description"
+        content="Create custom QR codes with real-time preview. Bulk generation, logo embedding, multiple formats. No registration required.">
+    <meta property="twitter:image" content="https://toolshelf.onrender.com/assets/images/twitter-image-qr.png">
+
+    <!-- Favicon and Icons -->
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+    <link rel="manifest" href="../manifest.json">
+    <meta name="theme-color" content="#3b82f6">
+
+    <!-- Schema.org structured data -->
+    <script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "WebApplication",
+        "name": "ToolShelf QR Code Generator",
+        "alternateName": "QR Code Generator and Scanner",
+        "description": "Free online QR code generator with bulk creation, logo embedding, and multiple export formats. Create QR codes for URLs, WiFi, contacts, SMS, email, and more with real-time preview.",
+        "url": "https://toolshelf.onrender.com/qr-generator/",
+        "applicationCategory": "UtilityApplication",
+        "operatingSystem": "Web Browser",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        },
+        "creator": {
+            "@type": "Organization",
+            "name": "ToolShelf"
+        },
+        "datePublished": "2025-06-22",
+        "dateModified": "2025-06-22",
+        "inLanguage": "en-US",
+        "isAccessibleForFree": true,
+        "featureList": [
+            "QR Code Generation",
+            "Bulk QR Code Creation",
+            "Logo Embedding",
+            "Custom Colors and Styling",
+            "Multiple Export Formats (PNG, SVG, PDF)",
+            "WiFi QR Codes",
+            "Contact Card QR Codes",
+            "SMS and Email QR Codes",
+            "URL QR Codes",
+            "Real-time Preview",
+            "CSV Bulk Upload",
+            "No Registration Required",
+            "Privacy-Focused Processing",
+            "Mobile Responsive"
+        ],
+        "screenshot": "https://toolshelf.onrender.com/assets/images/qr-generator-screenshot.png"
+    }
+    </script>
+
+    <!-- CSS Modules -->
+    <link rel="stylesheet" href="../shared/css/variables.css">
+    <link rel="stylesheet" href="../shared/css/base.css">
+    <link rel="stylesheet" href="../shared/css/components.css">
+    <link rel="stylesheet" href="../shared/css/tool-layout.css">
+    <link rel="stylesheet" href="../shared/css/responsive.css">
+    <link rel="stylesheet" href="../shared/css/seo-content.css">
+    <link rel="stylesheet" href="../qr-generator/css/qr-tool.css">
+
+    <!-- External Resources -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- QR Code Libraries -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.5/dist/FileSaver.min.js"></script> -->
+
+    <!-- <script src="https://unpkg.com/qrcode@1.5.3/build/qrcode.min.js"></script>
+    <script src="https://unpkg.com/jszip@3.10.1/dist/jszip.min.js"></script>
+    <script src="https://unpkg.com/papaparse@5.4.1/papaparse.min.js"></script>
+    <script src="https://unpkg.com/file-saver@2.0.5/dist/FileSaver.min.js"></script> -->
+    <!-- Corrected QR Code Libraries -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.4/lib/browser.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script> -->
+
+    <!-- <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.4/build/qrcode.min.js"></script>
+ -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script> -->
+    <!-- 
+    <script src="https://unpkg.com/qrious@4.0.2/dist/qrious.min.js"></script>
+    <script src="https://unpkg.com/jszip@3.10.1/dist/jszip.min.js"></script>
+    <script src="https://unpkg.com/papaparse@5.4.1/papaparse.min.js"></script>
+    <script src="https://unpkg.com/file-saver@2.0.5/dist/FileSaver.min.js"></script> -->
+
+    <script src="https://unpkg.com/qrious@4.0.2/dist/qrious.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-GBY4766X5D"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-GBY4766X5D');
+    </script>
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Header with Navigation -->
+        <header class="app-header">
+            <div class="header-container">
+                <div class="logo-section">
+                    <div class="logo-icon">
+                        <i class="fas fa-toolbox"></i>
+                    </div>
+                    <a href="../" class="logo-text">ToolShelf</a>
+                </div>
+
+                <nav class="main-nav">
+                    <a href="../" class="nav-link">Home</a>
+                    <a href="../#tools" class="nav-link active">Tools</a>
+                    <a href="../#about" class="nav-link">About</a>
+                </nav>
+
+                <div class="tool-actions">
+                    <button class="help-btn" id="helpBtn" title="Show instructions"
+                        aria-label="Show help and instructions">
+                        <i class="fas fa-question-circle" aria-hidden="true"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Breadcrumb Navigation -->
+            <div class="breadcrumb-container">
+                <div class="breadcrumb-wrapper">
+                    <nav class="breadcrumb">
+                        <a href="../">Home</a>
+                        <span class="breadcrumb-separator">›</span>
+                        <a href="../#tools">Tools</a>
+                        <span class="breadcrumb-separator">›</span>
+                        <span class="breadcrumb-current">QR Generator</span>
+                    </nav>
+
+                    <div class="tool-status">
+                        <span class="status-badge">Free</span>
+                        <span class="tool-tag">Real-time</span>
+                        <span class="validation-indicator">
+                            <i class="fas fa-qrcode" aria-hidden="true"></i>
+                            QR Maker
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="app-main" role="main">
+            <!-- SEO Content Section -->
+            <section class="seo-content" id="seo-content">
+                <div class="seo-intro">
+                    <h1>Free QR Code Generator & Scanner</h1>
+                    <p class="lead">Create custom QR codes instantly with real-time preview. Generate QR codes for URLs,
+                        WiFi, contacts, SMS, email, and more. Bulk generation, logo embedding, and multiple export
+                        formats - all free with no registration required.</p>
+
+                    <div class="seo-expandable">
+                        <div class="features-highlight">
+                            <div class="feature-item">
+                                <i class="fas fa-qrcode" aria-hidden="true"></i>
+                                <span>Multiple QR Types</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-palette" aria-hidden="true"></i>
+                                <span>Custom Styling</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-layer-group" aria-hidden="true"></i>
+                                <span>Bulk Generation</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-image" aria-hidden="true"></i>
+                                <span>Logo Embedding</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-download" aria-hidden="true"></i>
+                                <span>Multiple Formats</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-shield-alt" aria-hidden="true"></i>
+                                <span>Privacy-First</span>
+                            </div>
+                        </div>
+
+                        <button class="cta-button"
+                            onclick="document.getElementById('qr-tool').scrollIntoView({ behavior: 'smooth' });">
+                            <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                            Start Creating QR Codes
+                        </button>
+                    </div>
+                </div>
+
+                <button class="seo-toggle" onclick="toggleSeoContent()" aria-label="Show more information"
+                    aria-expanded="false">
+                    <span>Learn More</span>
+                    <i class="fas fa-chevron-down" aria-hidden="true"></i>
+                </button>
+            </section>
+
+            <!-- QR Generator Tool -->
+            <div id="qr-tool" class="tool-container active">
+                <div class="tool-workspace-qr">
+
+                    <!-- QR Type Selection Header -->
+                    <div class="qr-type-header">
+                        <div class="qr-type-tabs">
+                            <button class="qr-type-tab active" data-type="url">
+                                <i class="fas fa-link"></i>
+                                URL
+                            </button>
+                            <button class="qr-type-tab" data-type="wifi">
+                                <i class="fas fa-wifi"></i>
+                                WiFi
+                            </button>
+                            <button class="qr-type-tab" data-type="contact">
+                                <i class="fas fa-address-card"></i>
+                                Contact
+                            </button>
+                            <button class="qr-type-tab" data-type="sms">
+                                <i class="fas fa-sms"></i>
+                                SMS
+                            </button>
+                            <button class="qr-type-tab" data-type="email">
+                                <i class="fas fa-envelope"></i>
+                                Email
+                            </button>
+                            <button class="qr-type-tab" data-type="text">
+                                <i class="fas fa-align-left"></i>
+                                Text
+                            </button>
+                            <button class="qr-type-tab" data-type="bulk">
+                                <i class="fas fa-layer-group"></i>
+                                Bulk
+                            </button>
+                        </div>
+
+                        <div class="qr-actions">
+                            <button id="downloadQR" class="qr-action-btn primary" disabled>
+                                <i class="fas fa-download"></i>
+                                Download
+                            </button>
+                            <button id="resetQR" class="qr-action-btn">
+                                <i class="fas fa-undo-alt"></i>
+                                Reset
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Main QR Workspace -->
+                    <div class="qr-workspace">
+                        <!-- Left Panel - Input Forms -->
+                        <div class="qr-input-panel">
+                            <div class="qr-form-container">
+                                <!-- URL Form -->
+                                <div class="qr-form active" id="url-form">
+                                    <div class="form-group">
+                                        <label for="urlInput">Enter URL:</label>
+                                        <input type="url" id="urlInput" class="qr-input"
+                                            placeholder="https://example.com">
+                                    </div>
+                                </div>
+
+                                <!-- WiFi Form -->
+                                <div class="qr-form" id="wifi-form">
+                                    <div class="form-group">
+                                        <label for="wifiSSID">Network Name (SSID):</label>
+                                        <input type="text" id="wifiSSID" class="qr-input" placeholder="MyWiFiNetwork">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="wifiPassword">Password:</label>
+                                        <input type="text" id="wifiPassword" class="qr-input" placeholder="Password123">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="wifiSecurity">Security Type:</label>
+                                        <select id="wifiSecurity" class="qr-select">
+                                            <option value="WPA">WPA/WPA2</option>
+                                            <option value="WEP">WEP</option>
+                                            <option value="">None (Open)</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="checkbox-label">
+                                            <input type="checkbox" id="wifiHidden">
+                                            <span class="checkmark"></span>
+                                            Hidden Network
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <!-- Contact Form -->
+                                <div class="qr-form" id="contact-form">
+                                    <div class="form-group">
+                                        <label for="contactName">Full Name:</label>
+                                        <input type="text" id="contactName" class="qr-input" placeholder="John Doe">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="contactPhone">Phone:</label>
+                                        <input type="tel" id="contactPhone" class="qr-input" placeholder="+1234567890">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="contactEmail">Email:</label>
+                                        <input type="email" id="contactEmail" class="qr-input"
+                                            placeholder="john@example.com">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="contactOrg">Organization:</label>
+                                        <input type="text" id="contactOrg" class="qr-input" placeholder="Company Inc.">
+                                    </div>
+                                </div>
+
+                                <!-- SMS Form -->
+                                <div class="qr-form" id="sms-form">
+                                    <div class="form-group">
+                                        <label for="smsNumber">Phone Number:</label>
+                                        <input type="tel" id="smsNumber" class="qr-input" placeholder="+1234567890">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="smsMessage">Message:</label>
+                                        <textarea id="smsMessage" class="qr-textarea"
+                                            placeholder="Your message here..."></textarea>
+                                    </div>
+                                </div>
+
+                                <!-- Email Form -->
+                                <div class="qr-form" id="email-form">
+                                    <div class="form-group">
+                                        <label for="emailTo">To Email:</label>
+                                        <input type="email" id="emailTo" class="qr-input"
+                                            placeholder="recipient@example.com">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="emailSubject">Subject:</label>
+                                        <input type="text" id="emailSubject" class="qr-input"
+                                            placeholder="Email Subject">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="emailBody">Message:</label>
+                                        <textarea id="emailBody" class="qr-textarea"
+                                            placeholder="Email message..."></textarea>
+                                    </div>
+                                </div>
+
+                                <!-- Text Form -->
+                                <div class="qr-form" id="text-form">
+                                    <div class="form-group">
+                                        <label for="textContent">Text Content:</label>
+                                        <textarea id="textContent" class="qr-textarea"
+                                            placeholder="Enter any text here..."></textarea>
+                                    </div>
+                                </div>
+
+                                <!-- Bulk Form -->
+                                <div class="qr-form" id="bulk-form">
+                                    <div class="bulk-upload-area" id="bulkUploadArea">
+                                        <div class="upload-icon">
+                                            <i class="fas fa-cloud-upload-alt"></i>
+                                        </div>
+                                        <div class="upload-text">
+                                            <h3>Upload CSV File</h3>
+                                            <p>Drop CSV file here or click to browse</p>
+                                            <small>Format: url,label or name,phone,email</small>
+                                        </div>
+                                        <input type="file" id="csvFileInput" accept=".csv" hidden>
+                                    </div>
+                                    <div class="bulk-preview" id="bulkPreview" style="display: none;">
+                                        <div class="bulk-info">
+                                            <span id="bulkCount">0</span> QR codes ready to generate
+                                        </div>
+                                        <button id="generateBulk" class="qr-action-btn primary">
+                                            <i class="fas fa-magic"></i>
+                                            Generate All QR Codes
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Customization Panel -->
+                            <div class="qr-customization-panel">
+                                <h3><i class="fas fa-palette"></i> Customization</h3>
+
+                                <div class="custom-section">
+                                    <h4>Colors</h4>
+                                    <div class="color-controls">
+                                        <div class="color-group">
+                                            <label>Foreground:</label>
+                                            <input type="color" id="foregroundColor" value="#000000">
+                                        </div>
+                                        <div class="color-group">
+                                            <label>Background:</label>
+                                            <input type="color" id="backgroundColor" value="#ffffff">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="custom-section">
+                                    <h4>Size & Quality</h4>
+                                    <div class="size-controls">
+                                        <div class="size-group">
+                                            <label for="qrSize">Size:</label>
+                                            <select id="qrSize">
+                                                <option value="200">Small (200px)</option>
+                                                <option value="400" selected>Medium (400px)</option>
+                                                <option value="600">Large (600px)</option>
+                                                <option value="800">XL (800px)</option>
+                                            </select>
+                                        </div>
+                                        <div class="size-group">
+                                            <label for="qrMargin">Margin:</label>
+                                            <select id="qrMargin">
+                                                <option value="1">Minimal</option>
+                                                <option value="2" selected>Normal</option>
+                                                <option value="4">Large</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="custom-section">
+                                    <h4>Logo (Optional)</h4>
+                                    <div class="logo-upload">
+                                        <input type="file" id="logoInput" accept="image/*" hidden>
+                                        <button id="logoUploadBtn" class="upload-btn">
+                                            <i class="fas fa-image"></i>
+                                            Upload Logo
+                                        </button>
+                                        <div id="logoPreview" class="logo-preview" style="display: none;">
+                                            <img id="logoImage" alt="Logo preview">
+                                            <button id="removeLogo" class="remove-logo">×</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right Panel - QR Preview -->
+                        <div class="qr-preview-panel">
+                            <div class="qr-preview-container">
+                                <h3><i class="fas fa-eye"></i> Live Preview</h3>
+
+                                <div class="qr-display">
+                                    <div id="qrCanvas" class="qr-canvas">
+                                        <div class="qr-placeholder">
+                                            <i class="fas fa-qrcode"></i>
+                                            <p>QR code will appear here</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="qr-info">
+                                    <div class="qr-stats">
+                                        <div class="stat-item">
+                                            <span class="stat-label">Type:</span>
+                                            <span id="qrType" class="stat-value">URL</span>
+                                        </div>
+                                        <div class="stat-item">
+                                            <span class="stat-label">Size:</span>
+                                            <span id="qrSizeDisplay" class="stat-value">400px</span>
+                                        </div>
+                                        <div class="stat-item">
+                                            <span class="stat-label">Format:</span>
+                                            <span id="qrFormat" class="stat-value">PNG</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="export-options">
+                                    <h4>Export Format</h4>
+                                    <div class="format-buttons">
+                                        <button class="format-btn active" data-format="png">
+                                            <i class="fas fa-file-image"></i>
+                                            PNG
+                                        </button>
+                                        <button class="format-btn" data-format="svg">
+                                            <i class="fas fa-vector-square"></i>
+                                            SVG
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SEO Content - Expanded Section -->
+            <section class="seo-expanded" id="seo-expanded">
+                <div class="content-grid">
+                    <div class="content-section">
+                        <h2>What is a QR Code Generator?</h2>
+                        <p>A QR Code (Quick Response Code) generator creates 2D barcodes that can store various types of
+                            information such as URLs, contact details, WiFi credentials, and more. Our QR generator
+                            supports multiple data types and offers advanced customization options including logo
+                            embedding, custom colors, and bulk generation from CSV files.</p>
+
+                        <h3>Supported QR Code Types:</h3>
+                        <ul>
+                            <li><strong>URL QR Codes:</strong> Link to websites, landing pages, or online content</li>
+                            <li><strong>WiFi QR Codes:</strong> Share network credentials for easy connection</li>
+                            <li><strong>Contact Cards:</strong> vCard format for easy contact sharing</li>
+                            <li><strong>SMS QR Codes:</strong> Pre-filled text messages with phone numbers</li>
+                            <li><strong>Email QR Codes:</strong> Pre-composed emails with recipient and subject</li>
+                            <li><strong>Plain Text:</strong> Any text content for general purposes</li>
+                            <li><strong>Bulk Generation:</strong> Create hundreds of QR codes from CSV data</li>
+                        </ul>
+                    </div>
+
+                    <div class="content-section">
+                        <h2>Common Use Cases</h2>
+                        <div class="use-cases-grid">
+                            <div class="use-case">
+                                <h4><i class="fas fa-store"></i> Business & Marketing</h4>
+                                <p>Restaurant menus, business cards, product information, marketing campaigns, and event
+                                    check-ins.</p>
+                            </div>
+                            <div class="use-case">
+                                <h4><i class="fas fa-wifi"></i> WiFi Sharing</h4>
+                                <p>Share WiFi credentials with guests, customers, or colleagues without revealing
+                                    passwords.</p>
+                            </div>
+                            <div class="use-case">
+                                <h4><i class="fas fa-calendar"></i> Events</h4>
+                                <p>Event tickets, registration links, contact sharing, and location information.</p>
+                            </div>
+                            <div class="use-case">
+                                <h4><i class="fas fa-mobile-alt"></i> Mobile Apps</h4>
+                                <p>App store links, deep linking, user onboarding, and feature demonstrations.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-section">
+                    <h2>Advanced Features</h2>
+                    <div class="faq-grid">
+                        <div class="faq-item">
+                            <h3>Logo Embedding</h3>
+                            <p>Add your brand logo to QR codes while maintaining scannability</p>
+                        </div>
+                        <div class="faq-item">
+                            <h3>Bulk Generation</h3>
+                            <p>Upload CSV files and generate hundreds of QR codes at once</p>
+                        </div>
+                        <div class="faq-item">
+                            <h3>Custom Styling</h3>
+                            <p>Choose colors, sizes, and margins to match your brand</p>
+                        </div>
+                        <div class="faq-item">
+                            <h3>Multiple Formats</h3>
+                            <p>Export as PNG for web or SVG for print and scalability</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Footer -->
+            <footer class="app-footer">
+                <div class="footer-content">
+                    <div class="footer-section">
+                        <strong>ToolShelf</strong> - Free QR Code Generator & Scanner
+                    </div>
+                    <div class="footer-section">
+                        <span>© 2025 ToolShelf. All QR codes generated locally in your browser.</span>
+                    </div>
+                    <div class="footer-links">
+                        <a href="#privacy" onclick="showPrivacyInfo()">Privacy</a>
+                        <a href="#terms" onclick="showTermsInfo()">Terms</a>
+                        <a href="#contact" onclick="showContactInfo()">Contact</a>
+                    </div>
+                </div>
+            </footer>
+
+            <!-- Help Modal -->
+            <div id="helpModal" class="help-modal" role="dialog" aria-labelledby="help-title" aria-hidden="true">
+                <div class="help-content">
+                    <div class="help-header">
+                        <h2 id="help-title"><i class="fas fa-info-circle"></i> QR Code Generator Guide</h2>
+                        <button class="help-close" id="helpClose" aria-label="Close help dialog">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="help-body">
+                        <div class="help-section">
+                            <h3>Quick Start:</h3>
+                            <ol>
+                                <li>Select QR code type (URL, WiFi, Contact, etc.)</li>
+                                <li>Fill in the required information</li>
+                                <li>Customize colors, size, and add logo if needed</li>
+                                <li>Download your QR code in PNG or SVG format</li>
+                            </ol>
+                        </div>
+
+                        <div class="help-section">
+                            <h3>QR Code Types:</h3>
+                            <ul>
+                                <li><strong>URL:</strong> Link to any website or web page</li>
+                                <li><strong>WiFi:</strong> Share WiFi network credentials</li>
+                                <li><strong>Contact:</strong> Create vCard with contact information</li>
+                                <li><strong>SMS:</strong> Pre-filled text message with phone number</li>
+                                <li><strong>Email:</strong> Pre-composed email with recipient and subject</li>
+                                <li><strong>Text:</strong> Plain text content</li>
+                                <li><strong>Bulk:</strong> Generate multiple QR codes from CSV file</li>
+                            </ul>
+                        </div>
+
+                        <div class="help-section">
+                            <h3>Bulk Generation:</h3>
+                            <p>Upload a CSV file with the following formats:</p>
+                            <ul>
+                                <li><strong>URLs:</strong> url,label</li>
+                                <li><strong>Contacts:</strong> name,phone,email,organization</li>
+                                <li><strong>Custom:</strong> Any text data, one item per row</li>
+                            </ul>
+                        </div>
+
+                        <div class="help-section">
+                            <h3>Tips for Best Results:</h3>
+                            <ul>
+                                <li>Test QR codes with multiple devices before publishing</li>
+                                <li>Use high contrast colors for better scanning</li>
+                                <li>Keep logo size small to maintain scannability</li>
+                                <li>Choose appropriate size based on viewing distance</li>
+                                <li>Use SVG format for print materials</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Toast Notification -->
+            <div id="toast" class="toast" role="alert" aria-live="assertive">
+                <div class="toast-content">
+                    <i class="toast-icon fas fa-check-circle"></i>
+                    <span id="toastMessage">Operation completed!</span>
+                </div>
+                <button class="toast-close" onclick="this.parentElement.classList.remove('show')"
+                    aria-label="Close notification">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="../shared/config/constants.js"></script>
+    <script src="../shared/js/core/utils.js"></script>
+    <script src="../shared/js/core/events.js"></script>
+    <script src="../shared/js/core/analytics.js"></script>
+    <script src="../shared/js/components/toast.js"></script>
+    <script src="../shared/js/components/navigation.js"></script>
+    <script src="../shared/js/components/seo-content.js"></script>
+    <script src="../shared/js/components/keyboard.js"></script>
+    <script src="../shared/js/tools/base-tool.js"></script>
+    <script src="../shared/js/components/help-modal.js"></script>
+
+    <!-- QR Generator Modules -->
+    <script src="../qr-generator/js/qr-operations.js"></script>
+    <script src="../qr-generator/js/qr-bulk-processor.js"></script>
+    <script src="../qr-generator/js/qr-ui-handlers.js"></script>
+    <script src="../qr-generator/js/qr-generator.js"></script>
+
+
+    <!-- Initialize QR Generator -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            window.ToolShelf = window.ToolShelf || {};
+
+            try {
+                // Initialize Toast system first
+                if (window.ToolShelf.Toast && !window.ToolShelf.Toast.element) {
+                    const toastInitialized = window.ToolShelf.Toast.init();
+                    if (!toastInitialized) {
+                        console.warn('⚠️ Toast system failed to initialize');
+                    }
+                }
+
+                // Initialize Help Modal
+                if (window.ToolShelf.HelpModal) {
+                    window.ToolShelf.HelpModal.init();
+                }
+
+                // Create and initialize QR Generator
+                const qrGenerator = new window.ToolShelf.QRGenerator();
+                window.ToolShelf.currentTool = qrGenerator;
+
+                console.log('🎉 QR Generator initialized successfully');
+
+                // Show welcome message
+                setTimeout(() => {
+                    const hasVisited = localStorage.getItem('toolshelf-qr-visited');
+                    if (!hasVisited) {
+                        localStorage.setItem('toolshelf-qr-visited', 'true');
+                        if (window.ToolShelf.Toast) {
+                            window.ToolShelf.Toast.show(
+                                '✨ Tip: Start with a URL to see your first QR code!',
+                                'info',
+                                4000
+                            );
+                        }
+                    }
+                }, 1500);
+
+            } catch (error) {
+                console.error('❌ Failed to initialize QR Generator:', error);
+                if (window.ToolShelf.Toast) {
+                    window.ToolShelf.Toast.show('Failed to initialize QR Generator. Please refresh the page.', 'error');
+                }
+            }
+        });
+
+        // Page-specific functions
+        function toggleSeoContent() {
+            const seoContent = document.getElementById('seo-content');
+            const seoExpanded = document.getElementById('seo-expanded');
+            const isExpanded = seoContent.classList.contains('expanded');
+
+            if (isExpanded) {
+                seoContent.classList.remove('expanded');
+                if (seoExpanded) seoExpanded.style.display = 'none';
+            } else {
+                seoContent.classList.add('expanded');
+                if (seoExpanded) seoExpanded.style.display = 'block';
+            }
+
+            // Update button
+            const toggle = seoContent?.querySelector('.seo-toggle');
+            if (toggle) {
+                const icon = toggle.querySelector('i');
+                const text = toggle.querySelector('span');
+
+                if (icon && text) {
+                    if (isExpanded) {
+                        icon.className = 'fas fa-chevron-down';
+                        text.textContent = 'Learn More';
+                    } else {
+                        icon.className = 'fas fa-chevron-up';
+                        text.textContent = 'Show Less';
+                    }
+                }
+            }
+        }
+
+        function showPrivacyInfo() {
+            const message = `🔒 ToolShelf QR Generator Privacy:
+
+• All QR code generation happens locally in your browser
+• No data is sent to any servers
+• Your QR code content never leaves your device
+• No tracking or data collection
+• Works completely offline once loaded`;
+            alert(message);
+        }
+
+        function showTermsInfo() {
+            const message = `📋 Terms of Use:
+
+• ToolShelf QR Generator is provided free of charge
+• Use responsibly and at your own risk
+• QR codes generated are yours to use commercially
+• No warranty or guarantee of scanning accuracy
+• Report issues via our contact information`;
+            alert(message);
+        }
+
+        function showContactInfo() {
+            const message = `📧 Contact & Support:
+
+• GitHub: github.com/toolshelf/issues
+• Email: support@toolshelf.dev
+• Feature requests welcome
+• Bug reports appreciated
+• QR code scanning issues? Contact us!`;
+            alert(message);
+        }
+    </script>
+</body>
+
+</html>

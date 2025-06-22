@@ -601,3 +601,22 @@
     outline: 2px solid var(--primary-color);
     outline-offset: 2px;
 }
+
+.tool-card:nth-child(4) .tool-icon {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.tool-card:nth-child(4) .tool-icon i {
+    color: white;
+}
+
+/* New badge styling */
+.popularity-badge {
+    background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+    color: white;
+    font-size: 0.7rem;
+    padding: 0.2rem 0.5rem;
+    border-radius: 12px;
+    font-weight: 600;
+    margin-left: 0.5rem;
+}
