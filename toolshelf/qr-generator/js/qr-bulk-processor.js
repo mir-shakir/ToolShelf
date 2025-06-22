@@ -9,7 +9,8 @@ window.ToolShelf.QRBulkProcessor = class QRBulkProcessor {
         this.generator = generator;
         this.bulkData = [];
         this.processedCount = 0;
-        this.maxBulkSize = 500; // Maximum QR codes in one batch
+        this.maxBulkSize = 100; // Reduced for browser memory safety
+        this.recommendedSize = 50; // Recommended batch size
         this.isProcessing = false;
     }
 
@@ -116,8 +117,8 @@ window.ToolShelf.QRBulkProcessor = class QRBulkProcessor {
     }
 
     /**
-     * Parse CSV data using Papa Parse
-     */
+ * Parse CSV data with enhanced validation and limits
+ */
     async parseCSVData(csvText) {
         return new Promise((resolve, reject) => {
             try {
@@ -133,12 +134,19 @@ window.ToolShelf.QRBulkProcessor = class QRBulkProcessor {
                         this.bulkData = this.processParsedData(results.data);
 
                         if (this.bulkData.length === 0) {
-                            reject(new Error('No valid data found in CSV'));
+                            reject(new Error('No valid data found in CSV. Please check the format and try again.'));
                         } else if (this.bulkData.length > this.maxBulkSize) {
-                            reject(new Error(`Too many items. Maximum ${this.maxBulkSize} allowed`));
-                        } else {
-                            resolve(this.bulkData);
+                            reject(new Error(`Too many items (${this.bulkData.length}). Maximum ${this.maxBulkSize} allowed. For better performance, we recommend batches of ${this.recommendedSize} or fewer.`));
+                        } else if (this.bulkData.length > this.recommendedSize) {
+                            // Show warning but allow processing
+                            this.generator.showToast(
+                                `Large batch detected (${this.bulkData.length} items). This may take a while and use significant browser memory. Consider splitting into smaller batches for better performance.`,
+                                'warning',
+                                8000
+                            );
                         }
+
+                        resolve(this.bulkData);
                     },
                     error: (error) => {
                         reject(new Error(`CSV parsing failed: ${error.message}`));
@@ -300,17 +308,34 @@ window.ToolShelf.QRBulkProcessor = class QRBulkProcessor {
     }
 
     /**
-     * Show bulk preview
+     * Show bulk preview with enhanced info
      */
     showBulkPreview() {
         const uploadArea = this.generator.elements.bulkUploadArea;
         const preview = this.generator.elements.bulkPreview;
         const countElement = this.generator.elements.bulkCount;
+        const sizeWarning = document.getElementById('bulkSizeWarning');
 
         if (uploadArea) uploadArea.style.display = 'none';
         if (preview) preview.style.display = 'block';
         if (countElement) countElement.textContent = this.bulkData.length;
+
+        // Show size warning if needed
+        if (sizeWarning) {
+            if (this.bulkData.length > this.recommendedSize) {
+                sizeWarning.style.display = 'block';
+                sizeWarning.className = this.bulkData.length > this.maxBulkSize * 0.8 ? 'warning-message error' : 'warning-message warning';
+                sizeWarning.innerHTML = `
+                    <i class="fas fa-exclamation-triangle"></i>
+                    Large batch (${this.bulkData.length} items). Consider splitting for better performance.
+                    <br><small>Recommended: ≤${this.recommendedSize} items. Maximum: ${this.maxBulkSize} items.</small>
+                `;
+            } else {
+                sizeWarning.style.display = 'none';
+            }
+        }
     }
+
 
     /**
      * Hide bulk preview
@@ -327,8 +352,8 @@ window.ToolShelf.QRBulkProcessor = class QRBulkProcessor {
     }
 
     /**
-     * Generate bulk QR codes
-     */
+ * Generate bulk QR codes with enhanced progress and completion feedback
+ */
     async generateBulkQRCodes() {
         if (this.isProcessing) return;
         if (this.bulkData.length === 0) {
@@ -338,16 +363,17 @@ window.ToolShelf.QRBulkProcessor = class QRBulkProcessor {
 
         this.isProcessing = true;
         this.processedCount = 0;
+        const startTime = Date.now();
 
         try {
-            // Show progress
-            this.generator.showToast(`Generating ${this.bulkData.length} QR codes...`, 'info', 2000);
+            // Show initial progress
+            this.generator.showToast(`Starting generation of ${this.bulkData.length} QR codes...`, 'info', 3000);
 
             const zip = new JSZip();
             const options = this.generator.operations.buildQROptions();
 
-            // Process in batches to prevent browser freeze
-            const batchSize = 10;
+            // Process in smaller batches to prevent browser freeze
+            const batchSize = Math.min(5, Math.max(1, Math.floor(50 / this.bulkData.length * 10)));
             const totalBatches = Math.ceil(this.bulkData.length / batchSize);
 
             for (let batchIndex = 0; batchIndex < totalBatches; batchIndex++) {
@@ -359,25 +385,44 @@ window.ToolShelf.QRBulkProcessor = class QRBulkProcessor {
 
                 // Update progress
                 const progress = Math.round((end / this.bulkData.length) * 100);
-                this.updateProgress(progress);
+                this.updateProgress(progress, end, this.bulkData.length);
 
-                // Small delay to prevent UI freeze
-                await this.delay(50);
+                // Longer delay for larger batches to prevent browser freeze
+                await this.delay(this.bulkData.length > this.recommendedSize ? 100 : 50);
             }
 
             // Generate and download ZIP
-            const zipBlob = await zip.generateAsync({ type: 'blob' });
+            this.updateProgress(100, this.bulkData.length, this.bulkData.length, 'Finalizing...');
+            const zipBlob = await zip.generateAsync({
+                type: 'blob',
+                compression: "DEFLATE",
+                compressionOptions: { level: 6 }
+            });
+
             const timestamp = new Date().toISOString().slice(0, 19).replace(/[:\-]/g, '');
             const filename = `toolshelf-qr-bulk-${timestamp}.zip`;
 
             saveAs(zipBlob, filename);
 
-            this.generator.showToast(`Generated ${this.bulkData.length} QR codes successfully!`, 'success');
+            const duration = ((Date.now() - startTime) / 1000).toFixed(1);
+
+            // Enhanced completion message
+            const successMessage = `🎉 Successfully generated ${this.bulkData.length} QR codes in ${duration}s!\n\n` +
+                `📁 Downloaded: ${filename}\n` +
+                `💾 File size: ${this.formatFileSize(zipBlob.size)}\n` +
+                `⚡ Processing rate: ${Math.round(this.bulkData.length / parseFloat(duration))} QR codes/second`;
+
+            this.generator.showToast(successMessage, 'success', 8000);
+
+            // Show browser notification if permission granted
+            this.showBrowserNotification(this.bulkData.length, filename);
 
             // Track analytics
             if (window.ToolShelf.Analytics) {
                 window.ToolShelf.Analytics.trackToolUsage('qr_generator', 'bulk_generation', {
-                    count: this.bulkData.length
+                    count: this.bulkData.length,
+                    duration: duration,
+                    fileSize: zipBlob.size
                 });
             }
 
@@ -385,8 +430,53 @@ window.ToolShelf.QRBulkProcessor = class QRBulkProcessor {
             this.generator.handleError(error, 'Bulk generation failed');
         } finally {
             this.isProcessing = false;
+            this.resetGenerateButton();
         }
     }
+
+
+    /**
+     * Reset generate button
+     */
+    resetGenerateButton() {
+        const generateBtn = this.generator.elements.generateBulk;
+        if (generateBtn) {
+            generateBtn.innerHTML = `
+                <i class="fas fa-magic"></i>
+                Generate All QR Codes
+            `;
+        }
+    }
+
+    /**
+ * Show browser notification for completion
+ */
+    showBrowserNotification(count, filename) {
+        if ('Notification' in window && Notification.permission === 'granted') {
+            new Notification('QR Generation Complete!', {
+                body: `Successfully generated ${count} QR codes. File: ${filename}`,
+                icon: '/favicon-32x32.png',
+                tag: 'qr-bulk-complete'
+            });
+        } else if ('Notification' in window && Notification.permission === 'default') {
+            // Request permission for future notifications
+            Notification.requestPermission();
+        }
+    }
+
+
+    /**
+ * Format file size for display
+ */
+    formatFileSize(bytes) {
+        if (bytes === 0) return '0 Bytes';
+        const k = 1024;
+        const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+        const i = Math.floor(Math.log(bytes) / Math.log(k));
+        return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+    }
+
+
 
     /**
      * Process a batch of QR codes
@@ -422,15 +512,21 @@ window.ToolShelf.QRBulkProcessor = class QRBulkProcessor {
     }
 
     /**
-     * Update progress display
-     */
-    updateProgress(percentage) {
+  * Update progress display with enhanced info
+  */
+    updateProgress(percentage, processed, total, status = 'Generating...') {
         const generateBtn = this.generator.elements.generateBulk;
         if (generateBtn) {
             generateBtn.innerHTML = `
                 <i class="fas fa-spinner fa-spin"></i>
-                Generating... ${percentage}%
+                ${status} ${percentage}% (${processed}/${total})
             `;
+        }
+
+        // Update progress bar if exists
+        const progressBar = document.getElementById('bulkProgressBar');
+        if (progressBar) {
+            progressBar.style.width = `${percentage}%`;
         }
     }
 
@@ -482,43 +578,61 @@ window.ToolShelf.QRBulkProcessor = class QRBulkProcessor {
     }
 
     /**
-     * Get sample CSV templates
+     * Get sample CSV templates with better examples
      */
     getSampleCSVTemplates() {
         return {
             urls: `url,label
-https://example.com,Website
-https://github.com/toolshelf,GitHub
-https://google.com,Search Engine`,
+https://toolshelf.dev,ToolShelf Homepage
+https://github.com/toolshelf,ToolShelf GitHub
+https://docs.toolshelf.dev,Documentation
+https://api.toolshelf.dev,API Endpoint
+https://blog.toolshelf.dev,Blog`,
 
             contacts: `name,phone,email,organization
-John Doe,+1234567890,john@example.com,Company Inc
-Jane Smith,+0987654321,jane@example.com,Tech Corp`,
+John Doe,+1-555-0123,john.doe@company.com,Tech Corp Inc
+Jane Smith,+1-555-0124,jane.smith@startup.io,Startup Labs
+Mike Johnson,+1-555-0125,mike@consulting.biz,Johnson Consulting
+Sarah Wilson,+1-555-0126,sarah.w@agency.com,Digital Agency`,
 
             wifi: `ssid,password,security,hidden
-MyNetwork,password123,WPA,false
-GuestWiFi,,none,false`,
+OfficeWiFi,SecurePass123,WPA,false
+GuestNetwork,,none,false
+ConferenceRoom,Meeting2024,WPA2,false
+VIPLounge,VIP@2024!,WPA2,true`,
 
-            mixed: `type,data,label
-url,https://example.com,Website
-text,Hello World,Greeting
-email,contact@example.com,Email Us`
+            sms: `phone,message
++1-555-0123,Thanks for visiting our booth! Check out our website for special offers.
++1-555-0124,Your appointment reminder: Tomorrow at 2 PM. Reply CONFIRM to confirm.
++1-555-0125,Welcome to our service! Text HELP for assistance or STOP to unsubscribe.`,
+
+            email: `email,subject,body
+support@company.com,Quick Contact,Hi! I'd like to learn more about your services.
+sales@company.com,Product Inquiry,Please send me information about your products.
+info@company.com,General Question,I have a question about your company.`,
+
+            mixed: `type,url,label,name,phone,email,ssid,password
+url,https://company.com,Company Website,,,,,
+contact,,John's Contact,John Doe,+1-555-0123,john@company.com,,
+wifi,,,,,OfficeWiFi,SecurePass123
+url,https://support.company.com,Support Portal,,,,,`
         };
     }
 
     /**
-     * Download sample CSV
-     */
+         * Download sample CSV with enhanced templates
+         */
     downloadSampleCSV(type = 'urls') {
         const templates = this.getSampleCSVTemplates();
         const csvContent = templates[type] || templates.urls;
 
-        const blob = new Blob([csvContent], { type: 'text/csv' });
-        const filename = `qr-sample-${type}.csv`;
+        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+        const filename = `qr-sample-${type}-${new Date().toISOString().slice(0, 10)}.csv`;
 
         saveAs(blob, filename);
-        this.generator.showToast(`Downloaded sample CSV: ${filename}`, 'success');
+        this.generator.showToast(`📁 Downloaded sample CSV: ${filename}\n\nUse this as a template for your bulk QR generation.`, 'success', 5000);
     }
+
 
     /**
      * Get bulk processor statistics
