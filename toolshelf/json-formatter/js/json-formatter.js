@@ -207,22 +207,35 @@ window.ToolShelf.JSONFormatter = class JSONFormatter extends window.ToolShelf.Ba
     /**
      * Handle empty input state properly
      */
+    // Add this method to your JSONFormatter class
+
+    /**
+     * Handle empty input state properly without cursor interference
+     */
     handleEmptyInput() {
+        // Store if input is focused
+        const inputFocused = document.activeElement === this.elements.inputText;
+        const cursorPos = inputFocused ? this.elements.inputText.selectionStart : 0;
+
         // Clear output
         this.elements.outputText.value = '';
         this.elements.outputText.classList.remove('has-content');
 
-        // Clear syntax highlighting
-        this.highlighter.clearHighlighting();
+        // Clear syntax highlighting without affecting input
+        if (this.highlighter) {
+            this.highlighter.clearHighlighting();
+        }
 
         // Hide error display
-        this.validator.hideValidationError();
-
-        // Reset validation status
-        this.validator.resetValidationStatus();
+        if (this.validator) {
+            this.validator.hideValidationError();
+            this.validator.resetValidationStatus();
+        }
 
         // Clear JSONPath result
-        this.pathHandler.clearResult();
+        if (this.pathHandler) {
+            this.pathHandler.clearResult();
+        }
 
         // Reset state
         this.jsonData = null;
@@ -236,7 +249,15 @@ window.ToolShelf.JSONFormatter = class JSONFormatter extends window.ToolShelf.Ba
         this.updateOutputStats('');
         this.updateButtonStates();
 
-        console.log('📝 Input cleared via keyboard - state reset');
+        // Restore focus and cursor if it was focused
+        if (inputFocused) {
+            setTimeout(() => {
+                this.elements.inputText.focus();
+                this.elements.inputText.setSelectionRange(cursorPos, cursorPos);
+            }, 0);
+        }
+
+        console.log('📝 Input cleared - state reset');
     }
 
     /**
@@ -487,27 +508,50 @@ window.ToolShelf.JSONFormatter = class JSONFormatter extends window.ToolShelf.Ba
      * Reset all settings
      */
     resetAll() {
-        this.clearInput();
+        // Store current input/output to preserve them
+        const currentInput = this.elements.inputText.value;
+        const currentOutput = this.elements.outputText.value;
 
         // Reset options to defaults
         this.currentIndentation = 2;
         this.sortKeys = false;
         this.currentOperation = 'format';
 
-        // Reset UI controls
+        // Reset UI controls to defaults
         const defaultIndentOption = document.querySelector('input[name="json-indentation"][value="2"]');
         if (defaultIndentOption) {
             defaultIndentOption.checked = true;
         }
 
+        // Update sort keys button to reflect disabled state
         this.operations.updateSortKeysButton();
 
-        // Reset advanced options
+        // Reset advanced options to their default states
         this.elements.advancedOptions.forEach(option => {
             option.checked = option.defaultChecked;
         });
 
-        this.showToast('All settings reset', 'success');
+        // Reset button states
+        this.updateButtonStates();
+
+        // If we had valid input, re-process it with the reset settings
+        if (currentInput.trim()) {
+            // Keep the input
+            this.elements.inputText.value = currentInput;
+
+            // Re-validate and format with new settings
+            this.updateOutput();
+        } else {
+            // If input was empty, ensure everything is clean
+            this.elements.outputText.value = '';
+            this.resetValidationStatus();
+        }
+
+        // Clear any error states
+        this.validator.hideValidationError();
+        this.elements.inputText.classList.remove('input-error');
+
+        this.showToast('Settings reset to defaults', 'success');
     }
 
     /**

@@ -10,7 +10,38 @@ window.ToolShelf.JSONPathHandler = class JSONPathHandler {
         this.queryHistory = [];
         this.maxHistoryLength = 10;
 
+        // Initialize library check
+        this.initializeLibrary();
         this.setupExamples();
+    }
+
+    /**
+     * Initialize and check JSONPath library
+     */
+    initializeLibrary() {
+        // Check for JSONPath Plus library (correct way)
+        this.jsonPathLib = null;
+
+        // JSONPath Plus exposes JSONPath as the main function
+        if (typeof window.JSONPath !== 'undefined') {
+            this.jsonPathLib = window.JSONPath;
+            console.log('✅ JSONPath Plus library loaded successfully');
+        }
+        // Check for the UMD module export
+        else if (typeof window.jsonpath !== 'undefined') {
+            this.jsonPathLib = window.jsonpath;
+            console.log('✅ JSONPath library found via jsonpath global');
+        }
+        // Check if it's available under a different name
+        else if (typeof JSONPath !== 'undefined') {
+            this.jsonPathLib = JSONPath;
+            console.log('✅ JSONPath library found in global scope');
+        }
+        else {
+            console.warn('⚠️ JSONPath library not found, using fallback implementation');
+            // Try to check what's actually available
+            console.log('Available globals:', Object.keys(window).filter(key => key.toLowerCase().includes('json')));
+        }
     }
 
     /**
@@ -19,12 +50,12 @@ window.ToolShelf.JSONPathHandler = class JSONPathHandler {
     setupExamples() {
         const examples = [
             { path: '$', description: 'Root object' },
-            { path: '$.store.book[*].author', description: 'All book authors' },
-            { path: '$.store.book[?(@.price < 10)]', description: 'Books under $10' },
-            { path: '$..author', description: 'All authors (recursive)' },
-            { path: '$.store.book[0,1]', description: 'First two books' },
-            { path: '$.store.book[-1]', description: 'Last book' },
-            { path: '$.*.length', description: 'Length of all arrays' }
+            { path: '$.customer_id', description: 'Customer ID' },
+            { path: '$.segments[*]', description: 'All segments' },
+            { path: '$.cart_offers[*]', description: 'All cart offers' },
+            { path: '$.segments[0]', description: 'First segment' },
+            { path: '$.segments[-1]', description: 'Last segment' },
+            { path: '$..price', description: 'All prices (recursive)' }
         ];
 
         const container = document.querySelector('.jsonpath-examples');
@@ -69,7 +100,7 @@ window.ToolShelf.JSONPathHandler = class JSONPathHandler {
         }
 
         if (!this.formatter.jsonData) {
-            resultElement.value = 'Error: No valid JSON data to query';
+            resultElement.value = 'Error: No valid JSON data to query\nPlease paste valid JSON in the input area first.';
             return;
         }
 
@@ -83,14 +114,17 @@ window.ToolShelf.JSONPathHandler = class JSONPathHandler {
             // Add to history
             this.addToHistory(path, result);
 
+            console.log('✅ JSONPath query executed successfully:', path, result);
+
         } catch (error) {
-            resultElement.value = `Error: ${error.message}`;
-            console.warn('JSONPath query failed:', error);
+            const errorMessage = `Error: ${error.message}\n\nTip: Try these patterns:\n• $ (root)\n• $.property (access property)\n• $.array[*] (all array items)\n• $.array[0] (first item)\n• $..property (recursive search)`;
+            resultElement.value = errorMessage;
+            console.warn('❌ JSONPath query failed:', error);
         }
     }
 
     /**
-     * Enhanced JSONPath evaluation
+     * Enhanced JSONPath evaluation with multiple fallbacks
      */
     evaluateJsonPath(path, data) {
         // Handle root path
@@ -100,47 +134,82 @@ window.ToolShelf.JSONPathHandler = class JSONPathHandler {
 
         // Basic path validation
         if (!path.startsWith('$')) {
-            throw new Error('JSONPath must start with $');
+            throw new Error('JSONPath must start with $ (root)');
         }
 
         try {
-            // If JSONPath Plus library is available, use it
-            if (window.JSONPath) {
-                return window.JSONPath({ path: path, json: data });
+            // Try JSONPath Plus library first (CORRECTED)
+            if (this.jsonPathLib) {
+                // JSONPath Plus expects an options object with path and json properties
+                if (typeof this.jsonPathLib === 'function') {
+                    return this.jsonPathLib({ path: path, json: data });
+                }
+                // Alternative API style
+                else if (this.jsonPathLib.JSONPath) {
+                    return this.jsonPathLib.JSONPath({ path: path, json: data });
+                }
+                // Query method style
+                else if (this.jsonPathLib.query) {
+                    return this.jsonPathLib.query(data, path);
+                }
             }
 
             // Fallback to custom implementation
+            console.log('📝 Using custom JSONPath implementation for:', path);
             return this.customJsonPathEvaluator(path, data);
 
         } catch (error) {
-            throw new Error(`Invalid JSONPath expression: ${error.message}`);
+            console.warn('Library evaluation failed, trying custom implementation:', error);
+            // If library fails, try custom implementation
+            try {
+                return this.customJsonPathEvaluator(path, data);
+            } catch (customError) {
+                throw new Error(`Invalid JSONPath expression: ${customError.message}`);
+            }
         }
     }
 
     /**
-     * Custom JSONPath evaluator (basic implementation)
+     * Enhanced custom JSONPath evaluator
      */
     customJsonPathEvaluator(path, data) {
         let current = data;
-        let results = [current];
+
+        // Handle root-only path
+        if (path === '$') {
+            return current;
+        }
 
         // Remove the $ and split by dots, but preserve bracket notation
         const segments = this.parseJsonPath(path.substring(1));
 
-        for (const segment of segments) {
+        if (segments.length === 0) {
+            return current;
+        }
+
+        let results = [current];
+
+        for (let i = 0; i < segments.length; i++) {
+            const segment = segments[i];
             const newResults = [];
 
             for (const item of results) {
                 if (item === null || item === undefined) continue;
 
-                const segmentResults = this.processSegment(segment, item);
-                newResults.push(...segmentResults);
+                try {
+                    const segmentResults = this.processSegment(segment, item);
+                    newResults.push(...segmentResults);
+                } catch (segmentError) {
+                    console.warn(`Segment processing failed for "${segment}":`, segmentError);
+                    continue;
+                }
             }
 
             results = newResults;
             if (results.length === 0) break;
         }
 
+        // Return single item if only one result, otherwise return array
         return results.length === 1 ? results[0] : results;
     }
 
@@ -188,7 +257,7 @@ window.ToolShelf.JSONPathHandler = class JSONPathHandler {
             segments.push(current);
         }
 
-        return segments;
+        return segments.filter(s => s.length > 0);
     }
 
     /**
@@ -196,7 +265,7 @@ window.ToolShelf.JSONPathHandler = class JSONPathHandler {
      */
     processSegment(segment, data) {
         // Handle recursive descent (..)
-        if (segment === '.') {
+        if (segment === '..') {
             return this.recursiveSearch(data);
         }
 
@@ -222,11 +291,10 @@ window.ToolShelf.JSONPathHandler = class JSONPathHandler {
      * Process bracket notation [index], [*], [filter]
      */
     processBracketNotation(segment, data) {
-        const bracketContent = segment.match(/\[([^\]]+)\]/);
-        if (!bracketContent) return [];
+        const bracketMatch = segment.match(/^([^[]*)\[([^\]]+)\]$/);
+        if (!bracketMatch) return [];
 
-        const content = bracketContent[1];
-        const propertyName = segment.substring(0, segment.indexOf('['));
+        const [, propertyName, content] = bracketMatch;
 
         // Get the target object/array
         let target = data;
@@ -257,90 +325,11 @@ window.ToolShelf.JSONPathHandler = class JSONPathHandler {
 
             const indices = content.split(',').map(i => parseInt(i.trim()));
             return indices
-                .filter(i => i >= 0 && i < target.length)
+                .filter(i => !isNaN(i) && i >= 0 && i < target.length)
                 .map(i => target[i]);
         }
 
-        // Handle basic filter expressions [?(@.price < 10)]
-        if (content.startsWith('?(')) {
-            return this.processFilter(content, target);
-        }
-
         return [];
-    }
-
-    /**
-     * Process filter expressions
-     */
-    processFilter(filterExpression, data) {
-        if (!Array.isArray(data)) return [];
-
-        // Remove ?( and trailing )
-        const condition = filterExpression.slice(2, -1);
-
-        // Basic filter parsing (simplified)
-        const match = condition.match(/@\.([^<>=!]+)\s*([<>=!]+)\s*(.+)/);
-        if (!match) return [];
-
-        const [, property, operator, value] = match;
-        const targetValue = this.parseFilterValue(value);
-
-        return data.filter(item => {
-            if (!item || typeof item !== 'object') return false;
-
-            const itemValue = this.getNestedProperty(item, property);
-            return this.evaluateCondition(itemValue, operator, targetValue);
-        });
-    }
-
-    /**
-     * Parse filter value (string, number, boolean)
-     */
-    parseFilterValue(value) {
-        const trimmed = value.trim();
-
-        // String values (quoted)
-        if ((trimmed.startsWith('"') && trimmed.endsWith('"')) ||
-            (trimmed.startsWith("'") && trimmed.endsWith("'"))) {
-            return trimmed.slice(1, -1);
-        }
-
-        // Boolean values
-        if (trimmed === 'true') return true;
-        if (trimmed === 'false') return false;
-        if (trimmed === 'null') return null;
-
-        // Numeric values
-        const num = parseFloat(trimmed);
-        if (!isNaN(num)) return num;
-
-        return trimmed;
-    }
-
-    /**
-     * Evaluate filter condition
-     */
-    evaluateCondition(leftValue, operator, rightValue) {
-        switch (operator) {
-            case '<': return leftValue < rightValue;
-            case '<=': return leftValue <= rightValue;
-            case '>': return leftValue > rightValue;
-            case '>=': return leftValue >= rightValue;
-            case '==': return leftValue == rightValue;
-            case '===': return leftValue === rightValue;
-            case '!=': return leftValue != rightValue;
-            case '!==': return leftValue !== rightValue;
-            default: return false;
-        }
-    }
-
-    /**
-     * Get nested property value
-     */
-    getNestedProperty(obj, path) {
-        return path.split('.').reduce((current, prop) => {
-            return current && current[prop];
-        }, obj);
     }
 
     /**
@@ -360,12 +349,12 @@ window.ToolShelf.JSONPathHandler = class JSONPathHandler {
      */
     recursiveSearch(data, results = []) {
         if (Array.isArray(data)) {
+            results.push(...data);
             data.forEach(item => this.recursiveSearch(item, results));
         } else if (data && typeof data === 'object') {
-            Object.values(data).forEach(value => {
-                results.push(value);
-                this.recursiveSearch(value, results);
-            });
+            const values = Object.values(data);
+            results.push(...values);
+            values.forEach(value => this.recursiveSearch(value, results));
         }
         return results;
     }
@@ -384,12 +373,15 @@ window.ToolShelf.JSONPathHandler = class JSONPathHandler {
 
         if (Array.isArray(result)) {
             if (result.length === 0) {
-                return '[]';
+                return '[] (empty array)';
             }
 
             if (result.length === 1 && typeof result[0] !== 'object') {
-                return String(result[0]);
+                return `${String(result[0])}\n\n(Found 1 item)`;
             }
+
+            // For arrays, show JSON formatted with item count
+            return `${JSON.stringify(result, null, 2)}\n\n(Found ${result.length} items)`;
         }
 
         if (typeof result === 'object') {
@@ -434,41 +426,11 @@ window.ToolShelf.JSONPathHandler = class JSONPathHandler {
     }
 
     /**
-     * Get common JSONPath patterns for the current data structure
-     */
-    suggestPaths(data) {
-        const suggestions = [];
-
-        // Basic paths
-        suggestions.push('$');
-
-        if (typeof data === 'object' && data !== null) {
-            if (Array.isArray(data)) {
-                suggestions.push('$[*]');
-                suggestions.push('$[0]');
-                suggestions.push('$[-1]');
-                suggestions.push('$.length');
-            } else {
-                // Object properties
-                Object.keys(data).forEach(key => {
-                    suggestions.push(`$.${key}`);
-
-                    if (Array.isArray(data[key])) {
-                        suggestions.push(`$.${key}[*]`);
-                        suggestions.push(`$.${key}.length`);
-                    }
-                });
-            }
-        }
-
-        return suggestions;
-    }
-
-    /**
      * Cleanup
      */
     destroy() {
         this.formatter = null;
         this.queryHistory = [];
+        this.jsonPathLib = null;
     }
 };

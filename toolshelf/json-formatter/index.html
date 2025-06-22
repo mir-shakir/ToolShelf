@@ -113,6 +113,7 @@
     <link rel="dns-prefetch" href="//cdnjs.cloudflare.com">
     <!-- JSONPath Plus Library (lightweight) -->
     <script src="https://unpkg.com/jsonpath-plus@9.0.0/dist/index-browser-umd.min.cjs"></script>
+        
 
 
 
@@ -231,218 +232,164 @@
             </section>
 
             <!-- JSON Formatter Tool -->
+            <!-- OPTIMIZED JSON Formatter Tool -->
             <div id="json-tool" class="tool-container active">
-                <div class="tool-workspace">
-                    <!-- Left Sidebar: Controls -->
-                    <aside class="controls-sidebar" role="complementary" aria-label="JSON formatting options">
-                        <div class="controls-header">
-                            <h2><i class="fas fa-sliders-h" aria-hidden="true"></i> JSON Controls</h2>
-                            <button id="resetAll" class="btn-reset" title="Reset all settings"
-                                aria-label="Reset all JSON settings">
-                                <i class="fas fa-undo-alt" aria-hidden="true"></i>
+                <div class="tool-workspace-optimized">
+
+                    <!-- Compact Controls Header -->
+                    <div class="controls-header-compact">
+                        <div class="header-left">
+                            <h2><i class="fas fa-sliders-h"></i> JSON Tools</h2>
+                            <!-- Validation Status moved to header -->
+                            <div class="validation-status-inline" id="validationStatusInline">
+                                <i class="fas fa-info-circle"></i>
+                                <span>Ready to process JSON</span>
+                            </div>
+                        </div>
+
+                        <div class="quick-actions-compact">
+                            <button id="formatBtn" class="quick-action-btn-compact primary"
+                                title="Format JSON with proper indentation">
+                                <i class="fas fa-indent"></i>
+                                Format
                             </button>
-                        </div>
+                            <button id="minifyBtn" class="quick-action-btn-compact"
+                                title="Minify JSON by removing whitespace">
+                                <i class="fas fa-compress-alt"></i>
+                                Minify
+                            </button>
+                            <button id="validateBtn" class="quick-action-btn-compact" title="Validate JSON syntax">
+                                <i class="fas fa-check-circle"></i>
+                                Validate
+                            </button>
+                            <button id="sortKeysBtn" class="quick-action-btn-compact"
+                                title="Sort object keys alphabetically">
+                                <i class="fas fa-sort-alpha-down"></i>
+                                Sort
+                            </button>
 
-                        <!-- Quick Actions -->
-                        <div class="control-group">
-                            <div class="control-group-title">
-                                <i class="fas fa-bolt" aria-hidden="true"></i>
-                                Quick Actions
-                            </div>
-                            <!-- Update the quick action buttons with better descriptions -->
-                            <div class="quick-actions">
-                                <button id="formatBtn" class="quick-action-btn primary"
-                                    title="Format JSON with proper indentation and line breaks for readability">
-                                    <i class="fas fa-indent" aria-hidden="true"></i>
-                                    Format
-                                </button>
-                                <button id="minifyBtn" class="quick-action-btn"
-                                    title="Minify JSON by removing all unnecessary whitespace to reduce file size">
-                                    <i class="fas fa-compress-alt" aria-hidden="true"></i>
-                                    Minify
-                                </button>
-                                <button id="validateBtn" class="quick-action-btn"
-                                    title="Validate JSON syntax and show detailed error information if invalid">
-                                    <i class="fas fa-check-circle" aria-hidden="true"></i>
-                                    Validate
-                                </button>
-                                <button id="sortKeysBtn" class="quick-action-btn"
-                                    title="Sort all object keys alphabetically throughout the JSON structure">
-                                    <i class="fas fa-sort-alpha-down" aria-hidden="true"></i>
-                                    Sort Keys
-                                </button>
-                            </div>
-                        </div>
+                            <div class="divider"></div>
 
-                        <!-- Indentation Options -->
-                        <div class="control-group">
-                            <div class="control-group-title">
-                                <i class="fas fa-text-width" aria-hidden="true"></i>
-                                Indentation
-                            </div>
-                            <div class="format-options">
-                                <label class="format-option">
-                                    <input type="radio" name="json-indentation" value="2" checked>
-                                    <span class="format-option-label">2 spaces</span>
-                                </label>
-                                <label class="format-option">
-                                    <input type="radio" name="json-indentation" value="4">
-                                    <span class="format-option-label">4 spaces</span>
-                                </label>
-                                <label class="format-option">
-                                    <input type="radio" name="json-indentation" value="8">
-                                    <span class="format-option-label">8 spaces</span>
-                                </label>
-                                <label class="format-option">
-                                    <input type="radio" name="json-indentation" value="tab">
-                                    <span class="format-option-label">Tab characters</span>
-                                </label>
-                            </div>
-                        </div>
-
-                        <!-- JSON Statistics -->
-                        <div class="control-group">
-                            <div class="control-group-title">
-                                <i class="fas fa-chart-bar" aria-hidden="true"></i>
-                                JSON Statistics
-                            </div>
-                            <div class="json-stats">
-                                <div class="json-stat-item">
-                                    <div class="json-stat-value" id="jsonDepth">0</div>
-                                    <div class="json-stat-label">Depth</div>
-                                </div>
-                                <div class="json-stat-item">
-                                    <div class="json-stat-value" id="jsonKeys">0</div>
-                                    <div class="json-stat-label">Keys</div>
-                                </div>
-                                <div class="json-stat-item">
-                                    <div class="json-stat-value" id="jsonArrays">0</div>
-                                    <div class="json-stat-label">Arrays</div>
-                                </div>
-                                <div class="json-stat-item">
-                                    <div class="json-stat-value" id="jsonObjects">0</div>
-                                    <div class="json-stat-label">Objects</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- JSONPath Query -->
-                        <div class="control-group">
-                            <div class="control-group-title">
-                                <i class="fas fa-search" aria-hidden="true"></i>
-                                JSONPath Query
-                            </div>
-                            <div class="jsonpath-section">
-                                <input type="text" id="jsonPathInput" class="jsonpath-input"
-                                    placeholder="$.store.book[*].author" aria-label="JSONPath query input">
-                                <div class="jsonpath-examples">
-                                    <!-- Examples will be populated by JavaScript -->
-                                </div>
-                                <textarea id="jsonPathResult" class="jsonpath-result"
-                                    placeholder="Query results will appear here..." readonly></textarea>
-                            </div>
-                        </div>
-
-
-                        <!-- Advanced Options - Updated Structure -->
-                        <div class="control-group advanced-section" id="advancedSection">
-                            <button class="advanced-toggle" id="advancedToggle" type="button">
-                                <span>Advanced Options</span>
+                            <button class="advanced-toggle-compact" id="advancedToggle">
+                                <i class="fas fa-cog"></i>
+                                Options
                                 <i class="fas fa-chevron-down"></i>
                             </button>
-                            <div class="advanced-content">
-                                <label class="checkbox-option">
-                                    <input type="checkbox" id="enableSyntaxHighlighting" class="advanced-option"
-                                        checked>
-                                    <div class="checkbox-option-content">
-                                        <span class="checkbox-option-label">Syntax highlighting</span>
-                                        <div class="checkbox-option-desc">
-                                            Apply color coding to JSON elements for better readability
-                                        </div>
-                                    </div>
-                                </label>
 
-                                <label class="checkbox-option">
-                                    <input type="checkbox" id="autoValidate" class="advanced-option" checked>
-                                    <div class="checkbox-option-content">
-                                        <span class="checkbox-option-label">Auto-validation</span>
-                                        <div class="checkbox-option-desc">
-                                            Automatically validate JSON as you type
-                                        </div>
-                                    </div>
-                                </label>
+                            <button id="resetAll" class="quick-action-btn-compact" title="Reset all settings">
+                                <i class="fas fa-undo-alt"></i>
+                            </button>
+                        </div>
+                    </div>
 
-                                <label class="checkbox-option">
-                                    <input type="checkbox" id="compactArrays" class="advanced-option">
-                                    <div class="checkbox-option-content">
-                                        <span class="checkbox-option-label">Compact arrays</span>
-                                        <div class="checkbox-option-desc">
-                                            Display short arrays on single lines when formatting
-                                        </div>
+                    <!-- Expandable Advanced Options -->
+                    <div class="advanced-options-expanded" id="advancedOptions">
+                        <div class="advanced-options-grid">
+                            <!-- Indentation Options -->
+                            <div class="control-group">
+                                <div class="control-group-title">
+                                    <i class="fas fa-text-width"></i>
+                                    Indentation
+                                </div>
+                                <div class="format-options">
+                                    <label class="format-option">
+                                        <input type="radio" name="json-indentation" value="2" checked>
+                                        <span class="format-option-label">2 spaces</span>
+                                    </label>
+                                    <label class="format-option">
+                                        <input type="radio" name="json-indentation" value="4">
+                                        <span class="format-option-label">4 spaces</span>
+                                    </label>
+                                    <label class="format-option">
+                                        <input type="radio" name="json-indentation" value="tab">
+                                        <span class="format-option-label">Tab characters</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- JSONPath Query -->
+                            <div class="control-group">
+                                <div class="control-group-title">
+                                    <i class="fas fa-search"></i>
+                                    JSONPath Query
+                                </div>
+                                <div class="jsonpath-section">
+                                    <input type="text" id="jsonPathInput" class="jsonpath-input"
+                                        placeholder="$.store.book[*].author">
+                                    <textarea id="jsonPathResult" class="jsonpath-result" placeholder="Query results..."
+                                        readonly></textarea>
+                                </div>
+                            </div>
+
+                            <!-- JSON Statistics -->
+                            <div class="control-group">
+                                <div class="control-group-title">
+                                    <i class="fas fa-chart-bar"></i>
+                                    Statistics
+                                </div>
+                                <div class="json-stats">
+                                    <div class="json-stat-item">
+                                        <div class="json-stat-value" id="jsonDepth">0</div>
+                                        <div class="json-stat-label">Depth</div>
                                     </div>
-                                </label>
+                                    <div class="json-stat-item">
+                                        <div class="json-stat-value" id="jsonKeys">0</div>
+                                        <div class="json-stat-label">Keys</div>
+                                    </div>
+                                    <div class="json-stat-item">
+                                        <div class="json-stat-value" id="jsonArrays">0</div>
+                                        <div class="json-stat-label">Arrays</div>
+                                    </div>
+                                    <div class="json-stat-item">
+                                        <div class="json-stat-value" id="jsonObjects">0</div>
+                                        <div class="json-stat-label">Objects</div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
+                    </div>
 
-                        <!-- Validation Status -->
-                        <div class="validation-status neutral" id="validationStatus">
-                            <i class="fas fa-info-circle" aria-hidden="true"></i>
-                            <span>Ready to process JSON</span>
-                        </div>
-
-                        <!-- Error Display -->
-                    </aside>
-
-                    <!-- Right: Text Areas -->
-                    <div class="text-workspace">
+                    <!-- Main Text Workspace - Full Width Side by Side -->
+                    <div class="text-workspace-fullwidth">
                         <!-- Input Panel -->
                         <section class="text-panel input-panel">
                             <div class="panel-header">
                                 <div class="panel-title">
-                                    <i class="fas fa-edit" aria-hidden="true"></i>
+                                    <i class="fas fa-edit"></i>
                                     <span>Input JSON</span>
                                 </div>
                                 <div class="panel-actions">
-                                    <button id="pasteBtn" class="icon-btn" title="Paste from clipboard"
-                                        aria-label="Paste JSON from clipboard">
-                                        <i class="fas fa-paste" aria-hidden="true"></i>
+                                    <button id="pasteBtn" class="icon-btn" title="Paste from clipboard">
+                                        <i class="fas fa-paste"></i>
                                     </button>
-                                    <button id="clearInput" class="icon-btn" title="Clear input"
-                                        aria-label="Clear input area">
-                                        <i class="fas fa-trash" aria-hidden="true"></i>
+                                    <button id="clearInput" class="icon-btn" title="Clear input">
+                                        <i class="fas fa-trash"></i>
                                     </button>
                                 </div>
                             </div>
 
-                            <!-- Move error display here for better visibility -->
-                            <div class="error-display" id="errorDisplay">
-                                <!-- Error details will be populated by JavaScript -->
-                            </div>
+                            <!-- Error Display -->
+                            <div class="error-display" id="errorDisplay"></div>
 
-                            <textarea id="inputText" class="text-area" placeholder="Paste your JSON here...
+                            <textarea id="inputText" class="text-area" spellcheck="false" autocomplete="off"
+                                placeholder="Paste your JSON here...
+                            
+                            Example:
+                            {
+                              &quot;name&quot;: &quot;John Doe&quot;,
+                              &quot;age&quot;: 30,
+                              &quot;skills&quot;: [&quot;JavaScript&quot;, &quot;Python&quot;]
+                            }"></textarea>
 
-Examples:
-{
-  &quot;name&quot;: &quot;John Doe&quot;,
-  &quot;age&quot;: 30,
-  &quot;skills&quot;: [&quot;JavaScript&quot;, &quot;Python&quot;, &quot;JSON&quot;],
-  &quot;active&quot;: true
-}
-
-✨ Real-time validation enabled
-🎨 Syntax highlighting available  
-🔍 JSONPath queries supported
-⌨️ Keyboard shortcuts: Ctrl+F (format), Ctrl+M (minify)" spellcheck="false" autocomplete="off"
-                                aria-label="JSON input area - paste or type JSON data here"></textarea>
                             <div class="panel-footer">
                                 <div class="stats-row">
                                     <div class="stats-section">
                                         <span class="stat-item">
-                                            <i class="fas fa-font" aria-hidden="true"></i>
+                                            <i class="fas fa-font"></i>
                                             <span id="inputCharCount">0</span> chars
                                         </span>
                                         <span class="stat-item">
-                                            <i class="fas fa-file-alt" aria-hidden="true"></i>
+                                            <i class="fas fa-file-alt"></i>
                                             <span id="inputBytes">0</span> bytes
                                         </span>
                                     </div>
@@ -454,46 +401,40 @@ Examples:
                         <section class="text-panel output-panel">
                             <div class="panel-header">
                                 <div class="panel-title">
-                                    <i class="fas fa-code" aria-hidden="true"></i>
+                                    <i class="fas fa-code"></i>
                                     <span>Formatted Result</span>
                                 </div>
                                 <div class="panel-actions">
-                                    <button id="copyOutput" class="icon-btn" title="Copy to clipboard" disabled
-                                        aria-label="Copy formatted JSON to clipboard">
-                                        <i class="fas fa-copy" aria-hidden="true"></i>
+                                    <button id="copyOutput" class="icon-btn" title="Copy to clipboard" disabled>
+                                        <i class="fas fa-copy"></i>
                                     </button>
-                                    <button id="downloadOutput" class="icon-btn" title="Download as JSON file" disabled
-                                        aria-label="Download formatted JSON as file">
-                                        <i class="fas fa-download" aria-hidden="true"></i>
+                                    <button id="downloadOutput" class="icon-btn" title="Download as JSON file" disabled>
+                                        <i class="fas fa-download"></i>
                                     </button>
                                 </div>
                             </div>
-                            <textarea id="outputText" class="text-area output" placeholder="Formatted JSON will appear here...
 
-✅ Real-time processing
-🎨 Syntax highlighting  
-📊 Comprehensive statistics
-📋 One-click copy
-💾 Download as file
-🔍 JSONPath query support
+                            <textarea id="outputText" class="text-area output" readonly spellcheck="false" placeholder="Formatted JSON will appear here...
+                            
+                            ✅ Real-time processing
+                            🎨 Syntax highlighting  
+                            📋 One-click copy
+                            💾 Download as file"></textarea>
 
-Try pasting JSON in the input area to see it formatted instantly!" readonly spellcheck="false"
-                                aria-label="JSON output area - shows formatted results"></textarea>
                             <div class="panel-footer">
                                 <div class="stats-row">
                                     <div class="stats-section">
                                         <span class="stat-item">
-                                            <i class="fas fa-font" aria-hidden="true"></i>
+                                            <i class="fas fa-font"></i>
                                             <span id="outputCharCount">0</span> chars
                                         </span>
                                         <span class="stat-item">
-                                            <i class="fas fa-file-alt" aria-hidden="true"></i>
+                                            <i class="fas fa-file-alt"></i>
                                             <span id="outputBytes">0</span> bytes
                                         </span>
                                     </div>
                                     <div class="status-section">
-                                        <span id="operationStatus" class="operation-status info">Ready to format
-                                            JSON</span>
+                                        <span id="operationStatus" class="operation-status info">Ready</span>
                                     </div>
                                 </div>
                             </div>
@@ -822,6 +763,35 @@ Try pasting JSON in the input area to see it formatted instantly!" readonly spel
             <script src="../json-formatter/js/json-path-handler.js"></script>
             <script src="../json-formatter/js/json-ui-handlers.js"></script>
             <script src="../json-formatter/js/json-formatter.js"></script>
+            <!-- new script for toggle  -->
+            <script>
+                document.addEventListener('DOMContentLoaded', () => {
+                    const advancedToggle = document.getElementById('advancedToggle');
+                    const advancedOptions = document.getElementById('advancedOptions');
+
+                    advancedToggle?.addEventListener('click', () => {
+                        advancedOptions.classList.toggle('show');
+                        const icon = advancedToggle.querySelector('.fa-chevron-down, .fa-chevron-up');
+                        if (icon) {
+                            icon.classList.toggle('fa-chevron-down');
+                            icon.classList.toggle('fa-chevron-up');
+                        }
+                    });
+                });
+
+
+                window.addEventListener('DOMContentLoaded', () => {
+                        if (typeof window.JSONPath === 'undefined') {
+                            console.warn('⚠️ JSONPath library not loaded, loading fallback...');
+                            // Try to access JSONPath from global scope
+                            if (typeof JSONPath !== 'undefined') {
+                                window.JSONPath = JSONPath;
+                            }
+                        } else {
+                            console.log('✅ JSONPath library loaded successfully');
+                        }
+                    });
+            </script>
 
             <!-- Initialize JSON Formatter -->
             <script>

@@ -1,5 +1,5 @@
 /**
- * ToolShelf JSON Validator - Validation Logic Module
+ * ToolShelf JSON Validator - Validation Logic Module (FIXED - No Cursor Manipulation)
  */
 window.ToolShelf = window.ToolShelf || {};
 
@@ -67,25 +67,45 @@ window.ToolShelf.JSONValidator = class JSONValidator {
     }
 
     /**
-     * Show validation error with detailed information
+     * Show validation error with detailed information (NO CURSOR MANIPULATION)
      */
-    // showValidationError(error) {
-    //     this.updateValidationStatus('Invalid JSON', 'invalid');
+    showValidationError(error) {
+        this.updateValidationStatus('Invalid JSON', 'invalid');
 
-    //     const errorDisplay = this.formatter.elements.errorDisplay;
-    //     if (errorDisplay) {
-    //         const errorInfo = this.parseJsonError(error);
+        const errorDisplay = this.formatter.elements.errorDisplay;
+        if (errorDisplay) {
+            const errorInfo = this.parseJsonError(error);
 
-    //         errorDisplay.innerHTML = `
-    //             <div class="error-display-title">${errorInfo.type}</div>
-    //             <div class="error-display-message">${errorInfo.message}</div>
-    //             ${errorInfo.location ? `<div class="error-display-location">Location: ${errorInfo.location}</div>` : ''}
-    //             ${errorInfo.suggestion ? `<div class="error-display-suggestion">💡 ${errorInfo.suggestion}</div>` : ''}
-    //         `;
+            errorDisplay.innerHTML = `
+                <div class="error-display-title">${errorInfo.type}</div>
+                <div class="error-display-message">${errorInfo.message}</div>
+                ${errorInfo.location ? `<div class="error-display-location">📍 ${errorInfo.location}</div>` : ''}
+                ${errorInfo.suggestion ? `<div class="error-display-suggestion">💡 ${errorInfo.suggestion}</div>` : ''}
+            `;
 
-    //         errorDisplay.classList.add('show');
-    //     }
-    // }
+            errorDisplay.classList.add('show');
+
+            // REMOVED: this.highlightErrorInInput(errorInfo);
+            // Just add visual styling without cursor manipulation
+            this.addErrorStyling();
+        }
+    }
+
+    /**
+     * Add error styling without cursor manipulation
+     */
+    addErrorStyling() {
+        const inputElement = this.formatter.elements.inputText;
+        if (!inputElement) return;
+
+        // Add error styling to input (visual only, no cursor changes)
+        inputElement.classList.add('input-error');
+
+        // Remove error styling after 3 seconds
+        setTimeout(() => {
+            inputElement.classList.remove('input-error');
+        }, 3000);
+    }
 
     /**
      * Hide validation error
@@ -95,61 +115,68 @@ window.ToolShelf.JSONValidator = class JSONValidator {
         if (errorDisplay) {
             errorDisplay.classList.remove('show');
         }
+
+        // Remove error styling
+        const inputElement = this.formatter.elements.inputText;
+        if (inputElement) {
+            inputElement.classList.remove('input-error');
+        }
     }
 
-    // /**
-    //  * Parse JSON error for better user feedback
-    //  */
-    // parseJsonError(error) {
-    //     const message = error.message;
-    //     let type = 'Syntax Error';
-    //     let location = null;
-    //     let suggestion = null;
+    /**
+     * Parse JSON error for better user feedback (NO CURSOR POSITIONING)
+     */
+    parseJsonError(error) {
+        const message = error.message;
+        let type = 'Syntax Error';
+        let location = null;
+        let suggestion = null;
 
-    //     // Extract position information if available
-    //     const positionMatch = message.match(/position (\d+)/i);
-    //     const lineMatch = message.match(/line (\d+)/i);
-    //     const columnMatch = message.match(/column (\d+)/i);
+        // Extract position information for display only (not cursor positioning)
+        const positionMatch = message.match(/position (\d+)/i);
+        const lineMatch = message.match(/line (\d+)/i);
+        const columnMatch = message.match(/column (\d+)/i);
 
-    //     if (positionMatch) {
-    //         const position = parseInt(positionMatch[1]);
-    //         const inputText = this.formatter.elements.inputText.value;
-    //         const lines = inputText.substring(0, position).split('\n');
-    //         const line = lines.length;
-    //         const column = lines[lines.length - 1].length + 1;
-    //         location = `Line ${line}, Column ${column}`;
+        if (positionMatch) {
+            const position = parseInt(positionMatch[1]);
+            const inputText = this.formatter.elements.inputText.value;
+            const lines = inputText.substring(0, position).split('\n');
+            const line = lines.length;
+            const column = lines[lines.length - 1].length + 1;
+            location = `Line ${line}, Column ${column}`;
 
-    //         // Provide context around the error
-    //         const errorContext = this.getErrorContext(inputText, position);
-    //         if (errorContext) {
-    //             suggestion = `Check around: "${errorContext}"`;
-    //         }
-    //     } else if (lineMatch && columnMatch) {
-    //         location = `Line ${lineMatch[1]}, Column ${columnMatch[1]}`;
-    //     }
+            // Provide context around the error
+            const errorContext = this.getErrorContext(inputText, position);
+            if (errorContext) {
+                suggestion = `Check around: "${errorContext}"`;
+            }
+        } else if (lineMatch && columnMatch) {
+            location = `Line ${lineMatch[1]}, Column ${columnMatch[1]}`;
+        }
 
-    //     // Categorize error type and provide suggestions
-    //     if (message.includes('Unexpected token')) {
-    //         type = 'Unexpected Token';
-    //         suggestion = this.getSuggestionForUnexpectedToken(message);
-    //     } else if (message.includes('Unexpected end')) {
-    //         type = 'Incomplete JSON';
-    //         suggestion = 'Check for missing closing brackets or quotes';
-    //     } else if (message.includes('duplicate')) {
-    //         type = 'Duplicate Key';
-    //         suggestion = 'Remove or rename duplicate property keys';
-    //     } else if (message.includes('Expected property name')) {
-    //         type = 'Invalid Property';
-    //         suggestion = 'Property names must be strings in double quotes';
-    //     }
+        // Categorize error type and provide suggestions
+        if (message.includes('Unexpected token')) {
+            type = 'Unexpected Token';
+            suggestion = this.getSuggestionForUnexpectedToken(message);
+        } else if (message.includes('Unexpected end')) {
+            type = 'Incomplete JSON';
+            suggestion = 'Check for missing closing brackets or quotes';
+        } else if (message.includes('duplicate')) {
+            type = 'Duplicate Key';
+            suggestion = 'Remove or rename duplicate property keys';
+        } else if (message.includes('Expected property name')) {
+            type = 'Invalid Property';
+            suggestion = 'Property names must be strings in double quotes';
+        }
 
-    //     return {
-    //         type,
-    //         message: this.humanizeErrorMessage(message),
-    //         location,
-    //         suggestion
-    //     };
-    // }
+        return {
+            type,
+            message: this.humanizeErrorMessage(message),
+            location,
+            suggestion
+            // REMOVED: position (no longer needed since we don't manipulate cursor)
+        };
+    }
 
     /**
      * Get error context around the error position
@@ -336,112 +363,4 @@ window.ToolShelf.JSONValidator = class JSONValidator {
         this.formatter = null;
         this.debouncedValidate = null;
     }
-
-    /**
- * Show validation error with detailed information and highlighting
- */
-    showValidationError(error) {
-        this.updateValidationStatus('Invalid JSON', 'invalid');
-
-        const errorDisplay = this.formatter.elements.errorDisplay;
-        if (errorDisplay) {
-            const errorInfo = this.parseJsonError(error);
-
-            errorDisplay.innerHTML = `
-            <div class="error-display-title">${errorInfo.type}</div>
-            <div class="error-display-message">${errorInfo.message}</div>
-            ${errorInfo.location ? `<div class="error-display-location">📍 ${errorInfo.location}</div>` : ''}
-            ${errorInfo.suggestion ? `<div class="error-display-suggestion">💡 ${errorInfo.suggestion}</div>` : ''}
-        `;
-
-            errorDisplay.classList.add('show');
-
-            // Highlight error in input field
-            this.highlightErrorInInput(errorInfo);
-        }
-    }
-
-    /**
-     * Highlight error position in input field
-     */
-    highlightErrorInInput(errorInfo) {
-        const inputElement = this.formatter.elements.inputText;
-        if (!inputElement || !errorInfo.position) return;
-
-        // Add error styling to input
-        inputElement.classList.add('input-error');
-
-        // Remove error styling after 3 seconds
-        setTimeout(() => {
-            inputElement.classList.remove('input-error');
-        }, 3000);
-
-        // Try to position cursor at error location
-        if (errorInfo.position) {
-            try {
-                inputElement.focus();
-                inputElement.setSelectionRange(errorInfo.position, errorInfo.position + 1);
-            } catch (e) {
-                // Fallback: just focus the input
-                inputElement.focus();
-            }
-        }
-    }
-
-    /**
-     * Parse JSON error for better user feedback
-     */
-    parseJsonError(error) {
-        const message = error.message;
-        let type = 'Syntax Error';
-        let location = null;
-        let suggestion = null;
-        let position = null;
-
-        // Extract position information if available
-        const positionMatch = message.match(/position (\d+)/i);
-        const lineMatch = message.match(/line (\d+)/i);
-        const columnMatch = message.match(/column (\d+)/i);
-
-        if (positionMatch) {
-            position = parseInt(positionMatch[1]);
-            const inputText = this.formatter.elements.inputText.value;
-            const lines = inputText.substring(0, position).split('\n');
-            const line = lines.length;
-            const column = lines[lines.length - 1].length + 1;
-            location = `Line ${line}, Column ${column}`;
-
-            // Provide context around the error
-            const errorContext = this.getErrorContext(inputText, position);
-            if (errorContext) {
-                suggestion = `Check around: "${errorContext}"`;
-            }
-        } else if (lineMatch && columnMatch) {
-            location = `Line ${lineMatch[1]}, Column ${columnMatch[1]}`;
-        }
-
-        // Categorize error type and provide suggestions
-        if (message.includes('Unexpected token')) {
-            type = 'Unexpected Token';
-            suggestion = this.getSuggestionForUnexpectedToken(message);
-        } else if (message.includes('Unexpected end')) {
-            type = 'Incomplete JSON';
-            suggestion = 'Check for missing closing brackets or quotes';
-        } else if (message.includes('duplicate')) {
-            type = 'Duplicate Key';
-            suggestion = 'Remove or rename duplicate property keys';
-        } else if (message.includes('Expected property name')) {
-            type = 'Invalid Property';
-            suggestion = 'Property names must be strings in double quotes';
-        }
-
-        return {
-            type,
-            message: this.humanizeErrorMessage(message),
-            location,
-            suggestion,
-            position
-        };
-    }
 };
-

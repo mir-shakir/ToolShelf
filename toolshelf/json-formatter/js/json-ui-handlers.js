@@ -1,5 +1,5 @@
 /**
- * ToolShelf JSON UI Handlers - UI Event Handling Module
+ * ToolShelf JSON UI Handlers - Simplified Version (No Cursor Manipulation)
  */
 window.ToolShelf = window.ToolShelf || {};
 
@@ -8,46 +8,39 @@ window.ToolShelf.JSONUIHandlers = class JSONUIHandlers {
         this.formatter = formatter;
         this.setupEventListeners();
         this.setupDebouncedFunctions();
-        this.setupFileDragDrop(); // Add this
+        this.setupFileDragDrop();
     }
 
     /**
-     * Setup all event listeners
+     * Setup all event listeners - SIMPLIFIED
      */
     setupEventListeners() {
         const { elements } = this.formatter;
 
-        // Input text changes with real-time processing
+        // Simple input handling - no cursor manipulation
         if (elements.inputText) {
-            // Use addEventListener directly on the element
+            // Single input event listener
             elements.inputText.addEventListener('input', (e) => {
                 this.onInputChange(e);
             });
 
+            // Simple paste handler
             elements.inputText.addEventListener('paste', (e) => {
-                // Handle paste with slight delay to ensure content is pasted
+                // Just handle the content change after paste
                 setTimeout(() => this.onInputChange(e), 50);
             });
 
-            elements.inputText.addEventListener('keyup', (e) => {
-                // Handle deletions and other key events that might clear content
-                this.onInputChange(e);
-            });
-
+            // Focus handler (keep this for error clearing)
             elements.inputText.addEventListener('focus', () => {
                 this.onInputFocus();
             });
 
-            elements.inputText.addEventListener('keydown', (e) => {
-                this.onInputKeydown(e);
-            });
-
-            console.log('✅ Input text area event listeners attached');
+            console.log('✅ Simplified input text area event listeners attached');
         } else {
             console.error('❌ Input text area not found!');
         }
 
-        // Rest of the setup...
+        // Rest of the setup (unchanged)
         this.setupQuickActionButtons();
         this.setupFormatOptions();
         this.setupAdvancedOptions();
@@ -72,6 +65,32 @@ window.ToolShelf.JSONUIHandlers = class JSONUIHandlers {
         this.debouncedJsonPath = this.debounce(() => {
             this.formatter.pathHandler.executeJsonPath();
         }, 300);
+    }
+
+    /**
+     * Handle input text changes - SIMPLIFIED
+     */
+    onInputChange(e) {
+        // Simple debounced update - no cursor manipulation
+        this.debouncedUpdate();
+
+        // If input is empty, clear highlighting immediately
+        const inputValue = this.formatter.elements.inputText.value;
+        if (!inputValue.trim()) {
+            setTimeout(() => {
+                this.formatter.highlighter.forceClear();
+            }, 10);
+        }
+    }
+
+    /**
+     * Handle input focus
+     */
+    onInputFocus() {
+        // Clear any previous error highlighting
+        if (this.formatter.highlighter) {
+            this.formatter.highlighter.clearErrorHighlighting();
+        }
     }
 
     /**
@@ -200,33 +219,6 @@ window.ToolShelf.JSONUIHandlers = class JSONUIHandlers {
             elements.jsonPathInput.addEventListener('keydown', (e) => {
                 this.onJsonPathKeydown(e);
             });
-        }
-    }
-
-    /**
-    * Handle input text changes with better empty state handling
-    */
-    onInputChange(e) {
-        // Use debounced update for performance
-        this.debouncedUpdate();
-
-        // If input is now empty, force clear the highlighting immediately
-        const inputValue = this.formatter.elements.inputText.value;
-        if (!inputValue.trim()) {
-            // Force immediate cleanup for empty input
-            setTimeout(() => {
-                this.formatter.highlighter.forceClear();
-            }, 10);
-        }
-    }
-
-    /**
-     * Handle input focus
-     */
-    onInputFocus() {
-        // Clear any previous error highlighting
-        if (this.formatter.highlighter) {
-            this.formatter.highlighter.clearErrorHighlighting();
         }
     }
 
@@ -375,43 +367,6 @@ window.ToolShelf.JSONUIHandlers = class JSONUIHandlers {
     }
 
     /**
-     * Handle input area keydown events
-     */
-    onInputKeydown(e) {
-        // Allow normal typing - don't prevent default unnecessarily
-
-        // Tab key for indentation
-        if (e.key === 'Tab') {
-            e.preventDefault();
-            this.insertAtCursor(e.target, '  '); // 2 spaces
-            this.debouncedUpdate();
-            return;
-        }
-
-        // Auto-bracket completion
-        if (this.shouldAutoComplete(e.key)) {
-            this.handleAutoCompletion(e);
-        }
-    }
-
-    /**
-     * Handle output area keydown events
-     */
-    onOutputKeydown(e) {
-        // Ctrl+A for select all
-        if (e.ctrlKey && e.key === 'a') {
-            e.target.select();
-            e.preventDefault();
-            return;
-        }
-
-        // Prevent editing in output (readonly behavior)
-        if (!e.ctrlKey && !e.metaKey && e.key.length === 1) {
-            e.preventDefault();
-        }
-    }
-
-    /**
      * Handle JSONPath input keydown
      */
     onJsonPathKeydown(e) {
@@ -425,72 +380,6 @@ window.ToolShelf.JSONUIHandlers = class JSONUIHandlers {
             e.target.value = '';
             this.formatter.pathHandler.clearResult();
         }
-    }
-
-    /**
-     * Check if auto-completion should be triggered
-     */
-    shouldAutoComplete(key) {
-        const autoCompleteChars = ['{', '[', '"'];
-        return autoCompleteChars.includes(key);
-    }
-
-    /**
-     * Handle auto-completion of brackets and quotes
-     */
-    handleAutoCompletion(e) {
-        const textarea = e.target;
-        const start = textarea.selectionStart;
-        const end = textarea.selectionEnd;
-
-        let completionChar = '';
-
-        switch (e.key) {
-            case '{':
-                completionChar = '}';
-                break;
-            case '[':
-                completionChar = ']';
-                break;
-            case '"':
-                completionChar = '"';
-                break;
-        }
-
-        if (completionChar) {
-            e.preventDefault();
-
-            const selectedText = textarea.value.substring(start, end);
-            const replacement = e.key + selectedText + completionChar;
-
-            this.replaceSelection(textarea, replacement);
-
-            // Position cursor between the brackets/quotes
-            textarea.setSelectionRange(start + 1, start + 1 + selectedText.length);
-        }
-    }
-
-    /**
-     * Insert text at cursor position
-     */
-    insertAtCursor(textarea, text) {
-        const start = textarea.selectionStart;
-        const end = textarea.selectionEnd;
-        const value = textarea.value;
-
-        textarea.value = value.substring(0, start) + text + value.substring(end);
-        textarea.setSelectionRange(start + text.length, start + text.length);
-    }
-
-    /**
-     * Replace selected text
-     */
-    replaceSelection(textarea, replacement) {
-        const start = textarea.selectionStart;
-        const end = textarea.selectionEnd;
-        const value = textarea.value;
-
-        textarea.value = value.substring(0, start) + replacement + value.substring(end);
     }
 
     /**
@@ -539,16 +428,12 @@ window.ToolShelf.JSONUIHandlers = class JSONUIHandlers {
     }
 
     /**
-     * Focus input textarea
+     * Focus input textarea - SIMPLIFIED
      */
     focusInput() {
         const { elements } = this.formatter;
         if (elements.inputText) {
             elements.inputText.focus();
-
-            // Move cursor to end
-            const length = elements.inputText.value.length;
-            elements.inputText.setSelectionRange(length, length);
         }
     }
 

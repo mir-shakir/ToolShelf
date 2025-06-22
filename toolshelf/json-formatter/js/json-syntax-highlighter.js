@@ -7,19 +7,24 @@ window.ToolShelf.JSONSyntaxHighlighter = class JSONSyntaxHighlighter {
     constructor(formatter) {
         this.formatter = formatter;
         this.syntaxOverlay = null;
-        this.isEnabled = true;
+        this.isEnabled = false; // DISABLED FOR NOW
 
         this.debouncedHighlight = window.ToolShelf.Utils.debounce(() => {
             this.applySyntaxHighlighting();
         }, 200);
 
-        this.setupSyntaxOverlay();
+        // COMMENTED OUT TO FIX DUPLICATION ISSUE
+        // this.setupSyntaxOverlay();
     }
 
     /**
      * Setup syntax highlighting overlay
      */
     setupSyntaxOverlay() {
+        // TEMPORARILY DISABLED
+        return;
+
+        /* ORIGINAL CODE COMMENTED OUT
         const outputTextArea = this.formatter.elements.outputText;
         if (!outputTextArea) return;
 
@@ -38,22 +43,32 @@ window.ToolShelf.JSONSyntaxHighlighter = class JSONSyntaxHighlighter {
         this.syncScrolling(outputTextArea, this.syntaxOverlay);
 
         console.log('🎨 Syntax highlighting overlay setup complete');
+        */
     }
 
     /**
      * Sync scrolling between textarea and overlay
      */
     syncScrolling(textarea, overlay) {
+        // TEMPORARILY DISABLED
+        return;
+
+        /* ORIGINAL CODE
         textarea.addEventListener('scroll', () => {
             overlay.scrollTop = textarea.scrollTop;
             overlay.scrollLeft = textarea.scrollLeft;
         });
+        */
     }
 
     /**
      * Apply syntax highlighting to the output
      */
     applySyntaxHighlighting() {
+        // TEMPORARILY DISABLED - THIS WAS CAUSING THE DUPLICATION
+        return;
+
+        /* ORIGINAL CODE COMMENTED OUT
         if (!this.isEnabled || !this.syntaxOverlay) return;
 
         const outputTextArea = this.formatter.elements.outputText;
@@ -82,12 +97,12 @@ window.ToolShelf.JSONSyntaxHighlighter = class JSONSyntaxHighlighter {
             console.warn('Syntax highlighting failed:', error);
             this.clearHighlighting();
         }
+        */
     }
 
-
     /**
- * Force clear highlighting (for emergency cleanup)
- */
+     * Force clear highlighting (for emergency cleanup)
+     */
     forceClear() {
         const outputTextArea = this.formatter.elements.outputText;
 
@@ -106,7 +121,7 @@ window.ToolShelf.JSONSyntaxHighlighter = class JSONSyntaxHighlighter {
 
         console.log('🎨 Syntax highlighting force cleared');
     }
-    
+
     /**
      * Check if JSON is minified (single line, no indentation)
      */
@@ -119,6 +134,7 @@ window.ToolShelf.JSONSyntaxHighlighter = class JSONSyntaxHighlighter {
      * Custom JSON syntax highlighter
      */
     highlightJson(jsonString) {
+        // KEEP THIS METHOD FOR FUTURE USE
         // Escape HTML characters first
         let highlighted = jsonString
             .replace(/&/g, '&amp;')
@@ -180,6 +196,9 @@ window.ToolShelf.JSONSyntaxHighlighter = class JSONSyntaxHighlighter {
      * Enable/disable syntax highlighting
      */
     setEnabled(enabled) {
+        this.isEnabled = false; // FORCE DISABLED FOR NOW
+
+        /* ORIGINAL CODE
         this.isEnabled = enabled;
 
         if (!enabled) {
@@ -187,56 +206,57 @@ window.ToolShelf.JSONSyntaxHighlighter = class JSONSyntaxHighlighter {
         } else if (this.formatter.elements.outputText.value) {
             this.debouncedHighlight();
         }
+        */
     }
 
     /**
      * Toggle syntax highlighting
      */
     toggle() {
+        // DISABLED FOR NOW
+        return false;
+
+        /* ORIGINAL CODE
         this.setEnabled(!this.isEnabled);
         return this.isEnabled;
+        */
     }
 
     /**
      * Get current highlighting state
      */
     isHighlightingEnabled() {
-        return this.isEnabled;
+        return false; // FORCE DISABLED
     }
 
     /**
      * Highlight specific line or range (for error highlighting)
      */
     highlightError(line, column = null) {
-        if (!this.syntaxOverlay) return;
-
-        // Add error highlighting class
-        const lines = this.syntaxOverlay.innerHTML.split('\n');
-        if (line > 0 && line <= lines.length) {
-            lines[line - 1] = `<span class="json-error-line">${lines[line - 1]}</span>`;
-            this.syntaxOverlay.innerHTML = lines.join('\n');
-        }
+        // TEMPORARILY DISABLED
+        return;
     }
 
     /**
      * Remove error highlighting
      */
     clearErrorHighlighting() {
-        if (!this.syntaxOverlay) return;
-
-        const content = this.syntaxOverlay.innerHTML;
-        this.syntaxOverlay.innerHTML = content
-            .replace(/<span class="json-error-line">/g, '')
-            .replace(/<\/span>/g, '');
+        // TEMPORARILY DISABLED
+        return;
     }
 
     /**
      * Update highlighting when output changes
      */
     onOutputChange() {
+        // TEMPORARILY DISABLED
+        return;
+
+        /* ORIGINAL CODE
         if (this.isEnabled) {
             this.debouncedHighlight();
         }
+        */
     }
 
     /**
