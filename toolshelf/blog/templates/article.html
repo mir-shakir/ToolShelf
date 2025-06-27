@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ARTICLE_META_TITLE}} | ToolShelf Blog</title>
+    <meta name="description" content="{{ARTICLE_META_DESCRIPTION}}">
+    <meta name="keywords" content="{{ARTICLE_KEYWORDS}}">
+    <meta name="author" content="{{ARTICLE_AUTHOR}}">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="{{ARTICLE_TITLE}}">
+    <meta property="og:description" content="{{ARTICLE_META_DESCRIPTION}}">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="{{ARTICLE_URL}}">
+    <meta property="og:site_name" content="ToolShelf Blog">
+    <meta property="article:published_time" content="{{ARTICLE_PUBLISHED_ISO}}">
+    <meta property="article:author" content="{{ARTICLE_AUTHOR}}">
+    <meta property="article:section" content="{{ARTICLE_CATEGORY}}">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ARTICLE_TITLE}}">
+    <meta name="twitter:description" content="{{ARTICLE_META_DESCRIPTION}}">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="{{ARTICLE_URL}}">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Styles - FIXED PATHS -->
+    <link rel="stylesheet" href="/blog/css/blog.css">
+    <link rel="stylesheet" href="/blog/css/blog-components.css">
+
+    <!-- Syntax Highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+
+    <!-- Schema.org JSON-LD -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": "{{ARTICLE_TITLE}}",
+        "description": "{{ARTICLE_META_DESCRIPTION}}",
+        "url": "{{ARTICLE_URL}}",
+        "datePublished": "{{ARTICLE_PUBLISHED_ISO}}",
+        "dateModified": "{{ARTICLE_PUBLISHED_ISO}}",
+        "author": {
+            "@type": "Person",
+            "name": "{{ARTICLE_AUTHOR}}"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "ToolShelf",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "https://toolshelf.onrender.com/favicon-192x192.png"
+            }
+        },
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "{{ARTICLE_URL}}"
+        }
+    }
+    </script>
+</head>
+
+<body>
+    <!-- Navigation - FIXED LINKS -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <a href="/" class="brand-link">
+                    <i class="fas fa-toolbox brand-icon"></i>
+                    <span class="brand-text">ToolShelf</span>
+                </a>
+                <span class="nav-divider">/</span>
+                <a href="/blog/" class="nav-section">Blog</a>
+            </div>
+
+            <div class="nav-actions">
+                <a href="/blog/" class="nav-link">
+                    <i class="fas fa-arrow-left"></i>
+                    <span>Back to Blog</span>
+                </a>
+                <a href="/" class="nav-link">
+                    <i class="fas fa-tools"></i>
+                    <span>Tools</span>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Reading Progress -->
+    <div class="reading-progress">
+        <div class="reading-progress-bar" id="readingProgressBar"></div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="article-main">
+        <div class="article-container">
+            <article class="blog-article">
+                <header class="article-header">
+                    <div class="article-meta">
+                        <span class="article-category">{{ARTICLE_CATEGORY}}</span>
+                        <time datetime="{{ARTICLE_PUBLISHED_ISO}}">{{ARTICLE_PUBLISHED_DATE}}</time>
+                    </div>
+                    <h1 class="article-title">{{ARTICLE_TITLE}}</h1>
+                    <p class="article-excerpt">{{ARTICLE_EXCERPT}}</p>
+                    <div class="article-stats">
+                        <span><i class="fas fa-clock"></i> {{ARTICLE_READING_TIME}} min read</span>
+                        <span><i class="fas fa-eye"></i> {{ARTICLE_VIEW_COUNT}} views</span>
+                        <span><i class="fas fa-signal"></i> {{ARTICLE_DIFFICULTY}}</span>
+                    </div>
+                    <div class="article-tags">
+                        {{ARTICLE_TAGS}}
+                    </div>
+                </header>
+
+                {{TABLE_OF_CONTENTS}}
+
+                <div class="article-content">
+                    {{ARTICLE_CONTENT}}
+                </div>
+
+                <footer class="article-footer">
+                    <div class="article-actions">
+                        <div class="share-buttons">
+                            <span class="share-label">Share this article:</span>
+                            <button class="share-btn twitter" onclick="shareArticle('twitter')">
+                                <i class="fab fa-twitter"></i>
+                            </button>
+                            <button class="share-btn linkedin" onclick="shareArticle('linkedin')">
+                                <i class="fab fa-linkedin"></i>
+                            </button>
+                            <button class="share-btn facebook" onclick="shareArticle('facebook')">
+                                <i class="fab fa-facebook"></i>
+                            </button>
+                            <button class="share-btn copy" onclick="copyArticleLink()">
+                                <i class="fas fa-link"></i>
+                            </button>
+                        </div>
+
+                        <div class="article-feedback">
+                            <span class="feedback-label">Was this helpful?</span>
+                            <button class="feedback-btn positive" onclick="submitFeedback('positive')">
+                                <i class="fas fa-thumbs-up"></i>
+                                <span class="feedback-count">0</span>
+                            </button>
+                            <button class="feedback-btn negative" onclick="submitFeedback('negative')">
+                                <i class="fas fa-thumbs-down"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="author-bio">
+                        <div class="author-avatar">
+                            <img src="{{ARTICLE_AUTHOR_AVATAR}}" alt="{{ARTICLE_AUTHOR}}" loading="lazy">
+                        </div>
+                        <div class="author-info">
+                            <h4>{{ARTICLE_AUTHOR}}</h4>
+                            <p>Backend developer with 3+ years of experience building scalable systems.
+                                Passionate about performance optimization and clean architecture.</p>
+                        </div>
+                    </div>
+                </footer>
+            </article>
+
+            <nav class="article-navigation">
+                <a href="/blog/" class="nav-back">
+                    <i class="fas fa-arrow-left"></i>
+                    Back to Blog
+                </a>
+                <div class="nav-related">
+                    <h4>Related Articles</h4>
+                    <div class="related-articles">
+                        {{RELATED_ARTICLES}}
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </main>
+
+    <!-- Tools Cross-link Section -->
+    <section class="tools-section">
+        <div class="tools-container">
+            <h3>
+                <i class="fas fa-tools"></i>
+                Developer Tools by ToolShelf
+            </h3>
+            <p>While you're here, check out our free developer tools</p>
+            <div class="tools-grid">
+                <a href="/qr-generator/" class="tool-card">
+                    <div class="tool-icon">
+                        <i class="fas fa-qrcode"></i>
+                    </div>
+                    <div class="tool-info">
+                        <h4>QR Generator</h4>
+                        <p>Bulk QR codes with logo embedding</p>
+                    </div>
+                </a>
+                <a href="/json-formatter/" class="tool-card">
+                    <div class="tool-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <div class="tool-info">
+                        <h4>JSON Formatter</h4>
+                        <p>Format, validate & query JSON</p>
+                    </div>
+                </a>
+                <a href="/base64-encoder/" class="tool-card">
+                    <div class="tool-icon">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <div class="tool-info">
+                        <h4>Base64 Encoder</h4>
+                        <p>Encode & decode Base64 data</p>
+                    </div>
+                </a>
+                <a href="/text-transformer/" class="tool-card">
+                    <div class="tool-icon">
+                        <i class="fas fa-font"></i>
+                    </div>
+                    <div class="tool-info">
+                        <h4>Text Transformer</h4>
+                        <p>Transform text case & format</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <i class="fas fa-toolbox"></i>
+                    <span>ToolShelf</span>
+                </div>
+                <div class="footer-links">
+                    <a href="/">Tools</a>
+                    <a href="/blog/">Blog</a>
+                    <a href="/about/">About</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; {{CURRENT_YEAR}} ToolShelf. Privacy-focused developer tools.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts - FIXED PATHS -->
+    <script src="/blog/js/article-interactions.js"></script>
+
+    <!-- Analytics -->
+    <script>
+        // Track article view
+        if (window.ToolShelf && window.ToolShelf.Analytics) {
+            window.ToolShelf.Analytics.trackPageView('blog_article', {
+                article_slug: '{{ARTICLE_SLUG}}',
+                article_category: '{{ARTICLE_CATEGORY}}'
+            });
+        }
+    </script>
+</body>
+
+</html>

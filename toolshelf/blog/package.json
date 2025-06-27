@@ -1,0 +1,30 @@
+{
+    "name": "toolshelf-blog-generator",
+    "version": "1.0.0",
+    "description": "Static site generator for ToolShelf Blog",
+    "main": "build-static.js",
+    "scripts": {
+        "build": "node build.js",
+        "dev": "nodemon build.js",
+        "install-deps": "npm install",
+        "clean": "rm -f index.html sitemap.xml feed.xml && rm -rf clickhouse-production-insights-country-delight/ category/",
+        "prebuild": "npm run clean"
+    },
+    "dependencies": {
+        "@supabase/supabase-js": "^2.39.0",
+        "marked": "^9.1.6",
+        "highlight.js": "^11.9.0",
+        "dotenv": "^16.3.1"
+    },
+    "devDependencies": {
+        "nodemon": "^3.0.2"
+    },
+    "keywords": [
+        "static-site-generator",
+        "blog",
+        "markdown",
+        "supabase"
+    ],
+    "author": "mir-shakir",
+    "license": "MIT"
+}

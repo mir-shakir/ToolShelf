@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>ToolShelf Blog - Backend Development Insights</title>
+        <description>Deep-dive technical articles on ClickHouse, Kafka, microservices, and backend development</description>
+        <link>https://toolshelf.onrender.com/blog/</link>
+        <atom:link href="https://toolshelf.onrender.com/blog/feed.xml" rel="self" type="application/rss+xml"/>
+        <language>en-US</language>
+        <lastBuildDate>Mon, 23 Jun 2025 13:33:56 GMT</lastBuildDate>
+        <item>
+            <title><![CDATA[ClickHouse at Scale: Production Insights from Country Delight]]></title>
+            <description><![CDATA[Real-world experiences implementing ClickHouse for analytics at scale, handling millions of events daily with practical optimization techniques.]]></description>
+            <link>https://toolshelf.onrender.com/blog/clickhouse-production-insights-country-delight/</link>
+            <guid isPermaLink="true">https://toolshelf.onrender.com/blog/clickhouse-production-insights-country-delight/</guid>
+            <pubDate>Mon, 23 Jun 2025 09:07:50 GMT</pubDate>
+            <category><![CDATA[Database Systems]]></category>
+        </item>
+    </channel>
+</rss>

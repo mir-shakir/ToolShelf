@@ -1,0 +1,25 @@
+{
+    "name": "toolshelf",
+    "version": "1.0.0",
+    "description": "ToolShelf - Free developer tools and technical blog",
+    "private": true,
+    "scripts": {
+        "build-blog": "cd blog && npm install && npm run build",
+        "dev-blog": "cd blog && npm run dev",
+        "install-blog": "cd blog && npm install"
+    },
+    "keywords": [
+        "developer-tools",
+        "qr-generator",
+        "json-formatter",
+        "base64-encoder",
+        "blog",
+        "backend-development"
+    ],
+    "author": "mir-shakir",
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/mir-shakir/toolshelf"
+    }
+}

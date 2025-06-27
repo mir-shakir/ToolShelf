@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ClickHouse at Scale: Production Insights from Country Delight | ToolShelf | ToolShelf Blog</title>
+    <meta name="description" content="Learn how Country Delight implements ClickHouse for real-time analytics at scale. Production insights, optimization techniques, and performance benchmarks.">
+    <meta name="keywords" content="clickhouse, real-time analytics, database optimization, production insights">
+    <meta name="author" content="ToolShelf Team">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="ClickHouse at Scale: Production Insights from Country Delight">
+    <meta property="og:description" content="Learn how Country Delight implements ClickHouse for real-time analytics at scale. Production insights, optimization techniques, and performance benchmarks.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://toolshelf.onrender.com/blog/clickhouse-production-insights-country-delight/">
+    <meta property="og:site_name" content="ToolShelf Blog">
+    <meta property="article:published_time" content="2025-06-23T09:07:50.099211+00:00">
+    <meta property="article:author" content="ToolShelf Team">
+    <meta property="article:section" content="Database Systems">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="ClickHouse at Scale: Production Insights from Country Delight">
+    <meta name="twitter:description" content="Learn how Country Delight implements ClickHouse for real-time analytics at scale. Production insights, optimization techniques, and performance benchmarks.">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://toolshelf.onrender.com/blog/clickhouse-production-insights-country-delight/">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Styles - FIXED PATHS -->
+    <link rel="stylesheet" href="/blog/css/blog.css">
+    <link rel="stylesheet" href="/blog/css/blog-components.css">
+
+    <!-- Syntax Highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+
+    <!-- Schema.org JSON-LD -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": "ClickHouse at Scale: Production Insights from Country Delight",
+        "description": "Learn how Country Delight implements ClickHouse for real-time analytics at scale. Production insights, optimization techniques, and performance benchmarks.",
+        "url": "https://toolshelf.onrender.com/blog/clickhouse-production-insights-country-delight/",
+        "datePublished": "2025-06-23T09:07:50.099211+00:00",
+        "dateModified": "2025-06-23T09:07:50.099211+00:00",
+        "author": {
+            "@type": "Person",
+            "name": "ToolShelf Team"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "ToolShelf",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "https://toolshelf.onrender.com/favicon-192x192.png"
+            }
+        },
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https://toolshelf.onrender.com/blog/clickhouse-production-insights-country-delight/"
+        }
+    }
+    </script>
+</head>
+
+<body>
+    <!-- Navigation - FIXED LINKS -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <a href="/" class="brand-link">
+                    <i class="fas fa-toolbox brand-icon"></i>
+                    <span class="brand-text">ToolShelf</span>
+                </a>
+                <span class="nav-divider">/</span>
+                <a href="/blog/" class="nav-section">Blog</a>
+            </div>
+
+            <div class="nav-actions">
+                <a href="/blog/" class="nav-link">
+                    <i class="fas fa-arrow-left"></i>
+                    <span>Back to Blog</span>
+                </a>
+                <a href="/" class="nav-link">
+                    <i class="fas fa-tools"></i>
+                    <span>Tools</span>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Reading Progress -->
+    <div class="reading-progress">
+        <div class="reading-progress-bar" id="readingProgressBar"></div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="article-main">
+        <div class="article-container">
+            <article class="blog-article">
+                <header class="article-header">
+                    <div class="article-meta">
+                        <span class="article-category">Database Systems</span>
+                        <time datetime="2025-06-23T09:07:50.099211+00:00">June 23, 2025</time>
+                    </div>
+                    <h1 class="article-title">ClickHouse at Scale: Production Insights from Country Delight</h1>
+                    <p class="article-excerpt">Real-world experiences implementing ClickHouse for analytics at scale, handling millions of events daily with practical optimization techniques.</p>
+                    <div class="article-stats">
+                        <span><i class="fas fa-clock"></i> 12 min read</span>
+                        <span><i class="fas fa-eye"></i> 0 views</span>
+                        <span><i class="fas fa-signal"></i> Intermediate</span>
+                    </div>
+                    <div class="article-tags">
+                        <span class="tag">clickhouse</span><span class="tag">analytics</span><span class="tag">performance</span><span class="tag">real-time</span>
+                    </div>
+                </header>
+
+                
+        <nav class="table-of-contents">
+            <div class="toc-header">
+                <i class="fas fa-list"></i>
+                Table of Contents
+            </div>
+            <div class="toc-items">
+                <a href="#heading-1" class="toc-item" style="margin-left: 0px">Introduction</a><a href="#heading-2" class="toc-item" style="margin-left: 0px">Why ClickHouse?</a><a href="#heading-3" class="toc-item" style="margin-left: 0px">The Images</a><a href="#heading-4" class="toc-item" style="margin-left: 0px">Our Architecture</a><a href="#heading-5" class="toc-item" style="margin-left: 20px">Key Tables</a><a href="#heading-6" class="toc-item" style="margin-left: 0px">Ingestion Pipeline</a><a href="#heading-7" class="toc-item" style="margin-left: 0px">Querying at Speed</a><a href="#heading-8" class="toc-item" style="margin-left: 0px">Compression &amp; Storage</a><a href="#heading-9" class="toc-item" style="margin-left: 0px">Operational Learnings</a><a href="#heading-10" class="toc-item" style="margin-left: 20px">Scaling</a><a href="#heading-11" class="toc-item" style="margin-left: 20px">Maintenance</a><a href="#heading-12" class="toc-item" style="margin-left: 20px">Monitoring &amp; Alerting</a><a href="#heading-13" class="toc-item" style="margin-left: 0px">Challenges We Faced</a><a href="#heading-14" class="toc-item" style="margin-left: 0px">Future Plans</a><a href="#heading-15" class="toc-item" style="margin-left: 0px">Conclusion</a>
+            </div>
+        </nav>
+    
+
+                <div class="article-content">
+                    <h1></h1>
+<h2 id="heading-1">Introduction</h2>
+<p>At Country Delight, data is at the core of every decision we make. Our real-time analytics platform processes over one million events daily, driving operational intelligence across logistics, supply chain, customer behavior, and product performance. To handle this data at scale, we adopted <strong>ClickHouse</strong>, an open-source, columnar database optimized for fast analytics on large volumes of data. This article delves into our journey of scaling ClickHouse in production, the challenges we encountered, and the insights we gained.</p>
+<h2 id="heading-2">Why ClickHouse?</h2>
+<p>Before ClickHouse, our analytics stack struggled with high latency and unreliable batch jobs. We explored several OLAP engines, but ClickHouse stood out for its:</p>
+<ul>
+<li><strong>Exceptional performance</strong> on analytical queries.</li>
+<li><strong>Horizontal scalability</strong> with support for replicated and distributed clusters.</li>
+<li><strong>Efficient compression</strong> and storage capabilities.</li>
+<li><strong>Rich SQL support</strong> and flexibility.</li>
+</ul>
+<h2 id="heading-3">The Images</h2>
+<p>
+                <figure class="article-image">
+                    <img src="https://picsum.photos/200/300" alt="ClickHouse Dashboard" loading="lazy" class="responsive-image">
+                    
+                </figure>
+            </p>
+<h2 id="heading-4">Our Architecture</h2>
+<p>We run an 8-node ClickHouse cluster, with 4 primary shards and 4 replicas. Each node is equipped with:</p>
+<ul>
+<li>16 vCPUs</li>
+<li>64 GB RAM</li>
+<li>2 TB NVMe SSD</li>
+<li>10 Gbps networking</li>
+</ul>
+<p>The cluster handles ingestion and querying of over <strong>1 million events daily</strong>, with <strong>data volumes exceeding 68 GB per day</strong> post-ingestion.</p>
+<h3 id="heading-5">Key Tables</h3>
+<ol>
+<li><strong>events_daily</strong>: Main fact table with 5.2 billion rows.</li>
+<li><strong>user_sessions</strong>: Tracks user activity across platforms.</li>
+<li><strong>feature_metrics</strong>: Monitors application-level feature usage.</li>
+</ol>
+<p>We use <strong>partitioning</strong> on date and sharding on user or session IDs to optimize query performance and maintenance.</p>
+<h2 id="heading-6">Ingestion Pipeline</h2>
+<p>Events flow through Apache Kafka and are batch-inserted into ClickHouse every minute. We use <code>INSERT INTO</code> with async inserts and bulk loading for efficiency.</p>
+<ul>
+<li><strong>Peak ingestion rate</strong>: 14,800 events/sec</li>
+<li><strong>Off-peak ingestion</strong>: ~3,200 events/sec</li>
+<li><strong>Insert latency</strong>: ~120 ms</li>
+</ul>
+<p>We rely on background merges and TTL rules to manage data retention and disk usage efficiently.</p>
+<h2 id="heading-7">Querying at Speed</h2>
+<p>Our most common queries include time-windowed aggregations, funnel analysis, and cohort tracking. Query latencies (P95) stay under:</p>
+<ul>
+<li>130 ms for aggregations</li>
+<li>180 ms for drill-downs</li>
+<li>85 ms for time-based filtering</li>
+</ul>
+<p>This performance enables us to power dashboards, anomaly detection systems, and operational alerts in near real-time.</p>
+<h2 id="heading-8">Compression &amp; Storage</h2>
+<p>We experimented with multiple codecs to optimize storage:</p>
+<ul>
+<li><strong>LZ4</strong> for ingestion tables</li>
+<li><strong>ZSTD</strong> for cold analytics</li>
+<li><strong>Delta+Gorilla</strong> for time-series metrics</li>
+</ul>
+<p>Average compression ratio across tables is <strong>5.7x</strong>, keeping disk usage manageable despite the growing data volume.</p>
+<h2 id="heading-9">Operational Learnings</h2>
+<h3 id="heading-10">Scaling</h3>
+<ul>
+<li>We gradually scaled from 2 nodes to 8, doubling capacity every 6 months.</li>
+<li>Read/write separation using replicated tables improved performance.</li>
+</ul>
+<h3 id="heading-11">Maintenance</h3>
+<ul>
+<li>Background merges (~1,680/day) required careful tuning to avoid I/O contention.</li>
+<li>Weekly vacuuming and partition pruning became essential for long-term performance.</li>
+</ul>
+<h3 id="heading-12">Monitoring &amp; Alerting</h3>
+<p>We built custom Grafana dashboards monitoring:</p>
+<ul>
+<li>Insert lag</li>
+<li>Query latency and QPS</li>
+<li>Disk usage</li>
+<li>Merge performance</li>
+</ul>
+<p>Prometheus exporters and alerting rules helped us maintain <strong>99.985% uptime</strong> over the last 90 days.</p>
+<h2 id="heading-13">Challenges We Faced</h2>
+<ul>
+<li><strong>Backpressure during peak loads</strong> required insert queuing and Kafka topic tuning.</li>
+<li><strong>Slow merges</strong> on large partitions were mitigated by fine-tuning part sizes and using <code>optimize final</code> selectively.</li>
+<li><strong>Query skew</strong> due to uneven sharding prompted us to rehash high-volume users.</li>
+</ul>
+<h2 id="heading-14">Future Plans</h2>
+<ul>
+<li><strong>Tiered storage</strong>: Moving colder data to object storage.</li>
+<li><strong>Materialized views</strong>: For pre-aggregated metrics.</li>
+<li><strong>Query federation</strong>: Integrating with other systems like S3, Hive, and BigQuery.</li>
+</ul>
+<h2 id="heading-15">Conclusion</h2>
+<p>ClickHouse has been a game-changer in our analytics journey. Its performance, flexibility, and robustness allowed us to democratize data access and build intelligent systems at scale. With the right architecture, monitoring, and discipline, ClickHouse can handle production-grade, real-time analytics at massive scale — and we&#39;re only just getting started.</p>
+
+                </div>
+
+                <footer class="article-footer">
+                    <div class="article-actions">
+                        <div class="share-buttons">
+                            <span class="share-label">Share this article:</span>
+                            <button class="share-btn twitter" onclick="shareArticle('twitter')">
+                                <i class="fab fa-twitter"></i>
+                            </button>
+                            <button class="share-btn linkedin" onclick="shareArticle('linkedin')">
+                                <i class="fab fa-linkedin"></i>
+                            </button>
+                            <button class="share-btn facebook" onclick="shareArticle('facebook')">
+                                <i class="fab fa-facebook"></i>
+                            </button>
+                            <button class="share-btn copy" onclick="copyArticleLink()">
+                                <i class="fas fa-link"></i>
+                            </button>
+                        </div>
+
+                        <div class="article-feedback">
+                            <span class="feedback-label">Was this helpful?</span>
+                            <button class="feedback-btn positive" onclick="submitFeedback('positive')">
+                                <i class="fas fa-thumbs-up"></i>
+                                <span class="feedback-count">0</span>
+                            </button>
+                            <button class="feedback-btn negative" onclick="submitFeedback('negative')">
+                                <i class="fas fa-thumbs-down"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="author-bio">
+                        <div class="author-avatar">
+                            <img src="https://picsum.photos/200/300" alt="ToolShelf Team" loading="lazy">
+                        </div>
+                        <div class="author-info">
+                            <h4>ToolShelf Team</h4>
+                            <p>Backend developer with 3+ years of experience building scalable systems.
+                                Passionate about performance optimization and clean architecture.</p>
+                        </div>
+                    </div>
+                </footer>
+            </article>
+
+            <nav class="article-navigation">
+                <a href="/blog/" class="nav-back">
+                    <i class="fas fa-arrow-left"></i>
+                    Back to Blog
+                </a>
+                <div class="nav-related">
+                    <h4>Related Articles</h4>
+                    <div class="related-articles">
+                        
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </main>
+
+    <!-- Tools Cross-link Section -->
+    <section class="tools-section">
+        <div class="tools-container">
+            <h3>
+                <i class="fas fa-tools"></i>
+                Developer Tools by ToolShelf
+            </h3>
+            <p>While you're here, check out our free developer tools</p>
+            <div class="tools-grid">
+                <a href="/qr-generator/" class="tool-card">
+                    <div class="tool-icon">
+                        <i class="fas fa-qrcode"></i>
+                    </div>
+                    <div class="tool-info">
+                        <h4>QR Generator</h4>
+                        <p>Bulk QR codes with logo embedding</p>
+                    </div>
+                </a>
+                <a href="/json-formatter/" class="tool-card">
+                    <div class="tool-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <div class="tool-info">
+                        <h4>JSON Formatter</h4>
+                        <p>Format, validate & query JSON</p>
+                    </div>
+                </a>
+                <a href="/base64-encoder/" class="tool-card">
+                    <div class="tool-icon">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <div class="tool-info">
+                        <h4>Base64 Encoder</h4>
+                        <p>Encode & decode Base64 data</p>
+                    </div>
+                </a>
+                <a href="/text-transformer/" class="tool-card">
+                    <div class="tool-icon">
+                        <i class="fas fa-font"></i>
+                    </div>
+                    <div class="tool-info">
+                        <h4>Text Transformer</h4>
+                        <p>Transform text case & format</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <i class="fas fa-toolbox"></i>
+                    <span>ToolShelf</span>
+                </div>
+                <div class="footer-links">
+                    <a href="/">Tools</a>
+                    <a href="/blog/">Blog</a>
+                    <a href="/about/">About</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 ToolShelf. Privacy-focused developer tools.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts - FIXED PATHS -->
+    <script src="/blog/js/article-interactions.js"></script>
+
+    <!-- Analytics -->
+    <script>
+        // Track article view
+        if (window.ToolShelf && window.ToolShelf.Analytics) {
+            window.ToolShelf.Analytics.trackPageView('blog_article', {
+                article_slug: 'clickhouse-production-insights-country-delight',
+                article_category: 'Database Systems'
+            });
+        }
+    </script>
+</body>
+
+</html>
