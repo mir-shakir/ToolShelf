@@ -1,0 +1,79 @@
+
+When writing a new article, send this prompt to ChatGPT:
+
+I need you to format my article content according to the ToolShelf Blog formatting template. 
+
+Here's my article content:
+[PASTE YOUR CONTENT HERE]
+
+Please format it according to the template I provided, including:
+1. Proper SQL INSERT statement
+2. Correctly formatted markdown
+3. Appropriate category, tags, and tech_stack
+4. SEO-optimized title and meta description
+5. Estimated reading time and word count
+
+Make sure to follow all the formatting rules and guidelines in the template.
+
+
+
+deployment:
+
+🎯 Complete Workflow Example
+1. Write New Article:
+SQL
+-- In Supabase SQL Editor
+INSERT INTO articles (
+    title,
+    slug,
+    excerpt,
+    content,
+    category,
+    tags,
+    tech_stack,
+    meta_title,
+    meta_description,
+    keywords,
+    difficulty_level,
+    reading_time,
+    word_count,
+    status,
+    published_at,
+    featured
+) VALUES (
+    'ClickHouse at Scale: Production Insights from Country Delight',
+    'clickhouse-production-insights-country-delight',
+    'Real-world experiences implementing ClickHouse for analytics at scale, handling millions of events daily.',
+    '# ClickHouse at Scale: Production Insights
+
+## Introduction
+At Country Delight, data is at the core of every decision we make...
+
+[YOUR MARKDOWN CONTENT HERE]',
+    'Database Systems',
+    ARRAY['clickhouse', 'analytics', 'performance', 'real-time'],
+    ARRAY['clickhouse', 'kafka', 'postgresql'],
+    'ClickHouse at Scale: Production Insights | ToolShelf Blog',
+    'Learn how Country Delight implements ClickHouse for real-time analytics at scale.',
+    ARRAY['clickhouse', 'real-time analytics', 'database optimization'],
+    'intermediate',
+    12,
+    2800,
+    'published',
+    NOW(),
+    true
+);
+2. Clean Local Generated Files:
+bash
+cd blog
+npm run clean  # or manually delete generated files
+3. Deploy:
+bash
+git add .
+git commit -m "Add new ClickHouse article"
+git push origin main
+4. Render Builds Automatically:
+Runs npm run build-blog
+Generates fresh static files
+Deploys to live site
+🔍
