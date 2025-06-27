@@ -1,0 +1,16 @@
+User-agent: *
+Allow: /
+
+# Sitemaps
+Sitemap: https://toolshelf.onrender.com/sitemap.xml
+
+# Crawl optimization
+Crawl-delay: 1
+
+# Allow specific tool pages
+Allow: /text-transformer/
+Allow: /base64-encoder/
+
+# Block unnecessary paths (if any)
+# Disallow: /admin/
+# Disallow: /private/

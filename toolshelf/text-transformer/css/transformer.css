@@ -1,0 +1,196 @@
+.controls-sidebar {
+    overflow-y: auto; 
+}
+
+/* Updated header styles to match homepage */
+.app-header {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border-light);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    padding: var(--space-3) 0 0;
+}
+
+/* Override the layout.css header-content with homepage header-container */
+.header-container {
+    max-width: var(--max-width-xl);
+    margin: 0 auto;
+    padding: 0 var(--space-6);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 64px;
+}
+
+/* Logo section matching homepage */
+.logo-section {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+}
+
+.logo-icon {
+    width: 28px;
+    height: 28px;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    border-radius: var(--radius-lg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 0.875rem;
+    box-shadow: var(--shadow-sm);
+}
+
+.logo-text {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+.logo-text:hover {
+    color: var(--primary-color);
+}
+
+/* Main navigation matching homepage */
+.main-nav {
+    display: flex;
+    gap: var(--space-2);
+}
+
+.nav-link {
+    padding: var(--space-2) var(--space-4);
+    color: var(--text-secondary);
+    text-decoration: none;
+    border-radius: var(--radius-lg);
+    font-weight: 500;
+    font-size: 0.875rem;
+    transition: all var(--transition-fast);
+    position: relative;
+}
+
+.nav-link:hover {
+    color: var(--primary-color);
+    background: var(--primary-subtle);
+}
+
+.nav-link.active {
+    color: var(--primary-color);
+    background: var(--primary-subtle);
+    font-weight: 600;
+}
+
+/* Tool actions area */
+.tool-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+}
+
+.help-btn {
+    width: 36px;
+    height: 36px;
+    border: 1px solid var(--border-color);
+    background: var(--background-primary);
+    border-radius: var(--radius-lg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.help-btn:hover {
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+    background: var(--primary-subtle);
+}
+
+
+
+/* Tool status area */
+.tool-status {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+}
+
+.status-badge {
+    background: var(--success-color);
+    color: white;
+    font-size: 0.625rem;
+    padding: 0.25rem 0.5rem;
+    border-radius: var(--radius-full);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.025em;
+}
+
+.tool-tag {
+    color: var(--text-muted);
+    font-size: 0.75rem;
+    font-weight: 500;
+}
+
+/* Mobile responsive adjustments */
+@media (max-width: 768px) {
+    .header-container {
+        padding: 0 var(--space-4);
+    }
+
+    .breadcrumb-wrapper {
+        padding: 0 var(--space-4);
+        flex-direction: column;
+        gap: var(--space-2);
+        align-items: flex-start;
+    }
+
+    .main-nav {
+        display: none;
+        /* Hide main nav on mobile, could add hamburger menu later */
+    }
+
+    .tool-status {
+        align-self: flex-end;
+    }
+
+    .breadcrumb {
+        font-size: 0.8125rem;
+    }
+}
+
+/* Adjust tool container top spacing */
+.tool-container {
+    padding: var(--space-4) 0;
+}
+
+.controls-sidebar {
+    top: calc(120px + var(--space-4));
+    /* Adjust for new header height */
+}
+
+/* Add to transformer.css */
+.text-area.loading {
+    opacity: 0.7;
+    pointer-events: none;
+}
+
+.loading-spinner {
+    display: inline-block;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}

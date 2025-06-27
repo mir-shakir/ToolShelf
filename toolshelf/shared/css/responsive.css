@@ -1,0 +1,297 @@
+/* ToolShelf Responsive Styles - Updated for Two-Column Layout */
+
+/* Large screens (1400px+) - Optimal experience */
+@media (min-width: 1400px) {
+    .tool-workspace {
+        grid-template-columns: 350px 1fr;
+        gap: var(--spacing-2xl);
+    }
+
+    .controls-sidebar {
+        max-height: calc(100vh - 100px);
+    }
+}
+
+/* Medium-large screens (1200px - 1399px) */
+@media (max-width: 1399px) {
+    .tool-workspace {
+        grid-template-columns: 300px 1fr;
+        gap: var(--spacing-xl);
+    }
+}
+
+/* Medium screens (768px - 1199px) */
+@media (max-width: 1199px) {
+    .app-main {
+        padding: var(--spacing-md) var(--spacing-lg) 0;
+    }
+
+    .tool-workspace {
+        grid-template-columns: 280px 1fr;
+        gap: var(--spacing-lg);
+    }
+
+    .controls-sidebar {
+        max-height: calc(100vh - 120px);
+    }
+
+    .text-panel {
+        min-height: 280px;
+    }
+
+    .stats-section {
+        gap: var(--spacing-md);
+    }
+
+    .stats-row {
+        flex-direction: column;
+        align-items: stretch;
+        gap: var(--spacing-sm);
+    }
+}
+
+/* Small screens (481px - 767px) - Single column */
+@media (max-width: 767px) {
+    .app-main {
+        padding: var(--spacing-md);
+    }
+
+    .tool-workspace {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-md);
+    }
+
+    /* Transform controls become full width below text areas */
+    .controls-sidebar {
+        position: relative;
+        top: auto;
+        max-height: 400px;
+        order: 2;
+    }
+
+    .text-workspace {
+        order: 1;
+        gap: var(--spacing-md);
+    }
+
+    .text-panel {
+        min-height: 200px;
+    }
+
+    .header-content {
+        flex-direction: column;
+        gap: var(--spacing-md);
+        padding: var(--spacing-md);
+    }
+
+    .quick-guide {
+        margin-bottom: var(--spacing-md);
+    }
+
+    .guide-content {
+        padding: var(--spacing-sm) var(--spacing-md);
+        flex-direction: column;
+        gap: var(--spacing-sm);
+        text-align: center;
+    }
+
+    .guide-text {
+        font-size: 0.85rem;
+    }
+
+    /* Compact transform options for mobile */
+    .transform-option {
+        padding: var(--spacing-sm);
+    }
+
+    .option-label {
+        font-size: 0.85rem;
+    }
+
+    .option-example {
+        font-size: 0.7rem;
+    }
+
+    .transform-group {
+        margin-bottom: var(--spacing-sm);
+    }
+
+    .btn {
+        min-height: 44px;
+        font-size: 0.9rem;
+    }
+
+    .icon-btn {
+        width: 44px;
+        height: 44px;
+    }
+
+    .stats-row {
+        flex-direction: column;
+        gap: var(--spacing-sm);
+    }
+
+    .stats-section {
+        justify-content: center;
+        gap: var(--spacing-md);
+    }
+}
+
+/* Extra small screens (480px and below) */
+@media (max-width: 480px) {
+    .app-main {
+        padding: var(--spacing-sm);
+    }
+
+    .app-title {
+        font-size: 1.5rem;
+    }
+
+    .controls-sidebar,
+    .text-panel {
+        border-radius: var(--radius-lg);
+    }
+
+    .text-area {
+        padding: var(--spacing-md);
+        font-size: 0.85rem;
+        min-height: 180px;
+    }
+
+    .panel-header {
+        padding: var(--spacing-sm) var(--spacing-md);
+        flex-direction: column;
+        gap: var(--spacing-xs);
+        align-items: stretch;
+    }
+
+    .panel-actions {
+        justify-content: center;
+    }
+
+    .transform-option {
+        padding: var(--spacing-sm);
+    }
+
+    .stats-section {
+        flex-direction: column;
+        gap: var(--spacing-xs);
+        align-items: center;
+    }
+
+    .stat-item {
+        font-size: 0.7rem;
+    }
+
+    .nav-btn {
+        min-width: 120px;
+        padding: var(--spacing-sm);
+        font-size: 0.8rem;
+    }
+
+    .toast {
+        bottom: var(--spacing-sm);
+        right: var(--spacing-sm);
+        left: var(--spacing-sm);
+        min-width: auto;
+    }
+}
+
+/* Landscape orientation on mobile */
+@media (max-width: 767px) and (orientation: landscape) {
+    .text-workspace {
+        grid-template-columns: 1fr 1fr;
+        gap: var(--spacing-sm);
+    }
+
+    .text-panel {
+        min-height: 220px;
+    }
+
+    .quick-guide {
+        display: none;
+        /* Hide guide in landscape to save space */
+    }
+
+    .controls-sidebar {
+        grid-column: 1 / -1;
+        /* Full width below text areas */
+        max-height: 250px;
+    }
+}
+
+/* Touch device optimizations */
+@media (pointer: coarse) {
+
+    .btn,
+    .icon-btn,
+    .transform-option,
+    .nav-btn {
+        min-height: 44px;
+    }
+
+    .icon-btn {
+        width: 44px;
+        height: 44px;
+    }
+
+    .text-area {
+        font-size: 16px;
+        /* Prevent zoom on iOS */
+        line-height: 1.5;
+    }
+
+    .transform-option input[type="checkbox"],
+    .transform-option input[type="radio"] {
+        width: 18px;
+        height: 18px;
+    }
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+    .transform-option:has(input:checked) {
+        border: 2px solid #000;
+        background: #000;
+        color: #fff;
+    }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    .transform-option {
+        transition: none;
+    }
+
+    .transform-option:hover {
+        transform: none;
+    }
+}
+
+/* Print optimizations */
+@media print {
+
+    .controls-sidebar,
+    .panel-actions,
+    .app-header,
+    .app-footer,
+    .quick-guide {
+        display: none !important;
+    }
+
+    .tool-workspace {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-lg);
+    }
+
+    .text-panel {
+        border: 2px solid #000;
+        page-break-inside: avoid;
+    }
+
+    .text-area {
+        background: white !important;
+        color: black !important;
+        border: none;
+    }
+}

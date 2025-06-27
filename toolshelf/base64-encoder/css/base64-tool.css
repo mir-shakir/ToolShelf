@@ -1,0 +1,334 @@
+/* Base64 Encoder Tool Styles - Following ToolShelf Design System */
+
+/* Tool-specific workspace adjustments */
+.tool-workspace {
+    max-width: var(--max-width-2xl);
+    margin: 0 auto;
+    padding: var(--space-6);
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    gap: var(--space-6);
+    min-height: calc(100vh - 160px);
+}
+
+/* Controls sidebar for Base64 encoder */
+.controls-sidebar {
+    background: var(--background-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-2xl);
+    padding: var(--space-5);
+    height: fit-content;
+    position: sticky;
+    top: calc(120px + var(--space-4));
+    box-shadow: var(--shadow-sm);
+    overflow-y: auto;
+}
+
+.controls-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-5);
+    padding-bottom: var(--space-3);
+    border-bottom: 1px solid var(--border-light);
+}
+
+.controls-header h2 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+}
+
+/* Control groups */
+.control-group {
+    margin-bottom: var(--space-5);
+}
+
+.control-group:last-child {
+    margin-bottom: 0;
+}
+
+.control-group-title {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: var(--space-3);
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+}
+
+/* Operation buttons */
+.operation-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+}
+
+.operation-btn {
+    padding: var(--space-3) var(--space-4);
+    border: 1px solid var(--border-color);
+    background: var(--background-primary);
+    border-radius: var(--radius-lg);
+    color: var(--text-primary);
+    font-weight: 500;
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    justify-content: center;
+}
+
+.operation-btn:hover:not(:disabled) {
+    border-color: var(--primary-color);
+    background: var(--primary-subtle);
+    color: var(--primary-color);
+}
+
+.operation-btn.primary {
+    background: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+    font-weight: 600;
+}
+
+.operation-btn.primary:hover:not(:disabled) {
+    background: var(--primary-dark);
+    border-color: var(--primary-dark);
+}
+
+.operation-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Format options */
+.format-options {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+}
+
+.format-option {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-3);
+    padding: var(--space-3);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-lg);
+    transition: all var(--transition-fast);
+    cursor: pointer;
+}
+
+.format-option:hover {
+    border-color: var(--primary-light);
+    background: var(--primary-subtle);
+}
+
+.format-option input[type="radio"] {
+    margin: 0;
+    width: 16px;
+    height: 16px;
+    accent-color: var(--primary-color);
+}
+
+.format-option-content {
+    flex: 1;
+}
+
+.format-option-label {
+    font-weight: 500;
+    color: var(--text-primary);
+    margin-bottom: var(--space-1);
+    display: block;
+}
+
+.format-option-desc {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    line-height: 1.4;
+}
+
+/* Advanced options */
+.advanced-options {
+    border-top: 1px solid var(--border-light);
+    padding-top: var(--space-4);
+    margin-top: var(--space-4);
+}
+
+.checkbox-option {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-2) 0;
+    cursor: pointer;
+}
+
+.checkbox-option input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    accent-color: var(--primary-color);
+}
+
+.checkbox-option-label {
+    font-size: 0.875rem;
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+.checkbox-option-desc {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    margin-left: 18px;
+    margin-top: var(--space-1);
+    line-height: 1.4;
+}
+
+/* File handling section */
+.file-handler {
+    border: 2px dashed var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: var(--space-4);
+    text-align: center;
+    margin-bottom: var(--space-4);
+    transition: all var(--transition-fast);
+    cursor: pointer;
+}
+
+.file-handler:hover {
+    border-color: var(--primary-color);
+    background: var(--primary-subtle);
+}
+
+.file-handler.drag-over {
+    border-color: var(--primary-color);
+    background: var(--primary-subtle);
+    border-style: solid;
+}
+
+.file-handler-icon {
+    font-size: 1.5rem;
+    color: var(--text-muted);
+    margin-bottom: var(--space-2);
+}
+
+.file-handler-text {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    margin-bottom: var(--space-2);
+}
+
+.file-handler-button {
+    padding: var(--space-2) var(--space-4);
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: var(--radius-md);
+    font-size: 0.75rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background var(--transition-fast);
+}
+
+.file-handler-button:hover {
+    background: var(--primary-dark);
+}
+
+/* Status indicators */
+.status-indicator {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-2) var(--space-3);
+    background: var(--background-secondary);
+    border-radius: var(--radius-md);
+    font-size: 0.75rem;
+    margin-top: var(--space-3);
+}
+
+.status-indicator.success {
+    background: var(--success-color);
+    color: white;
+}
+
+.status-indicator.error {
+    background: var(--error-color);
+    color: white;
+}
+
+.status-indicator.info {
+    background: var(--info-color);
+    color: white;
+}
+
+/* Text workspace adjustments for base64 */
+.text-workspace {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+}
+
+.text-panel {
+    background: var(--background-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-2xl);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    flex: 1;
+}
+
+/* Auto-detection indicator */
+.auto-detect-indicator {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-1);
+    padding: var(--space-1) var(--space-2);
+    background: var(--accent-color);
+    color: white;
+    border-radius: var(--radius-full);
+    font-size: 0.625rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.025em;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+    .tool-workspace {
+        grid-template-columns: 1fr;
+        gap: var(--space-4);
+        padding: var(--space-4);
+    }
+
+    .controls-sidebar {
+        position: static;
+        order: 2;
+    }
+
+    .text-workspace {
+        order: 1;
+    }
+}
+
+@media (max-width: 768px) {
+    .tool-workspace {
+        padding: var(--space-3);
+    }
+
+    .operation-buttons {
+        flex-direction: column;
+    }
+
+    .format-options {
+        gap: var(--space-2);
+    }
+
+    .format-option {
+        padding: var(--space-2);
+    }
+}
