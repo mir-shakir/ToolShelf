@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Primary Meta Tags -->
+    <title>ToolShelf - Free Hash Generator | MD5, SHA256, SHA512 & More Online</title>
+    <meta name="title" content="ToolShelf - Free Hash Generator">
+    <meta name="description"
+        content="Generate cryptographic hashes with MD5, SHA1, SHA256, SHA512, and more. Support for text and file hashing, HMAC, batch processing, and hash comparison. Free online hash calculator.">
+    <meta name="keywords"
+        content="hash generator, MD5, SHA1, SHA256, SHA512, SHA3, BLAKE2, HMAC, checksum, file hash, text hash, cryptographic hash, online hash calculator">
+    <meta name="author" content="ToolShelf">
+    <meta name="robots" content="index, follow">
+    <meta name="language" content="English">
+    <meta name="revisit-after" content="7 days">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://toolshelf.onrender.com/hash-generator/">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://toolshelf.onrender.com/hash-generator/">
+    <meta property="og:title" content="ToolShelf - Free Hash Generator">
+    <meta property="og:description"
+        content="Generate cryptographic hashes with multiple algorithms. Support for text and file hashing, HMAC, batch processing. Privacy-focused and completely free.">
+    <meta property="og:image" content="https://toolshelf.onrender.com/assets/images/og-image-hash.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:site_name" content="ToolShelf">
+    <meta property="og:locale" content="en_US">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://toolshelf.onrender.com/hash-generator/">
+    <meta property="twitter:title" content="ToolShelf - Free Hash Generator">
+    <meta property="twitter:description"
+        content="Generate MD5, SHA256, SHA512 and more hashes online. File and text support, HMAC, batch processing. No registration required.">
+    <meta property="twitter:image" content="https://toolshelf.onrender.com/assets/images/twitter-image-hash.png">
+
+    <!-- Favicon and Icons -->
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+    <link rel="manifest" href="../manifest.json">
+    <meta name="theme-color" content="#3b82f6">
+
+    <!-- Schema.org structured data -->
+    <script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "WebApplication",
+        "name": "ToolShelf Hash Generator",
+        "alternateName": "Cryptographic Hash Calculator",
+        "description": "Free online hash generator supporting MD5, SHA1, SHA256, SHA512, SHA3, BLAKE2, and HMAC. Generate hashes for text and files with real-time calculation and comparison tools.",
+        "url": "https://toolshelf.onrender.com/hash-generator/",
+        "applicationCategory": "UtilityApplication",
+        "operatingSystem": "Web Browser",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        },
+        "creator": {
+            "@type": "Organization",
+            "name": "ToolShelf"
+        },
+        "datePublished": "2025-06-27",
+        "dateModified": "2025-06-27",
+        "inLanguage": "en-US",
+        "isAccessibleForFree": true,
+        "featureList": [
+            "MD5 Hash Generation",
+            "SHA1 Hash Generation", 
+            "SHA256 Hash Generation",
+            "SHA512 Hash Generation",
+            "SHA3 Hash Support",
+            "BLAKE2 Hash Support",
+            "HMAC Generation",
+            "File Hash Calculation",
+            "Hash Comparison Tools",
+            "Multiple Output Formats",
+            "Real-time Calculation",
+            "No Registration Required",
+            "Privacy-Focused Processing",
+            "Mobile Responsive"
+        ],
+        "screenshot": "https://toolshelf.onrender.com/assets/images/hash-generator-screenshot.png"
+    }
+    </script>
+
+    <!-- CSS Modules -->
+    <link rel="stylesheet" href="../shared/css/variables.css">
+    <link rel="stylesheet" href="../shared/css/base.css">
+    <link rel="stylesheet" href="../shared/css/components.css">
+    <link rel="stylesheet" href="../shared/css/tool-layout.css">
+    <link rel="stylesheet" href="../shared/css/responsive.css">
+    <link rel="stylesheet" href="../shared/css/seo-content.css">
+    <link rel="stylesheet" href="../hash-generator/css/hash-tool.css">
+
+    <!-- External Resources -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-GBY4766X5D"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-GBY4766X5D');
+    </script>
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Header with Navigation -->
+        <header class="app-header">
+            <div class="header-container">
+                <div class="logo-section">
+                    <div class="logo-icon">
+                        <i class="fas fa-toolbox"></i>
+                    </div>
+                    <a href="../" class="logo-text">ToolShelf</a>
+                </div>
+
+                <nav class="main-nav">
+                    <a href="../" class="nav-link">Home</a>
+                    <a href="../#tools" class="nav-link active">Tools</a>
+                    <a href="../#about" class="nav-link">About</a>
+                </nav>
+
+                <div class="tool-actions">
+                    <button class="help-btn" id="helpBtn" title="Show instructions"
+                        aria-label="Show help and instructions">
+                        <i class="fas fa-question-circle" aria-hidden="true"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Breadcrumb Navigation -->
+            <div class="breadcrumb-container">
+                <div class="breadcrumb-wrapper">
+                    <nav class="breadcrumb">
+                        <a href="../">Home</a>
+                        <span class="breadcrumb-separator">›</span>
+                        <a href="../#tools">Tools</a>
+                        <span class="breadcrumb-separator">›</span>
+                        <span class="breadcrumb-current">Hash Generator</span>
+                    </nav>
+
+                    <div class="tool-status">
+                        <span class="status-badge">Free</span>
+                        <span class="tool-tag">Real-time</span>
+                        <span class="validation-indicator">
+                            <i class="fas fa-hashtag" aria-hidden="true"></i>
+                            Hash Calculator
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="app-main" role="main">
+            <!-- SEO Content Section -->
+            <section class="seo-content" id="seo-content">
+                <div class="seo-intro">
+                    <h1>Free Cryptographic Hash Generator</h1>
+                    <p class="lead">Generate secure hashes with MD5, SHA1, SHA256, SHA512, SHA3, and BLAKE2 algorithms.
+                        Support for text and file hashing, HMAC generation, and hash comparison - all
+                        free with no registration required.</p>
+
+                    <div class="seo-expandable">
+                        <div class="features-highlight">
+                            <div class="feature-item">
+                                <i class="fas fa-shield-alt" aria-hidden="true"></i>
+                                <span>Multiple Algorithms</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-file-upload" aria-hidden="true"></i>
+                                <span>File & Text Support</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-key" aria-hidden="true"></i>
+                                <span>HMAC Generation</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-balance-scale" aria-hidden="true"></i>
+                                <span>Hash Comparison</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-download" aria-hidden="true"></i>
+                                <span>Export Results</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-lock" aria-hidden="true"></i>
+                                <span>Privacy-First</span>
+                            </div>
+                        </div>
+
+                        <button class="cta-button"
+                            onclick="document.getElementById('hash-tool').scrollIntoView({ behavior: 'smooth' });">
+                            <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                            Start Generating Hashes
+                        </button>
+                    </div>
+                </div>
+
+                <button class="seo-toggle" onclick="toggleSeoContent()" aria-label="Show more information"
+                    aria-expanded="false">
+                    <span>Learn More</span>
+                    <i class="fas fa-chevron-down" aria-hidden="true"></i>
+                </button>
+            </section>
+
+            <!-- Hash Generator Tool -->
+            <div id="hash-tool" class="tool-container active">
+                <div class="tool-workspace-hash">
+
+                    <!-- Top Controls Section -->
+                    <div class="hash-controls-section">
+                        <div class="controls-header">
+                            <h3><i class="fas fa-cogs"></i> Hash Generation Controls</h3>
+                        </div>
+                        <div class="controls-grid">
+                            <!-- Input Type Selector -->
+                            <div class="input-type-selector">
+                                <label for="inputTypeSelect">Input Type:</label>
+                                <select id="inputTypeSelect" class="input-type-select">
+                                    <option value="text">Text Input</option>
+                                    <option value="file">File Upload</option>
+                                </select>
+                            </div>
+
+                            <!-- Algorithm Selector -->
+                            <div class="algorithm-selector">
+                                <label for="algorithmSelect">Hash Algorithm:</label>
+                                <select id="algorithmSelect" class="algorithm-select">
+                                    <option value="sha256">SHA-256 (Recommended)</option>
+                                    <option value="sha512">SHA-512 (High Security)</option>
+                                    <option value="sha1">SHA-1 (Legacy)</option>
+                                    <option value="md5">MD5 (Legacy)</option>
+                                    <option value="sha3-256">SHA3-256 (Modern)</option>
+                                    <option value="sha3-512">SHA3-512 (Modern)</option>
+                                    <option value="blake2b">BLAKE2b (Fast)</option>
+                                </select>
+                            </div>
+
+                            <!-- Output Format Selector -->
+                            <div class="format-selector">
+                                <label for="formatSelect">Output Format:</label>
+                                <select id="formatSelect" class="format-select">
+                                    <option value="hex">Hexadecimal</option>
+                                    <option value="base64">Base64</option>
+                                    <option value="binary">Binary</option>
+                                </select>
+                            </div>
+
+                            <!-- Generate Button -->
+                            <div class="generate-button-container">
+                                <button id="generateHashBtn" class="btn-generate">
+                                    <i class="fas fa-play"></i>
+                                    Generate Hash
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Main Hash Workspace -->
+                    <div class="hash-workspace">
+                        <!-- Left Panel - Input -->
+                        <div class="hash-input-panel">
+                            <div class="panel-header">
+                                <h3><i class="fas fa-edit"></i> Text Input</h3>
+                                <div class="panel-actions">
+                                    <button id="pasteBtn" class="icon-btn" title="Paste from clipboard">
+                                        <i class="fas fa-clipboard"></i>
+                                    </button>
+                                    <button id="clearInput" class="icon-btn" title="Clear input">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="input-content">
+                                <!-- Text Input Panel -->
+                                <div class="input-panel active" id="text-input-panel">
+                                    <textarea id="inputText" class="hash-input"
+                                        placeholder="Enter text to generate hash..."></textarea>
+                                </div>
+
+                                <!-- File Input Panel -->
+                                <div class="input-panel" id="file-input-panel">
+                                    <div class="file-drop-area" id="fileDropArea">
+                                        <div class="drop-content">
+                                            <div class="drop-icon">
+                                                <i class="fas fa-cloud-upload-alt"></i>
+                                            </div>
+                                            <h4>Drop file here or click to browse</h4>
+                                            <p>Maximum file size: 100MB</p>
+                                            <input type="file" id="fileInput" hidden>
+                                            <button class="browse-btn"
+                                                onclick="document.getElementById('fileInput').click()">
+                                                <i class="fas fa-folder-open"></i>
+                                                Browse Files
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <!-- File Info Display -->
+                                    <div class="file-info" id="fileInfo" style="display: none;">
+                                        <div class="file-details">
+                                            <div class="file-icon">
+                                                <i class="fas fa-file"></i>
+                                            </div>
+                                            <div class="file-meta">
+                                                <div class="file-name" id="fileName"></div>
+                                                <div class="file-stats">
+                                                    <span id="fileSize"></span> •
+                                                    <span id="fileType"></span>
+                                                </div>
+                                            </div>
+                                            <button class="remove-file" id="removeFile">
+                                                <i class="fas fa-times"></i>
+                                            </button>
+                                        </div>
+                                        <div class="file-progress" id="fileProgress" style="display: none;">
+                                            <div class="progress-bar">
+                                                <div class="progress-fill" id="progressFill"></div>
+                                            </div>
+                                            <div class="progress-text" id="progressText">Processing...</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="input-stats">
+                                <span class="stat-item">
+                                    <i class="fas fa-calculator"></i>
+                                    <span id="inputCharCount">0</span> characters
+                                </span>
+                                <span class="stat-item">
+                                    <i class="fas fa-database"></i>
+                                    <span id="inputBytes">0</span> bytes
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Right Panel - Output -->
+                        <div class="hash-output-panel">
+                            <div class="output-header">
+                                <h3>SHA-256 Hash</h3>
+                                <div class="output-actions">
+                                    <button id="copyHash" class="icon-btn" title="Copy hash" disabled>
+                                        <i class="fas fa-copy"></i>
+                                    </button>
+                                    <button id="downloadHash" class="icon-btn" title="Download hash" disabled>
+                                        <i class="fas fa-download"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="output-content">
+                                <div class="hash-result-container">
+                                    <div class="hash-result" id="hashResult">
+                                        <div class="hash-placeholder">
+                                            <i class="fas fa-hashtag"></i>
+                                            <p>Hash will appear here</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Algorithm Information Panel -->
+                                <div class="algorithm-info-panel">
+                                    <h4><i class="fas fa-info-circle"></i> Algorithm Information</h4>
+                                    <div class="info-grid">
+                                        <div class="info-item">
+                                            <span class="info-label">Algorithm:</span>
+                                            <span class="info-value" id="info-algorithm">SHA-256</span>
+                                        </div>
+                                        <div class="info-item">
+                                            <span class="info-label">Hash Length:</span>
+                                            <span class="info-value" id="info-length">64 characters</span>
+                                        </div>
+                                        <div class="info-item">
+                                            <span class="info-label">Security Level:</span>
+                                            <span class="info-value security-high" id="info-security">High
+                                                Security</span>
+                                        </div>
+                                        <div class="info-item">
+                                            <span class="info-label">Use Case:</span>
+                                            <span class="info-value" id="info-usecase">General purpose</span>
+                                        </div>
+                                    </div>
+                                    <div class="algorithm-tips">
+                                        <strong>Tips:</strong> SHA-256 is the current industry standard. Perfect for
+                                        digital signatures, certificates, and blockchain applications.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Advanced Features Section (Initially Hidden) -->
+                    <div class="advanced-section" id="advancedSection" style="display: none;">
+                        <div class="section-header">
+                            <h3><i class="fas fa-cogs"></i> Advanced Features</h3>
+                            <button class="section-toggle" id="hideAdvanced">
+                                <i class="fas fa-chevron-up"></i>
+                                Hide Advanced
+                            </button>
+                        </div>
+
+                        <div class="advanced-features-grid">
+                            <!-- HMAC Generation -->
+                            <div class="advanced-feature">
+                                <div class="feature-header">
+                                    <h4><i class="fas fa-key"></i> HMAC Generation</h4>
+                                    <div class="feature-toggle">
+                                        <input type="checkbox" id="enableHMAC">
+                                        <label for="enableHMAC">Enable HMAC</label>
+                                    </div>
+                                </div>
+                                <div class="hmac-options" id="hmacOptions" style="display: none;">
+                                    <div class="form-group">
+                                        <label for="hmacKey">Secret Key:</label>
+                                        <input type="text" id="hmacKey" class="form-input"
+                                            placeholder="Enter secret key for HMAC...">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="keyEncoding">Key Encoding:</label>
+                                        <select id="keyEncoding" class="form-select">
+                                            <option value="utf8">UTF-8 Text</option>
+                                            <option value="hex">Hexadecimal</option>
+                                            <option value="base64">Base64</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Hash Comparison -->
+                            <div class="advanced-feature">
+                                <div class="feature-header">
+                                    <h4><i class="fas fa-balance-scale"></i> Hash Comparison</h4>
+                                    <div class="feature-toggle">
+                                        <input type="checkbox" id="enableComparison">
+                                        <label for="enableComparison">Enable Comparison</label>
+                                    </div>
+                                </div>
+                                <div class="comparison-options" id="comparisonOptions" style="display: none;">
+                                    <div class="form-group">
+                                        <label for="expectedHash">Expected Hash:</label>
+                                        <input type="text" id="expectedHash" class="form-input"
+                                            placeholder="Enter hash to compare against...">
+                                    </div>
+                                    <div class="comparison-result" id="comparisonResult">
+                                        <div class="comparison-status pending" id="comparisonStatus">
+                                            <i class="fas fa-question-circle"></i>
+                                            <span>Enter hashes to compare</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bottom Action Buttons -->
+                    <div class="hash-actions">
+                        <button id="showAdvanced" class="btn-secondary">
+                            <i class="fas fa-cogs"></i>
+                            Advanced Features
+                        </button>
+                        <button id="resetAll" class="btn-secondary">
+                            <i class="fas fa-undo"></i>
+                            Reset All
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SEO Content - Expanded Section -->
+            <section class="seo-expanded" id="seo-expanded">
+                <div class="content-grid">
+                    <div class="content-section">
+                        <h2>🔐 What is a Hash Generator?</h2>
+                        <p>A cryptographic hash generator is your digital fingerprinting tool that transforms any input
+                            data into a unique, fixed-size string. Think of it as creating a digital DNA for your files,
+                            passwords, or text - no two different inputs will ever produce the same hash (with
+                            astronomically high probability).</p>
+
+                        <h3>🚀 Why Use Our Hash Generator?</h3>
+                        <ul>
+                            <li><strong>🔒 Bank-Level Security:</strong> SHA-256 and SHA-512 used by Bitcoin and major
+                                financial institutions</li>
+                            <li><strong>⚡ Lightning Fast:</strong> Generate hashes instantly without server delays</li>
+                            <li><strong>🛡️ Privacy First:</strong> Everything happens in your browser - your data never
+                                leaves your device</li>
+                            <li><strong>📱 Works Everywhere:</strong> Perfect on desktop, tablet, and mobile devices
+                            </li>
+                            <li><strong>🆓 Always Free:</strong> No registration, no limits, no hidden costs</li>
+                            <li><strong>🔄 Real-time Updates:</strong> See hash changes instantly as you modify settings
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="content-section">
+                        <h2>🎯 Popular Use Cases</h2>
+                        <div class="use-cases-grid">
+                            <div class="use-case">
+                                <h4><i class="fas fa-shield-alt"></i> 🔍 File Integrity Verification</h4>
+                                <p><strong>Perfect for:</strong> Verifying downloads, detecting file corruption,
+                                    ensuring data hasn't been tampered with during transfer or storage. Used by software
+                                    developers and IT professionals worldwide.</p>
+                            </div>
+                            <div class="use-case">
+                                <h4><i class="fas fa-lock"></i> 🔐 Password Security</h4>
+                                <p><strong>Essential for:</strong> Secure password storage, comparing passwords without
+                                    storing them in plain text. Never store passwords directly - always hash them first!
+                                </p>
+                            </div>
+                            <div class="use-case">
+                                <h4><i class="fas fa-bitcoin"></i> 💰 Blockchain & Crypto</h4>
+                                <p><strong>Crypto enthusiasts:</strong> Verify Bitcoin addresses, check transaction
+                                    hashes, understand blockchain mechanics. SHA-256 powers Bitcoin's proof-of-work
+                                    system.</p>
+                            </div>
+                            <div class="use-case">
+                                <h4><i class="fas fa-database"></i> 🗄️ Database & Development</h4>
+                                <p><strong>Developers love it for:</strong> Creating unique IDs, database indexing, API
+                                    authentication, digital signatures, and ensuring data consistency across systems.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="content-section">
+                        <h2>🧠 Algorithm Deep Dive</h2>
+                        <div class="algorithm-comparison">
+                            <div class="algo-item">
+                                <h4>🥇 SHA-256 (Recommended)</h4>
+                                <p><strong>Best for:</strong> General use, Bitcoin, certificates<br>
+                                    <strong>Security:</strong> Extremely high (no known attacks)<br>
+                                    <strong>Speed:</strong> Fast<br>
+                                    <strong>Output:</strong> 64 hex characters
+                                </p>
+                            </div>
+                            <div class="algo-item">
+                                <h4>🛡️ SHA-512 (Maximum Security)</h4>
+                                <p><strong>Best for:</strong> High-security applications<br>
+                                    <strong>Security:</strong> Maximum (longer key = harder to crack)<br>
+                                    <strong>Speed:</strong> Moderate<br>
+                                    <strong>Output:</strong> 128 hex characters
+                                </p>
+                            </div>
+                            <div class="algo-item">
+                                <h4>🚨 MD5 (Legacy Only)</h4>
+                                <p><strong>Best for:</strong> File checksums (non-security)<br>
+                                    <strong>Security:</strong> ⚠️ Broken (vulnerable to collisions)<br>
+                                    <strong>Speed:</strong> Very fast<br>
+                                    <strong>Use case:</strong> Compatibility only
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-section">
+                    <h2>💡 Pro Tips & Common Questions</h2>
+                    <div class="faq-grid">
+                        <div class="faq-item">
+                            <h3>🤔 Can I reverse a hash?</h3>
+                            <p><strong>No!</strong> Hashes are one-way functions. That's the point! You can't get the
+                                original data back from a hash. This makes them perfect for password storage and data
+                                verification.</p>
+                        </div>
+                        <div class="faq-item">
+                            <h3>🔄 What if I change one character?</h3>
+                            <p><strong>Complete different hash!</strong> Even changing a single letter completely
+                                changes the entire hash. This "avalanche effect" is what makes hashes so useful for
+                                detecting any changes.</p>
+                        </div>
+                        <div class="faq-item">
+                            <h3>🎯 When should I use HMAC?</h3>
+                            <p><strong>For authentication!</strong> Use HMAC when you need to verify that data came from
+                                someone with the secret key. Perfect for API authentication and message verification.
+                            </p>
+                        </div>
+                        <div class="faq-item">
+                            <h3>⚡ Why is this faster than other tools?</h3>
+                            <p><strong>No server round-trips!</strong> Everything happens in your browser using
+                                optimized Web Crypto API. Most online tools send your data to servers, causing delays
+                                and privacy concerns.</p>
+                        </div>
+                        <div class="faq-item">
+                            <h3>🔢 What format should I use?</h3>
+                            <p><strong>Hexadecimal for most cases.</strong> It's human-readable and widely supported.
+                                Use Base64 for APIs and binary for debugging. All formats represent the same hash
+                                differently.</p>
+                        </div>
+                        <div class="faq-item">
+                            <h3>📏 How long should a hash be?</h3>
+                            <p><strong>Longer = more secure.</strong> SHA-256 (64 chars) is perfect for most needs.
+                                SHA-512 (128 chars) for maximum security. MD5 (32 chars) only for legacy compatibility.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="practical-examples">
+                    <h2>🛠️ Real-World Examples</h2>
+                    <div class="examples-grid">
+                        <div class="example-item">
+                            <h4>🔍 Verify File Download</h4>
+                            <p>Downloaded a large file? Hash it and compare with the provided checksum to ensure it
+                                wasn't corrupted during download.</p>
+                            <code>SHA-256: e3b0c44298fc1c149afbf4c8996fb924...</code>
+                        </div>
+                        <div class="example-item">
+                            <h4>🔐 Check Password Strength</h4>
+                            <p>Hash your password to see its unique fingerprint. Same password = same hash. Different
+                                password = completely different hash.</p>
+                            <code>Input: "MyPassword123"<br>Hash: a665a45920422f9d417e4867efdc4fb8...</code>
+                        </div>
+                        <div class="example-item">
+                            <h4>🎯 API Authentication</h4>
+                            <p>Use HMAC with a secret key to prove you're authorized to access an API without sending
+                                your password.</p>
+                            <code>HMAC-SHA256(message, secret_key)</code>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Footer -->
+            <footer class="app-footer">
+                <div class="footer-content">
+                    <div class="footer-section">
+                        <strong>ToolShelf</strong> - Free Hash Generator & Calculator
+                    </div>
+                    <div class="footer-section">
+                        <span>© 2025 ToolShelf. All hash generation performed locally in your browser.</span>
+                    </div>
+                    <div class="footer-links">
+                        <a href="#privacy" onclick="showPrivacyInfo()">Privacy</a>
+                        <a href="#terms" onclick="showTermsInfo()">Terms</a>
+                        <a href="#contact" onclick="showContactInfo()">Contact</a>
+                    </div>
+                </div>
+            </footer>
+
+            <!-- Help Modal -->
+            <div id="helpModal" class="help-modal" role="dialog" aria-labelledby="help-title" aria-hidden="true">
+                <div class="help-content">
+                    <div class="help-header">
+                        <h2 id="help-title"><i class="fas fa-info-circle"></i> Hash Generator Guide</h2>
+                        <button class="help-close" id="helpClose" aria-label="Close help dialog">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="help-body">
+                        <div class="help-section">
+                            <h3>Quick Start:</h3>
+                            <ol>
+                                <li>Choose your input type and hash algorithm from the dropdowns</li>
+                                <li>Enter your text or upload a file</li>
+                                <li>Click the prominent "Generate Hash" button</li>
+                                <li>Copy or download the generated hash result</li>
+                            </ol>
+                        </div>
+
+                        <div class="help-section">
+                            <h3>Hash Algorithms:</h3>
+                            <ul>
+                                <li><strong>SHA-256:</strong> Best for general use, secure and widely supported</li>
+                                <li><strong>SHA-512:</strong> Higher security, longer hash output</li>
+                                <li><strong>SHA3:</strong> Modern alternative to SHA-2, quantum-resistant design</li>
+                                <li><strong>BLAKE2:</strong> Fast and secure, good for performance-critical applications
+                                </li>
+                                <li><strong>MD5/SHA1:</strong> Legacy algorithms, use only for compatibility</li>
+                            </ul>
+                        </div>
+
+                        <div class="help-section">
+                            <h3>Advanced Features:</h3>
+                            <ul>
+                                <li><strong>HMAC:</strong> Hash-based Message Authentication Code with secret key</li>
+                                <li><strong>Hash Comparison:</strong> Verify hashes match expected values</li>
+                                <li><strong>File Hashing:</strong> Generate hashes for files up to 100MB</li>
+                                <li><strong>Multiple Formats:</strong> Output in hex, base64, or binary</li>
+                            </ul>
+                        </div>
+
+                        <div class="help-section">
+                            <h3>Keyboard Shortcuts:</h3>
+                            <ul>
+                                <li><kbd>Ctrl+G</kbd> - Generate hash</li>
+                                <li><kbd>Ctrl+C</kbd> - Copy hash result</li>
+                                <li><kbd>Ctrl+V</kbd> - Paste text input</li>
+                                <li><kbd>Ctrl+L</kbd> - Clear input</li>
+                                <li><kbd>Ctrl+R</kbd> - Reset all settings</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Toast Notification -->
+            <div id="toast" class="toast" role="alert" aria-live="assertive">
+                <div class="toast-content">
+                    <i class="toast-icon fas fa-check-circle"></i>
+                    <span id="toastMessage">Operation completed!</span>
+                </div>
+                <button class="toast-close" onclick="this.parentElement.classList.remove('show')"
+                    aria-label="Close notification">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </main>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="../shared/config/constants.js"></script>
+    <script src="../shared/js/core/utils.js"></script>
+    <script src="../shared/js/core/events.js"></script>
+    <script src="../shared/js/core/analytics.js"></script>
+    <script src="../shared/js/components/toast.js"></script>
+    <script src="../shared/js/components/navigation.js"></script>
+    <script src="../shared/js/components/seo-content.js"></script>
+    <script src="../shared/js/components/keyboard.js"></script>
+    <script src="../shared/js/tools/base-tool.js"></script>
+    <script src="../shared/js/components/help-modal.js"></script>
+
+    <!-- Hash Generator Modules -->
+    <script src="../hash-generator/js/hash-operations.js"></script>
+    <script src="../hash-generator/js/hash-file-processor.js"></script>
+    <script src="../hash-generator/js/hash-ui-handlers.js"></script>
+    <script src="../hash-generator/js/hash-generator.js"></script>
+
+    <!-- Initialize Hash Generator -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            window.ToolShelf = window.ToolShelf || {};
+
+            try {
+                // Initialize Toast system first
+                if (window.ToolShelf.Toast && !window.ToolShelf.Toast.element) {
+                    const toastInitialized = window.ToolShelf.Toast.init();
+                    if (!toastInitialized) {
+                        console.warn('⚠️ Toast system failed to initialize');
+                    }
+                }
+
+                // Initialize Help Modal
+                if (window.ToolShelf.HelpModal) {
+                    window.ToolShelf.HelpModal.init();
+                }
+
+                // Create and initialize Hash Generator
+                const hashGenerator = new window.ToolShelf.HashGenerator();
+                window.ToolShelf.currentTool = hashGenerator;
+
+                console.log('🎉 Hash Generator initialized successfully');
+
+                // Show welcome message
+                setTimeout(() => {
+                    const hasVisited = localStorage.getItem('toolshelf-hash-visited');
+                    if (!hasVisited) {
+                        localStorage.setItem('toolshelf-hash-visited', 'true');
+                        if (window.ToolShelf.Toast) {
+                            window.ToolShelf.Toast.show(
+                                '🔒 Choose your algorithm and click "Generate Hash" to start!',
+                                'info',
+                                4000
+                            );
+                        }
+                    }
+                }, 1500);
+
+            } catch (error) {
+                console.error('❌ Failed to initialize Hash Generator:', error);
+                if (window.ToolShelf.Toast) {
+                    window.ToolShelf.Toast.show('Failed to initialize Hash Generator. Please refresh the page.', 'error');
+                }
+            }
+        });
+
+        // Page-specific functions
+        function toggleSeoContent() {
+            const seoContent = document.getElementById('seo-content');
+            const seoExpanded = document.getElementById('seo-expanded');
+            const isExpanded = seoContent.classList.contains('expanded');
+
+            if (isExpanded) {
+                seoContent.classList.remove('expanded');
+                if (seoExpanded) seoExpanded.style.display = 'none';
+            } else {
+                seoContent.classList.add('expanded');
+                if (seoExpanded) seoExpanded.style.display = 'block';
+            }
+
+            // Update button
+            const toggle = seoContent?.querySelector('.seo-toggle');
+            if (toggle) {
+                const icon = toggle.querySelector('i');
+                const text = toggle.querySelector('span');
+
+                if (icon && text) {
+                    if (isExpanded) {
+                        icon.className = 'fas fa-chevron-down';
+                        text.textContent = 'Learn More';
+                    } else {
+                        icon.className = 'fas fa-chevron-up';
+                        text.textContent = 'Show Less';
+                    }
+                }
+            }
+        }
+
+        function showPrivacyInfo() {
+            const message = `🔒 ToolShelf Hash Generator Privacy:
+
+• All hash generation happens locally in your browser
+• No data is sent to any servers
+• Your files and text never leave your device
+• No tracking or data collection
+• Works completely offline once loaded`;
+            alert(message);
+        }
+
+        function showTermsInfo() {
+            const message = `📋 Terms of Use:
+
+• ToolShelf Hash Generator is provided free of charge
+• Use responsibly and at your own risk
+• Hashes generated are yours to use commercially
+• No warranty or guarantee of hash accuracy
+• Report issues via our contact information`;
+            alert(message);
+        }
+
+        function showContactInfo() {
+            const message = `📧 Contact & Support:
+
+• GitHub: github.com/toolshelf/issues
+• Email: support@toolshelf.dev
+• Feature requests welcome
+• Bug reports appreciated
+• Hash algorithm questions? Contact us!`;
+            alert(message);
+        }
+    </script>
+</body>
+
+</html>
