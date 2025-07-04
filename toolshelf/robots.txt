@@ -2,7 +2,7 @@ User-agent: *
 Allow: /
 
 # Sitemaps
-Sitemap: https://toolshelf.onrender.com/sitemap.xml
+Sitemap: https://toolshelf.tech/sitemap.xml
 
 # Crawl optimization
 Crawl-delay: 1
