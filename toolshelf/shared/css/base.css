@@ -24,7 +24,7 @@ body {
 
 /* Clean, Compact Header */
 .app-header {
-    background: rgba(255, 255, 255, 0.95);
+    background: var(--background-primary);
     backdrop-filter: blur(10px);
     border-bottom: 1px solid var(--border-light);
     position: sticky;
@@ -512,4 +512,38 @@ body {
 .cta-secondary:focus,
 .tool-button:focus {
     outline: 2px solid var(--primary-color);
-    outline-offset: 2px; }
+    outline-offset: 2px;
+}
+
+/* Header actions and theme switcher - minimal styles */
+.header-actions,
+.tool-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+}
+
+.theme-switcher-btn {
+    width: 32px;
+    height: 32px;
+    border: 1px solid var(--border-color);
+    background: var(--background-primary);
+    border-radius: var(--radius-lg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-secondary);
+    cursor: pointer;
+    font-size: 0.75rem;
+}
+
+.theme-switcher-btn:hover {
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+    background: var(--primary-subtle);
+}
+
+.theme-switcher-btn:focus {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+}

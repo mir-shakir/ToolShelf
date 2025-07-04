@@ -168,6 +168,9 @@
                 </nav>
 
                 <div class="tool-actions">
+                    <button class="theme-switcher-btn" id="themeSwitcher" title="Switch to dark mode" aria-label="Switch to dark mode">
+                        <i class="fas fa-moon"></i>
+                    </button>
                     <button class="help-btn" id="helpBtn" title="Show instructions"
                         aria-label="Show help and instructions">
                         <i class="fas fa-question-circle" aria-hidden="true"></i>
@@ -912,6 +915,59 @@
 • QR code scanning issues? Contact us!`;
             alert(message);
         }
+
+        // Minimal Theme Switcher
+        (function() {
+            let currentTheme = 'light';
+            
+            function loadTheme() {
+                try {
+                    const saved = localStorage.getItem('toolshelf-theme');
+                    if (saved === 'dark' || saved === 'light') {
+                        currentTheme = saved;
+                    } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                        currentTheme = 'dark';
+                    }
+                    document.documentElement.setAttribute('data-theme', currentTheme);
+                } catch (e) {
+                    document.documentElement.setAttribute('data-theme', 'light');
+                }
+            }
+            
+            function toggleTheme() {
+                currentTheme = currentTheme === 'light' ? 'dark' : 'light';
+                document.documentElement.setAttribute('data-theme', currentTheme);
+                try {
+                    localStorage.setItem('toolshelf-theme', currentTheme);
+                } catch (e) {}
+                updateButton();
+            }
+            
+            function updateButton() {
+                const btn = document.getElementById('themeSwitcher');
+                if (btn) {
+                    const icon = btn.querySelector('i');
+                    const isDark = currentTheme === 'dark';
+                    if (icon) {
+                        icon.className = isDark ? 'fas fa-sun' : 'fas fa-moon';
+                    }
+                    btn.title = isDark ? 'Switch to light mode' : 'Switch to dark mode';
+                    btn.setAttribute('aria-label', btn.title);
+                }
+            }
+            
+            // Load theme immediately
+            loadTheme();
+            
+            // Setup when DOM is ready
+            document.addEventListener('DOMContentLoaded', function() {
+                updateButton();
+                const btn = document.getElementById('themeSwitcher');
+                if (btn) {
+                    btn.addEventListener('click', toggleTheme);
+                }
+            });
+        })();
     </script>
 </body>
 
