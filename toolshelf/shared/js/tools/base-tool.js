@@ -92,6 +92,13 @@ window.ToolShelf.BaseTool = class BaseTool {
      * Show toast notification
      */
     showToast(message, type = 'success', duration) {
+        if (type == 'success' || type == 'info') {
+            duration = window.ToolShelf.Constants.TOAST_SHORT_DURATION;
+        } else if (type == 'error') {
+            duration = window.ToolShelf.Constants.TOAST_LONG_DURATION;
+        } else {
+            duration = window.ToolShelf.Constants.TOAST_MID_DURATION;
+        }
         if (window.ToolShelf.Toast) {
             window.ToolShelf.Toast.show(message, type, duration);
         }
@@ -107,7 +114,7 @@ window.ToolShelf.BaseTool = class BaseTool {
         });
 
         console.error(`❌ Error in ${this.toolId}:`, errorData);
-        this.showToast(userMessage, 'error', 5000);
+        this.showToast(userMessage, 'error', 1000);
 
         return errorData;
     }

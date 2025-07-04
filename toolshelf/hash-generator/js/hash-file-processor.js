@@ -382,7 +382,7 @@ window.ToolShelf.HashFileProcessor = class HashFileProcessor {
             this.generator.clearHash();
         }
 
-        this.generator.showToast('File removed', 'success');
+        // this.generator.showToast('File removed', 'success');
     }
 
     /**

@@ -374,7 +374,7 @@ window.ToolShelf.HashGenerator = class HashGenerator extends window.ToolShelf.Ba
                 }
             }
 
-            this.showToast('Configuration imported successfully', 'success');
+            // this.showToast('Configuration imported successfully', 'success');
             return true;
 
         } catch (error) {

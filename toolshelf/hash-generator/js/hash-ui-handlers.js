@@ -445,7 +445,7 @@ window.ToolShelf.HashUIHandlers = class HashUIHandlers {
         if (advancedSection) advancedSection.style.display = 'block';
         if (showBtn) showBtn.style.display = 'none';
 
-        this.generator.showToast('Advanced features enabled', 'info');
+        // this.generator.showToast('Advanced features enabled', 'info');
     }
 
     /**
@@ -637,7 +637,7 @@ window.ToolShelf.HashUIHandlers = class HashUIHandlers {
             this.formatAndDisplayHash(hash, this.generator.currentFormat);
             this.updateComparison();
 
-            this.generator.showToast(`${algorithm.toUpperCase()} hash generated`, 'success');
+            // this.generator.showToast(`${algorithm.toUpperCase()} hash generated`, 'success');
 
         } catch (error) {
             this.generator.handleError(error, 'Text hash generation failed');
@@ -744,10 +744,10 @@ window.ToolShelf.HashUIHandlers = class HashUIHandlers {
                 if (textInput) {
                     textInput.value = text;
                     this.updateInputStats();
-                    this.generator.showToast(`Pasted ${text.length.toLocaleString()} characters`, 'success');
+                    // this.generator.showToast(`Pasted ${text.length.toLocaleString()} characters`, 'success');
                 }
             } else {
-                this.generator.showToast('Clipboard is empty', 'info');
+                // this.generator.showToast('Clipboard is empty', 'info');
             }
         } catch (error) {
             this.generator.showToast('Could not access clipboard', 'warning');
@@ -764,7 +764,7 @@ window.ToolShelf.HashUIHandlers = class HashUIHandlers {
             textInput.focus();
             this.updateInputStats();
             this.clearHashDisplay();
-            this.generator.showToast('Input cleared', 'success');
+            // this.generator.showToast('Input cleared', 'success');
         }
     }
 
@@ -773,13 +773,13 @@ window.ToolShelf.HashUIHandlers = class HashUIHandlers {
      */
     async copyHash() {
         if (!this.generator.currentHash) {
-            this.generator.showToast('No hash to copy', 'warning');
+            // this.generator.showToast('No hash to copy', 'warning');
             return;
         }
 
         try {
             await navigator.clipboard.writeText(this.generator.currentHash);
-            this.generator.showToast('Hash copied to clipboard!', 'success');
+            // this.generator.showToast('Hash copied to clipboard!', 'success');
         } catch (error) {
             this.generator.showToast('Failed to copy hash', 'error');
         }

@@ -11,13 +11,11 @@ window.ToolShelf.Toast = {
     currentType: 'success',
 
     init() {
+
         this.element = document.getElementById('toast');
         this.messageElement = document.getElementById('toastMessage');
-
-        if (!this.element || !this.messageElement) {
-            console.error('❌ Toast elements not found');
-            return false;
-        }
+        if (!this.element || !this.messageElement) return false;
+        this.element.addEventListener('click', () => this.hide());
 
         // Set up close button
         const closeButton = this.element.querySelector('.toast-close');

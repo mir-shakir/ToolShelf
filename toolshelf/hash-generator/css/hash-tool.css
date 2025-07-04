@@ -1248,3 +1248,45 @@
         opacity: 0.5;
     }
 }
+
+
+@media (max-width: 768px) {
+
+    .hash-input-panel,
+    .hash-output-panel {
+        height: auto !important;
+        min-height: 0 !important;
+        max-height: none !important;
+    }
+
+    .hash-workspace {
+        min-height: 0 !important;
+    }
+
+    .output-content,
+    .hash-output-panel {
+        flex-direction: column !important;
+        flex: 1 1 auto !important;
+        min-height: 0 !important;
+    }
+
+    .hash-result-container {
+        flex: 0 0 auto !important;
+        padding: var(--space-4) !important;
+        overflow: visible !important;
+        display: flex !important;
+        flex-direction: column !important;
+    }
+
+    .hash-result {
+        min-height: 90px !important;
+        max-height: 200px !important;
+        overflow-y: auto !important;
+    }
+
+    .algorithm-info-panel {
+        flex-shrink: 0 !important;
+        min-height: 0 !important;
+        padding: var(--space-4) !important;
+    }
+}
