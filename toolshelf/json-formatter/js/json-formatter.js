@@ -55,7 +55,7 @@ window.ToolShelf.JSONFormatter = class JSONFormatter extends window.ToolShelf.Ba
             this.initializeElements();
             this.initializeComponents();
             this.initializeUI();
-            this.registerKeyboardShortcuts();
+            // this.registerKeyboardShortcuts();
             this.updateOutput(); // Initial state
 
             super.init();

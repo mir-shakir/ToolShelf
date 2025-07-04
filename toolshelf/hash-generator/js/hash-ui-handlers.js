@@ -19,7 +19,7 @@ window.ToolShelf.HashUIHandlers = class HashUIHandlers {
         this.setupInputHandlers();
         this.setupAdvancedFeatures();
         this.setupActionButtons();
-        this.setupKeyboardShortcuts();
+        // this.setupKeyboardShortcuts();
 
         // Create debounced update function for input stats only
         this.debouncedUpdate = window.ToolShelf.Utils.debounce(() => {

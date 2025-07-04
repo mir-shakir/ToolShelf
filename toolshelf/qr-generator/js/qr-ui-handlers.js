@@ -19,7 +19,7 @@ window.ToolShelf.QRUIHandlers = class QRUIHandlers {
         this.setupCustomizationHandlers();
         this.setupExportHandlers();
         this.setupLogoHandlers();
-        this.setupKeyboardShortcuts();
+        // this.setupKeyboardShortcuts();
 
         console.log('🎨 QR UI Handlers initialized');
     }

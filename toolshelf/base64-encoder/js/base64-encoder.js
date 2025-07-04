@@ -45,7 +45,7 @@ window.ToolShelf.Base64Tool = class Base64Tool extends window.ToolShelf.BaseTool
             this.initializeElements();
             this.initializeUI();
             this.setupFileHandling();
-            this.registerKeyboardShortcuts();
+            // this.registerKeyboardShortcuts();
             this.setupAutoDetection();
             this.updateOutput(); // Initial update
 

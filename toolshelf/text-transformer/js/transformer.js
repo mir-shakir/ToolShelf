@@ -45,7 +45,7 @@ window.ToolShelf.TextTransformer = class TextTransformer extends window.ToolShel
         try {
             this.initializeElements();
             this.initializeUI();
-            this.registerKeyboardShortcuts();
+            // this.registerKeyboardShortcuts();
             this.updateOutput(); // Initial update
             this.focusInput();
 
