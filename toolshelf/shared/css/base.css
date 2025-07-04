@@ -74,10 +74,16 @@ body {
     color: var(--primary-color);
 }
 
-/* Compact Navigation */
+/* Compact Navigation - includes theme switcher on homepage */
 .main-nav {
     display: flex;
     gap: var(--space-2);
+    align-items: center;
+}
+
+/* Theme switcher styling when in main nav (homepage) */
+.main-nav .theme-switcher-btn {
+    margin-left: var(--space-3);
 }
 
 .nav-link {
@@ -102,16 +108,10 @@ body {
     font-weight: 600;
 }
 
-/* Header Actions (Theme Switcher, etc.) */
-.header-actions {
-    display: flex;
-    align-items: center;
-    gap: var(--space-2);
-}
-
+/* Theme Switcher Button - matches help button styling */
 .theme-switcher-btn {
-    width: 36px;
-    height: 36px;
+    width: 32px;
+    height: 32px;
     border: 1px solid var(--border-color);
     background: var(--background-primary);
     border-radius: var(--radius-lg);
@@ -121,15 +121,13 @@ body {
     color: var(--text-secondary);
     cursor: pointer;
     transition: all var(--transition-fast);
-    font-size: 0.875rem;
+    font-size: 0.75rem;
 }
 
 .theme-switcher-btn:hover {
     border-color: var(--primary-color);
     color: var(--primary-color);
     background: var(--primary-subtle);
-    transform: translateY(-1px);
-    box-shadow: var(--shadow-sm);
 }
 
 .theme-switcher-btn:active {

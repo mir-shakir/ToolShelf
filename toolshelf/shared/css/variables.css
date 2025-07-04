@@ -80,12 +80,12 @@
     --error-color: #f87171;
     --info-color: #60a5fa;
 
-    /* Dark theme shadows with lighter opacity for better visibility */
-    --shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.3);
-    --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.4), 0 1px 2px -1px rgb(0 0 0 / 0.4);
-    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.4), 0 2px 4px -2px rgb(0 0 0 / 0.4);
-    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.4), 0 4px 6px -4px rgb(0 0 0 / 0.4);
-    --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.4), 0 8px 10px -6px rgb(0 0 0 / 0.4);
+    /* Dark theme shadows - same size as light theme to avoid layout changes */
+    --shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.15);
+    --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.2), 0 1px 2px -1px rgb(0 0 0 / 0.2);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.2), 0 2px 4px -2px rgb(0 0 0 / 0.2);
+    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.2), 0 4px 6px -4px rgb(0 0 0 / 0.2);
+    --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.2), 0 8px 10px -6px rgb(0 0 0 / 0.2);
 }
 
     /* Typography */
@@ -137,8 +137,16 @@
     --transition-slow: 350ms ease;
 }
 
-/* Smooth transitions for theme switching */
-* {
+/* Smooth transitions for theme switching - only for specific elements */
+body,
+.app-header,
+.tool-card,
+.nav-link,
+.theme-switcher-btn,
+.tool-button,
+.cta-primary,
+.cta-secondary,
+.feature-card {
     transition: background-color var(--transition-fast), 
                 color var(--transition-fast), 
                 border-color var(--transition-fast),
