@@ -18,6 +18,12 @@
     --background-tertiary: #f3f4f6;
     --background-card: #ffffff;
     
+    /* Tool-specific backgrounds */
+    --surface-color: #ffffff;
+    --surface-hover: #f9fafb;
+    --card-background: #ffffff;
+    --code-background: #f8f9fa;
+    
     /* RGB values for backdrop filters */
     --background-primary-rgb: 255, 255, 255;
 
@@ -34,6 +40,16 @@
     --warning-color: #f59e0b;
     --error-color: #ef4444;
     --info-color: #3b82f6;
+    
+    /* State-specific backgrounds and borders */
+    --success-background: #f0fdf4;
+    --success-border: #bbf7d0;
+    --warning-background: #fffbeb;
+    --warning-border: #fed7aa;
+    --error-background: #fef2f2;
+    --error-border: #fecaca;
+    --info-background: #eff6ff;
+    --info-border: #bae6fd;
 
     /* Refined Shadows */
     --shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.05);
@@ -63,6 +79,12 @@
     --background-tertiary: #334155;
     --background-card: #1e293b;
     
+    /* Tool-specific backgrounds */
+    --surface-color: #1e293b;
+    --surface-hover: #334155;
+    --card-background: #1e293b;
+    --code-background: #0f172a;
+    
     /* RGB values for backdrop filters */
     --background-primary-rgb: 15, 23, 42;
 
@@ -79,6 +101,16 @@
     --warning-color: #fbbf24;
     --error-color: #f87171;
     --info-color: #60a5fa;
+
+    /* State-specific backgrounds and borders - Dark theme */
+    --success-background: #064e3b;
+    --success-border: #059669;
+    --warning-background: #451a03;
+    --warning-border: #d97706;
+    --error-background: #450a0a;
+    --error-border: #dc2626;
+    --info-background: #1e3a8a;
+    --info-border: #3b82f6;
 
     /* Dark theme shadows - same size as light theme to avoid layout changes */
     --shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.15);
