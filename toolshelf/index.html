@@ -183,10 +183,13 @@
                 <a href="./#" class="nav-link active">Home</a>
                 <a href="./#tools" class="nav-link">Tools</a>
                 <a href="./#about" class="nav-link">About</a>
-                <button class="theme-switcher-btn" id="themeSwitcherBtn" title="Switch to dark mode" aria-label="Switch to dark mode">
+            </nav>
+
+            <div class="header-actions">
+                <button class="theme-switcher-btn" id="themeSwitcher" title="Switch to dark mode" aria-label="Switch to dark mode">
                     <i class="fas fa-moon"></i>
                 </button>
-            </nav>
+            </div>
         </div>
     </header>
 
@@ -587,7 +590,6 @@
     <!-- JavaScript -->
     <script src="shared/js/core/analytics.js"></script>
     <script src="shared/js/components/navigation.js"></script>
-    <script src="shared/js/components/theme-switcher.js"></script>
     <script src="shared/js/homepage.js"></script>
 
 
@@ -609,6 +611,59 @@
             document.getElementById('toolSearch').value = '';
             document.getElementById('toolSearch').dispatchEvent(new Event('input'));
         }
+
+        // Minimal Theme Switcher - Only changes colors
+        (function() {
+            let currentTheme = 'light';
+            
+            function loadTheme() {
+                try {
+                    const saved = localStorage.getItem('toolshelf-theme');
+                    if (saved === 'dark' || saved === 'light') {
+                        currentTheme = saved;
+                    } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                        currentTheme = 'dark';
+                    }
+                    document.documentElement.setAttribute('data-theme', currentTheme);
+                } catch (e) {
+                    document.documentElement.setAttribute('data-theme', 'light');
+                }
+            }
+            
+            function toggleTheme() {
+                currentTheme = currentTheme === 'light' ? 'dark' : 'light';
+                document.documentElement.setAttribute('data-theme', currentTheme);
+                try {
+                    localStorage.setItem('toolshelf-theme', currentTheme);
+                } catch (e) {}
+                updateButton();
+            }
+            
+            function updateButton() {
+                const btn = document.getElementById('themeSwitcher');
+                if (btn) {
+                    const icon = btn.querySelector('i');
+                    const isDark = currentTheme === 'dark';
+                    if (icon) {
+                        icon.className = isDark ? 'fas fa-sun' : 'fas fa-moon';
+                    }
+                    btn.title = isDark ? 'Switch to light mode' : 'Switch to dark mode';
+                    btn.setAttribute('aria-label', btn.title);
+                }
+            }
+            
+            // Load theme immediately
+            loadTheme();
+            
+            // Setup when DOM is ready
+            document.addEventListener('DOMContentLoaded', function() {
+                updateButton();
+                const btn = document.getElementById('themeSwitcher');
+                if (btn) {
+                    btn.addEventListener('click', toggleTheme);
+                }
+            });
+        })();
     </script>
 </body>
 

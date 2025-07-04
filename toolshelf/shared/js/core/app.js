@@ -70,12 +70,6 @@ window.ToolShelf.App = class ToolShelfApp {
             console.log('⌨️ Keyboard system ready');
         }
 
-        // Initialize theme switcher
-        if (window.ToolShelf.ThemeSwitcher) {
-            window.ToolShelf.ThemeSwitcher.init();
-            console.log('🎨 Theme switcher ready');
-        }
-
         console.log('🎨 UI components initialized');
     }
 

@@ -24,7 +24,7 @@ body {
 
 /* Clean, Compact Header */
 .app-header {
-    background: rgba(var(--background-primary-rgb, 255, 255, 255), 0.95);
+    background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(10px);
     border-bottom: 1px solid var(--border-light);
     position: sticky;
@@ -74,16 +74,10 @@ body {
     color: var(--primary-color);
 }
 
-/* Compact Navigation - includes theme switcher on homepage */
+/* Compact Navigation */
 .main-nav {
     display: flex;
     gap: var(--space-2);
-    align-items: center;
-}
-
-/* Theme switcher styling when in main nav (homepage) */
-.main-nav .theme-switcher-btn {
-    margin-left: var(--space-3);
 }
 
 .nav-link {
@@ -106,32 +100,6 @@ body {
     color: var(--primary-color);
     background: var(--primary-subtle);
     font-weight: 600;
-}
-
-/* Theme Switcher Button - matches help button styling */
-.theme-switcher-btn {
-    width: 32px;
-    height: 32px;
-    border: 1px solid var(--border-color);
-    background: var(--background-primary);
-    border-radius: var(--radius-lg);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--text-secondary);
-    cursor: pointer;
-    transition: all var(--transition-fast);
-    font-size: 0.75rem;
-}
-
-.theme-switcher-btn:hover {
-    border-color: var(--primary-color);
-    color: var(--primary-color);
-    background: var(--primary-subtle);
-}
-
-.theme-switcher-btn:active {
-    transform: translateY(0);
 }
 
 
@@ -544,4 +512,38 @@ body {
 .cta-secondary:focus,
 .tool-button:focus {
     outline: 2px solid var(--primary-color);
-    outline-offset: 2px; }
+    outline-offset: 2px;
+}
+
+/* Header actions and theme switcher - minimal styles */
+.header-actions,
+.tool-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+}
+
+.theme-switcher-btn {
+    width: 32px;
+    height: 32px;
+    border: 1px solid var(--border-color);
+    background: var(--background-primary);
+    border-radius: var(--radius-lg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-secondary);
+    cursor: pointer;
+    font-size: 0.75rem;
+}
+
+.theme-switcher-btn:hover {
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+    background: var(--primary-subtle);
+}
+
+.theme-switcher-btn:focus {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+}
