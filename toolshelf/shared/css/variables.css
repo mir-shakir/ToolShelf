@@ -85,4 +85,68 @@
     /* Transitions */
     --transition-fast: 150ms ease;
     --transition-normal: 250ms ease;
-    --transition-slow: 350ms ease; }
+    --transition-slow: 350ms ease;
+
+    /* Additional UI colors for components */
+    --surface-color: #ffffff;
+    --surface-hover: #f8fafc;
+    --card-background: #ffffff;
+    --code-background: #f8f9fa;
+    
+    /* Status colors with backgrounds */
+    --info-background: #f0f9ff;
+    --info-border: #bae6fd;
+    --success-background: #f0fdf4;
+    --success-border: #bbf7d0;
+    --error-background: #fef2f2;
+    --error-border: #fecaca;
+}
+
+/* Dark Theme - Only color changes, no layout modifications */
+[data-theme="dark"] {
+    --primary-color: #60a5fa;
+    --primary-light: #93c5fd;
+    --primary-dark: #3b82f6;
+    --primary-subtle: #1e3a8a;
+
+    --secondary-color: #9ca3af;
+    --secondary-light: #d1d5db;
+    --secondary-dark: #6b7280;
+
+    --accent-color: #34d399;
+    --accent-light: #6ee7b7;
+    --accent-dark: #10b981;
+
+    --background-primary: #0f172a;
+    --background-secondary: #1e293b;
+    --background-tertiary: #334155;
+    --background-card: #1e293b;
+
+    --text-primary: #f8fafc;
+    --text-secondary: #cbd5e1;
+    --text-muted: #94a3b8;
+    --text-white: #ffffff;
+
+    --border-color: #475569;
+    --border-light: #334155;
+    --border-focus: #60a5fa;
+
+    --success-color: #34d399;
+    --warning-color: #fbbf24;
+    --error-color: #f87171;
+    --info-color: #60a5fa;
+
+    /* Additional UI colors for dark theme */
+    --surface-color: #1e293b;
+    --surface-hover: #334155;
+    --card-background: #1e293b;
+    --code-background: #0f172a;
+    
+    /* Status colors with dark theme backgrounds */
+    --info-background: #1e3a8a;
+    --info-border: #3b82f6;
+    --success-background: #166534;
+    --success-border: #34d399;
+    --error-background: #dc2626;
+    --error-border: #f87171;
+}
