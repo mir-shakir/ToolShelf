@@ -24,7 +24,7 @@ body {
 
 /* Clean, Compact Header */
 .app-header {
-    background: rgba(255, 255, 255, 0.95);
+    background: rgba(var(--background-primary-rgb, 255, 255, 255), 0.95);
     backdrop-filter: blur(10px);
     border-bottom: 1px solid var(--border-light);
     position: sticky;
@@ -100,6 +100,40 @@ body {
     color: var(--primary-color);
     background: var(--primary-subtle);
     font-weight: 600;
+}
+
+/* Header Actions (Theme Switcher, etc.) */
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+}
+
+.theme-switcher-btn {
+    width: 36px;
+    height: 36px;
+    border: 1px solid var(--border-color);
+    background: var(--background-primary);
+    border-radius: var(--radius-lg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    font-size: 0.875rem;
+}
+
+.theme-switcher-btn:hover {
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+    background: var(--primary-subtle);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-sm);
+}
+
+.theme-switcher-btn:active {
+    transform: translateY(0);
 }
 
 

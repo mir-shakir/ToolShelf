@@ -40,6 +40,11 @@
         // Setup coming soon tracking
         setupComingSoonTracking();
 
+        // Initialize theme switcher
+        if (window.ToolShelf && window.ToolShelf.ThemeSwitcher) {
+            window.ToolShelf.ThemeSwitcher.init();
+        }
+
         // Initial animation
         animateToolsLoad();
 

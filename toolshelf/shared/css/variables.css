@@ -1,5 +1,5 @@
 :root {
-    /* Modern, Professional Color Palette */
+    /* Modern, Professional Color Palette - Light Theme */
     --primary-color: #3b82f6;
     --primary-light: #60a5fa;
     --primary-dark: #2563eb;
@@ -17,6 +17,9 @@
     --background-secondary: #f9fafb;
     --background-tertiary: #f3f4f6;
     --background-card: #ffffff;
+    
+    /* RGB values for backdrop filters */
+    --background-primary-rgb: 255, 255, 255;
 
     --text-primary: #111827;
     --text-secondary: #6b7280;
@@ -38,6 +41,52 @@
     --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
     --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
     --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+}
+
+/* Dark Theme */
+[data-theme="dark"] {
+    --primary-color: #60a5fa;
+    --primary-light: #93c5fd;
+    --primary-dark: #3b82f6;
+    --primary-subtle: #1e293b;
+
+    --secondary-color: #9ca3af;
+    --secondary-light: #d1d5db;
+    --secondary-dark: #6b7280;
+
+    --accent-color: #34d399;
+    --accent-light: #6ee7b7;
+    --accent-dark: #10b981;
+
+    --background-primary: #0f172a;
+    --background-secondary: #1e293b;
+    --background-tertiary: #334155;
+    --background-card: #1e293b;
+    
+    /* RGB values for backdrop filters */
+    --background-primary-rgb: 15, 23, 42;
+
+    --text-primary: #f8fafc;
+    --text-secondary: #cbd5e1;
+    --text-muted: #94a3b8;
+    --text-white: #ffffff;
+
+    --border-color: #475569;
+    --border-light: #334155;
+    --border-focus: #60a5fa;
+
+    --success-color: #34d399;
+    --warning-color: #fbbf24;
+    --error-color: #f87171;
+    --info-color: #60a5fa;
+
+    /* Dark theme shadows with lighter opacity for better visibility */
+    --shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.3);
+    --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.4), 0 1px 2px -1px rgb(0 0 0 / 0.4);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.4), 0 2px 4px -2px rgb(0 0 0 / 0.4);
+    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.4), 0 4px 6px -4px rgb(0 0 0 / 0.4);
+    --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.4), 0 8px 10px -6px rgb(0 0 0 / 0.4);
+}
 
     /* Typography */
     --font-family-primary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
@@ -85,4 +134,13 @@
     /* Transitions */
     --transition-fast: 150ms ease;
     --transition-normal: 250ms ease;
-    --transition-slow: 350ms ease; }
+    --transition-slow: 350ms ease;
+}
+
+/* Smooth transitions for theme switching */
+* {
+    transition: background-color var(--transition-fast), 
+                color var(--transition-fast), 
+                border-color var(--transition-fast),
+                box-shadow var(--transition-fast);
+}
