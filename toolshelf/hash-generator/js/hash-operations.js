@@ -1,6 +1,6 @@
 /**
- * ToolShelf Hash Operations - SECURE IMPLEMENTATION
- * Only generates correct hashes or fails gracefully
+ * ToolShelf Hash Operations - SECURE IMPLEMENTATION (hash-wasm only)
+ * Only generates correct hashes or fails gracefully, using hash-wasm for all algorithms.
  */
 window.ToolShelf = window.ToolShelf || {};
 
@@ -10,114 +10,8 @@ window.ToolShelf.HashOperations = class HashOperations {
         this.supportedAlgorithms = new Map();
         this.currentHash = null;
         this.isProcessing = false;
-        this.librariesLoaded = {
-            cryptojs: false,
-            sha3: false,
-            blake2b: false
-        };
-        this.libraryLoadPromise = null;
 
         this.initializeAlgorithms();
-        this.libraryLoadPromise = this.loadCryptoLibraries();
-    }
-
-    /**
-     * Load crypto libraries with proper error handling
-     */
-    async loadCryptoLibraries() {
-        try {
-            console.log('🔄 Loading crypto libraries...');
-
-            // Load crypto-js
-            try {
-                await this.loadScript('https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.2.0/crypto-js.min.js');
-                if (window.CryptoJS) {
-                    this.librariesLoaded.cryptojs = true;
-                    console.log('✅ CryptoJS loaded successfully');
-                } else {
-                    console.warn('❌ CryptoJS failed to load properly');
-                }
-            } catch (error) {
-                console.warn('❌ Failed to load CryptoJS:', error);
-            }
-
-            // Load SHA3 library
-            try {
-                await this.loadScript('https://cdnjs.cloudflare.com/ajax/libs/js-sha3/0.8.0/sha3.min.js');
-                if (window.sha3_256 && window.sha3_512) {
-                    this.librariesLoaded.sha3 = true;
-                    console.log('✅ SHA3 library loaded successfully');
-                } else {
-                    console.warn('❌ SHA3 library failed to load properly');
-                }
-            } catch (error) {
-                console.warn('❌ Failed to load SHA3 library:', error);
-            }
-
-            // Load BLAKE2 library (different approach)
-            try {
-                // await this.loadScript('https://cdn.jsdelivr.net/npm/blake2b@2.1.4/blake2b.min.js');
-                await this.loadScript('https://cdnjs.cloudflare.com/ajax/libs/blakejs/1.1.0/blake2b.min.js');
-                if (window.blake2b) {
-                    this.librariesLoaded.blake2b = true;
-                    console.log('✅ BLAKE2b library loaded successfully');
-                } else {
-                    console.warn('❌ BLAKE2b library failed to load properly');
-                }
-            } catch (error) {
-                console.warn('❌ Failed to load BLAKE2b library:', error);
-            }
-
-            // Report status
-            const loadedCount = Object.values(this.librariesLoaded).filter(Boolean).length;
-            console.log(`📊 Library status: ${loadedCount}/3 libraries loaded successfully`);
-
-            if (loadedCount > 0) {
-                this.generator.showToast(`${loadedCount}/3 crypto libraries loaded successfully`, 'success', 3000);
-            } else {
-                this.generator.showToast('Warning: External crypto libraries failed to load. Only basic algorithms available.', 'warning', 5000);
-            }
-
-        } catch (error) {
-            console.error('💥 Critical error loading crypto libraries:', error);
-            this.generator.showToast('Error loading crypto libraries. Some algorithms may not work.', 'error', 5000);
-        }
-    }
-
-    /**
-     * Load external script with timeout
-     */
-    loadScript(src) {
-        return new Promise((resolve, reject) => {
-            // Check if already loaded
-            if (document.querySelector(`script[src="${src}"]`)) {
-                resolve();
-                return;
-            }
-
-            const script = document.createElement('script');
-            script.src = src;
-            script.async = true;
-
-            // Timeout after 10 seconds
-            const timeout = setTimeout(() => {
-                script.remove();
-                reject(new Error(`Script loading timeout: ${src}`));
-            }, 10000);
-
-            script.onload = () => {
-                clearTimeout(timeout);
-                resolve();
-            };
-
-            script.onerror = () => {
-                clearTimeout(timeout);
-                script.remove();
-                reject(new Error(`Failed to load script: ${src}`));
-            };
-
-            document.head.appendChild(script);
-        });
     }
 
     /**
@@ -130,8 +24,7 @@ window.ToolShelf.HashOperations = class HashOperations {
             security: 'legacy',
             useCase: 'Legacy compatibility only',
             description: 'Cryptographically broken, use only for compatibility',
-            webCryptoSupported: false,
-            requiresLibrary: 'cryptojs'
+            tips: '⚠️ MD5 is fast but broken—use only for quick file checksums, never for security!'
         });
 
         this.supportedAlgorithms.set('sha1', {
@@ -140,9 +33,7 @@ window.ToolShelf.HashOperations = class HashOperations {
             security: 'low',
             useCase: 'Legacy systems',
             description: 'Deprecated for security applications',
-            webCryptoSupported: true,
-            webCryptoName: 'SHA-1',
-            requiresLibrary: 'cryptojs'
+            tips: 'SHA-1 hashes look longer than MD5, but it’s also considered insecure for new systems. Use for legacy only!'
         });
 
         this.supportedAlgorithms.set('sha256', {
@@ -151,9 +42,7 @@ window.ToolShelf.HashOperations = class HashOperations {
             security: 'high',
             useCase: 'General purpose',
             description: 'Recommended for most applications',
-            webCryptoSupported: true,
-            webCryptoName: 'SHA-256',
-            requiresLibrary: 'cryptojs'
+            tips: 'SHA-256 is the current industry standard. Perfect for digital signatures, certificates, and blockchain applications.'
         });
 
         this.supportedAlgorithms.set('sha512', {
@@ -162,9 +51,7 @@ window.ToolShelf.HashOperations = class HashOperations {
             security: 'high',
             useCase: 'High security applications',
             description: 'Maximum security, larger output',
-            webCryptoSupported: true,
-            webCryptoName: 'SHA-512',
-            requiresLibrary: 'cryptojs'
+            tips: 'SHA-512 offers extra-long hashes—great for maximum security, password storage, and future-proofing.'
         });
 
         this.supportedAlgorithms.set('sha3-256', {
@@ -173,8 +60,7 @@ window.ToolShelf.HashOperations = class HashOperations {
             security: 'high',
             useCase: 'Modern applications',
             description: 'Modern alternative to SHA-2',
-            webCryptoSupported: false,
-            requiresLibrary: 'sha3'
+            tips: 'SHA3-256 is designed to be secure even against quantum computers. Ideal for forward-thinking and research projects.'
         });
 
         this.supportedAlgorithms.set('sha3-512', {
@@ -183,8 +69,7 @@ window.ToolShelf.HashOperations = class HashOperations {
             security: 'high',
             useCase: 'High security modern',
             description: 'Maximum security with modern design',
-            webCryptoSupported: false,
-            requiresLibrary: 'sha3'
+            tips: 'The “tank” of hashes—SHA3-512 is for when you want the ultimate in modern cryptographic strength.'
         });
 
         this.supportedAlgorithms.set('blake2b', {
@@ -193,15 +78,14 @@ window.ToolShelf.HashOperations = class HashOperations {
             security: 'high',
             useCase: 'High performance',
             description: 'Fast and secure alternative',
-            webCryptoSupported: false,
-            requiresLibrary: 'blake2b'
+            tips: 'BLAKE2b is super-fast and highly secure—used by popular protocols like Argon2 and IPFS. Perfect for performance-critical apps!'
         });
 
-        console.log('🔐 Hash algorithms initialized');
+        console.log('🔐 Hash algorithms initialized (hash-wasm only)');
     }
-
+    
     /**
-     * Generate hash for text input - SECURE VERSION
+     * Generate hash for text input - hash-wasm only
      */
     async generateTextHash(text, algorithm, options = {}) {
         try {
@@ -211,23 +95,6 @@ window.ToolShelf.HashOperations = class HashOperations {
             const algorithmInfo = this.supportedAlgorithms.get(algorithm);
             if (!algorithmInfo) {
                 throw new Error(`Unsupported algorithm: ${algorithm}`);
-            }
-
-            // Check if required library is available
-            if (algorithmInfo.requiresLibrary && !this.librariesLoaded[algorithmInfo.requiresLibrary]) {
-                // Wait for libraries to load if they're still loading
-                if (this.libraryLoadPromise) {
-                    console.log('⏳ Waiting for crypto libraries to load...');
-                    await this.libraryLoadPromise;
-                }
-
-                // Check again after waiting
-                if (!this.librariesLoaded[algorithmInfo.requiresLibrary]) {
-                    console.log(algorithmInfo.name+' requires external library that failed to load. Please refresh the page and try again.');
-                    this.generator.showToast(algorithmInfo.name+ ' requires external library that failed to load. Please refresh the page and try again.','error', 5000);
-                    //clear output window
-                    return "";
-                }
             }
 
             let hash;
@@ -258,10 +125,7 @@ window.ToolShelf.HashOperations = class HashOperations {
 
         } catch (error) {
             // Show user-friendly error message
-            const errorMessage = error.message.includes('requires external library')
-                ? error.message
-                : `Failed to generate ${algorithm.toUpperCase()} hash: ${error.message}`;
-
+            const errorMessage = `Failed to generate ${algorithm.toUpperCase()} hash: ${error.message}`;
             this.generator.showToast(errorMessage, 'error', 5000);
             throw error;
         } finally {
@@ -270,219 +134,90 @@ window.ToolShelf.HashOperations = class HashOperations {
     }
 
     /**
-     * Generate standard hash - SECURE VERSION
+     * Generate standard hash - hash-wasm only
      */
     async generateStandardHash(text, algorithm) {
-        const algorithmInfo = this.supportedAlgorithms.get(algorithm);
+        const hashwasmMap = {
+            'md5': () => window.hashwasm.createMD5(),
+            'sha1': () => window.hashwasm.createSHA1(),
+            'sha256': () => window.hashwasm.createSHA256(),
+            'sha512': () => window.hashwasm.createSHA512(),
+            'sha3-256': () => window.hashwasm.createSHA3(256),
+            'sha3-512': () => window.hashwasm.createSHA3(512)
+        };
 
-        // Try Web Crypto API first for supported algorithms (only on HTTPS)
-        if (algorithmInfo.webCryptoSupported &&
-            window.crypto &&
-            window.crypto.subtle &&
-            window.isSecureContext) {
-            try {
-                console.log(`🔒 Using Web Crypto API for ${algorithm}`);
-                return await this.generateWebCryptoHash(text, algorithmInfo.webCryptoName);
-            } catch (error) {
-                console.warn(`Web Crypto failed for ${algorithm}, falling back to library:`, error);
+        if (algorithm === 'blake2b') {
+            if (!window.hashwasm || !window.hashwasm.blake2b) {
+                throw new Error('BLAKE2b requires hash-wasm library');
             }
+            return await window.hashwasm.blake2b(text);
         }
 
-        // Use crypto libraries - ONLY CORRECT IMPLEMENTATIONS
-        return await this.generateLibraryHash(text, algorithm);
-    }
-
-    /**
-     * Generate hash using Web Crypto API
-     */
-    async generateWebCryptoHash(text, algorithmName) {
-        const encoder = new TextEncoder();
-        const data = encoder.encode(text);
-        const hashBuffer = await crypto.subtle.digest(algorithmName, data);
-        return new Uint8Array(hashBuffer);
-    }
-
-    /**
-     * Generate hash using crypto libraries - ONLY CORRECT IMPLEMENTATIONS
-     */
-    async generateLibraryHash(text, algorithm) {
-        switch (algorithm) {
-            case 'md5':
-                if (!window.CryptoJS) {
-                    throw new Error('MD5 requires CryptoJS library');
-                }
-                return window.CryptoJS.MD5(text).toString();
-
-            case 'sha1':
-                if (!window.CryptoJS) {
-                    throw new Error('SHA1 requires CryptoJS library');
-                }
-                return window.CryptoJS.SHA1(text).toString();
-
-            case 'sha256':
-                if (!window.CryptoJS) {
-                    throw new Error('SHA256 requires CryptoJS library');
-                }
-                return window.CryptoJS.SHA256(text).toString();
-
-            case 'sha512':
-                if (!window.CryptoJS) {
-                    throw new Error('SHA512 requires CryptoJS library');
-                }
-                return window.CryptoJS.SHA512(text).toString();
-
-            case 'sha3-256':
-                if (!window.sha3_256) {
-                    throw new Error('SHA3-256 requires js-sha3 library');
-                }
-                return window.sha3_256(text);
-
-            case 'sha3-512':
-                if (!window.sha3_512) {
-                    throw new Error('SHA3-512 requires js-sha3 library');
-                }
-                return window.sha3_512(text);
-
-            case 'blake2b':
-                if (!window.blake2b) {
-                    throw new Error('BLAKE2b requires blake2b library');
-                }
-                try {
-                    // Try different BLAKE2b library interfaces
-                    if (typeof window.blake2b === 'function') {
-                        const hash = window.blake2b(64); // 64 bytes output
-                        hash.update(new TextEncoder().encode(text));
-                        const digest = hash.digest();
-                        return Array.from(digest).map(b => b.toString(16).padStart(2, '0')).join('');
-                    } else if (window.blake2b.blake2b) {
-                        return window.blake2b.blake2b(text, null, 64);
-                    } else {
-                        throw new Error('BLAKE2b library interface not recognized');
-                    }
-                } catch (error) {
-                    throw new Error(`BLAKE2b generation failed: ${error.message}`);
-                }
-
-            default:
-                throw new Error(`No secure implementation available for ${algorithm}`);
+        if (hashwasmMap[algorithm]) {
+            if (!window.hashwasm) {
+                throw new Error(`${algorithm.toUpperCase()} requires hash-wasm library`);
+            }
+            const hasher = await hashwasmMap[algorithm]();
+            hasher.init();
+            hasher.update(text);
+            return hasher.digest('hex');
         }
+
+        throw new Error(`No hash-wasm implementation available for ${algorithm}`);
     }
 
     /**
-     * Generate HMAC hash - SECURE VERSION
+     * Generate HMAC hash using hash-wasm for all supported algorithms
+     * BLAKE2b uses native keyed mode
+     * Returns hex string
      */
     async generateHMAC(text, key, algorithm, options = {}) {
-        // Try Web Crypto API first
-        if (window.crypto && window.crypto.subtle && window.isSecureContext) {
-            const algorithmInfo = this.supportedAlgorithms.get(algorithm);
-            if (algorithmInfo.webCryptoSupported) {
-                try {
-                    console.log(`🔒 Using Web Crypto API for HMAC-${algorithm}`);
-                    const keyData = this.prepareHMACKey(key, options.keyEncoding || 'utf8');
+        // Helper for hashwasm HMAC
+        async function hashwasmHMAC(hashFactory, key, message) {
+            const hmac = await window.hashwasm.createHMAC(hashFactory(), key);
+            hmac.init();
+            hmac.update(message);
+            return hmac.digest('hex');
+        }
 
-                    const cryptoKey = await crypto.subtle.importKey(
-                        'raw',
-                        keyData,
-                        { name: 'HMAC', hash: algorithmInfo.webCryptoName },
-                        false,
-                        ['sign']
-                    );
+        const hashwasmMap = {
+            'md5': () => window.hashwasm.createMD5(),
+            'sha1': () => window.hashwasm.createSHA1(),
+            'sha256': () => window.hashwasm.createSHA256(),
+            'sha512': () => window.hashwasm.createSHA512(),
+            'sha3-256': () => window.hashwasm.createSHA3(256),
+            'sha3-512': () => window.hashwasm.createSHA3(512)
+        };
 
-                    const encoder = new TextEncoder();
-                    const data = encoder.encode(text);
-                    const signature = await crypto.subtle.sign('HMAC', cryptoKey, data);
-
-                    return new Uint8Array(signature);
-                } catch (error) {
-                    console.warn('Web Crypto HMAC failed, trying library fallback:', error);
-                }
+        // BLAKE2b: use native keyed MAC mode
+        if (algorithm === 'blake2b') {
+            if (!window.hashwasm || !window.hashwasm.blake2b) {
+                throw new Error('BLAKE2b requires hash-wasm library');
+            }
+            try {
+                const outLen = 512; // bits (default)
+                const keyData = this.prepareHMACKey
+                    ? this.prepareHMACKey(key, options.keyEncoding || 'utf8')
+                    : key;
+                return await window.hashwasm.blake2b(text, outLen, keyData);
+            } catch (error) {
+                throw new Error(`BLAKE2b keyed hash failed: ${error.message}`);
             }
         }
 
-        // Fallback to CryptoJS HMAC
-        if (!window.CryptoJS) {
-            throw new Error(`HMAC-${algorithm.toUpperCase()} requires CryptoJS library`);
+        // All others via hashwasm HMAC
+        if (hashwasmMap[algorithm]) {
+            if (!window.hashwasm || !window.hashwasm.createHMAC) {
+                throw new Error(`${algorithm.toUpperCase()} HMAC requires hash-wasm library`);
+            }
+            try {
+                return await hashwasmHMAC(hashwasmMap[algorithm], key, text);
+            } catch (error) {
+                throw new Error(`${algorithm.toUpperCase()} HMAC failed: ${error.message}`);
+            }
         }
 
-        let hmacFunction;
-        switch (algorithm) {
-            case 'sha1':
-                hmacFunction = window.CryptoJS.HmacSHA1;
-                break;
-            case 'sha256':
-                hmacFunction = window.CryptoJS.HmacSHA256;
-                break;
-            case 'sha512':
-                hmacFunction = window.CryptoJS.HmacSHA512;
-                break;
-            default:
-                throw new Error(`HMAC not supported for ${algorithm}`);
-        }
-
-        return hmacFunction(text, key).toString();
-    }
-
-    /**
-     * Check if algorithm is currently available
-     */
-    isAlgorithmAvailable(algorithm) {
-        const info = this.supportedAlgorithms.get(algorithm);
-        if (!info) return false;
-
-        // Check Web Crypto availability
-        if (info.webCryptoSupported &&
-            window.crypto &&
-            window.crypto.subtle &&
-            window.isSecureContext) {
-            return true;
-        }
-
-        // Check library availability
-        if (info.requiresLibrary) {
-            return this.librariesLoaded[info.requiresLibrary];
-        }
-
-        return false;
-    }
-
-    /**
-     * Get algorithm availability status
-     */
-    getAlgorithmStatus(algorithm) {
-        const info = this.supportedAlgorithms.get(algorithm);
-        if (!info) return { available: false, reason: 'Unknown algorithm' };
-
-        // Check Web Crypto
-        if (info.webCryptoSupported &&
-            window.crypto &&
-            window.crypto.subtle &&
-            window.isSecureContext) {
-            return { available: true, method: 'Web Crypto API' };
-        }
-
-        // Check library
-        if (info.requiresLibrary) {
-            const libraryLoaded = this.librariesLoaded[info.requiresLibrary];
-            return {
-                available: libraryLoaded,
-                method: libraryLoaded ? `${info.requiresLibrary} library` : 'Library not loaded',
-                reason: libraryLoaded ? null : `Requires ${info.requiresLibrary} library`
-            };
-        }
-
-        return { available: false, reason: 'No implementation available' };
-    }
-
-    /**
-     * Get library loading status
-     */
-    getLibraryStatus() {
-        return {
-            librariesLoaded: this.librariesLoaded,
-            webCrypto: !!(window.crypto && window.crypto.subtle),
-            secureContext: !!window.isSecureContext,
-            availableAlgorithms: this.getSupportedAlgorithms().filter(alg => this.isAlgorithmAvailable(alg))
-        };
+        throw new Error(`HMAC not supported for ${algorithm}`);
     }
 
     /**
@@ -605,13 +340,10 @@ window.ToolShelf.HashOperations = class HashOperations {
         if (!hash1 || !hash2) {
             return { match: false, reason: 'Missing hash values' };
         }
-
         // Normalize hashes (remove spaces, convert to lowercase)
         const normalized1 = hash1.replace(/\s+/g, '').toLowerCase();
         const normalized2 = hash2.replace(/\s+/g, '').toLowerCase();
-
         const match = normalized1 === normalized2;
-
         return {
             match,
             reason: match ? 'Hashes match' : 'Hashes do not match',
@@ -647,10 +379,6 @@ window.ToolShelf.HashOperations = class HashOperations {
     getHashStatistics(input, algorithm) {
         const algorithmInfo = this.supportedAlgorithms.get(algorithm);
         if (!algorithmInfo) return null;
-
-        const status = this.getAlgorithmStatus(algorithm);
-        const libraryStatus = this.getLibraryStatus();
-
         return {
             inputLength: input.length,
             inputBytes: new Blob([input]).size,
@@ -658,9 +386,8 @@ window.ToolShelf.HashOperations = class HashOperations {
             outputLength: algorithmInfo.outputLength,
             securityLevel: algorithmInfo.security,
             useCase: algorithmInfo.useCase,
-            isAvailable: status.available,
-            method: status.method,
-            libraryStatus: libraryStatus
+            isAvailable: true,
+            method: 'hash-wasm'
         };
     }
 };

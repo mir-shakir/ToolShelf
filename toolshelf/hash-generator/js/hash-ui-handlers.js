@@ -244,27 +244,6 @@ window.ToolShelf.HashUIHandlers = class HashUIHandlers {
     }
 
     switchAlgorithm(algorithm) {
-        // Check if algorithm is available
-        const status = this.generator.operations.getAlgorithmStatus(algorithm);
-
-        if (!status.available) {
-            this.generator.showToast(
-                `${algorithm.toUpperCase()} is not available: ${status.reason}`,
-                'warning',
-                4000
-            );
-
-            // Disable the algorithm tab visually
-            const algorithmTab = document.querySelector(`[data-algorithm="${algorithm}"]`);
-            if (algorithmTab) {
-                algorithmTab.classList.add('disabled');
-                algorithmTab.title = status.reason;
-            }
-
-            return;
-        }
-
-        // Update tab states
         document.querySelectorAll('.algorithm-tab').forEach(tab => {
             tab.classList.toggle('active', tab.dataset.algorithm === algorithm);
             tab.classList.remove('disabled');
@@ -276,15 +255,42 @@ window.ToolShelf.HashUIHandlers = class HashUIHandlers {
         // Update algorithm info display
         this.updateAlgorithmInfo(algorithm);
 
-        // Show which method is being used
-        if (status.method) {
-            console.log(`🔐 Using ${status.method} for ${algorithm}`);
-        }
-
         // Regenerate hash with new algorithm
         this.updateHash();
 
         console.log(`🔐 Switched to ${algorithm} algorithm`);
+    }
+
+    async updateHash() {
+        if (this.generator.currentInputType !== 'text') return;
+
+        const textInput = document.getElementById('inputText');
+        if (!textInput) return;
+
+        const text = textInput.value.trim();
+
+        // Update input stats
+        this.updateInputStats(text);
+
+        if (!text) {
+            this.clearHashDisplay();
+            return;
+        }
+
+        try {
+            const algorithm = this.generator.currentAlgorithm;
+            const options = this.generator.getHashOptions();
+
+            const hash = await this.generator.operations.generateTextHash(text, algorithm, options);
+
+            this.generator.currentHash = hash;
+            this.formatAndDisplayHash(hash, this.generator.currentFormat);
+            this.updateComparison();
+
+        } catch (error) {
+            console.warn('Hash update failed:', error);
+            this.clearHashDisplay();
+        }
     }
 
     /**
