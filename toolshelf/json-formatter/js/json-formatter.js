@@ -3,6 +3,13 @@
  */
 window.ToolShelf = window.ToolShelf || {};
 
+const {
+    TOAST_SHORT_DURATION,
+    TOAST_MID_DURATION,
+    TOAST_LONG_DURATION,
+    TOAST_TYPES
+} = window.ToolShelf.Constants;
+
 window.ToolShelf.JSONFormatter = class JSONFormatter extends window.ToolShelf.BaseTool {
     constructor() {
         super('json-formatter');
@@ -55,7 +62,7 @@ window.ToolShelf.JSONFormatter = class JSONFormatter extends window.ToolShelf.Ba
             this.initializeElements();
             this.initializeComponents();
             this.initializeUI();
-            this.registerKeyboardShortcuts();
+            // this.registerKeyboardShortcuts();
             this.updateOutput(); // Initial state
 
             super.init();
@@ -314,7 +321,7 @@ window.ToolShelf.JSONFormatter = class JSONFormatter extends window.ToolShelf.Ba
         this.sortKeys = !this.sortKeys;
         this.operations.updateSortKeysButton();
         this.updateOutput();
-        this.showToast(`Key sorting ${this.sortKeys ? 'enabled' : 'disabled'}`, 'info');
+        this.showToast(`Key sorting ${this.sortKeys ? 'enabled' : 'disabled'}`, 'info',TOAST_SHORT_DURATION);
     }
 
     /**
@@ -411,7 +418,7 @@ window.ToolShelf.JSONFormatter = class JSONFormatter extends window.ToolShelf.Ba
         // Focus input
         this.elements.inputText.focus();
 
-        this.showToast('Input cleared', 'success');
+        this.showToast('Input cleared', 'success',TOAST_SHORT_DURATION);
     }
 
     /**
@@ -424,7 +431,7 @@ window.ToolShelf.JSONFormatter = class JSONFormatter extends window.ToolShelf.Ba
         try {
             // Check if clipboard API is available
             if (!navigator.clipboard || !navigator.clipboard.readText) {
-                this.showToast('Clipboard access not available. Please paste manually (Ctrl+V in the text area).', 'warning');
+                this.showToast('Clipboard access not available. Please paste manually (Ctrl+V in the text area).', 'warning',TOAST_MID_DURATION);
                 this.elements.inputText.focus();
                 return;
             }

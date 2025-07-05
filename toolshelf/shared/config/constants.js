@@ -78,6 +78,12 @@ window.ToolShelf.Constants = {
         WARNING: 'warning'
     },
 
+
+    // Toast durations (milliseconds)
+    TOAST_SHORT_DURATION: 1000,
+    TOAST_MID_DURATION: 2000,
+    TOAST_LONG_DURATION: 3000,
+
     // Json Formatter specific constants 
     JSON_INDENTATION_OPTIONS: {
         2: '2 spaces',

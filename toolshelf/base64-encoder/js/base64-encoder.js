@@ -45,7 +45,7 @@ window.ToolShelf.Base64Tool = class Base64Tool extends window.ToolShelf.BaseTool
             this.initializeElements();
             this.initializeUI();
             this.setupFileHandling();
-            this.registerKeyboardShortcuts();
+            // this.registerKeyboardShortcuts();
             this.setupAutoDetection();
             this.updateOutput(); // Initial update
 
@@ -185,17 +185,17 @@ window.ToolShelf.Base64Tool = class Base64Tool extends window.ToolShelf.BaseTool
      * Register keyboard shortcuts
      */
     registerKeyboardShortcuts() {
-        const shortcuts = [
-            { key: 'Ctrl+e', callback: () => this.performEncode(), description: 'Encode to Base64' },
-            { key: 'Ctrl+d', callback: () => this.performDecode(), description: 'Decode from Base64' },
-            { key: 'Ctrl+s', callback: () => this.swapInputOutput(), description: 'Swap input/output' },
-            { key: 'Ctrl+l', callback: () => this.clearInput(), description: 'Clear input' },
-            { key: 'Ctrl+Enter', callback: () => this.copyOutput(), description: 'Copy output' },
-            { key: 'Ctrl+r', callback: () => this.resetAll(), description: 'Reset all' }
-        ];
+        // const shortcuts = [
+        //     { key: 'Ctrl+e', callback: () => this.performEncode(), description: 'Encode to Base64' },
+        //     { key: 'Ctrl+d', callback: () => this.performDecode(), description: 'Decode from Base64' },
+        //     { key: 'Ctrl+s', callback: () => this.swapInputOutput(), description: 'Swap input/output' },
+        //     { key: 'Ctrl+l', callback: () => this.clearInput(), description: 'Clear input' },
+        //     { key: 'Ctrl+Enter', callback: () => this.copyOutput(), description: 'Copy output' },
+        //     { key: 'Ctrl+r', callback: () => this.resetAll(), description: 'Reset all' }
+        // ];
 
-        this.registerShortcuts(shortcuts);
-        console.log('⌨️ Base64 keyboard shortcuts registered');
+        // this.registerShortcuts(shortcuts);
+        // console.log('⌨️ Base64 keyboard shortcuts registered');
     }
 
     /**
@@ -294,7 +294,7 @@ window.ToolShelf.Base64Tool = class Base64Tool extends window.ToolShelf.BaseTool
             this.updateStatus(statusMessage, 'success');
 
             if (!isAuto) {
-                this.showToast('Text encoded successfully!', 'success');
+                this.showToast('Text encoded successfully!', 'success',1000);
                 // Track usage
                 if (window.ToolShelf.Analytics) {
                     window.ToolShelf.Analytics.trackToolUsage('base64_encoder', 'encode');
@@ -302,7 +302,7 @@ window.ToolShelf.Base64Tool = class Base64Tool extends window.ToolShelf.BaseTool
             }
 
         } catch (error) {
-            this.handleError(error, 'Encoding failed');
+            this.handleError(error, 'Encoding failed: Invalid input');
             this.updateStatus('Encoding failed: Invalid input', 'error');
         }
     }
@@ -328,7 +328,7 @@ window.ToolShelf.Base64Tool = class Base64Tool extends window.ToolShelf.BaseTool
             this.updateStatus(statusMessage, 'success');
 
             if (!isAuto) {
-                this.showToast('Base64 decoded successfully!', 'success');
+                this.showToast('Base64 decoded successfully!', 'success',1000);
                 // Track usage
                 if (window.ToolShelf.Analytics) {
                     window.ToolShelf.Analytics.trackToolUsage('base64_encoder', 'decode');
@@ -336,7 +336,7 @@ window.ToolShelf.Base64Tool = class Base64Tool extends window.ToolShelf.BaseTool
             }
 
         } catch (error) {
-            this.handleError(error, 'Decoding failed');
+            this.handleError(error, 'Decoding failed: Invalid Base64 string');
             this.updateStatus('Decoding failed: Invalid Base64 string', 'error');
         }
     }
@@ -403,7 +403,7 @@ window.ToolShelf.Base64Tool = class Base64Tool extends window.ToolShelf.BaseTool
 
         // Check file size (limit to 1MB for text files)
         if (file.size > 1024 * 1024) {
-            this.showToast('File too large. Maximum size is 1MB.', 'error');
+            this.showToast('File too large. Maximum size is 1MB.', 'error',3000);
             return;
         }
 
@@ -411,7 +411,7 @@ window.ToolShelf.Base64Tool = class Base64Tool extends window.ToolShelf.BaseTool
             const text = await this.readFileAsText(file);
             this.elements.inputText.value = text;
             this.updateOutput();
-            this.showToast(`File "${file.name}" loaded successfully`, 'success');
+            // this.showToast(`File "${file.name}" loaded successfully`, 'success');
 
         } catch (error) {
             this.handleError(error, `Failed to read file: ${file.name}`);
@@ -458,7 +458,7 @@ window.ToolShelf.Base64Tool = class Base64Tool extends window.ToolShelf.BaseTool
         this.elements.outputText.value = temp;
 
         this.updateOutput();
-        this.showToast('Input and output swapped', 'success');
+        this.showToast('Input and output swapped', 'success',1000);
     }
 
     /**
@@ -531,7 +531,7 @@ window.ToolShelf.Base64Tool = class Base64Tool extends window.ToolShelf.BaseTool
         this.updateOutputStats('');
         this.updateStatus('Ready to encode/decode', 'info');
         this.updateButtonStates();
-        this.showToast('Input cleared', 'success');
+        // this.showToast('Input cleared', 'success');
     }
 
     /**
@@ -543,9 +543,9 @@ window.ToolShelf.Base64Tool = class Base64Tool extends window.ToolShelf.BaseTool
             if (text) {
                 this.elements.inputText.value = text;
                 this.updateOutput();
-                this.showToast(`Pasted ${text.length} characters from clipboard`, 'success');
+                // this.showToast(`Pasted ${text.length} characters from clipboard`, 'success');
             } else {
-                this.showToast('Clipboard is empty', 'info');
+                // this.showToast('Clipboard is empty', 'info');
             }
         } catch (error) {
             this.handleError(error, 'Could not paste from clipboard');
@@ -559,7 +559,7 @@ window.ToolShelf.Base64Tool = class Base64Tool extends window.ToolShelf.BaseTool
         const outputText = this.elements.outputText.value;
 
         if (!outputText) {
-            this.showToast('No output to copy', 'error');
+            // this.showToast('No output to copy', 'error');
             return;
         }
 
@@ -569,7 +569,7 @@ window.ToolShelf.Base64Tool = class Base64Tool extends window.ToolShelf.BaseTool
             if (success) {
                 this.showToast(
                     `Copied ${outputText.length.toLocaleString()} characters to clipboard!`,
-                    'success'
+                    'success',2000
                 );
             } else {
                 throw new Error('Copy operation failed');
@@ -586,7 +586,7 @@ window.ToolShelf.Base64Tool = class Base64Tool extends window.ToolShelf.BaseTool
         const outputText = this.elements.outputText.value;
 
         if (!outputText) {
-            this.showToast('No output to download', 'error');
+            this.showToast('No output to download', 'error',3000);
             return;
         }
 
@@ -598,7 +598,7 @@ window.ToolShelf.Base64Tool = class Base64Tool extends window.ToolShelf.BaseTool
             const success = window.ToolShelf.Utils.downloadTextFile(outputText, filename);
 
             if (success) {
-                this.showToast(`Downloaded as ${filename}`, 'success');
+                this.showToast(`Downloaded as ${filename}`, 'success',1000);
             } else {
                 throw new Error('Download failed');
             }
@@ -632,7 +632,7 @@ window.ToolShelf.Base64Tool = class Base64Tool extends window.ToolShelf.BaseTool
             }
         });
 
-        this.showToast('All settings reset', 'success');
+        this.showToast('All settings reset', 'success',1000);
     }
 
     /**
