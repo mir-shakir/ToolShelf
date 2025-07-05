@@ -4,6 +4,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>
+        const oldDomains = [
+            "toolshelf.onrender.com",
+            "www.toolshelf.onrender.com"
+        ];
+        const newDomain = "https://toolshelf.tech";
+        if (oldDomains.includes(window.location.hostname)) {
+            const newUrl = newDomain + window.location.pathname + window.location.search + window.location.hash;
+            window.location.replace(newUrl);
+        }
+    </script>
 
     <!-- Primary Meta Tags -->
     <title>ToolShelf - Free Online Base64 Encoder & Decoder | Encode Text & Files</title>
