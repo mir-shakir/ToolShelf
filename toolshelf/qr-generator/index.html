@@ -639,6 +639,9 @@
                 </div>
             </div>
 
+            <div id="related-tools" class="related-tools-section"></div>
+            
+
             <!-- SEO Content - Expanded Section -->
             <section class="seo-expanded" id="seo-expanded">
                 <div class="content-grid">
@@ -814,7 +817,6 @@
     <script src="../qr-generator/js/qr-ui-handlers.js"></script>
     <script src="../qr-generator/js/qr-generator.js"></script>
 
-
     <!-- Initialize QR Generator -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
@@ -895,8 +897,8 @@
             }
         }
 
-        function showPrivacyInfo() {
-            const message = `🔒 ToolShelf QR Generator Privacy:
+    function showPrivacyInfo() {
+        const message = `🔒 ToolShelf QR Generator Privacy:
 
 • All QR code generation happens locally in your browser
 • No data is sent to any servers
@@ -981,6 +983,15 @@
             });
         })();
     </script>
+
+    <script type="module">
+        import { renderRelatedTools } from '../shared/js/core/render-related-tools.js';
+        import { initFeedbackWidget } from '../shared/js/core/feedback-widget.js';
+
+        initFeedbackWidget("qr-generator");
+        renderRelatedTools("qr-generator");
+    </script>
+
 </body>
 
 </html>

@@ -688,9 +688,9 @@ function toggleFooterContent() {
 }
 
 // Simple analytics placeholder
-function trackEvent(event, data) {
-    console.log('Event:', event, data);
-}
+// function trackEvent(event, data) {
+//     console.log('Event:', event, data);
+// }
 
 // Footer link handlers
 function showPrivacyInfo() {

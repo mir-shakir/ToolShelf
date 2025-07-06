@@ -498,6 +498,8 @@
                 </div>
             </div>
 
+            <div id="related-tools" class="related-tools-section"></div>
+                    
             <!-- SEO Content - Expanded Section -->
             <section class="seo-expanded" id="seo-expanded">
                 <div class="content-grid">
@@ -924,6 +926,14 @@
         });
     })();
 </script>
+
+    <script type="module">
+        import { renderRelatedTools } from '../shared/js/core/render-related-tools.js';
+        import { initFeedbackWidget } from '../shared/js/core/feedback-widget.js';
+
+        initFeedbackWidget("hash-generator");
+        renderRelatedTools("hash-generator");
+    </script>
 </body>
 
 </html>

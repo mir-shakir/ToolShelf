@@ -455,6 +455,7 @@ Auto-detection is enabled by default - just paste and see results!" spellcheck="
             </div>
         </main>
 
+        <div id="related-tools" class="related-tools-section"></div>
         <!-- Footer -->
         <footer class="app-footer">
             <div class="footer-content">
@@ -556,7 +557,6 @@ Auto-detection is enabled by default - just paste and see results!" spellcheck="
     <script src="../shared/js/components/keyboard.js"></script>
     <script src="../shared/js/tools/base-tool.js"></script>
     <script src="../base64-encoder/js/base64-encoder.js"></script>
-
     <!-- Initialize Base64 Tool -->
     <script>
         // Initialize the Base64 tool when DOM is ready
@@ -652,6 +652,14 @@ Auto-detection is enabled by default - just paste and see results!" spellcheck="
                 }
             });
         })();
+    </script>
+
+    <script type="module">
+        import { renderRelatedTools } from '../shared/js/core/render-related-tools.js';
+        import { initFeedbackWidget } from '../shared/js/core/feedback-widget.js';
+
+        initFeedbackWidget("base64-encoder");
+        renderRelatedTools("base64-encoder");
     </script>
 </body>
 
