@@ -1,9 +1,22 @@
 # ToolShelf 🛠️
 
-> Your Digital Productivity Toolkit - Modern, offline-first text transformation tools.
+> Your Digital Productivity Toolkit — Modern, offline-first text transformation tools built for speed and simplicity.
 
+[![Live](https://img.shields.io/badge/Visit-ToolShelf.tech-blue?logo=firefox)](https://toolshelf.tech)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Offline Ready](https://img.shields.io/badge/Offline-Ready-green.svg)](#features)
+
+## 🌐 Live Site
+
+🔗 [https://toolshelf.tech](https://toolshelf.tech)
+
+## 🔧 Tools Available
+
+* [JSON Formatter](https://toolshelf.tech/json-formatter)
+* [Base64 Encoder](https://toolshelf.tech/base64-encoder)
+* [Text Transformer](https://toolshelf.tech/text-transformer)
+* [QR Code Generator](https://toolshelf.tech/qr-generator)
+* [Hash Generator](https://toolshelf.tech/hash-generator)
 
 ## 🚀 Quick Start
 
@@ -13,25 +26,25 @@
 
 ## ✨ Features
 
-- **Real-time text transformations** - Case conversion, line operations, text cleanup
-- **Offline-first** - Works completely without internet
-- **Responsive design** - Desktop, tablet, and mobile optimized
-- **Statistics tracking** - Character, word, and line counts
-- **Keyboard shortcuts** - Efficient workflow
-- **State persistence** - Auto-save your work
+* **Real-time text transformations** — Case conversion, line operations, text cleanup
+* **Offline-first** — Works completely without internet
+* **Responsive design** — Desktop, tablet, and mobile optimized
+* **Statistics tracking** — Character, word, and line counts
+* **Keyboard shortcuts** — Efficient workflow
+* **State persistence** — Auto-save your work
 
 ## 🎯 Available Transformations
 
-**Case**: UPPERCASE, lowercase, Title Case, Sentence case  
-**Operations**: Reverse text, trim whitespace, remove duplicates  
+**Case**: UPPERCASE, lowercase, Title Case, Sentence case
+**Operations**: Reverse text, trim whitespace, remove duplicates
 **Lines**: Sort A→Z/Z→A, reverse order, remove empty lines
 
 ## 🛠️ Tech Stack
 
-- Vanilla JavaScript (ES6+)
-- Modern CSS3 (Grid, Custom Properties)
-- Font Awesome icons
-- No frameworks, no build process
+* Vanilla JavaScript (ES6+)
+* Modern CSS3 (Grid, Custom Properties)
+* Font Awesome icons
+* No frameworks, no build process
 
 ## 📁 Structure
 
@@ -47,10 +60,10 @@ ToolShelf/
 
 ## ⌨️ Shortcuts
 
-- `Ctrl + L` - Clear input
-- `Ctrl + Enter` - Copy output  
-- `Ctrl + D` - Download
-- `Ctrl + R` - Reset transformations
+* `Ctrl + L` — Clear input
+* `Ctrl + Enter` — Copy output
+* `Ctrl + D` — Download
+* `Ctrl + R` — Reset transformations
 
 ## 📖 Documentation
 
@@ -65,7 +78,7 @@ See [Project Documentation](project-snapshot.md) for detailed architecture, deve
 
 ## 📄 License
 
-MIT License - see [LICENSE](LICENSE) file for details.
+MIT License — see [LICENSE](LICENSE) file for details.
 
 ---
 
