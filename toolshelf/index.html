@@ -557,6 +557,113 @@
         </div>
     </section>
 
+
+    <section class="testimonials-section">
+        <div class="section-container">
+            <h2 class="section-title">What Users Say</h2>
+            <div id="testimonials-carousel" class="testimonials-carousel"></div>
+            <div class="testimonials-nav" id="testimonials-nav"></div>
+        </div>
+    </section>
+    
+    <!-- FAQ Section -->
+    <section class="faq-section" id="faq">
+        <div class="section-container">
+            <h2 class="section-title">Frequently Asked Questions</h2>
+            <div class="faq-list" id="faq-list">
+                <div class="faq-item">
+                    <button class="faq-question" aria-expanded="false">
+                        <span class="faq-q-icon">
+                            <svg width="20" height="20" viewBox="0 0 20 20">
+                                <polyline points="6 8 10 12 14 8" stroke="currentColor" stroke-width="2" fill="none"
+                                    stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                        </span>
+                        Is ToolShelf really free to use?
+                    </button>
+                    <div class="faq-answer">
+                        Yes. All tools on ToolShelf are completely free with no sign-up, subscription, or hidden limits.
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" aria-expanded="false">
+                        <span class="faq-q-icon">
+                            <svg width="20" height="20" viewBox="0 0 20 20">
+                                <polyline points="6 8 10 12 14 8" stroke="currentColor" stroke-width="2" fill="none"
+                                    stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                        </span>
+                        Do ToolShelf tools work offline?
+                    </button>
+                    <div class="faq-answer">
+                        Yes. Most tools are fully offline-capable and run entirely in your browser once loaded. No internet
+                        connection is needed after that.
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" aria-expanded="false">
+                        <span class="faq-q-icon">
+                            <svg width="20" height="20" viewBox="0 0 20 20">
+                                <polyline points="6 8 10 12 14 8" stroke="currentColor" stroke-width="2" fill="none"
+                                    stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                        </span>
+                        Does ToolShelf store or track my data?
+                    </button>
+                    <div class="faq-answer">
+                        No. ToolShelf processes everything locally in your browser. We do not collect or store any text,
+                        files, or input data.
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" aria-expanded="false">
+                        <span class="faq-q-icon">
+                            <svg width="20" height="20" viewBox="0 0 20 20">
+                                <polyline points="6 8 10 12 14 8" stroke="currentColor" stroke-width="2" fill="none"
+                                    stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                        </span>
+                        Who is ToolShelf for?
+                    </button>
+                    <div class="faq-answer">
+                        ToolShelf is designed for developers, writers, students, and anyone who needs fast, privacy-friendly
+                        utility tools like formatters, encoders, or text transformers.
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" aria-expanded="false">
+                        <span class="faq-q-icon">
+                            <svg width="20" height="20" viewBox="0 0 20 20">
+                                <polyline points="6 8 10 12 14 8" stroke="currentColor" stroke-width="2" fill="none"
+                                    stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                        </span>
+                        What tools are available on ToolShelf?
+                    </button>
+                    <div class="faq-answer">
+                        ToolShelf includes a JSON Formatter, Base64 Encoder, Text Transformer, QR Code Generator, and Hash
+                        Generator — with more tools coming soon.
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" aria-expanded="false">
+                        <span class="faq-q-icon">
+                            <svg width="20" height="20" viewBox="0 0 20 20">
+                                <polyline points="6 8 10 12 14 8" stroke="currentColor" stroke-width="2" fill="none"
+                                    stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                        </span>
+                        Can I suggest a new tool or feature?
+                    </button>
+                    <div class="faq-answer">
+                        Yes! You can submit feature requests or feedback on our GitHub issues page or via our contact page.
+                    </div>
+                </div>
+            </div>
+            <a href="./faq/" class="faq-link">See all FAQs &rarr;</a>
+        </div>
+        </section>
+
     <!-- Footer -->
     <footer class="app-footer">
         <div class="footer-content">
@@ -584,14 +691,15 @@
                     <a href="./base64-encoder/">Base64 Encoder</a>
                     <a href="./text-transformer/">Text Transformer</a>
                     <a href="./qr-generator/">QR Generator</a>
-                    <a href="./#coming-soon">Hash Generator</a>
+                    <a href="./hash-generator/">Hash Generator</a>
                 </div>
                 <div class="footer-section">
                     <h4>Resources</h4>
                     <a href="./#about">About ToolShelf</a>
-                    <a href="./#" onclick="showPrivacyInfo()">Privacy Policy</a>
-                    <a href="./#" onclick="showTermsInfo()">Terms of Use</a>
-                    <a href="./#" onclick="showContactInfo()">Contact</a>
+                    <a href="./privacy">Privacy Policy</a>
+                    <a href="./terms/">Terms of Use</a>
+                    <a href="./faq/">FAQs</a>
+                    <a href="./contact/">Contact</a>
                 </div>
             </div>
         </div>
@@ -604,6 +712,8 @@
     <script src="shared/js/core/analytics.js"></script>
     <script src="shared/js/components/navigation.js"></script>
     <script src="shared/js/homepage.js"></script>
+    <script src="shared/js/components/testimonials.js"></script>
+
 
 
     <script>
@@ -683,6 +793,42 @@
         import { initFeedbackWidget } from '../shared/js/core/feedback-widget.js';
 
         initFeedbackWidget("home");
+    </script>
+
+<script>
+    // FAQ accordion (modern, animated, accessible)
+    document.querySelectorAll('.faq-question').forEach(btn => {
+      btn.addEventListener('click', function () {
+        const expanded = this.getAttribute('aria-expanded') === 'true';
+        // Collapse all
+        document.querySelectorAll('.faq-question').forEach(b => {
+          b.setAttribute('aria-expanded', 'false');
+          b.parentElement.classList.remove('open');
+          const icon = b.querySelector('.faq-q-icon svg');
+          if (icon) icon.style.transform = 'rotate(0deg)';
+          b.nextElementSibling.style.maxHeight = null;
+          b.nextElementSibling.style.visibility = "hidden";
+        });
+        // document.querySelectorAll('.faq-answer').forEach(a => a.style.maxHeight = null);
+        if (!expanded) {
+          this.setAttribute('aria-expanded', 'true');
+          this.parentElement.classList.add('open');
+          const answer = this.nextElementSibling;
+          answer.style.visibility = "visible";
+          setTimeout(() => {
+                answer.style.maxHeight = answer.scrollHeight + "px";
+            }, 50); // 50ms delay lets CSS apply
+        //   answer.style.maxHeight = answer.scrollHeight + "px";
+          const icon = this.querySelector('.faq-q-icon svg');
+          if (icon) icon.style.transform = 'rotate(180deg)';
+        }
+      });
+    });
+    window.addEventListener('DOMContentLoaded', () => {
+      // For accessibility: open first FAQ by default
+      const first = document.querySelector('.faq-question');
+      if (first) first.click();
+    });
     </script>
 
 </body>

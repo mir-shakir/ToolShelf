@@ -119,37 +119,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <!-- QR Code Libraries -->
-    <!-- <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.5/dist/FileSaver.min.js"></script> -->
 
-    <!-- <script src="https://unpkg.com/qrcode@1.5.3/build/qrcode.min.js"></script>
-    <script src="https://unpkg.com/jszip@3.10.1/dist/jszip.min.js"></script>
-    <script src="https://unpkg.com/papaparse@5.4.1/papaparse.min.js"></script>
-    <script src="https://unpkg.com/file-saver@2.0.5/dist/FileSaver.min.js"></script> -->
-    <!-- Corrected QR Code Libraries -->
-    <!-- <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.4/lib/browser.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script> -->
-
-    <!-- <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.4/build/qrcode.min.js"></script>
- -->
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script> -->
-    <!-- 
-    <script src="https://unpkg.com/qrious@4.0.2/dist/qrious.min.js"></script>
-    <script src="https://unpkg.com/jszip@3.10.1/dist/jszip.min.js"></script>
-    <script src="https://unpkg.com/papaparse@5.4.1/papaparse.min.js"></script>
-    <script src="https://unpkg.com/file-saver@2.0.5/dist/FileSaver.min.js"></script> -->
-
-    <script src="https://unpkg.com/qrious@4.0.2/dist/qrious.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+    <!-- <script src="https://unpkg.com/qrious@4.0.2/dist/qrious.min.js"></script> -->
 
     <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-GBY4766X5D"></script>
@@ -713,21 +684,48 @@
             </section>
 
             <!-- Footer -->
-            <footer class="app-footer">
-                <div class="footer-content">
-                    <div class="footer-section">
-                        <strong>ToolShelf</strong> - Free QR Code Generator & Scanner
-                    </div>
-                    <div class="footer-section">
-                        <span>© 2025 ToolShelf. All QR codes generated locally in your browser.</span>
-                    </div>
-                    <div class="footer-links">
-                        <a href="#privacy" onclick="showPrivacyInfo()">Privacy</a>
-                        <a href="#terms" onclick="showTermsInfo()">Terms</a>
-                        <a href="#contact" onclick="showContactInfo()">Contact</a>
-                    </div>
+<!-- Footer -->
+<footer class="app-footer">
+    <div class="footer-content">
+        <div class="footer-main">
+            <div class="footer-logo">
+                <div class="logo-icon">
+                    <i class="fas fa-toolbox"></i>
                 </div>
-            </footer>
+                <strong>ToolShelf</strong>
+            </div>
+            <p class="footer-description">
+                Professional online tools that respect your privacy. Built for developers and professionals worldwide.
+            </p>
+            <div class="footer-stats">
+                <span>🌟 4.9/5 rating</span>
+                <span>👨‍💻 250+ developers</span>
+                <span>🔒 100% private</span>
+            </div>
+        </div>
+        <div class="footer-links">
+            <div class="footer-section">
+                <h4>Tools</h4>
+                <a href="../json-formatter/">JSON Formatter</a>
+                <a href="../base64-encoder/">Base64 Encoder</a>
+                <a href="../text-transformer/">Text Transformer</a>
+                <a href="#" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">QR Generator</a>
+                <a href="../hash-generator/">Hash Generator</a>
+            </div>
+            <div class="footer-section">
+                <h4>Resources</h4>
+                <a href="../#about">About ToolShelf</a>
+                <a href="../privacy/">Privacy Policy</a>
+                <a href="../terms/">Terms of Use</a>
+                <a href="../faq/">FAQs</a>
+                <a href="../contact/">Contact</a>
+            </div>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>© 2025 ToolShelf. All tools work offline and respect your privacy.</p>
+    </div>
+</footer>
 
             <!-- Help Modal -->
             <div id="helpModal" class="help-modal" role="dialog" aria-labelledby="help-title" aria-hidden="true">
@@ -816,6 +814,9 @@
     <script src="../qr-generator/js/qr-bulk-processor.js"></script>
     <script src="../qr-generator/js/qr-ui-handlers.js"></script>
     <script src="../qr-generator/js/qr-generator.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
 
     <!-- Initialize QR Generator -->
     <script>
@@ -837,25 +838,51 @@
                 }
 
                 // Create and initialize QR Generator
-                const qrGenerator = new window.ToolShelf.QRGenerator();
-                window.ToolShelf.currentTool = qrGenerator;
+                (async function initQRTool() {
+                    try {
+                        await new Promise((resolve, reject) => {
+                            const script = document.createElement('script');
+                            script.src = 'https://unpkg.com/qrious@4.0.2/dist/qrious.min.js';
+                            script.onload = resolve;
+                            script.onerror = reject;
+                            document.head.appendChild(script);
+                        });
+                        console.log('✅ Qrious loaded via <script>');
+                        console.log('✅ Qrious QR library loaded');
+
+                        const qrGenerator = new window.ToolShelf.QRGenerator();
+                        window.ToolShelf.currentTool = qrGenerator;
+
+                        console.log('🎉 QR Generator initialized successfully');
+
+                        setTimeout(() => {
+                            const hasVisited = localStorage.getItem('toolshelf-qr-visited');
+                            if (!hasVisited && window.ToolShelf.Toast) {
+                                localStorage.setItem('toolshelf-qr-visited', 'true');
+                                window.ToolShelf.Toast.show(
+                                    '✨ Tip: Start with a URL to see your first QR code!',
+                                    'info',
+                                    4000
+                                );
+                            }
+                        }, 1500);
+                    } catch (err) {
+                        console.error('❌ Failed to load Qrious or initialize QR Generator:', err);
+                        if (window.ToolShelf.Toast) {
+                            window.ToolShelf.Toast.show(
+                                'QR Generator failed to load. Please refresh.',
+                                'error'
+                            );
+                        }
+                    }
+                })();
+
+
+
 
                 console.log('🎉 QR Generator initialized successfully');
 
                 // Show welcome message
-                setTimeout(() => {
-                    const hasVisited = localStorage.getItem('toolshelf-qr-visited');
-                    if (!hasVisited) {
-                        localStorage.setItem('toolshelf-qr-visited', 'true');
-                        if (window.ToolShelf.Toast) {
-                            window.ToolShelf.Toast.show(
-                                '✨ Tip: Start with a URL to see your first QR code!',
-                                'info',
-                                4000
-                            );
-                        }
-                    }
-                }, 1500);
 
             } catch (error) {
                 console.error('❌ Failed to initialize QR Generator:', error);

@@ -11,38 +11,38 @@ window.ToolShelf.JSONPathHandler = class JSONPathHandler {
         this.maxHistoryLength = 10;
 
         // Initialize library check
-        this.initializeLibrary();
+        // this.initializeLibrary();
         this.setupExamples();
     }
 
     /**
      * Initialize and check JSONPath library
      */
-    initializeLibrary() {
-        // Check for JSONPath Plus library (correct way)
-        this.jsonPathLib = null;
+    // initializeLibrary() {
+    //     // Check for JSONPath Plus library (correct way)
+    //     this.jsonPathLib = null;
 
-        // JSONPath Plus exposes JSONPath as the main function
-        if (typeof window.JSONPath !== 'undefined') {
-            this.jsonPathLib = window.JSONPath;
-            console.log('✅ JSONPath Plus library loaded successfully');
-        }
-        // Check for the UMD module export
-        else if (typeof window.jsonpath !== 'undefined') {
-            this.jsonPathLib = window.jsonpath;
-            console.log('✅ JSONPath library found via jsonpath global');
-        }
-        // Check if it's available under a different name
-        else if (typeof JSONPath !== 'undefined') {
-            this.jsonPathLib = JSONPath;
-            console.log('✅ JSONPath library found in global scope');
-        }
-        else {
-            console.warn('⚠️ JSONPath library not found, using fallback implementation');
-            // Try to check what's actually available
-            console.log('Available globals:', Object.keys(window).filter(key => key.toLowerCase().includes('json')));
-        }
-    }
+    //     // JSONPath Plus exposes JSONPath as the main function
+    //     if (typeof window.JSONPath !== 'undefined') {
+    //         this.jsonPathLib = window.JSONPath;
+    //         console.log('✅ JSONPath Plus library loaded successfully');
+    //     }
+    //     // Check for the UMD module export
+    //     else if (typeof window.jsonpath !== 'undefined') {
+    //         this.jsonPathLib = window.jsonpath;
+    //         console.log('✅ JSONPath library found via jsonpath global');
+    //     }
+    //     // Check if it's available under a different name
+    //     else if (typeof JSONPath !== 'undefined') {
+    //         this.jsonPathLib = JSONPath;
+    //         console.log('✅ JSONPath library found in global scope');
+    //     }
+    //     else {
+    //         console.warn('⚠️ JSONPath library not found, using fallback implementation');
+    //         // Try to check what's actually available
+    //         console.log('Available globals:', Object.keys(window).filter(key => key.toLowerCase().includes('json')));
+    //     }
+    // }
 
     /**
      * Setup JSONPath example buttons
@@ -86,6 +86,11 @@ window.ToolShelf.JSONPathHandler = class JSONPathHandler {
      * Execute JSONPath query
      */
     executeJsonPath() {
+
+        if (!this.jsonPathLib && typeof window.JSONPath !== 'undefined') {
+            this.jsonPathLib = window.JSONPath;
+            console.log('✅ JSONPath Plus is now available in handler');
+        }
         const pathInput = this.formatter.elements.jsonPathInput;
         const resultElement = this.formatter.elements.jsonPathResult;
 

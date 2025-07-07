@@ -112,7 +112,7 @@
     <link rel="dns-prefetch" href="//fonts.googleapis.com">
     <link rel="dns-prefetch" href="//cdnjs.cloudflare.com">
     <!-- JSONPath Plus Library (lightweight) -->
-    <script src="https://unpkg.com/jsonpath-plus@9.0.0/dist/index-browser-umd.min.cjs"></script>
+    <!-- <script src="https://unpkg.com/jsonpath-plus@9.0.0/dist/index-browser-umd.min.cjs"></script> -->
         
 
 
@@ -553,22 +553,48 @@
                 </div>
             </section>
 
-            <!-- Footer -->
-            <footer class="app-footer">
-                <div class="footer-content">
-                    <div class="footer-section">
-                        <strong>ToolShelf</strong> - Free Online JSON Formatter & Validator
-                    </div>
-                    <div class="footer-section">
-                        <span>© 2025 ToolShelf. All tools work offline and respect your privacy.</span>
-                    </div>
-                    <div class="footer-links">
-                        <a href="#privacy" onclick="showPrivacyInfo()">Privacy</a>
-                        <a href="#terms" onclick="showTermsInfo()">Terms</a>
-                        <a href="#contact" onclick="showContactInfo()">Contact</a>
-                    </div>
+<!-- Footer -->
+<footer class="app-footer">
+    <div class="footer-content">
+        <div class="footer-main">
+            <div class="footer-logo">
+                <div class="logo-icon">
+                    <i class="fas fa-toolbox"></i>
                 </div>
-            </footer>
+                <strong>ToolShelf</strong>
+            </div>
+            <p class="footer-description">
+                Professional online tools that respect your privacy. Built for developers and professionals worldwide.
+            </p>
+            <div class="footer-stats">
+                <span>🌟 4.9/5 rating</span>
+                <span>👨‍💻 250+ developers</span>
+                <span>🔒 100% private</span>
+            </div>
+        </div>
+        <div class="footer-links">
+            <div class="footer-section">
+                <h4>Tools</h4>
+                <a href="#" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">JSON Formatter</a>
+                <a href="../base64-encoder/">Base64 Encoder</a>
+                <a href="../text-transformer/">Text Transformer</a>
+                <a href="../qr-generator/">QR Generator</a>
+                <a href="../hash-generator/">Hash Generator</a>
+            </div>
+            <div class="footer-section">
+                <h4>Resources</h4>
+                <a href="../#about">About ToolShelf</a>
+                <a href="../privacy/">Privacy Policy</a>
+                <a href="../terms/">Terms of Use</a>
+                <a href="../faq/">FAQs</a>
+                <a href="../contact/">Contact</a>
+            </div>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>© 2025 ToolShelf. All tools work offline and respect your privacy.</p>
+    </div>
+</footer>
 
             <!-- Replace the existing help modal section with this improved version -->
             <div id="helpModal" class="help-modal" role="dialog" aria-labelledby="help-title" aria-hidden="true">
@@ -769,33 +795,57 @@
             <script src="../json-formatter/js/json-formatter.js"></script>
             <!-- new script for toggle  -->
             <script>
+                // Lazy loader for JSONPath Plus
+                async function loadJSONPathLibraryWithTimeout(timeout = 2000) {
+                    if (typeof window.JSONPath !== 'undefined') {
+                        return true;
+                    }
+
+                    return new Promise((resolve, reject) => {
+                        const timer = setTimeout(() => {
+                            console.warn('⏱️ JSONPath library load timed out. Proceeding with fallback.');
+                            resolve(false);
+                        }, timeout);
+
+                        import('https://unpkg.com/jsonpath-plus@9.0.0/dist/index-browser-umd.min.cjs')
+                            .then((module) => {
+                                window.JSONPath = module.JSONPath || module.default || module;
+                                console.log('✅ JSONPath Plus dynamically loaded');
+                                clearTimeout(timer);
+                                resolve(true);
+                            })
+                            .catch((err) => {
+                                console.error('❌ Failed to load JSONPath:', err);
+                                clearTimeout(timer);
+                                resolve(false);
+                            });
+                    });
+                }
+
                 document.addEventListener('DOMContentLoaded', () => {
                     const advancedToggle = document.getElementById('advancedToggle');
                     const advancedOptions = document.getElementById('advancedOptions');
 
-                    advancedToggle?.addEventListener('click', () => {
+                    advancedToggle?.addEventListener('click', async () => {
+                        // Always show the panel immediately
                         advancedOptions.classList.toggle('show');
+
+                        // Update icon
                         const icon = advancedToggle.querySelector('.fa-chevron-down, .fa-chevron-up');
                         if (icon) {
                             icon.classList.toggle('fa-chevron-down');
                             icon.classList.toggle('fa-chevron-up');
                         }
-                    });
-                });
 
-
-                window.addEventListener('DOMContentLoaded', () => {
-                        if (typeof window.JSONPath === 'undefined') {
-                            console.warn('⚠️ JSONPath library not loaded, loading fallback...');
-                            // Try to access JSONPath from global scope
-                            if (typeof JSONPath !== 'undefined') {
-                                window.JSONPath = JSONPath;
-                            }
-                        } else {
-                            console.log('✅ JSONPath library loaded successfully');
+                        // Lazy-load JSONPath
+                        const loaded = await loadJSONPathLibraryWithTimeout(2500);
+                        if (!loaded) {
+                            console.warn('⚠️ JSONPath Plus not available, using fallback handler.');
                         }
                     });
+                });
             </script>
+            
 
             <!-- Initialize JSON Formatter -->
             <script>

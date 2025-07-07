@@ -616,22 +616,48 @@ this is a test" spellcheck="false" autocomplete="off"
             </div>
 
         </main>
-
-        <footer class="app-footer">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <strong>ToolShelf</strong> - Free Online Text Transformer & Productivity Tools
+<!-- Footer -->
+<footer class="app-footer">
+    <div class="footer-content">
+        <div class="footer-main">
+            <div class="footer-logo">
+                <div class="logo-icon">
+                    <i class="fas fa-toolbox"></i>
                 </div>
-                <div class="footer-section">
-                    <span>© 2025 ToolShelf. All tools work offline and respect your privacy.</span>
-                </div>
-                <div class="footer-links">
-                    <a href="#privacy" onclick="showPrivacyInfo()">Privacy</a>
-                    <a href="#terms" onclick="showTermsInfo()">Terms</a>
-                    <a href="#contact" onclick="showContactInfo()">Contact</a>
-                </div>
+                <strong>ToolShelf</strong>
             </div>
-        </footer>
+            <p class="footer-description">
+                Professional online tools that respect your privacy. Built for developers and professionals worldwide.
+            </p>
+            <div class="footer-stats">
+                <span>🌟 4.9/5 rating</span>
+                <span>👨‍💻 250+ developers</span>
+                <span>🔒 100% private</span>
+            </div>
+        </div>
+        <div class="footer-links">
+            <div class="footer-section">
+                <h4>Tools</h4>
+                <a href="../json-formatter/">JSON Formatter</a>
+                <a href="../base64-encoder/">Base64 Encoder</a>
+                <a href="#" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">Text Transformer</a>
+                <a href="../qr-generator/">QR Generator</a>
+                <a href="../hash-generator/">Hash Generator</a>
+            </div>
+            <div class="footer-section">
+                <h4>Resources</h4>
+                <a href="../#about">About ToolShelf</a>
+                <a href="../privacy/">Privacy Policy</a>
+                <a href="../terms/">Terms of Use</a>
+                <a href="../faq/">FAQs</a>
+                <a href="../contact/">Contact</a>
+            </div>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>© 2025 ToolShelf. All tools work offline and respect your privacy.</p>
+    </div>
+</footer>
 
         <!-- Help Modal (same as before) -->
         <div id="helpModal" class="help-modal" role="dialog" aria-labelledby="help-title" aria-hidden="true">
@@ -656,13 +682,13 @@ this is a test" spellcheck="false" autocomplete="off"
                     <div class="help-section">
                         <h3>Tips:</h3>
                         <ul>
-                            <li>Use section reset buttons to clear specific transformation groups</li>
+                            <li>Use section reset buttons to clear specifictransformation groups</li>
                             <li>Case transformations are mutually exclusive (only one at a time)</li>
                             <li>You can combine multiple operations and line transformations</li>
                             <li>Statistics show the difference between input and output</li>
                             <li>All processing happens locally - your data stays private</li>
-                        </ul>
-                    </div>
+                            </ul>
+                            </div>
                     <div class="help-section">
                         <h3>Keyboard Shortcuts:</h3>
                         <ul>

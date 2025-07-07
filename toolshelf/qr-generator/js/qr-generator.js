@@ -598,20 +598,42 @@ window.ToolShelf.QRGenerator = class QRGenerator extends window.ToolShelf.BaseTo
         }
     }
 };
+function waitForQRious(timeout = 3000) {
+    return new Promise((resolve, reject) => {
+        const interval = 50;
+        let elapsed = 0;
 
-document.addEventListener('DOMContentLoaded', () => {
-    if (typeof QRious === 'undefined') {
-        console.error('❌ QRious library not loaded. QR Generator requires qrious.js');
-        return;
-    }
+        const check = () => {
+            if (typeof QRious !== 'undefined') {
+                resolve(true);
+            } else if (elapsed >= timeout) {
+                reject(new Error('QRious not loaded within timeout.'));
+            } else {
+                elapsed += interval;
+                setTimeout(check, interval);
+            }
+        };
 
+        check();
+    });
+}
+
+document.addEventListener('DOMContentLoaded', async () => {
+    // Optional feature checks
     if (typeof JSZip === 'undefined') {
-        console.warn('⚠️ JSZip library not loaded. Bulk generation will not work');
+        console.warn('⚠️ JSZip library not loaded. Bulk QR code ZIP download will not work.');
     }
 
     if (typeof Papa === 'undefined') {
-        console.warn('⚠️ PapaParse library not loaded. CSV upload will not work');
+        console.warn('⚠️ PapaParse library not loaded. CSV upload will not work.');
     }
 
-    console.log('✅ QR Generator dependencies loaded successfully');
+    try {
+        await waitForQRious();
+        console.log('✅ QRious is ready');
+        new window.ToolShelf.QRGenerator();
+        console.log('✅ QR Generator initialized');
+    } catch (err) {
+        console.error('❌ QRious loading failed:', err.message);
+    }
 });
