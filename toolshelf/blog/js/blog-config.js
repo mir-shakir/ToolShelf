@@ -28,5 +28,14 @@ export const blogPosts = [
         date: 'July 11, 2025',
         readTime: '10 min read',
         tags: ['LLM', 'API Costs', 'Optimization', 'AI', 'Performance', 'Engineering']
-    }
+    },
+    {
+        slug: 'database-migrations-disasters',
+        title: 'Database Migrations: The Silent Killer of Production Deployments', 
+        excerpt: 'Learn why database migrations are a common source of production failures and discover strategies for safe, zero-downtime schema changes, handling locks, indexes, and rollbacks.',
+        thumbnail: '../blog/assets/images/blog-cover-migrations.png',
+        date: '2025-07-12',
+        readTime: '9 min read',
+        tags: ['Database', 'Migrations', 'Production', 'DevOps', 'PostgreSQL'],
+      },
 ];
