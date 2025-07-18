@@ -1,0 +1,181 @@
+# ToolShelf – Site Overview
+
+**Site Name:** ToolShelf
+**URL:** [https://toolshelf.tech](https://toolshelf.tech)
+**Type:** Static site (HTML/CSS/JS)
+**Hosting:** Likely deployed via static hosting (Render, Vercel, Netlify)
+
+---
+
+## ✅ Purpose
+
+ToolShelf is a **privacy-first developer utility site** offering fast, offline-capable tools like:
+
+* Base64 Encoder/Decoder
+* JSON Formatter
+* Text Transformer
+* Hash Generator (md5, sha256, etc.)
+* QR Code Generator
+
+It is designed for developers and professionals who want **simple, no-login, no-tracking tools** that work offline and don't collect data.
+
+---
+
+## ✅ Technical Foundation
+
+* Pure static site: no backend or database
+* Responsive design
+* SEO-optimized: canonical tags, meta tags, schema.org
+* Theme toggle: light/dark stored in `localStorage` (`toolshelf-theme`)
+* Uses:
+
+  * Inter via Google Fonts
+  * Font Awesome via CDN
+  * GA4 (no PII, anonymized, with real human traffic filtering)
+  * Redirect script: from `toolshelf.onrender.com` → `toolshelf.tech`
+
+---
+
+## �� SEO & Metadata Standards
+
+All pages follow strict SEO hygiene:
+
+* `<title>`, `<meta name="title">`, and `<meta name="description">` are unique per page
+* Meta descriptions under 160 chars
+* Open Graph & Twitter cards: 1200x630px images from `/assets/images/`
+* Structured data (`schema.org`) per page:
+
+  * Tools: `WebApplication`
+  * Static/legal pages: `WebPage`
+  * Homepage: `WebApplication`, `AggregateRating`, `FAQPage`
+
+---
+
+## ✅ Current Folder Structure (Simplified)
+
+```plaintext
+/toolshelf/
+├── index.html
+├── base64-encoder/
+├── json-formatter/
+├── text-transformer/
+├── hash-generator/
+├── qr-generator/
+├── terms/
+├── privacy/
+├── contact/
+├── faqs/
+├── assets/images/
+├── shared/icons/
+├── shared/css/
+└── shared/js/
+```
+
+---
+
+## 🌟 NEXT GOAL: Build the Blog Section (From Scratch)
+
+We now want to **add a modern blog section** to ToolShelf. This section will help with SEO, user education, and developer trust.
+
+### ✅ Core Requirements
+
+* Create a `/blog/` folder at the root of the site
+* Each post should live in `/blog/{slug}/index.html` for clean, directory-style URLs (no `.html` in URL)
+* Blog should reuse shared design where appropriate (fonts, header, footer, theme toggle)
+* Light/Dark mode must be supported (via `toolshelf-theme` localStorage)
+* Create blog-specific styles and JS if needed in `/blog/css/` and `/blog/js/`
+
+### ✅ Blog Home Page (`/blog/index.html`)
+
+* Display all blog posts in a **responsive grid of cards**
+* Each card must have:
+
+  * Thumbnail image (placeholder acceptable)
+  * Title, short excerpt, date, estimated read time
+  * Hover animations (scale or shadow)
+* Should look modern and elegant on all screen sizes
+* Consistent design with ToolShelf branding, but optimized for content reading
+
+### ✅ Individual Blog Post Page (`/blog/{slug}/index.html`)
+
+* Well-structured, narrow content container (700px max width)
+* Clear typographic hierarchy
+* Metadata (author, date, tags, read time) at top
+* Scroll progress bar (optional but encouraged)
+* Sticky or floating table of contents (TOC) on desktop
+* Responsive code blocks with modern styling
+* Optional: syntax highlighting (if supported without backend)
+
+---
+
+## ✅ Design Goals
+
+* Match the **visual and UX quality of modern blog platforms** like:
+
+  * Medium
+  * Dev.to
+  * Hashnode
+* Maintain the **minimalism and privacy-first values of ToolShelf**
+* No unnecessary JavaScript frameworks or tracking
+* Focus on performance, clarity, and polish
+
+---
+
+## ✅ You May
+
+* Use a lightweight CSS utility library (like Tailwind CSS) if it simplifies layout and responsiveness
+* Create placeholder blog content and posts
+* Use semantic HTML and modern CSS features (Grid, Flexbox, media queries)
+* Reorganize styles cleanly across shared and blog-specific sections
+
+---
+
+## Compressed Chat History
+
+<overall_goal>
+    Integrate a modern blog section into the ToolShelf website, ensuring all features (navigation, TOC, related posts, syntax highlighting) are functional and existing site components like analytics and feedback widgets are correctly integrated.
+</overall_goal>
+
+<key_knowledge>
+    - The ToolShelf site is static (HTML/CSS/JS).
+    - Blog posts use clean URLs (`/blog/{slug}/index.html`).
+    - Light/Dark mode must be supported across all blog pages.
+    - Analytics (`gtag`) and the feedback widget (`feedback-widget.js`) are existing, working components on other site pages and must be correctly integrated into the blog section.
+    - The `feedback-widget.js` relies on `window.ToolShelf.Analytics.trackEvent` for tracking.
+    - Script loading order is crucial: `constants.js`, `utils.js`, `analytics.js`, `app.js`, then page-specific scripts and module scripts (like `feedback-widget.js`).
+    - Image references for related posts in `blog/js/blog-post.js` needed path correction.
+</key_knowledge>
+
+<file_system_state>
+    - MODIFIED: `blog/index.html` - Added blog post template card, adjusted script loading order for `analytics.js` and `feedback-widget.js`, and added `feedbackWidgetContainer`.
+    - MODIFIED: `blog/blog-post-template/index.html` - Added Prism.js CSS/JS, HTML for previous/next navigation and related posts, adjusted script loading order for `analytics.js` and `feedback-widget.js`, and added `feedbackWidgetContainer`.
+    - MODIFIED: `blog/js/blog-post.js` - Implemented `blogPosts` array, `updateNavigation()`, `renderRelatedPosts()`, and enhanced TOC generation to include H3 headings. Corrected image paths for related posts.
+    - MODIFIED: `blog/css/blog.css` - Added styles for previous/next navigation, related posts section, and specific TOC styling for H2/H3.
+    - MODIFIED: `sitemap.xml` - Updated to include new blog pages.
+    - MODIFIED: `_redirects` - Updated to include new blog page redirects.
+    - REVERTED: `shared/js/core/analytics.js` - Restored to its original state.
+    - REVERTED: `shared/js/core/feedback-widget.js` - Restored to its original state.
+</file_system_state>
+
+<recent_actions>
+    - Successfully added the `blog-post-template` card to the blog home page.
+    - Updated `sitemap.xml` and `_redirects` to include the new blog content.
+    - Integrated Prism.js for syntax highlighting into the blog post template.
+    - Implemented dynamic previous/next navigation and a "Also Read" (related posts) section on blog post pages.
+    - Corrected image references within the `blog/js/blog-post.js` for related posts.
+    - Added necessary CSS for the new navigation and related posts sections.
+    - Identified and fixed `Uncaught SyntaxError: Unexpected token 'export'` by ensuring `feedback-widget.js` was loaded as a module.
+    - Identified and fixed `Uncaught TypeError: Cannot read properties of undefined (reading 'trackEvent')` by ensuring `analytics.js` loaded before `feedback-widget.js` and that `window.ToolShelf.Analytics.trackEvent` was correctly called.
+    - Reverted unintended modifications to `shared/js/core/analytics.js` and `shared/js/core/feedback-widget.js` as per user instruction.
+    - Adjusted script loading order in `blog/index.html` and `blog/blog-post-template/index.html` to ensure `analytics.js` loads before `app.js` and `feedback-widget.js` (which is a module).
+</recent_actions>
+
+<current_plan>
+    1. [TODO] Verify that the feedback widget is now visible and functional on both the blog home page and individual blog post pages, with no console errors.
+    2. [TODO] Confirm that analytics tracking is correctly enabled and sending events from the blog pages.
+    3. [TODO] Re-verify all previously implemented blog features (previous/next navigation, scroll progress bar, dynamic TOC, related posts, syntax highlighting) are still fully functional.
+    4. [TODO] Test the blog section across multiple devices and browsers to ensure responsiveness and performance.
+    5. [TODO] Fix the issue of footer section on blog page not consistent with the rest of the site, ensuring it matches the design and functionality of the main site footer.
+    6. [TODO] Look for further opportunities to enhance the blog section, such as adding a search feature or improving the design of the related posts section.
+    7. [TODO] Document any additional changes made to the blog section for future reference
+</current_plan>

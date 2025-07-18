@@ -1,5 +1,3 @@
-// import { trackEvent } from './analytics.js';
-
 function createFeedbackModal(tool) {
   // Remove any existing modal to avoid duplicates
   const old = document.getElementById('feedback-modal');

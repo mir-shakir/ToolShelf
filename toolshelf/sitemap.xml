@@ -2,62 +2,92 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
         <loc>https://toolshelf.tech/</loc>
-        <lastmod>2025-07-07</lastmod>
+        <lastmod>2025-07-12</lastmod>
         <changefreq>weekly</changefreq>
         <priority>1.0</priority>
     </url>
     <url>
         <loc>https://toolshelf.tech/json-formatter/</loc>
-        <lastmod>2025-07-07</lastmod>
+        <lastmod>2025-07-12</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.9</priority>
     </url>
     <url>
         <loc>https://toolshelf.tech/text-transformer/</loc>
-        <lastmod>2025-07-07</lastmod>
+        <lastmod>2025-07-12</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://toolshelf.tech/base64-encoder/</loc>
-        <lastmod>2025-07-07</lastmod>
+        <lastmod>2025-07-12</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://toolshelf.tech/qr-generator/</loc>
-        <lastmod>2025-07-07</lastmod>
+        <lastmod>2025-07-12</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://toolshelf.tech/hash-generator/</loc>
-        <lastmod>2025-07-07</lastmod>
+        <lastmod>2025-07-12</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://toolshelf.tech/faq/</loc>
-        <lastmod>2025-07-07</lastmod>
+        <lastmod>2025-07-12</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
         <loc>https://toolshelf.tech/privacy/</loc>
-        <lastmod>2025-07-07</lastmod>
+        <lastmod>2025-07-12</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.6</priority>
     </url>
     <url>
         <loc>https://toolshelf.tech/terms/</loc>
-        <lastmod>2025-07-07</lastmod>
+        <lastmod>2025-07-12</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.5</priority>
     </url>
     <url>
+        <loc>https://toolshelf.tech/blog/</loc>
+        <lastmod>2025-07-12</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://toolshelf.tech/blog/the-hidden-cost-of-your-hash-functions/</loc>
+        <lastmod>2025-07-12</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>https://toolshelf.tech/blog/why-your-llm-api-costs-are-through-the-roof/</loc>
+        <lastmod>2025-07-12</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>https://toolshelf.tech/blog/the-uuid-gotcha-that-burned-me/</loc>
+        <lastmod>2025-07-12</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
         <loc>https://toolshelf.tech/contact/</loc>
-        <lastmod>2025-07-07</lastmod>
+        <lastmod>2025-07-12</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.5</priority>
+    </url>
+    <url>
+        <loc>https://toolshelf.tech/blog/database-migrations-disasters/</loc>
+        <lastmod>2025-07-12</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
     </url>
 </urlset>
