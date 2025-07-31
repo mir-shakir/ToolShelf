@@ -9,7 +9,7 @@ export const blogPosts = [
         date: 'July 11, 2025',
         readTime: '8 min read',
         tags: ['Performance', 'Security', 'Hashing', 'API'],
-        isFeatured: true
+        isFeatured: false
     },
     {
         slug: 'the-uuid-gotcha-that-burned-me',
@@ -46,6 +46,16 @@ export const blogPosts = [
         date: 'July 19, 2025',
         readTime: '6 min read',
         tags: ['Productivity', 'Privacy', 'DevTools', 'Story']
-    }
+    },
+    {
+        slug: 'why-ai-cant-design',
+        title: 'Why Your AI Image Generator Can\'t Design: The Missing Blueprint',
+        excerpt: 'AI art generators create beautiful chaos, but they fail at structured design. Discover why a \'blueprint-first\' approach is the key to creating usable, professional visuals for your business.',
+        thumbnail: '../blog/assets/images/blog-cover-layoutcraft.png',
+        date: 'August 1, 2025',
+        readTime: '5 min read',
+        tags: ['AI', 'Design', 'Generative Art', 'Productivity'],
+        isFeatured: true 
+    },
 
 ];
