@@ -50,9 +50,6 @@ This document serves as a comprehensive guide and template for creating new blog
 8.  **Update `_redirects`:**
     *   Add a new redirect rule for your blog post to ensure clean URLs (e.g., `/blog/your-new-post-slug/index.html /blog/your-new-post-slug/ 301`).
 
-9.  **Delete Old Blog Post Directories:**
-    *   After creating the new post and updating `blog-config.js`, `sitemap.xml`, and `_redirects`, you can safely delete the old blog post directories if they are no longer needed.
-
 ## Blog Post Template HTML Structure (for reference)
 
 ```html

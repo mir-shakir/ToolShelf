@@ -56,25 +56,25 @@
     </url>
     <url>
         <loc>https://toolshelf.tech/blog/</loc>
-        <lastmod>2025-07-12</lastmod>
+        <lastmod>2025-07-19</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://toolshelf.tech/blog/the-hidden-cost-of-your-hash-functions/</loc>
-        <lastmod>2025-07-12</lastmod>
+        <lastmod>2025-07-19</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
         <loc>https://toolshelf.tech/blog/why-your-llm-api-costs-are-through-the-roof/</loc>
-        <lastmod>2025-07-12</lastmod>
+        <lastmod>2025-07-19</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
         <loc>https://toolshelf.tech/blog/the-uuid-gotcha-that-burned-me/</loc>
-        <lastmod>2025-07-12</lastmod>
+        <lastmod>2025-07-19</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
@@ -86,7 +86,13 @@
     </url>
     <url>
         <loc>https://toolshelf.tech/blog/database-migrations-disasters/</loc>
-        <lastmod>2025-07-12</lastmod>
+        <lastmod>2025-07-19</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>https://toolshelf.tech/blog/privacy-first-dev-tools/</loc>
+        <lastmod>2025-07-19</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>

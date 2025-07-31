@@ -37,5 +37,15 @@ export const blogPosts = [
         date: '2025-07-12',
         readTime: '9 min read',
         tags: ['Database', 'Migrations', 'Production', 'DevOps', 'PostgreSQL'],
-      },
+    },
+    {
+        slug: 'privacy-first-dev-tools',
+        title: 'Enhancing Developer Productivity with Privacy-First Tools: Lessons from Building ToolShelf',
+        excerpt: 'Discover why privacy-first, offline-ready developer tools matter, the philosophy behind ToolShelf, and actionable tips for safer, faster coding workflows.',
+        thumbnail: '../blog/assets/images/blog-cover-privacyfeatured.png',
+        date: 'July 19, 2025',
+        readTime: '6 min read',
+        tags: ['Productivity', 'Privacy', 'DevTools', 'Story']
+    }
+
 ];
