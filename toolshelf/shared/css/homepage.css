@@ -404,6 +404,54 @@
     transition: all var(--transition-normal);
 }
 
+/* Featured Project Section */
+.featured-section {
+    background: linear-gradient(135deg, var(--background-secondary) 0%, var(--background-card) 100%);
+    border-top: 1px solid var(--border-light);
+    border-bottom: 1px solid var(--border-light);
+    margin: var(--space-12) 0;
+    padding: var(--space-12) 0;
+}
+
+.featured-grid {
+    display: flex;
+    justify-content: center;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.featured-card {
+    width: 100%;
+    background: var(--background-card);
+    border: 2px solid var(--primary-light);
+    box-shadow: var(--shadow-lg);
+    position: relative;
+}
+
+.featured-card::before {
+    background: linear-gradient(90deg, var(--primary-color), var(--primary-light), var(--warning-color));
+    opacity: 1;
+    height: 4px;
+}
+
+.featured-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-xl);
+    border-color: var(--primary-color);
+}
+
+.featured-card .tool-icon {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    width: 48px;
+    height: 48px;
+    font-size: 1.2rem;
+}
+
+.featured-card .popularity-badge {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+}
+
 /* Responsive enhancements */
 @media (max-width: 1024px) {
     .hero-stats {
