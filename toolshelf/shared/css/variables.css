@@ -111,6 +111,13 @@
     --faq-bg: #f8fafc;
     --faq-answer-bg: #f2f7fd;
     --testi-bg: #f3f7fa;
+
+    /* Syntax Highlighting */
+    --color-syntax-key: #9b59b6;
+    --color-syntax-string: #27ae60;
+    --color-syntax-number: #d35400;
+    --color-syntax-boolean: #2980b9;
+    --color-syntax-null: #c0392b;
 }
 
 /* Dark Theme - Only color changes, no layout modifications */
@@ -170,4 +177,11 @@
     --faq-bg: #262e3a;
     --faq-answer-bg: #212837;
     --testi-bg: #232e41;
+
+    /* Syntax Highlighting */
+    --color-syntax-key: #be90d4;
+    --color-syntax-string: #2ecc71;
+    --color-syntax-number: #f39c12;
+    --color-syntax-boolean: #5dade2;
+    --color-syntax-null: #e74c3c;
 }
