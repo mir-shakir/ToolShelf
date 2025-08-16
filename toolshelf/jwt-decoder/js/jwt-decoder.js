@@ -1,20 +1,24 @@
+// toolshelf/jwt-decoder/js/jwt-decoder.js
+
 window.ToolShelf = window.ToolShelf || {};
 
 window.ToolShelf.JWTDecoder = class JWTDecoder extends window.ToolShelf.BaseTool {
     constructor() {
         super('jwt-decoder');
-
+        console.log('JWTDecoder constructor called.');
         this.elements = {};
         this.init();
     }
 
     init() {
+        console.log('JWTDecoder init started.');
         this.initializeElements();
         this.addEventListeners();
-        console.log('JWT Decoder Initialized');
+        console.log('JWTDecoder init finished.');
     }
 
     initializeElements() {
+        console.log('Initializing elements...');
         const ids = [
             'jwtInput', 'decodedHeader', 'decodedPayload',
             'secretKey', 'algSelector', 'verificationStatus',
@@ -23,10 +27,19 @@ window.ToolShelf.JWTDecoder = class JWTDecoder extends window.ToolShelf.BaseTool
         ];
         ids.forEach(id => {
             this.elements[id] = document.getElementById(id);
+            if (!this.elements[id]) {
+                console.error(`Element with ID '${id}' not found.`);
+            }
         });
+        console.log('Elements initialized:', this.elements);
     }
 
     addEventListeners() {
+        console.log('Adding event listeners...');
+        if (!this.elements.jwtInput) {
+            console.error('jwtInput element not found, cannot add event listeners.');
+            return;
+        }
         this.elements.jwtInput.addEventListener('input', () => this.decodeJWT());
         this.elements.clearBtn.addEventListener('click', () => this.clearAll());
         this.elements.pasteBtn.addEventListener('click', () => this.pasteFromClipboard());
@@ -35,17 +48,21 @@ window.ToolShelf.JWTDecoder = class JWTDecoder extends window.ToolShelf.BaseTool
         this.elements.verifyBtn.addEventListener('click', () => this.verifyJWT());
         this.elements.uploadBtn.addEventListener('click', () => this.elements.fileInput.click());
         this.elements.fileInput.addEventListener('change', (event) => this.handleFileUpload(event));
+        console.log('All event listeners added.');
     }
 
     decodeJWT() {
+        console.log('decodeJWT called.');
         const token = this.elements.jwtInput.value.trim();
+        this.updateVerificationStatus('', ''); // Clear previous status
+
         if (!token) {
             this.clearOutput();
+            console.log('Token is empty, output cleared.');
             return;
         }
 
-        this.updateVerificationStatus('', ''); // Clear previous status
-
+        console.log('Decoding token:', token);
         try {
             const parts = token.split('.');
             if (parts.length !== 3) {
@@ -56,6 +73,9 @@ window.ToolShelf.JWTDecoder = class JWTDecoder extends window.ToolShelf.BaseTool
 
             const header = window.jose.decodeProtectedHeader(token);
             const payload = window.jose.decodeJwt(token);
+
+            console.log('Decoded Header:', header);
+            console.log('Decoded Payload:', payload);
 
             this.elements.decodedHeader.textContent = JSON.stringify(header, null, 2);
             this.highlightJSON(this.elements.decodedHeader);
@@ -70,6 +90,7 @@ window.ToolShelf.JWTDecoder = class JWTDecoder extends window.ToolShelf.BaseTool
             }
 
         } catch (error) {
+            console.error('Error decoding JWT:', error);
             this.elements.decodedHeader.textContent = `Error decoding header: ${error.message}`;
             this.elements.decodedPayload.textContent = `Error decoding payload: ${error.message}`;
         }
@@ -91,19 +112,24 @@ window.ToolShelf.JWTDecoder = class JWTDecoder extends window.ToolShelf.BaseTool
     }
 
     clearOutput() {
-        this.elements.decodedHeader.textContent = '';
-        this.elements.decodedPayload.textContent = '';
-        this.elements.verificationStatus.textContent = '';
-        this.elements.verificationStatus.className = 'verification-status';
+        console.log('Clearing output.');
+        if (this.elements.decodedHeader) this.elements.decodedHeader.textContent = '';
+        if (this.elements.decodedPayload) this.elements.decodedPayload.textContent = '';
+        if (this.elements.verificationStatus) {
+            this.elements.verificationStatus.textContent = '';
+            this.elements.verificationStatus.className = 'verification-status';
+        }
     }
 
     clearAll() {
+        console.log('Clearing all.');
         this.elements.jwtInput.value = '';
         this.elements.secretKey.value = '';
         this.clearOutput();
     }
 
     async pasteFromClipboard() {
+        console.log('Pasting from clipboard...');
         try {
             const text = await navigator.clipboard.readText();
             if (text) {
@@ -119,6 +145,7 @@ window.ToolShelf.JWTDecoder = class JWTDecoder extends window.ToolShelf.BaseTool
     }
 
     copyToClipboard(part) {
+        console.log(`Copying ${part} to clipboard...`);
         let textToCopy = '';
         if (part === 'header') {
             textToCopy = this.elements.decodedHeader.textContent;
@@ -156,6 +183,7 @@ window.ToolShelf.JWTDecoder = class JWTDecoder extends window.ToolShelf.BaseTool
     }
 
     async verifyJWT() {
+        console.log('Verifying JWT...');
         const token = this.elements.jwtInput.value.trim();
         const secretOrKey = this.elements.secretKey.value.trim();
         const alg = this.elements.algSelector.value;
@@ -192,16 +220,19 @@ window.ToolShelf.JWTDecoder = class JWTDecoder extends window.ToolShelf.BaseTool
             this.displayPayload(payload);
 
         } catch (error) {
+            console.error('Verification failed:', error);
             this.updateVerificationStatus('invalid', `Verification failed: ${error.message}`);
         }
     }
 
     updateVerificationStatus(status, message) {
+        console.log(`Updating verification status: ${status}, ${message}`);
         this.elements.verificationStatus.textContent = message;
         this.elements.verificationStatus.className = `verification-status ${status}`;
     }
 
     handleFileUpload(event) {
+        console.log('Handling file upload...');
         const file = event.target.files[0];
         if (!file) {
             return;

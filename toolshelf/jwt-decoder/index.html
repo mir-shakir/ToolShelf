@@ -20,26 +20,6 @@
     <!-- Canonical URL -->
     <link rel="canonical" href="https://toolshelf.tech/jwt-decoder/">
 
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://toolshelf.tech/jwt-decoder/">
-    <meta property="og:title" content="ToolShelf - Free Online JWT Decoder & Verifier">
-    <meta property="og:description"
-        content="Decode and verify JSON Web Tokens (JWT) instantly. Supports various algorithms, real-time validation, and detailed claim inspection. Perfect for developers and API testing.">
-    <meta property="og:image" content="https://toolshelf.tech/assets/images/og-image-jwt-decoder.png">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
-    <meta property="og:site_name" content="ToolShelf">
-    <meta property="og:locale" content="en_US">
-
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://toolshelf.tech/jwt-decoder/">
-    <meta property="twitter:title" content="ToolShelf - Free Online JWT Decoder & Verifier">
-    <meta property="twitter:description"
-        content="Decode and verify JSON Web Tokens (JWT) with real-time feedback. Supports various algorithms and detailed claim inspection for developers.">
-    <meta property="twitter:image" content="https://toolshelf.tech/assets/images/og-image-jwt-decoder.png">
-
     <!-- Favicon and Icons -->
     <link rel="icon" type="image/x-icon" href="../favicon.ico">
     <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
@@ -47,39 +27,6 @@
     <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
     <link rel="manifest" href="../manifest.json">
     <meta name="theme-color" content="#3b82f6">
-
-    <!-- Schema.org structured data -->
-    <script type="application/ld+json">
-    {
-        "@context": "http://schema.org",
-        "@type": "WebApplication",
-        "name": "ToolShelf JWT Decoder",
-        "alternateName": "JWT Decoder and Verifier",
-        "description": "Free online JWT decoding and verification tool with real-time feedback, support for multiple algorithms, and detailed claim inspection. Perfect for developers, API testing, and security analysis.",
-        "url": "https://toolshelf.tech/jwt-decoder/",
-        "applicationCategory": "DeveloperApplication",
-        "operatingSystem": "Web Browser",
-        "offers": {
-            "@type": "Offer",
-            "price": "0",
-            "priceCurrency": "USD"
-        },
-        "creator": {
-            "@type": "Organization",
-            "name": "ToolShelf"
-        },
-        "featureList": [
-            "JWT Decoding",
-            "JWT Verification (HMAC, RSA, ECDSA)",
-            "Syntax Highlighting",
-            "Real-time Processing",
-            "Token Expiration and Claim Validation",
-            "Copy to Clipboard",
-            "File Upload",
-            "Offline Functionality"
-        ]
-    }
-    </script>
 
     <!-- CSS Modules -->
     <link rel="stylesheet" href="../shared/css/variables.css">
@@ -233,7 +180,7 @@
                                     <label for="secretKey">Secret / Public Key</label>
                                     <textarea id="secretKey" class="text-area" placeholder="Enter your secret or public key for verification..."></textarea>
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group button-group">
                                     <button id="verifyBtn" class="btn btn-primary">Verify</button>
                                     <button id="clearBtn" class="btn">Clear</button>
                                 </div>
@@ -243,8 +190,57 @@
                 </div>
             </div>
 
-            <div id="related-tools" class="related-tools-section"></div>
+            <div id="related-tools" class="related-tools-section">
+                <!-- Related tools will be populated here -->
+            </div>
 
+            <div id="helpModal" class="help-modal" role="dialog" aria-labelledby="help-title" aria-hidden="true">
+                <div class="help-content">
+                    <div class="help-header">
+                        <h2 id="help-title"><i class="fas fa-info-circle" aria-hidden="true"></i> JWT Decoder Guide</h2>
+                        <button class="help-close" id="helpClose" aria-label="Close help dialog">
+                            <i class="fas fa-times" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                    <div class="help-body">
+                        <div class="help-section">
+                            <h3>How to Use</h3>
+                            <ol>
+                                <li>Paste your JWT into the "Encoded JWT" text area.</li>
+                                <li>The header and payload will be decoded and displayed automatically.</li>
+                                <li>Timestamp claims like `exp`, `iat`, and `nbf` will be shown in a human-readable format.</li>
+                            </ol>
+                        </div>
+                        <div class="help-section">
+                            <h3>How to Verify a Signature</h3>
+                            <ol>
+                                <li>Select the correct algorithm from the dropdown menu.</li>
+                                <li>Paste the secret (for HMAC algorithms) or the public key (for RSA/ECDSA algorithms) into the "Secret / Public Key" text area.</li>
+                                <li>Click the "Verify" button.</li>
+                                <li>The verification result will be displayed above the decoded token.</li>
+                            </ol>
+                        </div>
+                        <div class="help-section">
+                            <h3>Supported Key Formats</h3>
+                            <ul>
+                                <li><strong>HMAC (HS256, HS384, HS512):</strong> A plain text secret.</li>
+                                <li><strong>RSA/ECDSA (RS/ES algorithms):</strong> A public key in PEM format (starting with `-----BEGIN PUBLIC KEY-----`) or a key in JWK format (a JSON object).</li>
+                            </ul>
+                        </div>
+                        <div class="help-section">
+                            <h3>Common Claims</h3>
+                            <ul>
+                                <li><strong>exp (Expiration Time):</strong> The time after which the JWT is no longer valid.</li>
+                                <li><strong>iat (Issued At):</strong> The time at which the JWT was issued.</li>
+                                <li><strong>nbf (Not Before):</strong> The time before which the JWT is not yet valid.</li>
+                                <li><strong>sub (Subject):</strong> The subject of the token.</li>
+                                <li><strong>iss (Issuer):</strong> The issuer of the token.</li>
+                                <li><strong>aud (Audience):</strong> The recipient that the token is intended for.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </main>
 
         <!-- Footer -->
@@ -319,34 +315,36 @@
 
         <!-- Initialize JWT Decoder -->
         <script type="module">
-            // Dynamically import the jose library
-            const jose = await import('https://cdn.jsdelivr.net/npm/jose/dist/browser/index.js');
-            window.jose = jose;
+            try {
+                // Dynamically import the jose library
+                const jose = await import('https://cdn.jsdelivr.net/npm/jose/dist/browser/index.js');
+                window.jose = jose;
+                console.log('✅ jose library loaded successfully.');
 
-            document.addEventListener('DOMContentLoaded', () => {
-                window.ToolShelf = window.ToolShelf || {};
-
-                try {
+                const initializeTool = () => {
+                    window.ToolShelf = window.ToolShelf || {};
                     if (window.ToolShelf.Toast && !window.ToolShelf.Toast.element) {
                         window.ToolShelf.Toast.init();
                     }
-
                     if (window.ToolShelf.HelpModal) {
                         window.ToolShelf.HelpModal.init();
                     }
-
                     const jwtDecoder = new window.ToolShelf.JWTDecoder();
                     window.ToolShelf.currentTool = jwtDecoder;
+                };
 
-                    console.log('🎉 JWT Decoder initialized successfully');
-
-                } catch (error) {
-                    console.error('❌ Failed to initialize JWT Decoder:', error);
-                    if (window.ToolShelf.Toast) {
-                        window.ToolShelf.Toast.show('Failed to initialize JWT Decoder. Please refresh the page.', 'error');
-                    }
+                if (document.readyState === 'loading') {
+                    document.addEventListener('DOMContentLoaded', initializeTool);
+                } else {
+                    initializeTool();
                 }
-            });
+
+            } catch (error) {
+                console.error('❌ Failed to load jose library or initialize JWT Decoder:', error);
+                if (window.ToolShelf && window.ToolShelf.Toast) {
+                    window.ToolShelf.Toast.show('Failed to initialize JWT Decoder. A critical library could not be loaded.', 'error');
+                }
+            }
         </script>
 
         <!-- Minimal Theme Switcher -->
