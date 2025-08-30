@@ -73,12 +73,12 @@
     <link rel="stylesheet" href="../shared/css/tool-layout.css">
     <link rel="stylesheet" href="../shared/css/responsive.css">
     <link rel="stylesheet" href="../shared/css/seo-content.css">
-    <link rel="stylesheet" href="./css/color-converter.css">
+    <link rel="stylesheet" href="../color-converter/css/color-converter.css">
 
     <!-- Third-party libraries -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/mdbassit/Coloris@latest/dist/coloris.min.css"/>
     <script src="https://cdn.jsdelivr.net/gh/mdbassit/Coloris@latest/dist/coloris.min.js"></script>
-    <script src="https://unpkg.com/culori"></script>
+    <script src="https://cdn.jsdelivr.net/npm/culori@4.0.2/bundled/culori.umd.js"></script>
 
     <!-- External Resources -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -382,11 +382,18 @@
         <!-- Initialize Color Converter -->
         <script>
             document.addEventListener('DOMContentLoaded', () => {
-                window.ToolShelf = window.ToolShelf || {};
-                if (window.ToolShelf.HelpModal) {
-                    window.ToolShelf.HelpModal.init();
+                try {
+                    window.ToolShelf = window.ToolShelf || {};
+                    if (window.ToolShelf.Toast && !window.ToolShelf.Toast.element) {
+                        window.ToolShelf.Toast.init();
+                    }
+                    if (window.ToolShelf.HelpModal) {
+                        window.ToolShelf.HelpModal.init();
+                    }
+                    window.ToolShelf.currentTool = new window.ToolShelf.AdvancedColorConverter();
+                } catch (error) {
+                    console.error('Failed to initialize Advanced Color Converter:', error);
                 }
-                window.ToolShelf.currentTool = new window.ToolShelf.AdvancedColorConverter();
             });
         </script>
 

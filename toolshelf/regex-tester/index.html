@@ -73,7 +73,7 @@
     <link rel="stylesheet" href="../shared/css/tool-layout.css">
     <link rel="stylesheet" href="../shared/css/responsive.css">
     <link rel="stylesheet" href="../shared/css/seo-content.css">
-    <link rel="stylesheet" href="./css/regex-tester.css">
+    <link rel="stylesheet" href="../regex-tester/css/regex-tester.css">
 
     <!-- External Resources -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -312,11 +312,18 @@
         <!-- Initialize Regex Tester -->
         <script>
             document.addEventListener('DOMContentLoaded', () => {
-                window.ToolShelf = window.ToolShelf || {};
-                if (window.ToolShelf.HelpModal) {
-                    window.ToolShelf.HelpModal.init();
+                try {
+                    window.ToolShelf = window.ToolShelf || {};
+                    if (window.ToolShelf.Toast && !window.ToolShelf.Toast.element) {
+                        window.ToolShelf.Toast.init();
+                    }
+                    if (window.ToolShelf.HelpModal) {
+                        window.ToolShelf.HelpModal.init();
+                    }
+                    window.ToolShelf.currentTool = new window.ToolShelf.RegexTester();
+                } catch (error) {
+                    console.error('Failed to initialize Regex Tester:', error);
                 }
-                window.ToolShelf.currentTool = new window.ToolShelf.RegexTester();
             });
         </script>
 
