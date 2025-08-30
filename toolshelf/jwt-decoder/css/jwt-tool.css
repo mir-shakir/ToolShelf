@@ -1,0 +1,161 @@
+/* JWT Decoder Tool Specific Styles */
+
+.tool-workspace-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 1.5rem;
+    padding: 1rem 0;
+}
+
+.panel {
+    background-color: var(--color-bg-secondary);
+    border-radius: var(--border-radius-lg);
+    border: 1px solid var(--color-border);
+    display: flex;
+    flex-direction: column;
+}
+
+.panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 1.25rem;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.panel-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--color-text-primary);
+}
+
+.panel-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.panel-body {
+    padding: 1.25rem;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.text-area {
+    width: 100%;
+    flex-grow: 1;
+    resize: none;
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: var(--color-text-secondary);
+    background-color: var(--color-bg-tertiary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-md);
+    padding: 0.75rem;
+}
+
+.code-block {
+    white-space: pre-wrap;
+    word-break: break-all;
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+    line-height: 1.6;
+    background-color: var(--color-bg-tertiary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-md);
+    padding: 1rem;
+    margin: 0;
+    color: var(--color-text-primary);
+    min-height: 100px; /* So it doesn't collapse when empty */
+}
+
+.output-section {
+    margin-bottom: 1rem;
+}
+
+.output-section:last-child {
+    margin-bottom: 0;
+}
+
+.output-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.output-header h4 {
+    margin: 0;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: var(--color-text-secondary);
+}
+
+.verification-panel {
+    grid-column: 1 / -1; /* Span both columns */
+    margin-top: 1rem;
+}
+
+.verification-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.form-group label {
+    font-weight: 500;
+    font-size: 0.9rem;
+}
+
+.form-group.button-group {
+    flex-direction: row;
+    gap: 1rem;
+    align-items: center;
+}
+
+.control {
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    border-radius: var(--border-radius-md);
+    border: 1px solid var(--color-border);
+    background-color: var(--color-bg-tertiary);
+    color: var(--color-text-primary);
+}
+
+.verification-status {
+    font-weight: 600;
+    padding: 0.25rem 0.75rem;
+    border-radius: var(--border-radius-full);
+    font-size: 0.8rem;
+}
+
+.verification-status.valid {
+    color: var(--color-success-text);
+    background-color: var(--color-success-bg);
+}
+
+.verification-status.invalid {
+    color: var(--color-error-text);
+    background-color: var(--color-error-bg);
+}
+
+@media (max-width: 768px) {
+    .tool-workspace-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Syntax Highlighting for JSON */
+.code-block .json-key { color: var(--color-syntax-key); }
+.code-block .json-string { color: var(--color-syntax-string); }
+.code-block .json-number { color: var(--color-syntax-number); }
+.code-block .json-boolean { color: var(--color-syntax-boolean); }
+.code-block .json-null { color: var(--color-syntax-null); }

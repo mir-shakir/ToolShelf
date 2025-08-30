@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Primary Meta Tags -->
+    <title>ToolShelf - Free Online JWT Decoder & Verifier</title>
+    <meta name="title" content="ToolShelf - Free Online JWT Decoder & Verifier">
+    <meta name="description"
+        content="Decode, verify, and inspect JSON Web Tokens (JWT) in real-time. Supports HMAC, RSA, and ECDSA algorithms. Free, offline, and privacy-first.">
+    <meta name="keywords"
+        content="jwt decoder, jwt verifier, jwt parser, json web token, developer tools, free jwt tool, hs256, rs256, es256">
+    <meta name="author" content="ToolShelf">
+    <meta name="robots" content="index, follow">
+    <meta name="language" content="English">
+    <meta name="revisit-after" content="7 days">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://toolshelf.tech/jwt-decoder/">
+
+    <!-- Favicon and Icons -->
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+    <link rel="manifest" href="../manifest.json">
+    <meta name="theme-color" content="#3b82f6">
+
+    <!-- CSS Modules -->
+    <link rel="stylesheet" href="../shared/css/variables.css">
+    <link rel="stylesheet" href="../shared/css/base.css">
+    <link rel="stylesheet" href="../shared/css/components.css">
+    <link rel="stylesheet" href="../shared/css/tool-layout.css">
+    <link rel="stylesheet" href="../shared/css/responsive.css">
+    <link rel="stylesheet" href="../shared/css/seo-content.css">
+    <link rel="stylesheet" href="./css/jwt-tool.css">
+
+    <!-- External Resources -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-GBY4766X5D"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-GBY4766X5D');
+    </script>
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Header with Navigation -->
+        <header class="app-header">
+            <div class="header-container">
+                <div class="logo-section">
+                    <div class="logo-icon">
+                        <i class="fas fa-toolbox"></i>
+                    </div>
+                    <a href="../" class="logo-text">ToolShelf</a>
+                </div>
+
+                <nav class="main-nav">
+                    <a href="../" class="nav-link">Home</a>
+                    <a href="../#tools" class="nav-link active">Tools</a>
+                    <a href="../blog/" class="nav-link">Blog</a>
+                    <a href="../#about" class="nav-link">About</a>
+                </nav>
+
+                <div class="tool-actions">
+                    <button class="theme-switcher-btn" id="themeSwitcher" title="Switch to dark mode" aria-label="Switch to dark mode">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                    <button class="help-btn" id="helpBtn" title="Show instructions"
+                        aria-label="Show help and instructions">
+                        <i class="fas fa-question-circle" aria-hidden="true"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Breadcrumb Navigation -->
+            <div class="breadcrumb-container">
+                <div class="breadcrumb-wrapper">
+                    <nav class="breadcrumb">
+                        <a href="../">Home</a>
+                        <span class="breadcrumb-separator">›</span>
+                        <a href="../#tools">Tools</a>
+                        <span class="breadcrumb-separator">›</span>
+                        <span class="breadcrumb-current">JWT Decoder</span>
+                    </nav>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="app-main" role="main">
+            <!-- SEO Content Section -->
+            <section class="seo-content" id="seo-content">
+                <div class="seo-intro">
+                    <h1>Free Online JWT Decoder & Verifier</h1>
+                    <p class="lead">Decode, verify, and inspect JSON Web Tokens (JWT) in real-time. Supports HMAC, RSA, and ECDSA algorithms. Free, offline, and privacy-first.</p>
+                </div>
+            </section>
+
+            <!-- JWT Decoder Tool -->
+            <div id="jwt-tool" class="tool-container active">
+                <div class="tool-workspace-grid">
+                    <!-- Left Panel: Input -->
+                    <div class="panel">
+                        <div class="panel-header">
+                            <h3 class="panel-title">Encoded JWT</h3>
+                            <div class="panel-actions">
+                                <button id="pasteBtn" class="icon-btn" title="Paste from clipboard"><i class="fas fa-paste"></i></button>
+                                <button id="uploadBtn" class="icon-btn" title="Upload a .jwt file"><i class="fas fa-upload"></i></button>
+                                <input type="file" id="fileInput" accept=".jwt,.txt" style="display: none;">
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                            <textarea id="jwtInput" class="text-area" placeholder="Paste your JWT here..."></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Right Panel: Decoded Output -->
+                    <div class="panel">
+                        <div class="panel-header">
+                            <h3 class="panel-title">Decoded Token</h3>
+                            <div id="verificationStatus" class="verification-status"></div>
+                        </div>
+                        <div class="panel-body">
+                            <div class="output-section">
+                                <div class="output-header">
+                                    <h4>Header</h4>
+                                    <button id="copyHeaderBtn" class="icon-btn" title="Copy header"><i class="fas fa-copy"></i></button>
+                                </div>
+                                <pre id="decodedHeader" class="code-block"></pre>
+                            </div>
+                            <div class="output-section">
+                                <div class="output-header">
+                                    <h4>Payload</h4>
+                                    <button id="copyPayloadBtn" class="icon-btn" title="Copy payload"><i class="fas fa-copy"></i></button>
+                                </div>
+                                <pre id="decodedPayload" class="code-block"></pre>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bottom Panel: Verification -->
+                    <div class="panel verification-panel">
+                        <div class="panel-header">
+                            <h3 class="panel-title">Verification</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div class="verification-controls">
+                                <div class="form-group">
+                                    <label for="algSelector">Algorithm</label>
+                                    <select id="algSelector" class="control">
+                                        <optgroup label="HMAC">
+                                            <option value="HS256">HS256</option>
+                                            <option value="HS384">HS384</option>
+                                            <option value="HS512">HS512</option>
+                                        </optgroup>
+                                        <optgroup label="RSA">
+                                            <option value="RS256">RS256</option>
+                                            <option value="RS384">RS384</option>
+                                            <option value="RS512">RS512</option>
+                                        </optgroup>
+                                        <optgroup label="ECDSA">
+                                            <option value="ES256">ES256</option>
+                                            <option value="ES384">ES384</option>
+                                            <option value="ES512">ES512</option>
+                                        </optgroup>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="secretKey">Secret / Public Key</label>
+                                    <textarea id="secretKey" class="text-area" placeholder="Enter your secret or public key for verification..."></textarea>
+                                </div>
+                                <div class="form-group button-group">
+                                    <button id="verifyBtn" class="btn btn-primary">Verify</button>
+                                    <button id="clearBtn" class="btn">Clear</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="related-tools" class="related-tools-section">
+                <!-- Related tools will be populated here -->
+            </div>
+
+            <div id="helpModal" class="help-modal" role="dialog" aria-labelledby="help-title" aria-hidden="true">
+                <div class="help-content">
+                    <div class="help-header">
+                        <h2 id="help-title"><i class="fas fa-info-circle" aria-hidden="true"></i> JWT Decoder Guide</h2>
+                        <button class="help-close" id="helpClose" aria-label="Close help dialog">
+                            <i class="fas fa-times" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                    <div class="help-body">
+                        <div class="help-section">
+                            <h3>How to Use</h3>
+                            <ol>
+                                <li>Paste your JWT into the "Encoded JWT" text area.</li>
+                                <li>The header and payload will be decoded and displayed automatically.</li>
+                                <li>Timestamp claims like `exp`, `iat`, and `nbf` will be shown in a human-readable format.</li>
+                            </ol>
+                        </div>
+                        <div class="help-section">
+                            <h3>How to Verify a Signature</h3>
+                            <ol>
+                                <li>Select the correct algorithm from the dropdown menu.</li>
+                                <li>Paste the secret (for HMAC algorithms) or the public key (for RSA/ECDSA algorithms) into the "Secret / Public Key" text area.</li>
+                                <li>Click the "Verify" button.</li>
+                                <li>The verification result will be displayed above the decoded token.</li>
+                            </ol>
+                        </div>
+                        <div class="help-section">
+                            <h3>Supported Key Formats</h3>
+                            <ul>
+                                <li><strong>HMAC (HS256, HS384, HS512):</strong> A plain text secret.</li>
+                                <li><strong>RSA/ECDSA (RS/ES algorithms):</strong> A public key in PEM format (starting with `-----BEGIN PUBLIC KEY-----`) or a key in JWK format (a JSON object).</li>
+                            </ul>
+                        </div>
+                        <div class="help-section">
+                            <h3>Common Claims</h3>
+                            <ul>
+                                <li><strong>exp (Expiration Time):</strong> The time after which the JWT is no longer valid.</li>
+                                <li><strong>iat (Issued At):</strong> The time at which the JWT was issued.</li>
+                                <li><strong>nbf (Not Before):</strong> The time before which the JWT is not yet valid.</li>
+                                <li><strong>sub (Subject):</strong> The subject of the token.</li>
+                                <li><strong>iss (Issuer):</strong> The issuer of the token.</li>
+                                <li><strong>aud (Audience):</strong> The recipient that the token is intended for.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="app-footer">
+            <div class="footer-content">
+                <div class="footer-main">
+                    <div class="footer-logo">
+                        <div class="logo-icon">
+                            <i class="fas fa-toolbox"></i>
+                        </div>
+                        <strong>ToolShelf</strong>
+                    </div>
+                    <p class="footer-description">
+                        Professional online tools that respect your privacy. Built for developers and professionals worldwide.
+                    </p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-section">
+                        <h4>Tools</h4>
+                        <a href="../json-formatter/">JSON Formatter</a>
+                        <a href="../base64-encoder/">Base64 Encoder</a>
+                        <a href="../text-transformer/">Text Transformer</a>
+                        <a href="../qr-generator/">QR Generator</a>
+                        <a href="../hash-generator/">Hash Generator</a>
+                        <a href="../jwt-decoder/">JWT Decoder</a>
+                    </div>
+                    <div class="footer-section">
+                        <h4>Resources</h4>
+                        <a href="../#about">About ToolShelf</a>
+                        <a href="../privacy/">Privacy Policy</a>
+                        <a href="../terms/">Terms of Use</a>
+                        <a href="../faq/">FAQs</a>
+                        <a href="../contact/">Contact</a>
+                    </div>
+                    <div class="footer-section">
+                        <h4>Company</h4>
+                        <a href="../blog/">Blog</a>
+                        <a href="../#about">About Us</a>
+                        <a href="../contact/">Contact</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2025 ToolShelf. All tools work offline and respect your privacy.</p>
+            </div>
+        </footer>
+
+        <div id="toast" class="toast" role="alert" aria-live="assertive">
+            <div class="toast-content">
+                <i class="toast-icon fas fa-check-circle" aria-hidden="true"></i>
+                <span id="toastMessage"></span>
+            </div>
+            <button class="toast-close" onclick="this.parentElement.classList.remove('show')" aria-label="Close notification">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+
+        <!-- JavaScript -->
+        <script src="../shared/config/constants.js"></script>
+        <script src="../shared/js/core/utils.js"></script>
+        <script src="../shared/js/core/events.js"></script>
+        <script src="../shared/js/core/analytics.js"></script>
+        <script src="../shared/js/components/toast.js"></script>
+        <script src="../shared/js/components/navigation.js"></script>
+        <script src="../shared/js/components/seo-content.js"></script>
+        <script src="../shared/js/components/keyboard.js"></script>
+        <script src="../shared/js/tools/base-tool.js"></script>
+        <script src="../shared/js/components/help-modal.js"></script>
+
+        <!-- JWT Decoder Modules -->
+        <script src="./js/jwt-decoder.js"></script>
+
+        <!-- Initialize JWT Decoder -->
+        <script type="module">
+            try {
+                // Dynamically import the jose library
+                const jose = await import('https://cdn.jsdelivr.net/npm/jose/dist/browser/index.js');
+                window.jose = jose;
+                console.log('✅ jose library loaded successfully.');
+
+                const initializeTool = () => {
+                    window.ToolShelf = window.ToolShelf || {};
+                    if (window.ToolShelf.Toast && !window.ToolShelf.Toast.element) {
+                        window.ToolShelf.Toast.init();
+                    }
+                    if (window.ToolShelf.HelpModal) {
+                        window.ToolShelf.HelpModal.init();
+                    }
+                    const jwtDecoder = new window.ToolShelf.JWTDecoder();
+                    window.ToolShelf.currentTool = jwtDecoder;
+                };
+
+                if (document.readyState === 'loading') {
+                    document.addEventListener('DOMContentLoaded', initializeTool);
+                } else {
+                    initializeTool();
+                }
+
+            } catch (error) {
+                console.error('❌ Failed to load jose library or initialize JWT Decoder:', error);
+                if (window.ToolShelf && window.ToolShelf.Toast) {
+                    window.ToolShelf.Toast.show('Failed to initialize JWT Decoder. A critical library could not be loaded.', 'error');
+                }
+            }
+        </script>
+
+        <!-- Minimal Theme Switcher -->
+        <script>
+            (function() {
+                let currentTheme = 'light';
+
+                function loadTheme() {
+                    try {
+                        const saved = localStorage.getItem('toolshelf-theme');
+                        if (saved === 'dark' || saved === 'light') {
+                            currentTheme = saved;
+                        } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                            currentTheme = 'dark';
+                        }
+                        document.documentElement.setAttribute('data-theme', currentTheme);
+                    } catch (e) {
+                        document.documentElement.setAttribute('data-theme', 'light');
+                    }
+                }
+
+                function toggleTheme() {
+                    currentTheme = currentTheme === 'light' ? 'dark' : 'light';
+                    document.documentElement.setAttribute('data-theme', currentTheme);
+                    try {
+                        localStorage.setItem('toolshelf-theme', currentTheme);
+                    } catch (e) {}
+                    updateButton();
+                }
+
+                function updateButton() {
+                    const btn = document.getElementById('themeSwitcher');
+                    if (btn) {
+                        const icon = btn.querySelector('i');
+                        const isDark = currentTheme === 'dark';
+                        if (icon) {
+                            icon.className = isDark ? 'fas fa-sun' : 'fas fa-moon';
+                        }
+                        btn.title = isDark ? 'Switch to light mode' : 'Switch to dark mode';
+                        btn.setAttribute('aria-label', btn.title);
+                    }
+                }
+
+                loadTheme();
+
+                document.addEventListener('DOMContentLoaded', function() {
+                    updateButton();
+                    const btn = document.getElementById('themeSwitcher');
+                    if (btn) {
+                        btn.addEventListener('click', toggleTheme);
+                    }
+                });
+            })();
+        </script>
+        <script type="module">
+            import { renderRelatedTools } from '../shared/js/core/render-related-tools.js';
+            import { initFeedbackWidget } from '../shared/js/core/feedback-widget.js';
+
+            initFeedbackWidget("jwt-decoder");
+            renderRelatedTools("jwt-decoder");
+        </script>
+    </div>
+</body>
+</html>
