@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Primary Meta Tags -->
+    <title>ToolShelf - Online Regex Tester</title>
+    <meta name="title" content="ToolShelf - Online Regex Tester">
+    <meta name="description"
+        content="Test and debug regular expressions in real-time. Features syntax highlighting, match groups, and a regex cheat sheet.">
+    <meta name="keywords"
+        content="regex tester, regular expression, javascript regex, regex checker, regex validator, developer tools">
+    <meta name="author" content="ToolShelf">
+    <meta name="robots" content="index, follow">
+    <meta name="language" content="English">
+    <meta name="revisit-after" content="7 days">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://toolshelf.tech/regex-tester/">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://toolshelf.tech/regex-tester/">
+    <meta property="og:title" content="ToolShelf - Online Regex Tester">
+    <meta property="og:description"
+        content="A powerful, real-time regex tool for developers. Test patterns, see match results instantly, and use the built-in cheat sheet.">
+    <meta property="og:image" content="https://toolshelf.tech/assets/images/og-image-regex-tester.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:site_name" content="ToolShelf">
+    <meta property="og:locale" content="en_US">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://toolshelf.tech/regex-tester/">
+    <meta property="twitter:title" content="ToolShelf - Online Regex Tester">
+    <meta property="twitter:description"
+        content="A powerful, real-time regex tool for developers. Test patterns, see match results instantly, and use the built-in cheat sheet.">
+    <meta property="twitter:image" content="https://toolshelf.tech/assets/images/og-image-regex-tester.png">
+
+    <!-- Favicon and Icons -->
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+    <link rel="manifest" href="../manifest.json">
+    <meta name="theme-color" content="#3b82f6">
+
+    <!-- Schema.org structured data -->
+    <script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "WebApplication",
+        "name": "ToolShelf Regex Tester",
+        "description": "Test and debug regular expressions in real-time with syntax highlighting, match groups, and a regex cheat sheet.",
+        "url": "https://toolshelf.tech/regex-tester/",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Web Browser",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        }
+    }
+    </script>
+
+    <!-- CSS Modules -->
+    <link rel="stylesheet" href="../shared/css/variables.css">
+    <link rel="stylesheet" href="../shared/css/base.css">
+    <link rel="stylesheet" href="../shared/css/components.css">
+    <link rel="stylesheet" href="../shared/css/tool-layout.css">
+    <link rel="stylesheet" href="../shared/css/responsive.css">
+    <link rel="stylesheet" href="../shared/css/seo-content.css">
+    <link rel="stylesheet" href="./css/regex-tester.css">
+
+    <!-- External Resources -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Header with Navigation -->
+        <header class="app-header">
+            <div class="header-container">
+                <div class="logo-section">
+                    <div class="logo-icon">
+                        <i class="fas fa-toolbox"></i>
+                    </div>
+                    <a href="../" class="logo-text">ToolShelf</a>
+                </div>
+
+                <nav class="main-nav">
+                    <a href="../" class="nav-link">Home</a>
+                    <a href="../#tools" class="nav-link active">Tools</a>
+                    <a href="../blog/" class="nav-link">Blog</a>
+                    <a href="../#about" class="nav-link">About</a>
+                </nav>
+
+                <div class="tool-actions">
+                    <button class="theme-switcher-btn" id="themeSwitcher" title="Switch to dark mode" aria-label="Switch to dark mode">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Breadcrumb Navigation -->
+            <div class="breadcrumb-container">
+                <div class="breadcrumb-wrapper">
+                    <nav class="breadcrumb">
+                        <a href="../">Home</a>
+                        <span class="breadcrumb-separator">›</span>
+                        <a href="../#tools">Tools</a>
+                        <span class="breadcrumb-separator">›</span>
+                        <span class="breadcrumb-current">Regex Tester</span>
+                    </nav>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="app-main" role="main">
+            <!-- SEO Content Section -->
+            <section class="seo-content" id="seo-content">
+                <div class="seo-intro">
+                    <h1>Online Regex Tester</h1>
+                    <p class="lead">A powerful, real-time regex tool for developers. Test patterns, see match results instantly, and use the built-in cheat sheet.</p>
+                </div>
+            </section>
+
+            <!-- Regex Tester Tool -->
+            <div id="regex-tester-tool" class="tool-container active">
+                <div class="tool-workspace-regex">
+                    <!-- Top Section: Regex Input and Flags -->
+                    <div class="regex-input-section">
+                        <div class="regex-input-container">
+                            <span class="regex-delimiter">/</span>
+                            <input type="text" id="regexInput" class="regex-input" placeholder="Enter your regular expression here..." spellcheck="false" autocomplete="off">
+                            <span class="regex-delimiter">/</span>
+                        </div>
+                        <div class="regex-flags-container" id="regexFlags">
+                            <label><input type="checkbox" id="flagGlobal" value="g" checked> g (global)</label>
+                            <label><input type="checkbox" id="flagIgnoreCase" value="i"> i (ignore case)</label>
+                            <label><input type="checkbox" id="flagMultiline" value="m"> m (multiline)</label>
+                        </div>
+                    </div>
+
+                    <!-- Middle Section: Test String -->
+                    <div class="test-string-section">
+                        <textarea id="testString" class="text-area" placeholder="Enter the string to test your regex against..."></textarea>
+                        <div class="test-string-highlight" id="testStringHighlight"></div>
+                    </div>
+
+                    <!-- Bottom Section: Match Results and Cheat Sheet -->
+                    <div class="results-section-grid">
+                        <div class="match-results-panel">
+                            <h3>Match Results</h3>
+                            <div id="matchResults" class="match-results-container">
+                                <p class="no-matches">No matches found.</p>
+                            </div>
+                        </div>
+                        <div class="cheatsheet-panel">
+                            <details class="cheatsheet-details" open>
+                                <summary>RegEx Cheat Sheet</summary>
+                                <div class="cheatsheet-content" id="cheatSheet">
+                                    <!-- Cheat sheet items will be generated here -->
+                                </div>
+                            </details>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="related-tools" class="related-tools-section"></div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="app-footer">
+            <div class="footer-content">
+                <div class="footer-main">
+                    <div class="footer-logo">
+                        <div class="logo-icon">
+                            <i class="fas fa-toolbox"></i>
+                        </div>
+                        <strong>ToolShelf</strong>
+                    </div>
+                    <p class="footer-description">
+                        Professional online tools that respect your privacy. Built for developers and professionals worldwide.
+                    </p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-section">
+                        <h4>Tools</h4>
+                        <a href="../json-formatter/">JSON Formatter</a>
+                        <a href="../base64-encoder/">Base64 Encoder</a>
+                        <a href="../text-transformer/">Text Transformer</a>
+                        <a href="../qr-generator/">QR Generator</a>
+                        <a href="../hash-generator/">Hash Generator</a>
+                        <a href="../jwt-decoder/">JWT Decoder</a>
+                <a href="../color-converter/">Advanced Color Converter</a>
+                <a href="../regex-tester/">Regex Tester</a>
+                    </div>
+                    <div class="footer-section">
+                        <h4>Resources</h4>
+                        <a href="../#about">About ToolShelf</a>
+                        <a href="../privacy/">Privacy Policy</a>
+                        <a href="../terms/">Terms of Use</a>
+                        <a href="../faq/">FAQs</a>
+                        <a href="../contact/">Contact</a>
+                    </div>
+                     <div class="footer-section">
+                        <h4>Company</h4>
+                        <a href="../blog/">Blog</a>
+                        <a href="../#about">About Us</a>
+                        <a href="../contact/">Contact</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2025 ToolShelf. All tools work offline and respect your privacy.</p>
+            </div>
+        </footer>
+
+        <div id="toast" class="toast" role="alert" aria-live="assertive">
+            <div class="toast-content">
+                <i class="toast-icon fas fa-check-circle" aria-hidden="true"></i>
+                <span id="toastMessage"></span>
+            </div>
+            <button class="toast-close" onclick="this.parentElement.classList.remove('show')" aria-label="Close notification">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+
+        <!-- JavaScript -->
+        <script src="../shared/config/constants.js"></script>
+        <script src="../shared/js/core/utils.js"></script>
+        <script src="../shared/js/core/events.js"></script>
+        <script src="../shared/js/components/toast.js"></script>
+        <script src="../shared/js/components/navigation.js"></script>
+        <script src="../shared/js/tools/base-tool.js"></script>
+
+        <!-- Regex Tester Modules -->
+        <script src="./js/regex-tester.js"></script>
+
+        <!-- Initialize Regex Tester -->
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                window.ToolShelf = window.ToolShelf || {};
+                window.ToolShelf.currentTool = new window.ToolShelf.RegexTester();
+            });
+        </script>
+
+        <!-- Minimal Theme Switcher -->
+        <script>
+            (function() {
+                let currentTheme = 'light';
+
+                function loadTheme() {
+                    try {
+                        const saved = localStorage.getItem('toolshelf-theme');
+                        if (saved === 'dark' || saved === 'light') {
+                            currentTheme = saved;
+                        } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                            currentTheme = 'dark';
+                        }
+                        document.documentElement.setAttribute('data-theme', currentTheme);
+                    } catch (e) {
+                        document.documentElement.setAttribute('data-theme', 'light');
+                    }
+                }
+
+                function toggleTheme() {
+                    currentTheme = currentTheme === 'light' ? 'dark' : 'light';
+                    document.documentElement.setAttribute('data-theme', currentTheme);
+                    try {
+                        localStorage.setItem('toolshelf-theme', currentTheme);
+                    } catch (e) {}
+                    updateButton();
+                }
+
+                function updateButton() {
+                    const btn = document.getElementById('themeSwitcher');
+                    if (btn) {
+                        const icon = btn.querySelector('i');
+                        const isDark = currentTheme === 'dark';
+                        if (icon) {
+                            icon.className = isDark ? 'fas fa-sun' : 'fas fa-moon';
+                        }
+                        btn.title = isDark ? 'Switch to light mode' : 'Switch to dark mode';
+                        btn.setAttribute('aria-label', btn.title);
+                    }
+                }
+
+                // Load theme immediately
+                loadTheme();
+
+                // Setup when DOM is ready
+                document.addEventListener('DOMContentLoaded', function() {
+                    updateButton();
+                    const btn = document.getElementById('themeSwitcher');
+                    if (btn) {
+                        btn.addEventListener('click', toggleTheme);
+                    }
+                });
+            })();
+        </script>
+
+        <script type="module">
+            import { renderRelatedTools } from '../shared/js/core/render-related-tools.js';
+            import { initFeedbackWidget } from '../shared/js/core/feedback-widget.js';
+
+            initFeedbackWidget("regex-tester");
+            renderRelatedTools("regex-tester");
+        </script>
+    </div>
+</body>
+
+</html>

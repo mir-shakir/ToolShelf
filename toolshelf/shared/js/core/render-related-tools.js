@@ -1,11 +1,13 @@
 
 export const RELATED_TOOLS = {
-    "json-formatter": ["base64-encoder", "hash-generator", "jwt-decoder"],
+    "json-formatter": ["base64-encoder", "regex-tester", "jwt-decoder"],
     "base64-encoder": ["json-formatter", "hash-generator", "jwt-decoder"],
-    "text-transformer": ["json-formatter", "base64-encoder", "qr-generator"],
-    "qr-generator": ["json-formatter", "base64-encoder", "text-transformer"],
-    "hash-generator": ["json-formatter", "base64-encoder", "jwt-decoder"],
+    "text-transformer": ["regex-tester", "json-formatter", "qr-generator"],
+    "qr-generator": ["color-converter", "base64-encoder", "text-transformer"],
+    "hash-generator": ["jwt-decoder", "base64-encoder", "regex-tester"],
     "jwt-decoder": ["hash-generator", "base64-encoder", "json-formatter"],
+    "color-converter": ["qr-generator", "json-formatter", "regex-tester"],
+    "regex-tester": ["text-transformer", "json-formatter", "jwt-decoder"],
 };
 
 export const TOOL_LABELS = {
@@ -15,6 +17,8 @@ export const TOOL_LABELS = {
     "qr-generator": "QR Generator",
     "hash-generator": "Hash Generator",
     "jwt-decoder": "JWT Decoder",
+    "color-converter": "Advanced Color Converter",
+    "regex-tester": "Regex Tester",
 };
 
 export function renderRelatedTools(currentTool, containerId = "related-tools") {

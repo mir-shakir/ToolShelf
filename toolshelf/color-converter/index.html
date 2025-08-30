@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Primary Meta Tags -->
+    <title>ToolShelf - Advanced Color Converter</title>
+    <meta name="title" content="ToolShelf - Advanced Color Converter">
+    <meta name="description"
+        content="Convert between HEX, RGBA, HSLA, HWB, and LCH color formats. Check WCAG contrast ratios and generate color palettes.">
+    <meta name="keywords"
+        content="color converter, hex, rgba, hsla, hwb, lch, css color, wcag contrast, color palette generator, developer tools, free color tool">
+    <meta name="author" content="ToolShelf">
+    <meta name="robots" content="index, follow">
+    <meta name="language" content="English">
+    <meta name="revisit-after" content="7 days">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://toolshelf.tech/color-converter/">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://toolshelf.tech/color-converter/">
+    <meta property="og:title" content="ToolShelf - Advanced Color Converter">
+    <meta property="og:description"
+        content="A powerful, real-time color tool for developers and designers. Convert, analyze, and generate colors instantly.">
+    <meta property="og:image" content="https://toolshelf.tech/assets/images/og-image-color-converter.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:site_name" content="ToolShelf">
+    <meta property="og:locale" content="en_US">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://toolshelf.tech/color-converter/">
+    <meta property="twitter:title" content="ToolShelf - Advanced Color Converter">
+    <meta property="twitter:description"
+        content="A powerful, real-time color tool for developers and designers. Convert, analyze, and generate colors instantly.">
+    <meta property="twitter:image" content="https://toolshelf.tech/assets/images/og-image-color-converter.png">
+
+    <!-- Favicon and Icons -->
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+    <link rel="manifest" href="../manifest.json">
+    <meta name="theme-color" content="#3b82f6">
+
+    <!-- Schema.org structured data -->
+    <script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "WebApplication",
+        "name": "ToolShelf Advanced Color Converter",
+        "description": "Convert between HEX, RGBA, HSLA, HWB, and LCH color formats. Includes a visual color picker, WCAG contrast checker, and palette generator.",
+        "url": "https://toolshelf.tech/color-converter/",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Web Browser",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        }
+    }
+    </script>
+
+    <!-- CSS Modules -->
+    <link rel="stylesheet" href="../shared/css/variables.css">
+    <link rel="stylesheet" href="../shared/css/base.css">
+    <link rel="stylesheet" href="../shared/css/components.css">
+    <link rel="stylesheet" href="../shared/css/tool-layout.css">
+    <link rel="stylesheet" href="../shared/css/responsive.css">
+    <link rel="stylesheet" href="../shared/css/seo-content.css">
+    <link rel="stylesheet" href="./css/color-converter.css">
+
+    <!-- Third-party libraries -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/mdbassit/Coloris@latest/dist/coloris.min.css"/>
+    <script src="https://cdn.jsdelivr.net/gh/mdbassit/Coloris@latest/dist/coloris.min.js"></script>
+    <script src="https://unpkg.com/culori"></script>
+
+    <!-- External Resources -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Header with Navigation -->
+        <header class="app-header">
+            <div class="header-container">
+                <div class="logo-section">
+                    <div class="logo-icon">
+                        <i class="fas fa-toolbox"></i>
+                    </div>
+                    <a href="../" class="logo-text">ToolShelf</a>
+                </div>
+
+                <nav class="main-nav">
+                    <a href="../" class="nav-link">Home</a>
+                    <a href="../#tools" class="nav-link active">Tools</a>
+                    <a href="../blog/" class="nav-link">Blog</a>
+                    <a href="../#about" class="nav-link">About</a>
+                </nav>
+
+                <div class="tool-actions">
+                    <button class="theme-switcher-btn" id="themeSwitcher" title="Switch to dark mode" aria-label="Switch to dark mode">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Breadcrumb Navigation -->
+            <div class="breadcrumb-container">
+                <div class="breadcrumb-wrapper">
+                    <nav class="breadcrumb">
+                        <a href="../">Home</a>
+                        <span class="breadcrumb-separator">›</span>
+                        <a href="../#tools">Tools</a>
+                        <span class="breadcrumb-separator">›</span>
+                        <span class="breadcrumb-current">Advanced Color Converter</span>
+                    </nav>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="app-main" role="main">
+            <!-- SEO Content Section -->
+            <section class="seo-content" id="seo-content">
+                <div class="seo-intro">
+                    <h1>Advanced Color Converter</h1>
+                    <p class="lead">A powerful, real-time color tool for developers and designers. Convert, analyze, and generate colors instantly.</p>
+                </div>
+            </section>
+
+            <!-- Color Converter Tool -->
+            <div id="color-converter-tool" class="tool-container active">
+                <div class="tool-workspace-grid">
+                    <!-- Left Column: Color Picker and Inputs -->
+                    <div class="color-main-panel">
+                        <div class="color-picker-container" id="colorPickerContainer">
+                            <div class="color-swatch-large" id="colorSwatch" tabindex="0" role="button" aria-label="Open Color Picker"></div>
+                            <input type="text" id="colorPickerInput" class="visually-hidden" data-coloris>
+                        </div>
+                        <div class="color-inputs-grid">
+                            <!-- HEX -->
+                            <div class="color-input-group">
+                                <label for="hexInput">HEX</label>
+                                <input type="text" id="hexInput" class="color-input" spellcheck="false">
+                                <button class="icon-btn" id="copyHex" title="Copy HEX"><i class="fas fa-copy"></i></button>
+                            </div>
+                            <!-- RGBA -->
+                            <div class="color-input-group">
+                                <label for="rgbaInput">RGBA</label>
+                                <input type="text" id="rgbaInput" class="color-input" spellcheck="false">
+                                <button class="icon-btn" id="copyRgba" title="Copy RGBA"><i class="fas fa-copy"></i></button>
+                            </div>
+                            <!-- HSLA -->
+                            <div class="color-input-group">
+                                <label for="hslaInput">HSLA</label>
+                                <input type="text" id="hslaInput" class="color-input" spellcheck="false">
+                                <button class="icon-btn" id="copyHsla" title="Copy HSLA"><i class="fas fa-copy"></i></button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Column: Advanced Info and Palette -->
+                    <div class="color-details-panel">
+                        <!-- Advanced Formats -->
+                        <div class="details-section">
+                            <h3 class="details-header">Modern Formats</h3>
+                            <div class="readonly-formats-grid">
+                                <div class="color-input-group readonly">
+                                    <label for="hwbOutput">HWB</label>
+                                    <input type="text" id="hwbOutput" class="color-input" readonly>
+                                    <button class="icon-btn" id="copyHwb" title="Copy HWB"><i class="fas fa-copy"></i></button>
+                                </div>
+                                <div class="color-input-group readonly">
+                                    <label for="lchOutput">LCH</label>
+                                    <input type="text" id="lchOutput" class="color-input" readonly>
+                                    <button class="icon-btn" id="copyLch" title="Copy LCH"><i class="fas fa-copy"></i></button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- WCAG Contrast -->
+                        <div class="details-section">
+                            <h3 class="details-header">WCAG Contrast Ratio</h3>
+                            <div class="contrast-checker-grid">
+                                <div class="contrast-result" id="contrastVsWhite">
+                                    <span class="contrast-label">vs White Text</span>
+                                    <span class="contrast-score" id="scoreVsWhite">1.0</span>
+                                    <span class="contrast-rating" id="ratingVsWhite">Fail</span>
+                                </div>
+                                <div class="contrast-result" id="contrastVsBlack">
+                                    <span class="contrast-label">vs Black Text</span>
+                                    <span class="contrast-score" id="scoreVsBlack">21.0</span>
+                                    <span class="contrast-rating" id="ratingVsBlack">AAA</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Palette Generation -->
+                        <div class="details-section">
+                            <div class="palette-header">
+                                <h3 class="details-header">Color Palette</h3>
+                                <button id="generatePaletteBtn" class="action-btn">Generate</button>
+                            </div>
+                            <div class="palette-container" id="paletteContainer">
+                                <!-- Color swatches will be generated here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="related-tools" class="related-tools-section"></div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="app-footer">
+            <div class="footer-content">
+                <div class="footer-main">
+                    <div class="footer-logo">
+                        <div class="logo-icon">
+                            <i class="fas fa-toolbox"></i>
+                        </div>
+                        <strong>ToolShelf</strong>
+                    </div>
+                    <p class="footer-description">
+                        Professional online tools that respect your privacy. Built for developers and professionals worldwide.
+                    </p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-section">
+                        <h4>Tools</h4>
+                        <a href="../json-formatter/">JSON Formatter</a>
+                        <a href="../base64-encoder/">Base64 Encoder</a>
+                        <a href="../text-transformer/">Text Transformer</a>
+                        <a href="../qr-generator/">QR Generator</a>
+                        <a href="../hash-generator/">Hash Generator</a>
+                        <a href="../jwt-decoder/">JWT Decoder</a>
+                <a href="../color-converter/">Advanced Color Converter</a>
+                <a href="../regex-tester/">Regex Tester</a>
+                    </div>
+                    <div class="footer-section">
+                        <h4>Resources</h4>
+                        <a href="../#about">About ToolShelf</a>
+                        <a href="../privacy/">Privacy Policy</a>
+                        <a href="../terms/">Terms of Use</a>
+                        <a href="../faq/">FAQs</a>
+                        <a href="../contact/">Contact</a>
+                    </div>
+                     <div class="footer-section">
+                        <h4>Company</h4>
+                        <a href="../blog/">Blog</a>
+                        <a href="../#about">About Us</a>
+                        <a href="../contact/">Contact</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2025 ToolShelf. All tools work offline and respect your privacy.</p>
+            </div>
+        </footer>
+
+        <div id="toast" class="toast" role="alert" aria-live="assertive">
+            <div class="toast-content">
+                <i class="toast-icon fas fa-check-circle" aria-hidden="true"></i>
+                <span id="toastMessage"></span>
+            </div>
+            <button class="toast-close" onclick="this.parentElement.classList.remove('show')" aria-label="Close notification">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+
+        <!-- JavaScript -->
+        <script src="../shared/config/constants.js"></script>
+        <script src="../shared/js/core/utils.js"></script>
+        <script src="../shared/js/core/events.js"></script>
+        <script src="../shared/js/components/toast.js"></script>
+        <script src="../shared/js/components/navigation.js"></script>
+        <script src="../shared/js/tools/base-tool.js"></script>
+
+        <!-- Color Converter Modules -->
+        <script src="./js/color-converter.js"></script>
+
+        <!-- Initialize Color Converter -->
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                window.ToolShelf = window.ToolShelf || {};
+                window.ToolShelf.currentTool = new window.ToolShelf.AdvancedColorConverter();
+            });
+        </script>
+
+        <!-- Minimal Theme Switcher -->
+        <script>
+            (function() {
+                let currentTheme = 'light';
+
+                function loadTheme() {
+                    try {
+                        const saved = localStorage.getItem('toolshelf-theme');
+                        if (saved === 'dark' || saved === 'light') {
+                            currentTheme = saved;
+                        } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                            currentTheme = 'dark';
+                        }
+                        document.documentElement.setAttribute('data-theme', currentTheme);
+                    } catch (e) {
+                        document.documentElement.setAttribute('data-theme', 'light');
+                    }
+                }
+
+                function toggleTheme() {
+                    currentTheme = currentTheme === 'light' ? 'dark' : 'light';
+                    document.documentElement.setAttribute('data-theme', currentTheme);
+                    try {
+                        localStorage.setItem('toolshelf-theme', currentTheme);
+                    } catch (e) {}
+                    updateButton();
+                }
+
+                function updateButton() {
+                    const btn = document.getElementById('themeSwitcher');
+                    if (btn) {
+                        const icon = btn.querySelector('i');
+                        const isDark = currentTheme === 'dark';
+                        if (icon) {
+                            icon.className = isDark ? 'fas fa-sun' : 'fas fa-moon';
+                        }
+                        btn.title = isDark ? 'Switch to light mode' : 'Switch to dark mode';
+                        btn.setAttribute('aria-label', btn.title);
+                    }
+                }
+
+                // Load theme immediately
+                loadTheme();
+
+                // Setup when DOM is ready
+                document.addEventListener('DOMContentLoaded', function() {
+                    updateButton();
+                    const btn = document.getElementById('themeSwitcher');
+                    if (btn) {
+                        btn.addEventListener('click', toggleTheme);
+                    }
+                });
+            })();
+        </script>
+
+        <script type="module">
+            import { renderRelatedTools } from '../shared/js/core/render-related-tools.js';
+            import { initFeedbackWidget } from '../shared/js/core/feedback-widget.js';
+
+            initFeedbackWidget("color-converter");
+            renderRelatedTools("color-converter");
+        </script>
+    </div>
+</body>
+
+</html>
