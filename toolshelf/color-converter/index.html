@@ -110,6 +110,10 @@
                     <button class="theme-switcher-btn" id="themeSwitcher" title="Switch to dark mode" aria-label="Switch to dark mode">
                         <i class="fas fa-moon"></i>
                     </button>
+                    <button class="help-btn" id="helpBtn" title="Show instructions"
+                        aria-label="Show help and instructions">
+                        <i class="fas fa-question-circle" aria-hidden="true"></i>
+                    </button>
                 </div>
             </div>
 
@@ -139,86 +143,140 @@
 
             <!-- Color Converter Tool -->
             <div id="color-converter-tool" class="tool-container active">
-                <div class="tool-workspace-grid">
-                    <!-- Left Column: Color Picker and Inputs -->
-                    <div class="color-main-panel">
-                        <div class="color-picker-container" id="colorPickerContainer">
-                            <div class="color-swatch-large" id="colorSwatch" tabindex="0" role="button" aria-label="Open Color Picker"></div>
+                <div class="tool-workspace-grid color-converter-grid">
+                    <!-- Left Column: Color Controls -->
+                    <div class="color-controls-panel">
+                        <div class="color-picker-area">
+                            <div id="colorSwatch" class="color-swatch" tabindex="0" role="button"
+                                aria-label="Open Color Picker"></div>
                             <input type="text" id="colorPickerInput" class="visually-hidden" data-coloris>
                         </div>
-                        <div class="color-inputs-grid">
-                            <!-- HEX -->
-                            <div class="color-input-group">
-                                <label for="hexInput">HEX</label>
-                                <input type="text" id="hexInput" class="color-input" spellcheck="false">
-                                <button class="icon-btn" id="copyHex" title="Copy HEX"><i class="fas fa-copy"></i></button>
+
+                        <div class="color-input-group hex-group">
+                            <label for="hexInput">HEX</label>
+                            <input type="text" id="hexInput" class="color-input" spellcheck="false">
+                            <button class="icon-btn" id="copyHex" title="Copy HEX"><i class="fas fa-copy"></i></button>
+                        </div>
+
+                        <div class="slider-group" id="rgbaSliders">
+                            <div class="slider-control">
+                                <label for="rSlider">R</label>
+                                <input type="range" id="rSlider" min="0" max="255" step="1">
+                                <input type="number" id="rInput" min="0" max="255" class="slider-input">
                             </div>
-                            <!-- RGBA -->
-                            <div class="color-input-group">
-                                <label for="rgbaInput">RGBA</label>
-                                <input type="text" id="rgbaInput" class="color-input" spellcheck="false">
-                                <button class="icon-btn" id="copyRgba" title="Copy RGBA"><i class="fas fa-copy"></i></button>
+                            <div class="slider-control">
+                                <label for="gSlider">G</label>
+                                <input type="range" id="gSlider" min="0" max="255" step="1">
+                                <input type="number" id="gInput" min="0" max="255" class="slider-input">
                             </div>
-                            <!-- HSLA -->
-                            <div class="color-input-group">
-                                <label for="hslaInput">HSLA</label>
-                                <input type="text" id="hslaInput" class="color-input" spellcheck="false">
-                                <button class="icon-btn" id="copyHsla" title="Copy HSLA"><i class="fas fa-copy"></i></button>
+                            <div class="slider-control">
+                                <label for="bSlider">B</label>
+                                <input type="range" id="bSlider" min="0" max="255" step="1">
+                                <input type="number" id="bInput" min="0" max="255" class="slider-input">
+                            </div>
+                            <div class="slider-control">
+                                <label for="aSlider">A</label>
+                                <input type="range" id="aSlider" min="0" max="1" step="0.01">
+                                <input type="number" id="aInput" min="0" max="1" step="0.01" class="slider-input">
+                            </div>
+                        </div>
+
+                        <div class="slider-group" id="hslaSliders">
+                            <div class="slider-control">
+                                <label for="hSlider">H</label>
+                                <input type="range" id="hSlider" min="0" max="360" step="1">
+                                <input type="number" id="hInput" min="0" max="360" class="slider-input">
+                            </div>
+                            <div class="slider-control">
+                                <label for="sSlider">S</label>
+                                <input type="range" id="sSlider" min="0" max="100" step="1">
+                                <input type="number" id="sInput" min="0" max="100" class="slider-input">
+                            </div>
+                            <div class="slider-control">
+                                <label for="lSlider">L</label>
+                                <input type="range" id="lSlider" min="0" max="100" step="1">
+                                <input type="number" id="lInput" min="0" max="100" class="slider-input">
+                            </div>
+                            <div class="slider-control">
+                                <label for="hslaASlider">A</label>
+                                <input type="range" id="hslaASlider" min="0" max="1" step="0.01">
+                                <input type="number" id="hslaAInput" min="0" max="1" step="0.01" class="slider-input">
                             </div>
                         </div>
                     </div>
 
-                    <!-- Right Column: Advanced Info and Palette -->
-                    <div class="color-details-panel">
-                        <!-- Advanced Formats -->
-                        <div class="details-section">
-                            <h3 class="details-header">Modern Formats</h3>
-                            <div class="readonly-formats-grid">
-                                <div class="color-input-group readonly">
-                                    <label for="hwbOutput">HWB</label>
-                                    <input type="text" id="hwbOutput" class="color-input" readonly>
-                                    <button class="icon-btn" id="copyHwb" title="Copy HWB"><i class="fas fa-copy"></i></button>
+                    <!-- Right Column: Color Information -->
+                    <div class="color-info-panel">
+                        <div class="info-section">
+                            <h3 class="info-header">Modern Formats</h3>
+                            <div class="output-group">
+                                <label>HWB</label>
+                                <input type="text" id="hwbOutput" readonly>
+                                <button class="icon-btn" id="copyHwb" title="Copy HWB"><i
+                                        class="fas fa-copy"></i></button>
+                            </div>
+                            <div class="output-group">
+                                <label>LCH</label>
+                                <input type="text" id="lchOutput" readonly>
+                                <button class="icon-btn" id="copyLch" title="Copy LCH"><i
+                                        class="fas fa-copy"></i></button>
+                            </div>
+                        </div>
+
+                        <div class="info-section">
+                            <h3 class="info-header">WCAG Contrast</h3>
+                            <div class="contrast-results">
+                                <div class="contrast-item" id="contrastVsWhite">
+                                    <span>vs White</span>
+                                    <strong id="scoreVsWhite">1.0</strong>
+                                    <span id="ratingVsWhite" class="rating-badge fail">Fail</span>
                                 </div>
-                                <div class="color-input-group readonly">
-                                    <label for="lchOutput">LCH</label>
-                                    <input type="text" id="lchOutput" class="color-input" readonly>
-                                    <button class="icon-btn" id="copyLch" title="Copy LCH"><i class="fas fa-copy"></i></button>
+                                <div class="contrast-item" id="contrastVsBlack">
+                                    <span>vs Black</span>
+                                    <strong id="scoreVsBlack">21.0</strong>
+                                    <span id="ratingVsBlack" class="rating-badge pass">AAA</span>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- WCAG Contrast -->
-                        <div class="details-section">
-                            <h3 class="details-header">WCAG Contrast Ratio</h3>
-                            <div class="contrast-checker-grid">
-                                <div class="contrast-result" id="contrastVsWhite">
-                                    <span class="contrast-label">vs White Text</span>
-                                    <span class="contrast-score" id="scoreVsWhite">1.0</span>
-                                    <span class="contrast-rating" id="ratingVsWhite">Fail</span>
-                                </div>
-                                <div class="contrast-result" id="contrastVsBlack">
-                                    <span class="contrast-label">vs Black Text</span>
-                                    <span class="contrast-score" id="scoreVsBlack">21.0</span>
-                                    <span class="contrast-rating" id="ratingVsBlack">AAA</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Palette Generation -->
-                        <div class="details-section">
+                        <div class="info-section">
                             <div class="palette-header">
-                                <h3 class="details-header">Color Palette</h3>
+                                <h3 class="info-header">Color Palette</h3>
                                 <button id="generatePaletteBtn" class="action-btn">Generate</button>
                             </div>
-                            <div class="palette-container" id="paletteContainer">
-                                <!-- Color swatches will be generated here -->
-                            </div>
+                            <div class="palette-container" id="paletteContainer"></div>
                         </div>
                     </div>
                 </div>
             </div>
 
             <div id="related-tools" class="related-tools-section"></div>
+
+            <section class="seo-expanded">
+                <div class="content-grid">
+                    <div class="content-section">
+                        <h2>Understanding Digital Color Formats</h2>
+                        <p>This tool allows you to convert between the most common color formats used in web design and development. Each format has its own strengths:</p>
+                        <ul>
+                            <li><strong>HEX (Hexadecimal):</strong> The most common format, a 6-digit code representing RGB values. Compact and widely supported.</li>
+                            <li><strong>RGBA (Red, Green, Blue, Alpha):</strong> Represents color with individual values for Red, Green, and Blue, plus an Alpha channel for transparency. Very intuitive for programmatic color manipulation.</li>
+                            <li><strong>HSLA (Hue, Saturation, Lightness, Alpha):</strong> Represents color based on its position on a color wheel (Hue), its intensity (Saturation), and its brightness (Lightness). Excellent for creating color harmonies.</li>
+                            <li><strong>HWB (Hue, Whiteness, Blackness):</strong> A newer, more intuitive way to create tints and shades of a color by mixing it with white or black.</li>
+                            <li><strong>LCH (Lightness, Chroma, Hue):</strong> A perceptually uniform color space, meaning changes in its values correspond more closely to how humans perceive color differences. Great for creating accessible color palettes.</li>
+                        </ul>
+                    </div>
+                    <div class="content-section">
+                        <h2>Why is WCAG Contrast Important?</h2>
+                        <p>The Web Content Accessibility Guidelines (WCAG) provide standards to make the web accessible to people with disabilities. A key part of this is ensuring text has enough contrast against its background to be easily readable.</p>
+                        <p>This tool checks the selected color against black and white text and provides a rating:</p>
+                        <ul>
+                            <li><strong>Fail:</strong> The contrast is too low and will be difficult for many users to read.</li>
+                            <li><strong>AA:</strong> The minimum level of contrast required for most text.</li>
+                            <li><strong>AAA:</strong> An enhanced level of contrast, providing better readability for all users.</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
         </main>
 
         <!-- Footer -->
@@ -268,6 +326,37 @@
             </div>
         </footer>
 
+        <div id="helpModal" class="help-modal" role="dialog" aria-labelledby="help-title" aria-hidden="true">
+            <div class="help-content">
+                <div class="help-header">
+                    <h2 id="help-title"><i class="fas fa-palette" aria-hidden="true"></i> Color Converter Guide</h2>
+                    <button class="help-close" id="helpClose" aria-label="Close help dialog">
+                        <i class="fas fa-times" aria-hidden="true"></i>
+                    </button>
+                </div>
+                <div class="help-body">
+                    <div class="help-section">
+                        <h3>Quick Start:</h3>
+                        <ol>
+                            <li>Click the large color swatch to open the visual color picker.</li>
+                            <li>Use the HEX input or the RGBA/HSLA sliders to adjust the color.</li>
+                            <li>All fields update in real-time as you make changes.</li>
+                            <li>Use the "Generate Palette" button to create a set of related colors.</li>
+                        </ol>
+                    </div>
+                    <div class="help-section">
+                        <h3>Main Features:</h3>
+                        <ul>
+                            <li><strong>Two-Way Binding:</strong> All inputs (picker, text, sliders) are synchronized.</li>
+                            <li><strong>Modern Formats:</strong> View HWB and LCH values for modern CSS.</li>
+                            <li><strong>WCAG Contrast:</strong> Instantly see the contrast ratio against black and white text to ensure readability.</li>
+                            <li><strong>Palette Generation:</strong> Create complementary and triadic color schemes with one click.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div id="toast" class="toast" role="alert" aria-live="assertive">
             <div class="toast-content">
                 <i class="toast-icon fas fa-check-circle" aria-hidden="true"></i>
@@ -285,6 +374,7 @@
         <script src="../shared/js/components/toast.js"></script>
         <script src="../shared/js/components/navigation.js"></script>
         <script src="../shared/js/tools/base-tool.js"></script>
+        <script src="../shared/js/components/help-modal.js"></script>
 
         <!-- Color Converter Modules -->
         <script src="./js/color-converter.js"></script>
@@ -293,6 +383,9 @@
         <script>
             document.addEventListener('DOMContentLoaded', () => {
                 window.ToolShelf = window.ToolShelf || {};
+                if (window.ToolShelf.HelpModal) {
+                    window.ToolShelf.HelpModal.init();
+                }
                 window.ToolShelf.currentTool = new window.ToolShelf.AdvancedColorConverter();
             });
         </script>

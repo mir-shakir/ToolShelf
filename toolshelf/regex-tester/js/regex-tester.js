@@ -55,7 +55,8 @@ window.ToolShelf.RegexTester = class RegexTester extends window.ToolShelf.BaseTo
 
     initializeElements() {
         const elementIds = [
-            'regexInput', 'regexFlags', 'testString', 'testStringHighlight', 'matchResults', 'cheatSheet'
+            'regexInput', 'regexFlags', 'testString', 'testStringHighlight',
+            'matchResults', 'cheatSheet', 'regexError'
         ];
         elementIds.forEach(id => {
             this.elements[id] = document.getElementById(id);
@@ -63,6 +64,7 @@ window.ToolShelf.RegexTester = class RegexTester extends window.ToolShelf.BaseTo
                 throw new Error(`Required DOM element not found: #${id}`);
             }
         });
+        this.elements.regexInputContainer = this.elements.regexInput.parentElement;
 
         // Flag checkboxes
         this.elements.flagGlobal = document.getElementById('flagGlobal');
@@ -93,80 +95,78 @@ window.ToolShelf.RegexTester = class RegexTester extends window.ToolShelf.BaseTo
                            .map(cb => cb.value)
                            .join('');
 
-        // Update highlighting
-        this.updateHighlighting(pattern, testString);
-
-        // Update match results
-        this.updateMatchResults(pattern, testString);
-    }
-
-    updateHighlighting(pattern, testString) {
-        if (!pattern) {
+        let regex;
+        try {
+            // This regex is just for validation. The actual matching will use specific objects.
+            regex = new RegExp(pattern, this.flags);
+            this.elements.regexInputContainer.classList.remove('error');
+            this.elements.regexError.textContent = '';
+        } catch (e) {
+            this.elements.regexInputContainer.classList.add('error');
+            this.elements.regexError.textContent = e.message;
             this.elements.testStringHighlight.innerHTML = this.escapeHTML(testString);
+            this.elements.matchResults.innerHTML = '<p class="no-matches">Invalid regular expression.</p>';
             return;
         }
 
-        // Highlighting should always be global to show all potential matches
-        const highlightFlags = this.flags.includes('g') ? this.flags : this.flags + 'g';
-
-        try {
-            const regex = new RegExp(pattern, highlightFlags);
-            const highlighted = this.escapeHTML(testString).replace(regex, '<mark>$&</mark>');
-            this.elements.testStringHighlight.innerHTML = highlighted;
-            this.elements.regexInput.parentElement.classList.remove('error');
-        } catch (e) {
-            this.elements.testStringHighlight.innerHTML = this.escapeHTML(testString);
-            this.elements.regexInput.parentElement.classList.add('error');
-        }
-    }
-
-    updateMatchResults(pattern, testString) {
-        this.elements.matchResults.innerHTML = ''; // Clear previous results
-
         if (!pattern) {
+            this.elements.testStringHighlight.innerHTML = this.escapeHTML(testString);
             this.elements.matchResults.innerHTML = '<p class="no-matches">Enter a regular expression to see matches.</p>';
             return;
         }
 
-        try {
-            const regex = new RegExp(pattern, this.flags);
-            const matches = [...testString.matchAll(regex)];
+        this.updateHighlighting(pattern, testString);
+        this.updateMatchResults(regex, testString);
+    }
 
-            if (matches.length === 0) {
-                this.elements.matchResults.innerHTML = '<p class="no-matches">No matches found.</p>';
-                return;
-            }
+    updateHighlighting(pattern, testString) {
+        // Highlighting should always be global to show all potential matches
+        const highlightFlags = this.flags.replace('g', '') + 'g';
+        const highlightRegex = new RegExp(pattern, highlightFlags);
+        const matches = [...testString.matchAll(highlightRegex)];
 
-            matches.forEach((match) => {
-                const matchEl = document.createElement('div');
-                matchEl.classList.add('match-item');
-
-                let matchHTML = `
-                    <div class="match-header">${this.escapeHTML(match[0])}</div>
-                    <span class="match-details">Index: ${match.index}</span>
-                `;
-
-                if (match.length > 1) {
-                    matchHTML += '<ul class="capture-groups">';
-                    for (let j = 1; j < match.length; j++) {
-                        const groupContent = match[j] === undefined ? '<em>undefined</em>' : this.escapeHTML(match[j]);
-                        matchHTML += `
-                            <li class="capture-group">
-                                <span class="group-index">${j}:</span>
-                                <span>${groupContent}</span>
-                            </li>
-                        `;
-                    }
-                    matchHTML += '</ul>';
-                }
-
-                matchEl.innerHTML = matchHTML;
-                this.elements.matchResults.appendChild(matchEl);
-            });
-
-        } catch (e) {
-            this.elements.matchResults.innerHTML = `<p class="error-message">Invalid Regex: ${this.escapeHTML(e.message)}</p>`;
+        if (!matches.length) {
+            this.elements.testStringHighlight.innerHTML = this.escapeHTML(testString);
+            return;
         }
+
+        let highlightedHTML = '';
+        let lastIndex = 0;
+
+        matches.forEach(match => {
+            highlightedHTML += this.escapeHTML(testString.substring(lastIndex, match.index));
+            highlightedHTML += `<mark>${this.escapeHTML(match[0])}</mark>`;
+            lastIndex = match.index + match[0].length;
+        });
+
+        highlightedHTML += this.escapeHTML(testString.substring(lastIndex));
+        this.elements.testStringHighlight.innerHTML = highlightedHTML;
+    }
+
+    updateMatchResults(regex, testString) {
+        this.elements.matchResults.innerHTML = '';
+        const matches = [...testString.matchAll(regex)];
+
+        if (matches.length === 0) {
+            this.elements.matchResults.innerHTML = '<p class="no-matches">No matches found.</p>';
+            return;
+        }
+
+        matches.forEach((match) => {
+            const matchEl = document.createElement('div');
+            matchEl.classList.add('match-item');
+            let matchHTML = `<div class="match-header">${this.escapeHTML(match[0])}</div><span class="match-details">Index: ${match.index}</span>`;
+            if (match.length > 1) {
+                matchHTML += '<ul class="capture-groups">';
+                for (let j = 1; j < match.length; j++) {
+                    const groupContent = match[j] === undefined ? '<em>undefined</em>' : this.escapeHTML(match[j]);
+                    matchHTML += `<li class="capture-group"><span class="group-index">${j}:</span><span>${groupContent}</span></li>`;
+                }
+                matchHTML += '</ul>';
+            }
+            matchEl.innerHTML = matchHTML;
+            this.elements.matchResults.appendChild(matchEl);
+        });
     }
 
     escapeHTML(str) {

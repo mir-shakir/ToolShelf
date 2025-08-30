@@ -3,217 +3,190 @@ window.ToolShelf = window.ToolShelf || {};
 window.ToolShelf.AdvancedColorConverter = class AdvancedColorConverter extends window.ToolShelf.BaseTool {
     constructor() {
         super('color-converter');
-
-        // State
-        this.currentColor = {};
-        this.isUpdating = false; // Flag to prevent event loops
-
-        // External libraries/components
         this.culori = window.culori;
-
-        // DOM elements
+        this.isUpdating = false;
         this.elements = {};
-
         this.init();
     }
 
     init() {
-        console.log('🎨 Initializing Advanced Color Converter...');
         try {
             this.initializeElements();
             this.initializeColoris();
             this.initializeUI();
             super.init();
-            this.updateColor('#3b82f6'); // Set initial color
-            console.log('✅ Advanced Color Converter initialized successfully');
+            this.updateColor('#3b82f6', 'init');
         } catch (error) {
-            this.handleError(error, 'Failed to initialize Advanced Color Converter');
+            this.handleError(error, 'Failed to initialize Color Converter');
         }
     }
 
     initializeElements() {
-        const elementIds = [
-            'colorPickerContainer', 'colorSwatch', 'colorPickerInput', 'hexInput', 'copyHex',
-            'rgbaInput', 'copyRgba', 'hslaInput', 'copyHsla', 'hwbOutput', 'copyHwb',
-            'lchOutput', 'copyLch', 'contrastVsWhite', 'scoreVsWhite', 'ratingVsWhite',
-            'contrastVsBlack', 'scoreVsBlack', 'ratingVsBlack', 'generatePaletteBtn', 'paletteContainer'
+        const ids = [
+            'colorSwatch', 'colorPickerInput', 'hexInput', 'copyHex',
+            'rSlider', 'rInput', 'gSlider', 'gInput', 'bSlider', 'bInput', 'aSlider', 'aInput',
+            'hSlider', 'hInput', 'sSlider', 'sInput', 'lSlider', 'lInput', 'hslaASlider', 'hslaAInput',
+            'hwbOutput', 'copyHwb', 'lchOutput', 'copyLch',
+            'scoreVsWhite', 'ratingVsWhite', 'scoreVsBlack', 'ratingVsBlack',
+            'generatePaletteBtn', 'paletteContainer'
         ];
-
-        elementIds.forEach(id => {
-            this.elements[id] = document.getElementById(id);
-            if (!this.elements[id]) throw new Error(`Required DOM element not found: #${id}`);
-        });
-
-        console.log('🎯 Color Converter DOM elements initialized');
+        ids.forEach(id => this.elements[id] = document.getElementById(id));
     }
 
     initializeColoris() {
-        Coloris.init();
         Coloris({
             el: '#colorPickerInput',
             themeMode: document.documentElement.getAttribute('data-theme') || 'light',
             alpha: true,
             format: 'hex',
-            onChange: (color) => {
-                if (!this.isUpdating) {
-                    this.updateColor(color, 'picker');
-                }
-            }
+            onChange: color => this.updateColor(color, 'picker')
         });
-
-        // Sync Coloris theme with website theme
-        const observer = new MutationObserver(() => {
-            const theme = document.documentElement.getAttribute('data-theme') || 'light';
-            Coloris.setTheme(theme);
-        });
-        observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
-
         this.elements.colorSwatch.addEventListener('click', () => {
             this.elements.colorPickerInput.dispatchEvent(new Event('click', { bubbles: true }));
         });
     }
 
     initializeUI() {
-        const inputs = [this.elements.hexInput, this.elements.rgbaInput, this.elements.hslaInput];
-        inputs.forEach(input => {
-            this.addEventListener(input, 'input', (e) => {
-                if (!this.isUpdating) {
-                    this.updateColor(e.target.value, 'input');
-                }
-            });
-        });
+        this.addEventListener(this.elements.hexInput, 'input', e => this.updateColor(e.target.value, 'hex'));
 
-        // Add copy button listeners
-        this.addCopyListener('Hex', this.elements.copyHex, () => this.elements.hexInput.value);
-        this.addCopyListener('RGBA', this.elements.copyRgba, () => this.elements.rgbaInput.value);
-        this.addCopyListener('HSLA', this.elements.copyHsla, () => this.elements.hslaInput.value);
-        this.addCopyListener('HWB', this.elements.copyHwb, () => this.elements.hwbOutput.value);
-        this.addCopyListener('LCH', this.elements.copyLch, () => this.elements.lchOutput.value);
+        ['r', 'g', 'b', 'a'].forEach(channel => this.bindSliderAndInput(channel, 'rgba'));
+        ['h', 's', 'l'].forEach(channel => this.bindSliderAndInput(channel, 'hsla'));
+        this.bindSliderAndInput('hslaA', 'hsla');
+
+        this.addEventListener(this.elements.copyHex, 'click', () => this.copyColor(this.elements.hexInput.value, 'HEX'));
+        this.addEventListener(this.elements.copyHwb, 'click', () => this.copyColor(this.elements.hwbOutput.value, 'HWB'));
+        this.addEventListener(this.elements.copyLch, 'click', () => this.copyColor(this.elements.lchOutput.value, 'LCH'));
 
         this.addEventListener(this.elements.generatePaletteBtn, 'click', () => this.generatePalette());
-
-        console.log('🎨 Color Converter UI handlers initialized');
     }
 
-    addCopyListener(format, button, valueGetter) {
-        this.addEventListener(button, 'click', async () => {
-            const textToCopy = valueGetter();
-            const success = await window.ToolShelf.Utils.copyToClipboard(textToCopy);
-            if (success) {
-                this.showToast(`${format} color copied to clipboard!`);
-            } else {
-                this.showToast(`Failed to copy ${format} color.`, 'error');
-            }
+    copyColor(value, format) {
+        window.ToolShelf.Utils.copyToClipboard(value)
+            .then(success => this.showToast(success ? `${format} color copied!` : `Failed to copy ${format}`, success ? 'success' : 'error'));
+    }
+
+    bindSliderAndInput(channel, type = 'rgba') {
+        const slider = this.elements[`${channel}Slider`];
+        const input = this.elements[`${channel}Input`];
+        const handler = type === 'rgba' ? () => this.handleRgbaChange() : () => this.handleHslaChange();
+
+        this.addEventListener(slider, 'input', () => {
+            if (this.isUpdating) return;
+            input.value = slider.value;
+            handler();
         });
+        this.addEventListener(input, 'input', () => {
+            if (this.isUpdating) return;
+            slider.value = input.value;
+            handler();
+        });
+    }
+
+    handleRgbaChange() {
+        const color = {
+            mode: 'rgb',
+            r: this.elements.rInput.value / 255,
+            g: this.elements.gInput.value / 255,
+            b: this.elements.bInput.value / 255,
+            alpha: this.elements.aInput.value
+        };
+        this.updateColor(color, 'rgba');
+    }
+
+    handleHslaChange() {
+        const color = {
+            mode: 'hsl',
+            h: this.elements.hInput.value,
+            s: this.elements.sInput.value / 100,
+            l: this.elements.lInput.value / 100,
+            alpha: this.elements.hslaAInput.value
+        };
+        this.updateColor(color, 'hsla');
     }
 
     updateColor(newColor, source = 'init') {
         if (this.isUpdating) return;
         this.isUpdating = true;
 
-        try {
-            const parsed = this.culori.parse(newColor);
-            if (!parsed) {
-                // TODO: Add validation feedback
-                this.isUpdating = false;
-                return;
-            }
-            this.currentColor = parsed;
+        const parsed = this.culori.parse(newColor);
+        if (!parsed) {
+            this.isUpdating = false;
+            return;
+        }
+        this.currentColor = parsed;
 
-            // Update text inputs
-            if (source !== 'input') {
-                this.elements.hexInput.value = this.culori.formatHex(this.currentColor);
-                this.elements.rgbaInput.value = this.culori.formatRgb(this.currentColor);
-                this.elements.hslaInput.value = this.culori.formatHsl(this.currentColor);
-            }
+        const rgb = this.culori.to('rgb')(this.currentColor);
+        const hsl = this.culori.to('hsl')(this.currentColor);
 
-            // Update read-only outputs
-            this.elements.hwbOutput.value = this.culori.formatHwb(this.currentColor);
-            this.elements.lchOutput.value = this.culori.formatLch(this.currentColor);
+        if (source !== 'hex') this.elements.hexInput.value = this.culori.formatHex(this.currentColor);
+        if (source !== 'rgba') this.updateRgbaInputs(rgb);
+        if (source !== 'hsla') this.updateHslaInputs(hsl);
 
-            // Update UI visuals
-            const displayColor = this.culori.formatRgb(this.currentColor);
-            this.elements.colorSwatch.style.backgroundColor = displayColor;
+        const displayColor = this.culori.formatRgb(this.currentColor);
+        this.elements.colorSwatch.style.backgroundColor = displayColor;
 
-            // Update Coloris picker state without re-triggering its onChange
-            if (source !== 'picker') {
-                this.elements.colorPickerInput.value = displayColor;
-                this.elements.colorPickerInput.dispatchEvent(new Event('input', { bubbles: true }));
-            }
-
-            this.updateContrastInfo();
-
-        } catch (e) {
-            console.error("Invalid color:", e);
+        if (source !== 'picker') {
+            this.elements.colorPickerInput.value = displayColor;
+            this.elements.colorPickerInput.dispatchEvent(new Event('input', { bubbles: true }));
         }
 
+        this.updateInfoPanels();
         this.isUpdating = false;
     }
 
-    getContrastRating(ratio) {
-        if (ratio >= 7) return 'AAA';
-        if (ratio >= 4.5) return 'AA';
-        if (ratio >= 3) return 'AA Large';
-        return 'Fail';
+    updateRgbaInputs(rgb) {
+        this.elements.rSlider.value = this.elements.rInput.value = Math.round(rgb.r * 255);
+        this.elements.gSlider.value = this.elements.gInput.value = Math.round(rgb.g * 255);
+        this.elements.bSlider.value = this.elements.bInput.value = Math.round(rgb.b * 255);
+        this.elements.aSlider.value = this.elements.aInput.value = rgb.alpha === undefined ? 1 : rgb.alpha.toFixed(2);
     }
 
-    updateContrastInfo() {
-        if (!this.currentColor) return;
+    updateHslaInputs(hsl) {
+        this.elements.hSlider.value = this.elements.hInput.value = Math.round(hsl.h || 0);
+        this.elements.sSlider.value = this.elements.sInput.value = Math.round((hsl.s || 0) * 100);
+        this.elements.lSlider.value = this.elements.lInput.value = Math.round((hsl.l || 0) * 100);
+        this.elements.hslaASlider.value = this.elements.hslaAInput.value = hsl.alpha === undefined ? 1 : hsl.alpha.toFixed(2);
+    }
 
+    updateInfoPanels() {
+        // Modern Formats
+        this.elements.hwbOutput.value = this.culori.formatHwb(this.currentColor);
+        this.elements.lchOutput.value = this.culori.formatLch(this.currentColor);
+
+        // WCAG Contrast
         const contrastWhite = this.culori.contrast(this.currentColor, 'white');
         const contrastBlack = this.culori.contrast(this.currentColor, 'black');
+        this.updateContrastItem(this.elements.scoreVsWhite, this.elements.ratingVsWhite, contrastWhite);
+        this.updateContrastItem(this.elements.scoreVsBlack, this.elements.ratingVsBlack, contrastBlack);
+    }
 
-        const ratingWhite = this.getContrastRating(contrastWhite);
-        const ratingBlack = this.getContrastRating(contrastBlack);
-
-        this.elements.scoreVsWhite.textContent = contrastWhite.toFixed(2);
-        this.elements.ratingVsWhite.textContent = ratingWhite;
-        this.elements.ratingVsWhite.dataset.rating = ratingWhite.toLowerCase().replace(' ', '-');
-
-        this.elements.scoreVsBlack.textContent = contrastBlack.toFixed(2);
-        this.elements.ratingVsBlack.textContent = ratingBlack;
-        this.elements.ratingVsBlack.dataset.rating = ratingBlack.toLowerCase().replace(' ', '-');
+    updateContrastItem(scoreEl, ratingEl, ratio) {
+        scoreEl.textContent = ratio.toFixed(2);
+        const rating = (ratio >= 7) ? 'AAA' : (ratio >= 4.5) ? 'AA' : 'Fail';
+        ratingEl.textContent = rating;
+        ratingEl.className = 'rating-badge';
+        ratingEl.classList.add(rating === 'Fail' ? 'fail' : 'pass');
     }
 
     generatePalette() {
-        if (!this.currentColor) {
-            this.showToast('Please select a color first.', 'warning');
-            return;
-        }
-
-        const baseColor = this.culori.to('hsl')(this.currentColor);
-
-        const harmonies = {
-            complementary: (baseColor.h + 180) % 360,
-            triadic1: (baseColor.h + 120) % 360,
-            triadic2: (baseColor.h + 240) % 360,
-        };
-
+        const baseHsl = this.culori.to('hsl')(this.currentColor);
         const palette = [
-            { h: harmonies.complementary, s: baseColor.s, l: baseColor.l },
-            { h: harmonies.triadic1, s: baseColor.s, l: baseColor.l },
-            { h: harmonies.triadic2, s: baseColor.s, l: baseColor.l },
+            this.currentColor,
+            { ...baseHsl, h: (baseHsl.h + 180) % 360 }, // Complementary
+            { ...baseHsl, h: (baseHsl.h + 120) % 360 }, // Triadic 1
+            { ...baseHsl, h: (baseHsl.h + 240) % 360 }, // Triadic 2
+            { ...baseHsl, l: Math.min(1, baseHsl.l + 0.2) } // Lighter
         ];
 
-        this.elements.paletteContainer.innerHTML = ''; // Clear previous palette
-
-        [this.currentColor, ...palette].forEach(color => {
+        this.elements.paletteContainer.innerHTML = '';
+        palette.forEach(color => {
             const swatch = document.createElement('div');
             swatch.classList.add('palette-swatch');
             const colorRgb = this.culori.formatRgb(color);
             swatch.style.backgroundColor = colorRgb;
             swatch.title = `Set color to ${colorRgb}`;
-            swatch.dataset.color = colorRgb;
-
-            this.addEventListener(swatch, 'click', (e) => {
-                this.updateColor(e.target.dataset.color);
-                window.ToolShelf.Utils.trackEvent('palette_color_selected');
-            });
-
+            this.addEventListener(swatch, 'click', () => this.updateColor(color, 'palette'));
             this.elements.paletteContainer.appendChild(swatch);
         });
-
-        this.showToast('New color palette generated!');
-        window.ToolShelf.Utils.trackEvent('palette_generated');
     }
 };

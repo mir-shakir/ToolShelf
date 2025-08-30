@@ -45,6 +45,19 @@
     font-family: var(--font-family-mono);
 }
 
+.regex-input-container.error {
+    border-color: var(--color-error);
+    box-shadow: 0 0 0 1px var(--color-error);
+}
+
+.regex-error-message {
+    color: var(--color-error);
+    font-family: var(--font-family-mono);
+    font-size: 0.875rem;
+    margin-top: -0.5rem;
+    min-height: 1.2em;
+}
+
 .regex-flags-container {
     display: flex;
     gap: 1rem;

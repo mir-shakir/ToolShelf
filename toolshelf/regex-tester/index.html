@@ -105,6 +105,10 @@
                     <button class="theme-switcher-btn" id="themeSwitcher" title="Switch to dark mode" aria-label="Switch to dark mode">
                         <i class="fas fa-moon"></i>
                     </button>
+                    <button class="help-btn" id="helpBtn" title="Show instructions"
+                        aria-label="Show help and instructions">
+                        <i class="fas fa-question-circle" aria-hidden="true"></i>
+                    </button>
                 </div>
             </div>
 
@@ -148,6 +152,7 @@
                             <label><input type="checkbox" id="flagMultiline" value="m"> m (multiline)</label>
                         </div>
                     </div>
+                    <div id="regexError" class="regex-error-message"></div>
 
                     <!-- Middle Section: Test String -->
                     <div class="test-string-section">
@@ -176,6 +181,31 @@
             </div>
 
             <div id="related-tools" class="related-tools-section"></div>
+
+            <section class="seo-expanded">
+                <div class="content-grid">
+                    <div class="content-section">
+                        <h2>What is a Regular Expression (Regex)?</h2>
+                        <p>A regular expression is a sequence of characters that specifies a search pattern in text. Usually such patterns are used by string-searching algorithms for "find" or "find and replace" operations on strings, or for input validation. It is a technique developed in theoretical computer science and formal language theory.</p>
+                        <h3>Common Use Cases:</h3>
+                        <ul>
+                            <li><strong>Input Validation:</strong> Ensuring user input like emails, phone numbers, and passwords are in the correct format.</li>
+                            <li><strong>Data Scraping:</strong> Extracting specific pieces of information (like prices or names) from web pages or documents.</li>
+                            <li><strong>Log Analysis:</strong> Searching for specific error codes or patterns in large log files.</li>
+                            <li><strong>Find and Replace:</strong> Performing powerful, pattern-based search and replace operations in text editors and IDEs.</li>
+                        </ul>
+                    </div>
+                    <div class="content-section">
+                        <h2>Understanding Regex Flags</h2>
+                        <p>Flags, or modifiers, change how the regular expression is interpreted. This tool supports the most common JavaScript flags:</p>
+                        <ul>
+                            <li><strong>g (Global):</strong> Finds all matches in the string, not just the first one. Without this, the search stops after the first match.</li>
+                            <li><strong>i (Ignore Case):</strong> Makes the pattern case-insensitive (e.g., `/a/i` matches both "a" and "A").</li>
+                            <li><strong>m (Multiline):</strong> Allows the start (^) and end ($) anchors to match the start and end of individual lines within the string, not just the very start and end of the entire string.</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
         </main>
 
         <!-- Footer -->
@@ -225,6 +255,38 @@
             </div>
         </footer>
 
+        <div id="helpModal" class="help-modal" role="dialog" aria-labelledby="help-title" aria-hidden="true">
+            <div class="help-content">
+                <div class="help-header">
+                    <h2 id="help-title"><i class="fas fa-project-diagram" aria-hidden="true"></i> Regex Tester Guide</h2>
+                    <button class="help-close" id="helpClose" aria-label="Close help dialog">
+                        <i class="fas fa-times" aria-hidden="true"></i>
+                    </button>
+                </div>
+                <div class="help-body">
+                    <div class="help-section">
+                        <h3>Quick Start:</h3>
+                        <ol>
+                            <li>Enter your regular expression in the top input field.</li>
+                            <li>Enter the text you want to test against in the large text area.</li>
+                            <li>Matches will be highlighted in the text area in real-time.</li>
+                            <li>A detailed list of all matches and capture groups will appear in the results panel.</li>
+                        </ol>
+                    </div>
+                    <div class="help-section">
+                        <h3>Main Features:</h3>
+                        <ul>
+                            <li><strong>Real-time Highlighting:</strong> Instantly see all matches in your test string as you type.</li>
+                            <li><strong>Detailed Match Info:</strong> View a structured list of all matches, including their index and capture groups.</li>
+                            <li><strong>Toggable Flags:</strong> Easily toggle the global (g), ignore case (i), and multiline (m) flags.</li>
+                            <li><strong>Interactive Cheat Sheet:</strong> Click any token in the cheat sheet to insert it directly into your expression.</li>
+                            <li><strong>Error Handling:</strong> Get immediate feedback if your regex pattern is invalid.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div id="toast" class="toast" role="alert" aria-live="assertive">
             <div class="toast-content">
                 <i class="toast-icon fas fa-check-circle" aria-hidden="true"></i>
@@ -242,6 +304,7 @@
         <script src="../shared/js/components/toast.js"></script>
         <script src="../shared/js/components/navigation.js"></script>
         <script src="../shared/js/tools/base-tool.js"></script>
+        <script src="../shared/js/components/help-modal.js"></script>
 
         <!-- Regex Tester Modules -->
         <script src="./js/regex-tester.js"></script>
@@ -250,6 +313,9 @@
         <script>
             document.addEventListener('DOMContentLoaded', () => {
                 window.ToolShelf = window.ToolShelf || {};
+                if (window.ToolShelf.HelpModal) {
+                    window.ToolShelf.HelpModal.init();
+                }
                 window.ToolShelf.currentTool = new window.ToolShelf.RegexTester();
             });
         </script>
