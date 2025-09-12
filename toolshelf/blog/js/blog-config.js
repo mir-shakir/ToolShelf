@@ -57,5 +57,25 @@ export const blogPosts = [
         tags: ['AI', 'Design', 'Generative Art', 'Productivity'],
         isFeatured: true 
     },
+    {
+        slug: 'hash-function-security-2025-developers-guide',
+        title: 'Hash Function Security in 2025: What Developers Need to Know',
+        excerpt: 'Complete guide to hash function security in 2025. Learn about quantum threats, algorithm recommendations, implementation best practices, and future-proofing strategies.',
+        thumbnail: '../blog/assets/images/blog-cover-hash-security.png',
+        date: 'September 12, 2025',
+        readTime: '12 min read',
+        tags: ['Security', 'Hashing', 'Cryptography', 'Quantum Computing', 'Best Practices'],
+        isFeatured: false
+    },
+    {
+        slug: 'md5-vs-sha256-vs-sha512-which-hash-should-you-use',
+        title: 'MD5 vs SHA256 vs SHA512: Which Hash Should You Use?',
+        excerpt: 'Complete comparison of MD5, SHA256, and SHA512 hash algorithms. Learn security levels, performance differences, and when to use each algorithm in 2025.',
+        thumbnail: '../blog/assets/images/blog-cover-hash-comparison.png',
+        date: 'October 5, 2025',
+        readTime: '10 min read',
+        tags: ['Hashing', 'MD5', 'SHA256', 'SHA512', 'Security', 'Performance'],
+        isFeatured: false
+    }
 
 ];
