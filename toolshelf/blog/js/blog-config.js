@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'jwt-explained-ultimate-guide-api-authentication',
+        title: 'JWT Explained: The Ultimate Guide to Secure API Authentication',
+        excerpt: 'A complete guide to JSON Web Tokens (JWTs). Learn their structure, how they work, and the security best practices for API authentication.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/d1dd3865-ec64-418e-9b24-032198ab3101.png?', // Using the direct URL as per your strategy
+        date: 'September 19, 2025',
+        readTime: '10 min read',
+        tags: ["jwt","authentication","api","security","json"],
+        isFeatured: false
+    },
+    {
         slug: 'the-hidden-cost-of-your-hash-functions',
         title: 'The Hidden Cost of Your Hash Functions: Why SHA-256 Might Be Killing Your API Performance',
         excerpt: 'Explore the hidden performance costs of cryptographic hash functions like SHA-256 and learn when to choose faster alternatives for optimal API performance.',
