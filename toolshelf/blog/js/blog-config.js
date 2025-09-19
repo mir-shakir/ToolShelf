@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'claude-3-5-sonnet-vs-gpt-4o-developer-cost-performance-breakdown',
+        title: 'Claude 3.5 Sonnet vs. GPT-4o: A Developer\'s Cost-Performance Breakdown',
+        excerpt: 'A deep dive into Claude 3.5 Sonnet vs. GPT-4o, comparing API costs, performance benchmarks, and use cases to help developers choose the right AI model.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/11ca0212-f2c7-400e-97d9-e5c28e00a1b9.png?', // Using the direct URL as per your strategy
+        date: 'September 19, 2025',
+        readTime: '11 min read',
+        tags: ["ai","llm","claude","gpt-4o","api"],
+        isFeatured: false
+    },
+    {
         slug: 'the-hidden-cost-of-your-hash-functions',
         title: 'The Hidden Cost of Your Hash Functions: Why SHA-256 Might Be Killing Your API Performance',
         excerpt: 'Explore the hidden performance costs of cryptographic hash functions like SHA-256 and learn when to choose faster alternatives for optimal API performance.',
