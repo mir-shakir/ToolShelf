@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'run-llama-3-locally-ollama-developer-guide',
+        title: 'Run Llama 3 Locally: The Ultimate Developer\'s Guide with Ollama',
+        excerpt: 'Run Meta\'s Llama 3 locally with Ollama for ultimate privacy, zero API costs, and offline speed. A complete guide for developers on installation and API use.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/f1214cec-1017-4972-a319-dcf195ed20a0.png?', // Using the direct URL as per your strategy
+        date: 'September 19, 2025',
+        readTime: '10 min read',
+        tags: ["llama3","ollama","local llm","ai","development"],
+        isFeatured: false
+    },
+    {
         slug: 'beyond-jwts-implementing-passkeys-with-webauthn-guide',
         title: 'Beyond JWTs: A Practical Guide to Implementing Passkeys with WebAuthn',
         excerpt: 'A dev\'s guide to implementing phishing-resistant Passkeys with the WebAuthn API and integrating them into existing JWT-based authentication systems.',
