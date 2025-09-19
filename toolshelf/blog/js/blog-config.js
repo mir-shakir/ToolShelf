@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'beyond-jwts-implementing-passkeys-with-webauthn-guide',
+        title: 'Beyond JWTs: A Practical Guide to Implementing Passkeys with WebAuthn',
+        excerpt: 'A dev\'s guide to implementing phishing-resistant Passkeys with the WebAuthn API and integrating them into existing JWT-based authentication systems.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/8848477c-a121-4daa-8d23-0a382bcd5ccd.png?', // Using the direct URL as per your strategy
+        date: 'September 19, 2025',
+        readTime: '14 min read',
+        tags: ["webauthn","passkeys","authentication","security","jwt"],
+        isFeatured: false
+    },
+    {
         slug: 'jwt-explained-ultimate-guide-api-authentication',
         title: 'JWT Explained: The Ultimate Guide to Secure API Authentication',
         excerpt: 'A complete guide to JSON Web Tokens (JWTs). Learn their structure, how they work, and the security best practices for API authentication.',
