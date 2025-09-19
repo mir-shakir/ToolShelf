@@ -120,4 +120,11 @@
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
+
+    <url>
+        <loc>https://toolshelf.tech/blog/jwt-explained-ultimate-guide-api-authentication/</loc>
+        <lastmod>2025-09-19</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
 </urlset>
