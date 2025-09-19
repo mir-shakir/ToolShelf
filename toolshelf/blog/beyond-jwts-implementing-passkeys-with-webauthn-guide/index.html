@@ -1,0 +1,168 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><!-- Primary Meta Tags --><title>Beyond JWTs: A Practical Guide to Implementing Passkeys with WebAuthn</title><meta name="title" content="Beyond JWTs: A Practical Guide to Implementing Passkeys with WebAuthn"><meta name="description" content="A dev's guide to implementing phishing-resistant Passkeys with the WebAuthn API and integrating them into existing JWT-based authentication systems."><!-- Canonical URL --><link rel="canonical" href="https://toolshelf.tech/blog/beyond-jwts-implementing-passkeys-with-webauthn-guide/"><!-- Open Graph / Facebook --><meta property="og:type" content="article"><meta property="og:url" content="https://toolshelf.tech/blog/beyond-jwts-implementing-passkeys-with-webauthn-guide/"><meta property="og:title" content="Beyond JWTs: A Practical Guide to Implementing Passkeys with WebAuthn"><meta property="og:description" content="A dev's guide to implementing phishing-resistant Passkeys with the WebAuthn API and integrating them into existing JWT-based authentication systems."><meta property="og:image" content="https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/8848477c-a121-4daa-8d23-0a382bcd5ccd.png"><!-- Twitter --><meta property="twitter:card" content="summary_large_image"><meta property="twitter:url" content="https://toolshelf.tech/blog/beyond-jwts-implementing-passkeys-with-webauthn-guide/"><meta property="twitter:title" content="Beyond JWTs: A Practical Guide to Implementing Passkeys with WebAuthn"><meta property="twitter:description" content="A dev's guide to implementing phishing-resistant Passkeys with the WebAuthn API and integrating them into existing JWT-based authentication systems."><meta property="twitter:image" content="https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/8848477c-a121-4daa-8d23-0a382bcd5ccd.png"><!-- Favicon --><link rel="icon" type="image/x-icon" href="../../favicon.ico"><link rel="icon" type="image/png" sizes="32x32" href="../../favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="../../favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="../../apple-touch-icon.png"><link rel="manifest" href="../../manifest.json"><meta name="theme-color" content="#3b82f6"><!-- CSS --><link rel="stylesheet" href="../../shared/css/variables.css"><link rel="stylesheet" href="../../shared/css/base.css"><link rel="stylesheet" href="../../shared/css/layout.css"><link rel="stylesheet" href="../css/blog.css"><!-- Fonts --><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fira+Code&display=swap" rel="stylesheet"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"><!-- Prism.js for Syntax Highlighting --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css"></head><body><div class="scroll-progress-bar"></div><header class="app-header"><div class="header-container"><div class="logo-section"><div class="logo-icon"><i class="fas fa-toolbox"></i></div><a href="../../" class="logo-text">ToolShelf</a></div><nav class="main-nav"><a href="../../" class="nav-link">Home</a><a href="../../#tools" class="nav-link">Tools</a><a href="../" class="nav-link active">Blog</a><a href="../../#about" class="nav-link">About</a></nav><div class="header-actions"><button class="theme-switcher-btn" id="themeSwitcher" title="Switch to dark mode" aria-label="Switch to dark mode"><i class="fas fa-moon"></i></button></div></div></header><main><div class="blog-post-container"><aside class="toc-container" id="tocContainer"><h3>Table of Contents</h3><ul class="toc-list" id="tocList"></ul></aside><article class="blog-post-article"><header class="blog-post-header"><h1 class="blog-post-title">Beyond JWTs: A Practical Guide to Implementing Passkeys with WebAuthn</h1><div class="blog-post-meta"><span>By The ToolShelf Team</span><span><i class="fas fa-calendar-alt"></i> September 20, 2025</span><span><i class="fas fa-clock"></i> 14 min read</span></div><div class="blog-post-tags"><span class="tag-badge">webauthn</span><span class="tag-badge">passkeys</span><span class="tag-badge">authentication</span><span class="tag-badge">security</span><span class="tag-badge">jwt</span></div></header><div class="blog-post-content" id="articleContent"><h2 id="the-future-is-passwordless-why-your-next-auth-system-should-use-passkeys">The Future is Passwordless: Why Your Next Auth System Should Use Passkeys</h2><p>For decades, we've treated passwords as a necessary evil. We store hashed versions in our databases, enforce complex rotation policies, and layer on multi-factor authentication, yet they remain the web's single largest attack vector. Even modern token-based systems using JWTs, while excellent for authorizing API access, can't protect a user who is tricked into entering their credentials on a convincing phishing site. The fundamental problem is the 'shared secret'—something the user knows and the server knows. As long as that secret can be stolen, your system is vulnerable.</p><p>This is where Passkeys enter the picture. Backed by a powerful consortium of tech leaders including Apple, Google, and Microsoft under the FIDO Alliance umbrella, Passkeys represent a fundamental shift in digital identity. They replace vulnerable, shared secrets with secure, phishing-resistant public-key cryptography, offering a login experience that is simultaneously more secure and dramatically more seamless for the user.</p><p>This article is a developer-focused, practical roadmap to this new frontier. We will demystify the core technologies, walk through the implementation flow of the WebAuthn API step-by-step, and provide a clear strategy for integrating a Passkey-first authentication flow into your existing JWT-based application infrastructure. It's time to stop patching a broken model and start building the future of authentication.</p><h2 id="understanding-the-passwordless-landscape-passkeys-fido2-and-webauthn">Understanding the Passwordless Landscape: Passkeys, FIDO2, and WebAuthn</h2><h3 id="demystifying-the-terminology">Demystifying the Terminology</h3><p>The world of passwordless authentication is filled with acronyms. Let's clarify the key players and how they relate to one another to build a solid foundation.</p><ul><li><strong>WebAuthn:</strong> This is the core technology you will interact with as a web developer. WebAuthn (Web Authentication) is a W3C standard and browser API that exposes public-key cryptography to web applications. It allows a website to register and authenticate users with built-in authenticators (like Windows Hello or Face ID) or external security keys (like a YubiKey) without ever using a password.</li><li><strong>FIDO2:</strong> FIDO2 is the larger, overarching project from the FIDO (Fast Identity Online) Alliance. It's the umbrella term that encompasses both WebAuthn (the browser API component) and CTAP (Client to Authenticator Protocol). CTAP is the protocol that allows browsers and operating systems to communicate with the authenticators. You won't interact with CTAP directly, but it's the magic that makes everything work under the hood.</li><li><strong>Passkeys:</strong> This is the user-friendly, consumer-facing brand for the credentials created by the WebAuthn/FIDO2 standards. When a user creates a 'passkey' for your site on their iPhone, it's a discoverable FIDO credential that syncs across their iCloud Keychain. This allows them to sign in on their MacBook or iPad without re-registering. The term 'Passkey' simplifies the concept for end-users, hiding the complex cryptography behind a friendly and understandable name.</li></ul><h3 id="why-passkeys-are-a-game-changer-for-security-and-ux">Why Passkeys Are a Game-Changer for Security and UX</h3><p>Passkeys aren't just an incremental improvement; they represent a paradigm shift in how we approach digital security and user experience.</p><ul><li><strong>Phishing Resistance by Design:</strong> A passkey is cryptographically bound to the origin (i.e., your website's domain) where it was created. When a user attempts to log in, the browser checks this origin. A user on a phishing site like <code>your-bank.scam.com</code> cannot use a passkey created for <code>your-bank.com</code>. The browser simply won't present the passkey as an option. This mechanism, combined with public-key cryptography, makes it mathematically impossible to phish a user's credential because no secret is ever transmitted.</li><li><strong>Server-Side Security:</strong> A major benefit is what you <em>don't</em> have to store. With passkeys, your database contains only a user's public key, a credential ID, and some metadata. There are no password hashes or shared secrets. If your database is breached, attackers gain nothing that can be used to impersonate your users on your site or any other site. The risk of credential stuffing and password reuse attacks is completely eliminated.</li><li><strong>Frictionless User Experience:</strong> The user flow is remarkably simple. Registration and login are typically a single tap or click, followed by a familiar biometric prompt (Face ID, Touch ID, fingerprint scan) or the device's PIN. Because major platform vendors (Apple, Google, Microsoft) sync these passkeys through their cloud services, a user who registers on their phone can seamlessly log in on their laptop without any extra steps. This removes the friction of forgotten passwords and clumsy MFA codes, leading to higher conversion and retention rates.</li></ul><h2 id="the-core-implementation-flow-registration-and-authentication">The Core Implementation Flow: Registration and Authentication</h2><h3 id="part-1-the-registration-ceremony-creating-a-passkey">Part 1: The Registration Ceremony (Creating a Passkey)</h3><p>Creating a passkey is a multi-step dance between your server (the Relying Party or RP), the client's browser, and the authenticator. We call this the 'registration ceremony.'</p><ol><li><strong>Server-Side: Generate Options:</strong> The process begins when the user indicates they want to create a passkey. Your server generates a set of registration options. Critically, this object includes a unique, randomly generated, and single-use <code>challenge</code> string, along with information about your service (the Relying Party), and the user's identity (their user ID and name).</li><li><strong>Client-Side: Trigger the API:</strong> Your frontend receives these options from the server and passes them to the <code>navigator.credentials.create({ publicKey: options })</code> method. This JavaScript call invokes the browser's WebAuthn API, which in turn prompts the user to create a new passkey using their device's platform authenticator (e.g., Face ID, Windows Hello).</li><li><strong>Authenticator: Generate Keys:</strong> The user's authenticator (e.g., the Secure Enclave in an iPhone) performs the core cryptographic work. It creates a new, unique public/private key pair. The private key is stored securely on the device and never leaves it. The authenticator then returns the newly created public key, a unique Credential ID, and attestation data (proof of where and how the key was created) to the browser.</li><li><strong>Server-Side Validation: Store the Credential:</strong> The frontend sends this entire payload back to your server. Your server's job is to perform a series of critical validations: verify that the challenge matches the one you originally sent, check that the origin is correct, and parse the attestation data. If everything is valid, you store the Credential ID, the public key, and a signature counter in your database, associating them with the user's account.</li></ol><h3 id="part-2-the-authentication-ceremony-logging-in">Part 2: The Authentication Ceremony (Logging In)</h3><p>Once a user has a passkey registered, logging in is a similar but distinct process called the 'authentication ceremony.'</p><ol><li><strong>Server-Side: Generate a Challenge:</strong> When a user wants to log in, your server again generates a unique, single-use <code>challenge</code>. You also look up the Credential IDs associated with that user in your database and send them to the client as a hint.</li><li><strong>Client-Side: Request Assertion:</strong> The frontend receives the options and calls <code>navigator.credentials.get({ publicKey: options })</code>. This prompts the browser to look for passkeys associated with your website's domain. If it finds one (or more), it will ask the user to verify their identity.</li><li><strong>Authenticator: Sign the Challenge:</strong> The user authenticates with their biometric or PIN. The authenticator then uses the securely stored <em>private key</em> to create a cryptographic signature over the challenge and other client data. This signature is proof that the user possesses the private key corresponding to the public key you have on file.</li><li><strong>Server-Side Validation: Verify the Signature:</strong> The frontend sends the authenticator's response, including the signature, back to your server. Your server retrieves the user's stored public key from the database. It then uses this public key to verify that the signature is valid for the challenge you sent. It also checks that the signature counter has incremented to prevent replay attacks. If the signature is valid, the user is successfully authenticated, and you can establish a session for them.</li></ol><h2 id="practical-implementation-code-snippets-and-server-side-logic">Practical Implementation: Code Snippets and Server-Side Logic</h2><h3 id="setting-up-your-server-the-relying-party">Setting Up Your Server (The Relying Party)</h3><p>While you could implement the WebAuthn specification from scratch, it is complex and fraught with security pitfalls. It is highly recommended to use a well-maintained, server-side library to handle the heavy lifting.</p><ul><li><strong>Choosing a Library:</strong> Strong choices exist for most major platforms. For Node.js, <code>@simplewebauthn/server</code> is a fantastic, feature-rich option. Python developers often turn to <code>py_webauthn</code>, and similar libraries exist for Go, Rust, Java, and PHP. These libraries simplify generating challenges, verifying attestation, and validating assertions.</li><li><strong>Database Schema:</strong> You'll need a new table to store passkey credentials. A typical schema would look something like this:</li></ul><pre><code class="language-sql">CREATE TABLE user_credentials (
+  id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  user_id BIGINT UNSIGNED NOT NULL,
+  -- The credential ID is stored as raw bytes, often represented as Base64URL
+  credential_id VARBINARY(255) NOT NULL UNIQUE,
+  -- The public key in COSE format, stored as raw bytes
+  public_key VARBINARY(255) NOT NULL,
+  -- The signature counter, used to prevent replay attacks
+  sign_count BIGINT UNSIGNED NOT NULL,
+  -- List of transports (e.g., 'internal', 'usb', 'hybrid') for the authenticator
+  transports VARCHAR(255),
+  FOREIGN KEY (user_id) REFERENCES users(id)
+);</code></pre><ul><li><strong>Backend Example (Generating Registration Options):</strong> Here is a conceptual Node.js example using <code>simplewebauthn</code> to generate the options you'd send to the client.</li></ul><pre><code class="language-javascript">import { generateRegistrationOptions } from '@simplewebauthn/server';
+
+// --- In your Express route handler ---
+async function getRegistrationOptions(req, res) {
+  const user = await User.findById(req.session.userId);
+
+  const options = await generateRegistrationOptions({
+    rpName: 'ToolShelf Blog',
+    rpID: 'toolshelf.dev', // Your domain
+    userID: user.id,
+    userName: user.username,
+    // Don't prompt for resident keys for this example
+    authenticatorSelection: {
+      residentKey: 'discouraged',
+    },
+    // Exclude credentials the user has already registered
+    excludeCredentials: user.credentials.map(cred => ({
+      id: cred.credentialID,
+      type: 'public-key',
+      transports: cred.transports,
+    })),
+  });
+
+  // Store the challenge in the user's session to verify it later
+  req.session.currentChallenge = options.challenge;
+
+  res.json(options);
+}</code></pre><h3 id="wiring-up-the-frontend-with-javascript">Wiring Up the Frontend with JavaScript</h3><p>The frontend is responsible for calling the <code>navigator.credentials</code> API and communicating with your backend. One crucial detail is handling the data formats.</p><ul><li><strong>Handling Array Buffers:</strong> The WebAuthn API works with <code>ArrayBuffer</code> objects for binary data like IDs and public keys. However, JSON, the standard for web APIs, cannot represent <code>ArrayBuffer</code>s directly. The common practice is to convert these buffers to Base64URL strings before sending them to the server, and have the server decode them back into buffers for processing. Helper functions are essential for this.</li><li><strong>Frontend Example (Registration):</strong> This snippet shows how to call <code>create()</code>, handle the ArrayBuffers, and send the result to your server.</li></ul><pre><code class="language-javascript">// Helper function to convert ArrayBuffer to Base64URL string
+function bufferToBase64URL(buffer) {
+  const str = window.btoa(String.fromCharCode.apply(null, new Uint8Array(buffer)));
+  return str.replace(/\+/g, '-').replace(/\//g, '_').replace(/=/g, '');
+}
+
+async function registerPasskey() {
+  // 1. Fetch registration options from the server
+  const resp = await fetch('/generate-registration-options');
+  const options = await resp.json();
+
+  // Note: The server sends challenges as strings. The API needs ArrayBuffers.
+  // A good client-side library like @simplewebauthn/browser handles this for you.
+  // For simplicity, we assume options are correctly formatted here.
+
+  // 2. Call the WebAuthn API
+  let attestation;
+  try {
+    attestation = await navigator.credentials.create({ publicKey: options });
+  } catch (error) {
+    console.error('Passkey creation failed:', error);
+    return;
+  }
+
+  // 3. Convert binary data to Base64URL and send to server for verification
+  const verificationJSON = {
+    id: attestation.id,
+    rawId: bufferToBase64URL(attestation.rawId),
+    response: {
+      clientDataJSON: bufferToBase64URL(attestation.response.clientDataJSON),
+      attestationObject: bufferToBase64URL(attestation.response.attestationObject),
+    },
+    type: attestation.type,
+  };
+
+  await fetch('/verify-registration', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(verificationJSON),
+  });
+}</code></pre><ul><li><strong>Frontend Example (Login):</strong> The login flow is very similar, but calls <code>get()</code> instead of <code>create()</code>.</li></ul><pre><code class="language-javascript">async function loginWithPasskey() {
+  // 1. Fetch assertion options from the server
+  const resp = await fetch('/generate-authentication-options');
+  const options = await resp.json();
+
+  // 2. Call the WebAuthn API
+  let assertion;
+  try {
+    assertion = await navigator.credentials.get({ publicKey: options });
+  } catch (error) {
+    console.error('Passkey authentication failed:', error);
+    return;
+  }
+
+  // 3. Convert to JSON-friendly format and send for verification
+  const verificationJSON = {
+    id: assertion.id,
+    rawId: bufferToBase64URL(assertion.rawId),
+    response: {
+      clientDataJSON: bufferToBase64URL(assertion.response.clientDataJSON),
+      authenticatorData: bufferToBase64URL(assertion.response.authenticatorData),
+      signature: bufferToBase64URL(assertion.response.signature),
+      userHandle: bufferToBase64URL(assertion.response.userHandle),
+    },
+    type: assertion.type,
+  };
+
+  await fetch('/verify-authentication', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(verificationJSON),
+  });
+}</code></pre><h2 id="integrating-passkeys-with-your-existing-jwt-based-system">Integrating Passkeys with Your Existing JWT-Based System</h2><h3 id="passkeys-for-authentication-jwts-for-authorization">Passkeys for Authentication, JWTs for Authorization</h3><p>A common point of confusion is whether Passkeys replace JWTs. They do not. They are complementary technologies that solve different problems.</p><ul><li><strong>Clarifying the roles:</strong> Think of it this way: Passkeys and WebAuthn are responsible for <strong>Authentication</strong>. They answer the question, 'Is this person really who they claim to be?'. JWTs (JSON Web Tokens) are typically used for <strong>Authorization</strong>. They answer the question, 'Now that we know who this person is, what are they allowed to do?'.</li><li><strong>The Modern Auth Flow:</strong> The ideal integration combines the strengths of both. The user logs in with a passkey, which is a stateful, challenge-response interaction with your server. Once your backend has successfully verified the passkey signature, it confirms the user's identity. At that point, the server generates and signs a short-lived JWT containing the user's ID, roles, and permissions, and sends it back to the client. The client can then include this JWT as a bearer token in the <code>Authorization</code> header for all subsequent, stateless API requests.</li><li><strong>Best of Both Worlds:</strong> This model is incredibly powerful. You get the phishing-proof, frictionless login experience of Passkeys at the entry point, and the stateless, scalable, and widely-supported API authorization of JWTs for your application's ongoing operations. Your protected API endpoints don't need to know anything about WebAuthn; they just need to validate a JWT, as they likely already do.</li></ul><h3 id="strategies-for-a-hybrid-system">Strategies for a Hybrid System</h3><p>You don't have to switch your entire user base to Passkeys overnight. A gradual, hybrid approach is the most practical path forward.</p><ul><li><strong>Add Passkeys to Existing Accounts:</strong> Start by treating a passkey as an additional authentication method, much like you would add an authenticator app for 2FA. In the user's account settings page, provide an option to 'Add a passkey'. This allows your most engaged and security-conscious users to opt-in first. They can still sign in with their password if they lose access to their devices.</li><li><strong>Graceful Login UI:</strong> Design your login form to accommodate both methods. Instead of a single username/password form, present a username field first. Once the user enters their email or username and leaves the field, you can make a quick API call to check if that user has a passkey registered. If they do, you can prominently display a 'Sign in with a passkey' button, making it the primary, recommended action, while still offering a 'Use password instead' link as a fallback.</li><li><strong>Conditional UI (Autofill):</strong> For the most seamless experience, implement Conditional UI. This is enabled by setting <code>mediation: 'conditional'</code> in your <code>navigator.credentials.get()</code> call. This tells the browser to attach the passkey prompt directly to your username input field. When the user clicks on the field, their passkey(s) will appear in the browser's autofill suggestions, right alongside saved passwords. This allows for a true one-tap login experience directly from the form field they're already used to, creating a powerful and intuitive flow.</li></ul><h2 id="conclusion-embrace-the-passwordless-future">Conclusion: Embrace the Passwordless Future</h2><p>Passkeys are not a distant, futuristic concept; they are a production-ready technology available in all major browsers today, offering a monumental leap forward for both web security and user experience. By replacing shared secrets with public-key cryptography, they effectively solve the phishing problem that has plagued the web for decades, while providing users with the simple, one-tap login they expect.</p><p>As we've seen, the key takeaway for developers is that WebAuthn is the mechanism for robust <strong>authentication</strong>, and it pairs perfectly with your existing JWT-based systems for session management and <strong>authorization</strong>. You don't need to throw away your current infrastructure; you can enhance it by layering the superior security of Passkeys on top.</p><p>The path forward is clear. Start experimenting with a server-side WebAuthn library in a test environment today. Map out a plan to introduce Passkeys as an optional sign-in method for your users. By embracing this technology now, you can put your application and your users at the forefront of a more secure, seamless, and passwordless future.</p><p>Stay secure &amp; happy coding,<br>&mdash; ToolShelf Team</p></div><div class="blog-post-navigation"><a href="#" id="prevPostLink" class="nav-link-post prev-post hidden"><i class="fas fa-arrow-left"></i><span>Previous Post</span><span class="nav-post-title"></span></a><a href="#" id="nextPostLink" class="nav-link-post next-post hidden"><span>Next Post</span><span class="nav-post-title"></span><i class="fas fa-arrow-right"></i></a></div><section class="related-posts-section"><h2 class="section-title">Also Read</h2><div class="related-posts-grid"><!-- Related posts will be injected here by JavaScript --></div></section></article></div></main><footer class="app-footer"><div class="footer-content"><div class="footer-main"><div class="footer-logo"><div class="logo-icon"><i class="fas fa-toolbox"></i></div><strong>ToolShelf</strong></div><p class="footer-description">Professional online tools that respect your privacy. Built for developers and professionals worldwide.</p></div><div class="footer-links"><div class="footer-section"><h4>Tools</h4><a href="../../json-formatter/">JSON Formatter</a><a href="../../base64-encoder/">Base64 Encoder</a><a href="../../text-transformer/">Text Transformer</a><a href="../../qr-generator/">QR Generator</a><a href="../../hash-generator/">Hash Generator</a></div><div class="footer-section"><h4>Resources</h4><a href="../../#about">About ToolShelf</a><a href="../../privacy/">Privacy Policy</a><a href="../../terms/">Terms of Use</a><a href="../../faq/">FAQs</a><a href="../../contact/">Contact</a></div><div class="footer-section"><h4>Company</h4><a href="../">Blog</a><a href="../../#about">About Us</a><a href="../../contact/">Contact</a></div></div></div><div class="footer-bottom"><p>© 2025 ToolShelf. All tools work offline and respect your privacy.</p></div></footer><script src="../../shared/config/constants.js"></script><script src="../../shared/js/core/utils.js"></script><script src="../../shared/js/core/analytics.js"></script><script src="../../shared/js/core/app.js"></script><script type="module" src="../js/blog-post.js"></script><!-- Prism.js for Syntax Highlighting --><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-sql.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-css.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-markup.min.js"></script><script>// Minimal Theme Switcher
+(function () {
+  let currentTheme = 'light';
+
+  function loadTheme() {
+    try {
+      const saved = localStorage.getItem('toolshelf-theme');
+      if (saved === 'dark' || saved === 'light') {
+        currentTheme = saved;
+      } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        currentTheme = 'dark';
+      }
+      document.documentElement.setAttribute('data-theme', currentTheme);
+    } catch (e) {
+      document.documentElement.setAttribute('data-theme', 'light');
+    }
+  }
+
+  function toggleTheme() {
+    currentTheme = currentTheme === 'light' ? 'dark' : 'light';
+    document.documentElement.setAttribute('data-theme', currentTheme);
+    try {
+      localStorage.setItem('toolshelf-theme', currentTheme);
+    } catch (e) { }
+    updateButton();
+  }
+
+  function updateButton() {
+    const btn = document.getElementById('themeSwitcher');
+    if (btn) {
+      const icon = btn.querySelector('i');
+      const isDark = currentTheme === 'dark';
+      if (icon) {
+        icon.className = isDark ? 'fas fa-sun' : 'fas fa-moon';
+      }
+      btn.title = isDark ? 'Switch to light mode' : 'Switch to dark mode';
+      btn.setAttribute('aria-label', btn.title);
+    }
+  }
+
+  // Load theme immediately
+  loadTheme();
+
+  // Setup when DOM is ready
+  document.addEventListener('DOMContentLoaded', function () {
+    updateButton();
+    const btn = document.getElementById('themeSwitcher');
+    if (btn) {
+      btn.addEventListener('click', toggleTheme);
+    }
+  });
+})();</script><div id="feedbackWidgetContainer"></div><script type="module">
+  import { initFeedbackWidget } from '../../shared/js/core/feedback-widget.js';
+  document.addEventListener('DOMContentLoaded', () => {
+    initFeedbackWidget('Blog Post: ' + document.title);
+  });
+</script></body></html>
