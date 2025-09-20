@@ -141,4 +141,11 @@
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
+
+    <url>
+        <loc>https://toolshelf.tech/blog/claude-3-5-sonnet-artifacts-developers-guide/</loc>
+        <lastmod>2025-09-19</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
 </urlset>
