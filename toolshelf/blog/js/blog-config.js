@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'pinecone-vs-weaviate-vs-qdrant-vector-database-comparison-2025',
+        title: 'Pinecone vs. Weaviate vs. Qdrant: Choosing the Best Vector Database for AI in 2025',
+        excerpt: 'Compare Pinecone, Weaviate, & Qdrant on performance, features, & cost to choose the best vector database for your AI application in 2025.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/1d9f1d9d-cf83-42bd-ae95-91ee3c7366da.png?', // Using the direct URL as per your strategy
+        date: 'September 20, 2025',
+        readTime: '14 min read',
+        tags: ["vector database","pinecone","weaviate","qdrant","ai"],
+        isFeatured: false
+    },
+    {
         slug: 'bun-vs-nodejs-2025-javascript-runtimes',
         title: 'Bun vs. Node.js in 2025: A Deep Dive for Developers',
         excerpt: 'Is Bun the new king of JavaScript runtimes? Our 2025 deep dive compares Bun vs. Node.js on performance, features, and ecosystem maturity for your next project.',
