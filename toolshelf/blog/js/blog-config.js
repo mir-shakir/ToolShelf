@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'apple-intelligence-developers-guide-building-smarter-apps',
+        title: 'Apple Intelligence: A Developer\'s Guide to Building Smarter Apps',
+        excerpt: 'A developer\'s guide to Apple Intelligence. Dive into the new on-device architecture, core APIs, and App Intents to build smarter, privacy-first apps.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/cf2a4907-44ee-4b82-872f-345ba9f6a8a6.png?', // Using the direct URL as per your strategy
+        date: 'September 20, 2025',
+        readTime: '11 min read',
+        tags: ["apple intelligence","wwdc 2024","ios 18","swiftui","core ml"],
+        isFeatured: false
+    },
+    {
         slug: 'build-ai-agent-with-agentcraft-langchain-alternative',
         title: 'Build Your First AI Agent with AgentCraft: The Modern LangChain Alternative',
         excerpt: 'A step-by-step guide to building an AI research agent with AgentCraft, a developer-friendly Python framework and a simple, modern alternative to LangChain.',
