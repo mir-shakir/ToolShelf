@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'bun-vs-nodejs-2025-javascript-runtimes',
+        title: 'Bun vs. Node.js in 2025: A Deep Dive for Developers',
+        excerpt: 'Is Bun the new king of JavaScript runtimes? Our 2025 deep dive compares Bun vs. Node.js on performance, features, and ecosystem maturity for your next project.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/19d8852d-4946-4844-81d8-0d770c6aea24.png?', // Using the direct URL as per your strategy
+        date: 'September 20, 2025',
+        readTime: '10 min read',
+        tags: ["bun","nodejs","javascript","performance","runtime"],
+        isFeatured: false
+    },
+    {
         slug: 'apple-intelligence-developers-guide-building-smarter-apps',
         title: 'Apple Intelligence: A Developer\'s Guide to Building Smarter Apps',
         excerpt: 'A developer\'s guide to Apple Intelligence. Dive into the new on-device architecture, core APIs, and App Intents to build smarter, privacy-first apps.',
