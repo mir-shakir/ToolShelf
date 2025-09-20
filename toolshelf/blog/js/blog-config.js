@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'server-side-webassembly-wasm-guide-2025',
+        title: 'Beyond the Browser: The Developer\'s Guide to Server-Side WebAssembly in 2025',
+        excerpt: 'Explore server-side WebAssembly in 2025. This guide covers Wasm runtimes, WASI, use cases, and how to build your first backend Wasm app.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/e2f45d97-2811-443c-8c7e-56f17535134e.png?', // Using the direct URL as per your strategy
+        date: 'September 20, 2025',
+        readTime: '9 min read',
+        tags: ["webassembly","wasm","backend","serverless","rust"],
+        isFeatured: false
+    },
+    {
         slug: 'pinecone-vs-weaviate-vs-qdrant-vector-database-comparison-2025',
         title: 'Pinecone vs. Weaviate vs. Qdrant: Choosing the Best Vector Database for AI in 2025',
         excerpt: 'Compare Pinecone, Weaviate, & Qdrant on performance, features, & cost to choose the best vector database for your AI application in 2025.',
