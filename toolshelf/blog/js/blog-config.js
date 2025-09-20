@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'ci-cd-showdown-2025-github-actions-gitlab-jenkins',
+        title: 'CI/CD Showdown 2025: GitHub Actions vs. GitLab CI vs. Jenkins',
+        excerpt: '2025 Showdown: GitHub Actions vs. GitLab CI vs. Jenkins. A deep-dive comparison of features, cost, and use cases to help you choose the right CI/CD tool.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/4ef35afc-bbb8-40bb-a02e-1c8225e55d3b.png?', // Using the direct URL as per your strategy
+        date: 'September 20, 2025',
+        readTime: '12 min read',
+        tags: ["ci/cd","devops","github actions","gitlab ci","jenkins"],
+        isFeatured: false
+    },
+    {
         slug: 'server-side-webassembly-wasm-guide-2025',
         title: 'Beyond the Browser: The Developer\'s Guide to Server-Side WebAssembly in 2025',
         excerpt: 'Explore server-side WebAssembly in 2025. This guide covers Wasm runtimes, WASI, use cases, and how to build your first backend Wasm app.',
