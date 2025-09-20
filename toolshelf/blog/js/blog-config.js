@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'claude-3-5-sonnet-artifacts-developers-guide',
+        title: 'Claude 3.5 Sonnet & Artifacts: A Developer\'s Guide to AI Workflows',
+        excerpt: 'Explore Claude 3.5 Sonnet and its groundbreaking Artifacts feature. A practical guide for developers to streamline prototyping, debugging, and interactive coding.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/d13144f4-ef20-4325-a4b3-f351434f359c.png?', // Using the direct URL as per your strategy
+        date: 'September 19, 2025',
+        readTime: '11 min read',
+        tags: ["ai","claude 3.5","development","productivity","anthropic"],
+        isFeatured: false
+    },
+    {
         slug: 'run-llama-3-locally-ollama-developer-guide',
         title: 'Run Llama 3 Locally: The Ultimate Developer\'s Guide with Ollama',
         excerpt: 'Run Meta\'s Llama 3 locally with Ollama for ultimate privacy, zero API costs, and offline speed. A complete guide for developers on installation and API use.',
