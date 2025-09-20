@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'build-ai-agent-with-agentcraft-langchain-alternative',
+        title: 'Build Your First AI Agent with AgentCraft: The Modern LangChain Alternative',
+        excerpt: 'A step-by-step guide to building an AI research agent with AgentCraft, a developer-friendly Python framework and a simple, modern alternative to LangChain.',
+        thumbnail: 'undefined', // Using the direct URL as per your strategy
+        date: 'September 20, 2025',
+        readTime: '11 min read',
+        tags: ["ai","python","agentcraft","langchain","llm"],
+        isFeatured: false
+    },
+    {
         slug: 'run-llama-3-locally-ollama-developer-guide',
         title: 'Run Llama 3 Locally: The Ultimate Developer\'s Guide with Ollama',
         excerpt: 'Run Meta\'s Llama 3 locally with Ollama for ultimate privacy, zero API costs, and offline speed. A complete guide for developers on installation and API use.',
