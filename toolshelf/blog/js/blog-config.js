@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'structured-logging-go-1-25-slog-guide',
+        title: 'Go 1.25\'s slog Package: A Practical Guide to Structured Logging',
+        excerpt: 'Master Go 1.25\'s new slog package. This guide covers structured logging essentials, from basic setup to advanced patterns with practical code examples.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/a611a7c4-bda7-4d1b-956d-b4bbd99c5e97.png?', // Using the direct URL as per your strategy
+        date: 'September 21, 2025',
+        readTime: '10 min read',
+        tags: ["go","golang","slog","structured-logging","observability"],
+        isFeatured: false
+    },
+    {
         slug: 'terraform-vs-pulumi-vs-opentofu-2025-iac-showdown',
         title: 'Terraform vs. Pulumi vs. OpenTofu: The Definitive IaC Showdown in 2025',
         excerpt: 'A deep dive comparison of Terraform, Pulumi, and OpenTofu in 2025. Discover the best IaC tool for your DevOps needs based on language, state, and license.',
