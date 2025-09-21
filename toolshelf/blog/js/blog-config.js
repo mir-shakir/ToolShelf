@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'terraform-vs-pulumi-vs-opentofu-2025-iac-showdown',
+        title: 'Terraform vs. Pulumi vs. OpenTofu: The Definitive IaC Showdown in 2025',
+        excerpt: 'A deep dive comparison of Terraform, Pulumi, and OpenTofu in 2025. Discover the best IaC tool for your DevOps needs based on language, state, and license.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/034182e7-c28c-46ed-b969-1ba52cd49187.png?', // Using the direct URL as per your strategy
+        date: 'September 21, 2025',
+        readTime: '11 min read',
+        tags: ["iac","terraform","pulumi","opentofu","devops"],
+        isFeatured: false
+    },
+    {
         slug: 'build-rust-cli-tool-with-clap-guide',
         title: 'Build Your First CLI Tool with Rust and Clap: A Step-by-Step Guide',
         excerpt: 'Learn to build powerful, fast, and reliable CLI tools with Rust. This step-by-step 2025 tutorial guides you through creating an app using the Clap library.',
