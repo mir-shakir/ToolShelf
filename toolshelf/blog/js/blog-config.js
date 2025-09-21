@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'svelte-5-runes-reactivity-guide',
+        title: 'Svelte 5 Runes: A Developer\'s Guide to the Future of Reactivity',
+        excerpt: 'Deep dive into Svelte 5\'s \'Runes\' reactivity. Learn how $state, $derived, and $effect are revolutionizing frontend development with explicit, powerful state.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/7c0f79f0-ed77-4ff0-b076-31265349f055.png?', // Using the direct URL as per your strategy
+        date: 'September 20, 2025',
+        readTime: '10 min read',
+        tags: ["svelte","javascript","frontend","reactivity","web development"],
+        isFeatured: false
+    },
+    {
         slug: 'ci-cd-showdown-2025-github-actions-gitlab-jenkins',
         title: 'CI/CD Showdown 2025: GitHub Actions vs. GitLab CI vs. Jenkins',
         excerpt: '2025 Showdown: GitHub Actions vs. GitLab CI vs. Jenkins. A deep-dive comparison of features, cost, and use cases to help you choose the right CI/CD tool.',
