@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'build-rust-cli-tool-with-clap-guide',
+        title: 'Build Your First CLI Tool with Rust and Clap: A Step-by-Step Guide',
+        excerpt: 'Learn to build powerful, fast, and reliable CLI tools with Rust. This step-by-step 2025 tutorial guides you through creating an app using the Clap library.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/006eff9f-d8dc-44ce-8587-74aa2c7310f4.png?', // Using the direct URL as per your strategy
+        date: 'September 21, 2025',
+        readTime: '14 min read',
+        tags: ["rust","cli","clap","tutorial","programming"],
+        isFeatured: false
+    },
+    {
         slug: 'svelte-5-runes-reactivity-guide',
         title: 'Svelte 5 Runes: A Developer\'s Guide to the Future of Reactivity',
         excerpt: 'Deep dive into Svelte 5\'s \'Runes\' reactivity. Learn how $state, $derived, and $effect are revolutionizing frontend development with explicit, powerful state.',
