@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'mastering-type-safe-python-pydantic-mypy-2025',
+        title: 'Mastering Type-Safe Python in 2025: A Guide to Pydantic and MyPy',
+        excerpt: 'Build robust, error-free Python apps by mastering Pydantic for data validation and MyPy for static type checking. Your guide to bulletproof code in 2025.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/f888781e-de1b-4bbb-ae7c-072dd4907621.png?', // Using the direct URL as per your strategy
+        date: 'September 22, 2025',
+        readTime: '8 min read',
+        tags: ["python","pydantic","mypy","type-safety","best-practices"],
+        isFeatured: false
+    },
+    {
         slug: 'zed-editor-2025-rust-guide',
         title: 'Zed Editor in 2025: Your Guide to the High-Performance, Rust-Based Code Editor',
         excerpt: 'Your complete guide to the Zed editor. Learn why this Rust-based, high-performance tool is gaining traction, how to install it, and master its core features.',
