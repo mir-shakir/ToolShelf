@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'postgres-18-developers-guide-ai-performance-upgrades',
+        title: 'Postgres 18: A Developer\'s Guide to AI Features & Performance Upgrades',
+        excerpt: 'Explore Postgres 18\'s new AI features, vector search, in-database ML, and massive performance upgrades. A complete developer\'s guide to what\'s new.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/005c6b39-5383-4b51-a93e-72995a8d8451.png?', // Using the direct URL as per your strategy
+        date: 'September 22, 2025',
+        readTime: '15 min read',
+        tags: ["postgresql","database","ai","vector search","performance"],
+        isFeatured: false
+    },
+    {
         slug: 'mastering-type-safe-python-pydantic-mypy-2025',
         title: 'Mastering Type-Safe Python in 2025: A Guide to Pydantic and MyPy',
         excerpt: 'Build robust, error-free Python apps by mastering Pydantic for data validation and MyPy for static type checking. Your guide to bulletproof code in 2025.',
