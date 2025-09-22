@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'zed-editor-2025-rust-guide',
+        title: 'Zed Editor in 2025: Your Guide to the High-Performance, Rust-Based Code Editor',
+        excerpt: 'Your complete guide to the Zed editor. Learn why this Rust-based, high-performance tool is gaining traction, how to install it, and master its core features.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/15942db2-205c-43da-8e70-665f97c05426.png?', // Using the direct URL as per your strategy
+        date: 'September 22, 2025',
+        readTime: '9 min read',
+        tags: ["zed","rust","code editor","developer tools","vs code"],
+        isFeatured: false
+    },
+    {
         slug: 'build-high-performance-rest-api-with-go-2025-guide',
         title: 'Build a High-Performance REST API with Go in 2025: A Step-by-Step Guide',
         excerpt: 'Learn to build a fast, scalable REST API from scratch using Go (Golang). A step-by-step tutorial for developers, covering setup, CRUD, and best practices.',
