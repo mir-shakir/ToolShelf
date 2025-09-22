@@ -1,0 +1,254 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><!-- Primary Meta Tags --><title>Build a High-Performance REST API with Go in 2025: A Step-by-Step Guide</title><meta name="title" content="Build a High-Performance REST API with Go in 2025: A Step-by-Step Guide"><meta name="description" content="Learn to build a fast, scalable REST API from scratch using Go (Golang). A step-by-step tutorial for developers, covering setup, CRUD, and best practices."><!-- Canonical URL --><link rel="canonical" href="https://toolshelf.tech/blog/build-high-performance-rest-api-with-go-2025-guide/"><!-- Open Graph / Facebook --><meta property="og:type" content="article"><meta property="og:url" content="https://toolshelf.tech/blog/build-high-performance-rest-api-with-go-2025-guide/"><meta property="og:title" content="Build a High-Performance REST API with Go in 2025: A Step-by-Step Guide"><meta property="og:description" content="Learn to build a fast, scalable REST API from scratch using Go (Golang). A step-by-step tutorial for developers, covering setup, CRUD, and best practices."><meta property="og:image" content="https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/434ce28a-5359-4e93-b3ad-9b5b7c9de2bc.png"><!-- Twitter --><meta property="twitter:card" content="summary_large_image"><meta property="twitter:url" content="https://toolshelf.tech/blog/build-high-performance-rest-api-with-go-2025-guide/"><meta property="twitter:title" content="Build a High-Performance REST API with Go in 2025: A Step-by-Step Guide"><meta property="twitter:description" content="Learn to build a fast, scalable REST API from scratch using Go (Golang). A step-by-step tutorial for developers, covering setup, CRUD, and best practices."><meta property="twitter:image" content="https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/434ce28a-5359-4e93-b3ad-9b5b7c9de2bc.png"><!-- Favicon --><link rel="icon" type="image/x-icon" href="../../favicon.ico"><link rel="icon" type="image/png" sizes="32x32" href="../../favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="../../favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="../../apple-touch-icon.png"><link rel="manifest" href="../../manifest.json"><meta name="theme-color" content="#3b82f6"><!-- CSS --><link rel="stylesheet" href="../../shared/css/variables.css"><link rel="stylesheet" href="../../shared/css/base.css"><link rel="stylesheet" href="../../shared/css/layout.css"><link rel="stylesheet" href="../css/blog.css"><!-- Fonts --><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fira+Code&display=swap" rel="stylesheet"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"><!-- Prism.js for Syntax Highlighting --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css"></head><body><div class="scroll-progress-bar"></div><header class="app-header"><div class="header-container"><div class="logo-section"><div class="logo-icon"><i class="fas fa-toolbox"></i></div><a href="../../" class="logo-text">ToolShelf</a></div><nav class="main-nav"><a href="../../" class="nav-link">Home</a><a href="../../#tools" class="nav-link">Tools</a><a href="../" class="nav-link active">Blog</a><a href="../../#about" class="nav-link">About</a></nav><div class="header-actions"><button class="theme-switcher-btn" id="themeSwitcher" title="Switch to dark mode" aria-label="Switch to dark mode"><i class="fas fa-moon"></i></button></div></div></header><main><div class="blog-post-container"><aside class="toc-container" id="tocContainer"><h3>Table of Contents</h3><ul class="toc-list" id="tocList"></ul></aside><article class="blog-post-article"><header class="blog-post-header"><h1 class="blog-post-title">Build a High-Performance REST API with Go in 2025: A Step-by-Step Guide</h1><div class="blog-post-meta"><span>By The ToolShelf Team</span><span><i class="fas fa-calendar-alt"></i> September 21, 2025</span><span><i class="fas fa-clock"></i> 15 min read</span></div><div class="blog-post-tags"><span class="tag-badge">go</span><span class="tag-badge">golang</span><span class="tag-badge">rest api</span><span class="tag-badge">backend</span><span class="tag-badge">tutorial</span></div></header><div class="blog-post-content" id="articleContent"><h2 id="introduction-why-go-is-dominating-backend-development">Introduction: Why Go is Dominating Backend Development</h2><p>In 2025, the digital landscape demands applications that are not only feature-rich but also incredibly fast and resilient. As users expect real-time interactions and businesses rely on services that handle massive concurrent loads, the choice of backend technology has never been more critical. This is where Go, also known as Golang, steps into the spotlight. Developed at Google, Go was designed to address the challenges of modern software development, offering a powerful combination of simplicity, raw performance, and a first-class concurrency model. This article is your practical guide to harnessing that power. We will build a production-ready REST API from the ground up, providing you with a solid foundation to build any high-performance web service. Whether you're a developer looking to transition from another language or a newcomer seeking a comprehensive, hands-on project, you'll find everything you need to start building with Go today.</p><h2 id="why-choose-go-for-your-next-rest-api">Why Choose Go for Your Next REST API?</h2><h3 id="blazing-fast-performance-and-built-in-concurrency">Blazing-Fast Performance and Built-in Concurrency</h3><p>Go is a compiled language, which means your code is translated directly into machine code that the processor can execute. This results in performance that rivals C++ and Rust, leaving interpreted languages like Python and Node.js far behind. But speed isn't just about raw computation; it's also about handling many things at once. Go's concurrency model is its killer feature. It's built around <strong>goroutines</strong>, which are incredibly lightweight threads managed by the Go runtime. You can spin up thousands, or even millions, of goroutines without breaking a sweat. Communication between them is safely handled by <strong>channels</strong>, preventing the race conditions that plague traditional multi-threaded programming. For a REST API, this means effortlessly handling thousands of simultaneous client requests, leading to lower latency and a more responsive user experience.</p><h3 id="simplicity-and-a-powerful-standard-library">Simplicity and a Powerful Standard Library</h3><p>Go's philosophy is 'less is more.' Its syntax is clean, minimal, and easy to grasp, with only 25 keywords. This simplicity makes Go code highly readable and maintainable, reducing the cognitive load on developers and making it easier for teams to collaborate. A major strength is its comprehensive standard library. The built-in <code>net/http</code> package provides all the tools you need to build a robust, production-grade web server without reaching for a third-party framework. This 'batteries-included' approach means you can create powerful APIs with minimal dependencies, resulting in smaller binaries and a more secure, stable application.</p><h3 id="static-typing-and-tooling-for-reliable-code">Static Typing and Tooling for Reliable Code</h3><p>As a statically-typed language, Go requires you to declare the types of your variables. The compiler checks for type mismatches before you even run your code, catching a whole class of bugs at compile-time that might only surface at runtime in dynamically-typed languages. This leads to more reliable and robust applications. Furthermore, Go comes with an exceptional suite of built-in tools that streamline the development process. <code>go fmt</code> automatically formats your code to a canonical style, ending debates about code layout. <code>go test</code> provides a simple yet powerful framework for writing and running tests. And <code>go build</code> makes it trivial to cross-compile your application into a single, static binary for any operating system or architecture, dramatically simplifying deployment.</p><h2 id="step-1-setting-up-your-go-development-environment">Step 1: Setting Up Your Go Development Environment</h2><h3 id="installing-go-on-your-system">Installing Go on Your System</h3><p>First, you'll need the Go toolchain. You can find the latest version and installation instructions on the official Go downloads page: <a href="https://go.dev/dl/">https://go.dev/dl/</a>.</p><p>For common platforms:</p><ul><li><strong>macOS (with Homebrew):</strong> <code>brew install go</code></li><li><strong>Linux (Debian/Ubuntu):</strong> <code>sudo apt update && sudo apt install golang-go</code></li><li><strong>Windows:</strong> Download and run the MSI installer from the official site.</li></ul><p>Once installed, verify the installation by opening your terminal and running:</p><pre><code class="language-shell">go version</code></pre><p>You should see output similar to <code>go version go1.22.0 linux/amd64</code>.</p><h3 id="initializing-your-project-with-go-modules">Initializing Your Project with Go Modules</h3><p>Go Modules are the standard way to manage dependencies in your projects. A module is a collection of Go packages stored in a file tree with a <code>go.mod</code> file at its root. To start, create a new directory for your project and initialize a module.</p><pre><code class="language-shell">mkdir go-rest-api
+cd go-rest-api
+go mod init github.com/your-username/go-rest-api</code></pre><p>Replace <code>github.com/your-username/go-rest-api</code> with your own module path, which is typically the URL where your repository will live. This command creates a <code>go.mod</code> file, which will track your project's dependencies.</p><h3 id="recommended-tools-vs-code-and-the-go-extension">Recommended Tools: VS Code and the Go Extension</h3><p>While you can write Go in any text editor, Visual Studio Code offers a fantastic development experience with its official Go extension. If you don't have it, download VS Code from <a href="https://code.visualstudio.com/">https://code.visualstudio.com/</a>.</p><p>Once VS Code is open, navigate to the Extensions view (Ctrl+Shift+X) and search for 'Go'. Install the extension published by the Go Team at Google. After installation, open the Command Palette (Ctrl+Shift+P) and run <code>Go: Install/Update Tools</code>. Select all the tools and click OK to install them. This will set up essential utilities like <code>gopls</code> (the Go language server) for code completion, diagnostics, and <code>gofumpt</code> for stricter code formatting.</p><h2 id="step-2-building-the-api---from-hello-world-to-crud">Step 2: Building the API - From 'Hello World' to CRUD</h2><h3 id="creating-your-first-http-server">Creating Your First HTTP Server</h3><p>Let's start with the simplest possible server. Create a file named <code>main.go</code> in your project's root directory and add the following code:</p><pre><code class="language-go">package main
+
+import (
+	"fmt"
+	"log"
+	"net/http"
+)
+
+func main() {
+	http.HandleFunc("/hello", func(w http.ResponseWriter, r *http.Request) {
+		fmt.Fprintf(w, "Hello, ToolShelf Developer!")
+	})
+
+	log.Println("Starting server on :8080")
+	if err := http.ListenAndServe(":8080", nil); err != nil {
+		log.Fatal(err)
+	}
+}</code></pre><p><strong>Explanation:</strong></p><ul><li><code>package main</code>: Declares that this is an executable program.</li><li><code>import (...)</code>: Imports the necessary standard library packages.</li><li><code>http.HandleFunc("/hello", ...)</code>: Registers a handler function for the <code>/hello</code> route. The function takes an <code>http.ResponseWriter</code> (to write the response) and an <code>http.Request</code> (containing request details).</li><li><code>http.ListenAndServe(":8080", nil)</code>: Starts a server on port 8080. The <code>nil</code> argument tells it to use the default router we just configured.</li></ul><p>Run it from your terminal:</p><pre><code class="language-shell">go run .</code></pre><p>Now, open your browser or use <code>curl</code> to visit <code>http://localhost:8080/hello</code>. You'll see your greeting!</p><h3 id="structuring-your-project-for-scalability">Structuring Your Project for Scalability</h3><p>As our API grows, a flat file structure becomes unmanageable. Let's adopt a standard, scalable layout. Create the following directories:</p><pre><code class="language-shell">go-rest-api/
+├── cmd/
+│   └── api/
+│       └── main.go      // Main application entry point
+├── internal/
+│   ├── handlers/        // HTTP handlers
+│   └── models/          // Data structures
+└── go.mod</code></pre><ul><li><code>cmd/api/</code>: Contains the <code>main</code> package for our executable application. This keeps the entry point separate from the business logic.</li><li><code>internal/</code>: A special Go directory whose contents are only accessible by code within the <code>go-rest-api</code> module. This is perfect for our core application logic.</li><li><code>internal/handlers/</code>: Will contain the functions that handle specific HTTP requests.</li><li><code>internal/models/</code>: Will define our data structures, like <code>Task</code> or <code>Product</code>.</li></ul><p>Move your <code>main.go</code> file into <code>cmd/api/</code> and adjust its contents as we build out the other components.</p><h3 id="implementing-a-router-and-defining-endpoints">Implementing a Router and Defining Endpoints</h3><p>The default <code>http.ServeMux</code> is basic. For features like URL parameters (e.g., <code>/tasks/123</code>) and method-based routing, a dedicated router is better. We'll use <code>chi</code>, a lightweight and idiomatic router.</p><p>First, add it to your project:</p><pre><code class="language-shell">go get github.com/go-chi/chi/v5</code></pre><p>Your <code>go.mod</code> file will be updated automatically. Now, let's update <code>cmd/api/main.go</code> to use <code>chi</code> and define CRUD endpoints for a <code>Task</code> resource.</p><pre><code class="language-go">// in cmd/api/main.go
+package main
+
+import (
+	"log"
+	"net/http"
+
+	"github.com/go-chi/chi/v5"
+	"github.com/go-chi/chi/v5/middleware"
+)
+
+func main() {
+	r := chi.NewRouter()
+	r.Use(middleware.Logger) // A handy logger middleware
+
+	// Task routes
+	r.Route("/tasks", func(r chi.Router) {
+		r.Get("/", getTasks) // GET /tasks
+		r.Post("/", createTask) // POST /tasks
+		r.Route("/{taskID}", func(r chi.Router) {
+			r.Get("/", getTaskByID)    // GET /tasks/123
+			r.Put("/", updateTask)    // PUT /tasks/123
+			r.Delete("/", deleteTask) // DELETE /tasks/123
+		})
+	})
+
+	log.Println("Starting server on :8080")
+	if err := http.ListenAndServe(":8080", r); err != nil {
+		log.Fatal(err)
+	}
+}
+
+// Placeholder handlers (we'll implement these next)
+func getTasks(w http.ResponseWriter, r *http.Request)    {}
+func createTask(w http.ResponseWriter, r *http.Request)  {}
+func getTaskByID(w http.ResponseWriter, r *http.Request) {}
+func updateTask(w http.ResponseWriter, r *http.Request)   {}
+func deleteTask(w http.ResponseWriter, r *http.Request)  {}</code></pre><h3 id="handling-json-requests-and-responses">Handling JSON Requests and Responses</h3><p>APIs communicate with data. In Go, we model JSON data with structs. Let's define our <code>Task</code> model in <code>internal/models/task.go</code>:</p><pre><code class="language-go">// in internal/models/task.go
+package models
+
+import "time"
+
+type Task struct {
+	ID        int       `json:"id"`
+	Title     string    `json:"title"`
+	Completed bool      `json:"completed"`
+	CreatedAt time.Time `json:"createdAt"`
+}</code></pre><p>The <code>json:"..."</code> tags tell Go's JSON encoder/decoder how to map struct fields to JSON keys.</p><p>Now, let's implement a handler in <code>internal/handlers/task_handler.go</code> to create and list tasks. For now, we'll use an in-memory slice instead of a database.</p><pre><code class="language-go">// in a new file: internal/handlers/task_handler.go
+package handlers
+
+import (
+	"encoding/json"
+	"net/http"
+	"sync"
+	"time"
+
+	"github.com/your-username/go-rest-api/internal/models"
+)
+
+// In-memory 'database'
+var (
+	tasks  = make(map[int]models.Task)
+	nextID = 1
+	mu     sync.Mutex
+)
+
+func CreateTask(w http.ResponseWriter, r *http.Request) {
+	var task models.Task
+	if err := json.NewDecoder(r.Body).Decode(&task); err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	mu.Lock()
+	task.ID = nextID
+	nextID++
+	task.CreatedAt = time.Now()
+	tasks[task.ID] = task
+	mu.Unlock()
+
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusCreated)
+	json.NewEncoder(w).Encode(task)
+}
+
+func GetTasks(w http.ResponseWriter, r *http.Request) {
+	mu.Lock()
+	defer mu.Unlock()
+
+	taskList := make([]models.Task, 0, len(tasks))
+	for _, task := range tasks {
+		taskList = append(taskList, task)
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(taskList)
+}</code></pre><p>Finally, wire these handlers up in your <code>main.go</code> by replacing the placeholders with <code>handlers.CreateTask</code> and <code>handlers.GetTasks</code>. Remember to import your handlers package!</p><h2 id="step-3-advancing-your-api-with-best-practices">Step 3: Advancing Your API with Best Practices</h2><h3 id="graceful-shutdown-for-zero-downtime-deployments">Graceful Shutdown for Zero-Downtime Deployments</h3><p>When you restart your server during a deployment, you don't want to abruptly terminate active connections. A graceful shutdown allows the server to stop accepting new requests but gives existing ones time to finish. This is essential for zero-downtime deployments.</p><p>Here’s how to implement it in your <code>cmd/api/main.go</code>:</p><pre><code class="language-go">// in main() function, replacing the simple ListenAndServe
+server := &http.Server{
+	Addr:    ":8080",
+	Handler: r,
+}
+
+go func() {
+	log.Println("Starting server on port 8080")
+	if err := server.ListenAndServe(); err != nil && err != http.ErrServerClosed {
+		log.Fatalf("Could not listen on %s: %v\n", server.Addr, err)
+	}
+}()
+
+// Channel to listen for OS signals
+stopChan := make(chan os.Signal, 1)
+signal.Notify(stopChan, os.Interrupt, syscall.SIGTERM)
+
+// Block until a signal is received
+&lt;-stopChan
+log.Println("Shutting down server...")
+
+// Create a context with a timeout to allow for graceful shutdown
+ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+defer cancel()
+
+if err := server.Shutdown(ctx); err != nil {
+	log.Fatalf("Server Shutdown Failed:%+v", err)
+}
+
+log.Println("Server exited properly")</code></pre><p>This code listens for <code>Ctrl+C</code> (<code>os.Interrupt</code>) or a <code>SIGTERM</code> signal. When received, it gives the server 5 seconds to finish processing requests before shutting down.</p><h3 id="using-middleware-for-cross-cutting-concerns">Using Middleware for Cross-Cutting Concerns</h3><p>Middleware is a powerful concept in web development. It's a piece of code that wraps an HTTP handler, allowing you to execute logic before or after the main handler runs. This is perfect for cross-cutting concerns like logging, authentication, CORS headers, or request compression.</p><p>Let's write a simple logging middleware that records the HTTP method, URL, and the time it took to process each request. You can add this to your <code>handlers</code> package or a new <code>middleware</code> package.</p><pre><code class="language-go">// A simple logging middleware
+func LoggerMiddleware(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		start := time.Now()
+		next.ServeHTTP(w, r)
+		log.Printf("%s %s %s", r.Method, r.RequestURI, time.Since(start))
+	})
+}</code></pre><p>You can then apply this middleware to your entire router in <code>main.go</code> using the <code>Use</code> method. The <code>chi/middleware.Logger</code> we used earlier is a more feature-rich version of this concept.</p><pre><code class="language-go">// in main.go
+r := chi.NewRouter()
+r.Use(LoggerMiddleware) // Apply your custom middleware
+
+// ... your routes</code></pre><h3 id="writing-your-first-api-test">Writing Your First API Test</h3><p>Go's built-in testing capabilities are excellent. The <code>net/http/httptest</code> package makes it easy to test your HTTP handlers without needing to spin up a live server. Let's write a test for our <code>GetTasks</code> handler.</p><p>Create a new file named <code>task_handler_test.go</code> inside the <code>internal/handlers</code> directory.</p><pre><code class="language-go">// in internal/handlers/task_handler_test.go
+package handlers
+
+import (
+	"net/http"
+	"net/http/httptest"
+	"testing"
+)
+
+func TestGetTasks(t *testing.T) {
+	// Create a new HTTP request
+	req, err := http.NewRequest("GET", "/tasks", nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	// Create a ResponseRecorder to record the response
+	rr := httptest.NewRecorder()
+	handler := http.HandlerFunc(GetTasks)
+
+	// Call the handler directly
+	handler.ServeHTTP(rr, req)
+
+	// Check the status code
+	if status := rr.Code; status != http.StatusOK {
+		t.Errorf("handler returned wrong status code: got %v want %v",
+			status, http.StatusOK)
+	}
+
+	// Check the response body (can be extended to check JSON content)
+	expected := `[]` // Expect an empty JSON array for a new server
+	if rr.Body.String() != expected {
+		t.Errorf("handler returned unexpected body: got %v want %v",
+			rr.Body.String(), expected)
+	}
+}</code></pre><p>To run the tests for your project, navigate to the root directory in your terminal and execute:</p><pre><code class="language-shell">go test ./...</code></pre><p>This command will discover and run all tests in your module, giving you confidence that your API handlers are working as expected.</p><h2 id="conclusion-your-journey-with-go-has-just-begun">Conclusion: Your Journey with Go Has Just Begun</h2><p>Congratulations! You have successfully built a REST API in Go, starting from a blank directory and progressing to a well-structured, testable, and production-ready service. We've covered setting up your environment, structuring a scalable application, handling CRUD operations with JSON, and implementing best practices like graceful shutdowns and middleware. This project has demonstrated Go's core strengths firsthand: its stellar performance, elegant simplicity, and robust standard library make it an outstanding choice for modern backend development.</p><p>But this is just the beginning. The foundation you've built is ready to be extended. We encourage you to take the next steps:</p><ul><li><strong>Add a Database:</strong> Replace the in-memory store with a persistent database like PostgreSQL, using the <code>database/sql</code> package and a library like <code>sqlx</code> for convenience.</li><li><strong>Implement Authentication:</strong> Secure your endpoints using JWT (JSON Web Tokens) or another authentication strategy.</li><li><strong>Containerize Your API:</strong> Write a Dockerfile to package your application into a container, simplifying deployment and ensuring consistency across environments.</li></ul><p>By continuing to build on this project, you'll solidify your understanding and become a proficient Go developer.</p><p><strong>The complete source code for this tutorial is available on our GitHub repository: <a href="https://github.com/toolshelf/go-rest-api-2025-example">https://github.com/toolshelf/go-rest-api-2025-example</a></strong></p></div><div class="blog-post-navigation"><a href="#" id="prevPostLink" class="nav-link-post prev-post hidden"><i class="fas fa-arrow-left"></i><span>Previous Post</span><span class="nav-post-title"></span></a><a href="#" id="nextPostLink" class="nav-link-post next-post hidden"><span>Next Post</span><span class="nav-post-title"></span><i class="fas fa-arrow-right"></i></a></div><section class="related-posts-section"><h2 class="section-title">Also Read</h2><div class="related-posts-grid"><!-- Related posts will be injected here by JavaScript --></div></section></article></div></main><footer class="app-footer"><div class="footer-content"><div class="footer-main"><div class="footer-logo"><div class="logo-icon"><i class="fas fa-toolbox"></i></div><strong>ToolShelf</strong></div><p class="footer-description">Professional online tools that respect your privacy. Built for developers and professionals worldwide.</p></div><div class="footer-links"><div class="footer-section"><h4>Tools</h4><a href="../../json-formatter/">JSON Formatter</a><a href="../../base64-encoder/">Base64 Encoder</a><a href="../../text-transformer/">Text Transformer</a><a href="../../qr-generator/">QR Generator</a><a href="../../hash-generator/">Hash Generator</a></div><div class="footer-section"><h4>Resources</h4><a href="../../#about">About ToolShelf</a><a href="../../privacy/">Privacy Policy</a><a href="../../terms/">Terms of Use</a><a href="../../faq/">FAQs</a><a href="../../contact/">Contact</a></div><div class="footer-section"><h4>Company</h4><a href="../">Blog</a><a href="../../#about">About Us</a><a href="../../contact/">Contact</a></div></div></div><div class="footer-bottom"><p>© 2025 ToolShelf. All tools work offline and respect your privacy.</p></div></footer><script src="../../shared/config/constants.js"></script><script src="../../shared/js/core/utils.js"></script><script src="../../shared/js/core/analytics.js"></script><script src="../../shared/js/core/app.js"></script><script type="module" src="../js/blog-post.js"></script><!-- Prism.js for Syntax Highlighting --><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-go.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-shell-session.min.js"></script><script>// Minimal Theme Switcher
+    (function () {
+      let currentTheme = 'light';
+
+      function loadTheme() {
+        try {
+          const saved = localStorage.getItem('toolshelf-theme');
+          if (saved === 'dark' || saved === 'light') {
+            currentTheme = saved;
+          } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            currentTheme = 'dark';
+          }
+          document.documentElement.setAttribute('data-theme', currentTheme);
+        } catch (e) {
+          document.documentElement.setAttribute('data-theme', 'light');
+        }
+      }
+
+      function toggleTheme() {
+        currentTheme = currentTheme === 'light' ? 'dark' : 'light';
+        document.documentElement.setAttribute('data-theme', currentTheme);
+        try {
+          localStorage.setItem('toolshelf-theme', currentTheme);
+        } catch (e) { }
+        updateButton();
+      }
+
+      function updateButton() {
+        const btn = document.getElementById('themeSwitcher');
+        if (btn) {
+          const icon = btn.querySelector('i');
+          const isDark = currentTheme === 'dark';
+          if (icon) {
+            icon.className = isDark ? 'fas fa-sun' : 'fas fa-moon';
+          }
+          btn.title = isDark ? 'Switch to light mode' : 'Switch to dark mode';
+          btn.setAttribute('aria-label', btn.title);
+        }
+      }
+
+      // Load theme immediately
+      loadTheme();
+
+      // Setup when DOM is ready
+      document.addEventListener('DOMContentLoaded', function () {
+        updateButton();
+        const btn = document.getElementById('themeSwitcher');
+        if (btn) {
+          btn.addEventListener('click', toggleTheme);
+        }
+      });
+    })();</script><div id="feedbackWidgetContainer"></div><script type="module">
+    import { initFeedbackWidget } from '../../shared/js/core/feedback-widget.js';
+    document.addEventListener('DOMContentLoaded', () => {
+      initFeedbackWidget('Blog Post: ' + document.title);
+    });
+  </script></body></html>

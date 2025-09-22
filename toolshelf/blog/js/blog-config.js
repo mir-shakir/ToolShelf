@@ -2,6 +2,15 @@
 
 export const blogPosts = [
     {
+        slug: 'build-high-performance-rest-api-with-go-2025-guide',
+        title: 'Build a High-Performance REST API with Go in 2025: A Step-by-Step Guide',
+        excerpt: 'Learn to build a fast, scalable REST API from scratch using Go (Golang). A step-by-step tutorial for developers, covering setup, CRUD, and best practices.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/434ce28a-5359-4e93-b3ad-9b5b7c9de2bc.png?', // Using the direct URL as per your strategy
+        date: 'September 21, 2025',
+        readTime: '15 min read',
+        tags: ["go","golang","rest api","backend","tutorial"],
+      },
+  {
         slug: 'structured-logging-go-1-25-slog-guide',
         title: 'Go 1.25\'s slog Package: A Practical Guide to Structured Logging',
         excerpt: 'Master Go 1.25\'s new slog package. This guide covers structured logging essentials, from basic setup to advanced patterns with practical code examples.',
