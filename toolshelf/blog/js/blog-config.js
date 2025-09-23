@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'htmx-2-practical-guide-ditching-complex-javascript',
+        title: 'HTMX 2.0: A Practical Guide to Ditching Complex JavaScript',
+        excerpt: 'Explore the game-changing features of HTMX 2.0. This guide walks you through building modern, dynamic UIs with less JavaScript and more HTML.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/ca5cea8f-321c-4dde-995a-d03b8e5fd516.png?', // Using the direct URL as per your strategy
+        date: 'September 23, 2025',
+        readTime: '10 min read',
+        tags: ["htmx","frontend","javascript","web development","hypermedia"],
+        isFeatured: false
+    },
+    {
         slug: 'build-an-idp-backstage-kubernetes-guide-2025',
         title: 'Build an IDP: A Step-by-Step Guide with Backstage & Kubernetes for 2025',
         excerpt: 'Step-by-step guide to building an Internal Developer Platform (IDP) with Backstage and Kubernetes. Enhance developer experience and accelerate delivery in 2025.',
