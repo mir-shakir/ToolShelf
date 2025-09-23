@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'build-an-idp-backstage-kubernetes-guide-2025',
+        title: 'Build an IDP: A Step-by-Step Guide with Backstage & Kubernetes for 2025',
+        excerpt: 'Step-by-step guide to building an Internal Developer Platform (IDP) with Backstage and Kubernetes. Enhance developer experience and accelerate delivery in 2025.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/4399373c-bb0d-43f7-bfec-c0fc098cb927.png?', // Using the direct URL as per your strategy
+        date: 'September 23, 2025',
+        readTime: '15 min read',
+        tags: ["idp","backstage","kubernetes","platform engineering","devops"],
+        isFeatured: false
+    },
+    {
         slug: 'mistral-constellation-developers-guide-on-device-ai',
         title: 'Mistral Constellation: A Developer\'s Guide to On-Device AI',
         excerpt: 'Your guide to Mistral\'s \'Constellation\' SLMs. Learn how Small Language Models are powering the future of fast, private, and offline on-device AI.',
