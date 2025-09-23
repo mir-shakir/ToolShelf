@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'react-compiler-usememo-usecallback-obsolete',
+        title: 'React\'s New Compiler: Are useMemo and useCallback Obsolete?',
+        excerpt: 'Explore React\'s new compiler. Learn how it automates memoization, making manual hooks like useMemo and useCallback largely obsolete. Simpler, faster code.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/bdb7af6b-81ae-4b25-b267-5d7de2b722b9.png?', // Using the direct URL as per your strategy
+        date: 'September 23, 2025',
+        readTime: '9 min read',
+        tags: ["react","javascript","performance","frontend","compiler"],
+        isFeatured: false
+    },
+    {
         slug: 'postgres-18-developers-guide-ai-performance-upgrades',
         title: 'Postgres 18: A Developer\'s Guide to AI Features & Performance Upgrades',
         excerpt: 'Explore Postgres 18\'s new AI features, vector search, in-database ML, and massive performance upgrades. A complete developer\'s guide to what\'s new.',
