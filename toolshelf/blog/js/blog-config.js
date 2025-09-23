@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'mistral-constellation-developers-guide-on-device-ai',
+        title: 'Mistral Constellation: A Developer\'s Guide to On-Device AI',
+        excerpt: 'Your guide to Mistral\'s \'Constellation\' SLMs. Learn how Small Language Models are powering the future of fast, private, and offline on-device AI.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/f655bf52-7364-4224-a261-1841ccf58f87.png?', // Using the direct URL as per your strategy
+        date: 'September 23, 2025',
+        readTime: '12 min read',
+        tags: ["mistral","slm","on-device ai","ai","python"],
+        isFeatured: false
+    },
+    {
         slug: 'github-copilot-workspace-first-look-ai-native-ide',
         title: 'GitHub Copilot Workspace: A Developer\'s First Look at the AI-Native IDE',
         excerpt: 'Explore GitHub Copilot Workspace, the new AI-native IDE. This first look covers its features, workflow, and impact on the future of software development.',
