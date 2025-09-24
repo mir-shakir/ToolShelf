@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'docker-genai-developers-guide-local-llms',
+        title: 'Docker GenAI: A Developer\'s Guide to Running Local LLMs',
+        excerpt: 'Explore Docker GenAI to run local LLMs with the simplicity of a container. A step-by-step guide for developers to get started in minutes.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/61520da3-11ad-4b24-9676-0ab1aa197eaa.png?', // Using the direct URL as per your strategy
+        date: 'September 24, 2025',
+        readTime: '10 min read',
+        tags: ["docker","genai","llm","local development","ai"],
+        isFeatured: false
+    },
+    {
         slug: 'ai-security-crisis-prompt-injection-surge-guide',
         title: 'The AI Security Crisis: Deconstructing the 300% Surge in Prompt Injection Attacks',
         excerpt: 'Explore the 300% surge in AI prompt injection attacks. Learn how they work, why they\'re rising, and how to defend your systems with actionable strategies.',
