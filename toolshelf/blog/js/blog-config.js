@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'ai-security-crisis-prompt-injection-surge-guide',
+        title: 'The AI Security Crisis: Deconstructing the 300% Surge in Prompt Injection Attacks',
+        excerpt: 'Explore the 300% surge in AI prompt injection attacks. Learn how they work, why they\'re rising, and how to defend your systems with actionable strategies.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/a9e84e83-5e43-4a96-ba01-77a1be3b1604.png?', // Using the direct URL as per your strategy
+        date: 'September 24, 2025',
+        readTime: '10 min read',
+        tags: ["ai","security","prompt injection","llm","cybersecurity"],
+        isFeatured: false
+    },
+    {
         slug: 'htmx-2-practical-guide-ditching-complex-javascript',
         title: 'HTMX 2.0: A Practical Guide to Ditching Complex JavaScript',
         excerpt: 'Explore the game-changing features of HTMX 2.0. This guide walks you through building modern, dynamic UIs with less JavaScript and more HTML.',
