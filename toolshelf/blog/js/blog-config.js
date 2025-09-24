@@ -12,6 +12,16 @@ export const blogPosts = [
         isFeatured: false
     },
     {
+        slug: 'typescript-6-0-guide-upgrading-new-features',
+        title: 'TypeScript 6.0 Guide: Upgrading and Using the Top New Features',
+        excerpt: 'Upgrade to TypeScript 6.0 with this guide. Learn about new features like the `using` keyword, better `typeof`, and major performance boosts with code examples.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/c7a048d2-4b09-478f-b6f2-4958ba463f57.png?', // Using the direct URL as per your strategy
+        date: 'September 24, 2025',
+        readTime: '10 min read',
+        tags: ["typescript","javascript","webdev","guide","programming"],
+        isFeatured: false
+    },
+    {
         slug: 'build-an-idp-backstage-kubernetes-guide-2025',
         title: 'Build an IDP: A Step-by-Step Guide with Backstage & Kubernetes for 2025',
         excerpt: 'Step-by-step guide to building an Internal Developer Platform (IDP) with Backstage and Kubernetes. Enhance developer experience and accelerate delivery in 2025.',
