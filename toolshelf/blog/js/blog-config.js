@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'low-code-surge-is-traditional-development-obsolete',
+        title: 'Low-Code\'s $264B Surge: Is Traditional Development Obsolete?',
+        excerpt: 'Low-code is projected to hit $264B by 2032. Is traditional development dead? We analyze its impact on developers and how to choose the right path.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/7348ba53-f810-4c64-b274-f3739eaec090.png?', // Using the direct URL as per your strategy
+        date: 'September 25, 2025',
+        readTime: '11 min read',
+        tags: ["low-code","no-code","software development","career","future of tech"],
+        isFeatured: false
+    },
+    {
         slug: 'docker-genai-developers-guide-local-llms',
         title: 'Docker GenAI: A Developer\'s Guide to Running Local LLMs',
         excerpt: 'Explore Docker GenAI to run local LLMs with the simplicity of a container. A step-by-step guide for developers to get started in minutes.',
