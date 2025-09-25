@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'ai-discovers-exploits-zero-days-in-minutes',
+        title: 'AI Discovers & Exploits Zero-Days in Minutes: A New Era of Cyber Warfare',
+        excerpt: 'AI-powered tools now find and weaponize zero-day vulnerabilities in minutes, making human-speed defense obsolete. Learn how they work and how to fight back.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/424eeef9-a097-4689-8ec8-393da8fb3633.png?', // Using the direct URL as per your strategy
+        date: 'September 25, 2025',
+        readTime: '14 min read',
+        tags: ["ai","cybersecurity","zero-day","threat intelligence","automation"],
+        isFeatured: false
+    },
+    {
         slug: 'docker-genai-developers-guide-local-llms',
         title: 'Docker GenAI: A Developer\'s Guide to Running Local LLMs',
         excerpt: 'Explore Docker GenAI to run local LLMs with the simplicity of a container. A step-by-step guide for developers to get started in minutes.',
