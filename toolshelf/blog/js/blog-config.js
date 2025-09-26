@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'ai-security-crisis-prompt-injection-attacks',
+        title: 'AI Security Crisis: Deconstructing the 300% Surge in Prompt Injection Attacks',
+        excerpt: 'A deep dive into the 2025 AI security crisis. Learn about the surge in prompt injection, model poisoning, and how to secure your AI systems.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/ae2c3061-cdfb-4669-ba27-d5fddb4a95ea.png?', // Using the direct URL as per your strategy
+        date: 'September 26, 2025',
+        readTime: '10 min read',
+        tags: ["ai security","prompt injection","llm","cybersecurity","owasp"],
+        isFeatured: false
+    },
+    {
         slug: 'caas-revolution-why-startups-outsource-security',
         title: 'The CaaS Revolution: Why Startups Are Outsourcing Security',
         excerpt: 'Cybercrime costs trillions. Discover how Cybersecurity-as-a-Service (CaaS) offers startups elite security without the enterprise price tag.',
