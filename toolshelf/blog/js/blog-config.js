@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'poisoned-ai-genai-supply-chain-attacks-hugging-face',
+        title: 'Poisoned AI: Defending Against GenAI Supply Chain Attacks on Hugging Face',
+        excerpt: 'OWASP\'s #1 AI risk is real. Learn how attackers poison open-source models on Hugging Face and discover strategies to mitigate these GenAI supply chain threats.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/5ce0f375-6d66-4ef9-8da9-92dfbb2ea468.png?', // Using the direct URL as per your strategy
+        date: 'September 26, 2025',
+        readTime: '9 min read',
+        tags: ["genai","security","hugging face","owasp","supply chain"],
+        isFeatured: false
+    },
+    {
         slug: 'digital-twins-developers-guide-110b-revolution',
         title: 'Digital Twins: A Developer\'s Guide to the $110B Revolution',
         excerpt: 'Explore digital twin technology, its synergy with IoT & AI, and learn how to implement this $110B revolution. A practical guide for developers.',
