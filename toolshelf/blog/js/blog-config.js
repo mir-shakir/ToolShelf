@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'digital-twins-developers-guide-110b-revolution',
+        title: 'Digital Twins: A Developer\'s Guide to the $110B Revolution',
+        excerpt: 'Explore digital twin technology, its synergy with IoT & AI, and learn how to implement this $110B revolution. A practical guide for developers.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/c738461f-ffb9-4199-9930-8cb8d5007636.png?', // Using the direct URL as per your strategy
+        date: 'September 26, 2025',
+        readTime: '10 min read',
+        tags: ["digital twin","iot","ai","cloud computing","predictive maintenance"],
+        isFeatured: false
+    },
+    {
         slug: 'microsoft-patch-tuesday-september-2025-zero-day-analysis',
         title: 'Microsoft\'s Sept 2025 Patch Tuesday: 2 Zero-Days Demand Immediate Action',
         excerpt: 'Analysis of Microsoft\'s Sept 2025 Patch Tuesday: 84 CVEs, 2 exploited zero-days. Get expert guidance on prioritizing these critical security patches.',
