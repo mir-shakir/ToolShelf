@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'microsoft-patch-tuesday-september-2025-zero-day-analysis',
+        title: 'Microsoft\'s Sept 2025 Patch Tuesday: 2 Zero-Days Demand Immediate Action',
+        excerpt: 'Analysis of Microsoft\'s Sept 2025 Patch Tuesday: 84 CVEs, 2 exploited zero-days. Get expert guidance on prioritizing these critical security patches.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/e0a05b32-b77b-4688-bc0b-1953d3bebc38.png?', // Using the direct URL as per your strategy
+        date: 'September 26, 2025',
+        readTime: '9 min read',
+        tags: ["security","microsoft","patch tuesday","zero-day","vulnerability"],
+        isFeatured: false
+    },
+    {
         slug: 'ai-discovers-exploits-zero-days-in-minutes',
         title: 'AI Discovers & Exploits Zero-Days in Minutes: A New Era of Cyber Warfare',
         excerpt: 'AI-powered tools now find and weaponize zero-day vulnerabilities in minutes, making human-speed defense obsolete. Learn how they work and how to fight back.',
