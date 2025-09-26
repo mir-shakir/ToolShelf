@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'caas-revolution-why-startups-outsource-security',
+        title: 'The CaaS Revolution: Why Startups Are Outsourcing Security',
+        excerpt: 'Cybercrime costs trillions. Discover how Cybersecurity-as-a-Service (CaaS) offers startups elite security without the enterprise price tag.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/0a47bdaa-b86a-49eb-a4b7-cc0db328ef4f.png?', // Using the direct URL as per your strategy
+        date: 'September 26, 2025',
+        readTime: '10 min read',
+        tags: ["security","caas","startups","cybersecurity","cloud security"],
+        isFeatured: false
+    },
+    {
         slug: 'samsung-ai-forum-2025-developer-tools-guide',
         title: 'Samsung AI Forum 2025: A Developer\'s Guide to New AI Tools',
         excerpt: 'Explore the groundbreaking AI developer tools from Samsung AI Forum 2025: Galaxy AI Engine 2.0, Bixby Connect API, and the Tizen AI Framework.',
