@@ -10,6 +10,26 @@ export const blogPosts = [
         readTime: '14 min read',
         tags: ["ai","cybersecurity","zero-day","threat intelligence","automation"],
         isFeatured: false
+      },
+    {
+        slug: 'low-code-surge-is-traditional-development-obsolete',
+        title: 'Low-Code\'s $264B Surge: Is Traditional Development Obsolete?',
+        excerpt: 'Low-code is projected to hit $264B by 2032. Is traditional development dead? We analyze its impact on developers and how to choose the right path.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/7348ba53-f810-4c64-b274-f3739eaec090.png?', // Using the direct URL as per your strategy
+        date: 'September 25, 2025',
+        readTime: '11 min read',
+        tags: ["low-code","no-code","software development","career","future of tech"],
+        isFeatured: false
+      },
+    {
+        slug: 'react-19-actions-api-replacing-rest',
+        title: 'React 19\'s Actions API: Replacing REST with Simpler, More Powerful Forms',
+        excerpt: 'Explore the React 19 Actions API. Learn how Server Actions and new hooks like useFormStatus are streamlining forms and replacing traditional REST patterns.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/1f4c5fd5-9011-46f4-99f6-b48944d4e589.png?', // Using the direct URL as per your strategy
+        date: 'September 24, 2025',
+        readTime: '11 min read',
+        tags: ["react","react 19","server actions","javascript","web development"],
+        isFeatured: false
     },
     {
         slug: 'docker-genai-developers-guide-local-llms',
