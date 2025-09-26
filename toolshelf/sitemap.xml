@@ -294,10 +294,15 @@
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
-
-    <url>
+      <url>
+        <loc>https://toolshelf.tech/blog/low-code-surge-is-traditional-development-obsolete/</loc>
+        <lastmod>2025-09-25</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+      <url>
         <loc>https://toolshelf.tech/blog/react-19-actions-api-replacing-rest/</loc>
-        <lastmod>2025-09-24</lastmod>
+         <lastmod>2025-09-25</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
