@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'samsung-ai-forum-2025-developer-tools-guide',
+        title: 'Samsung AI Forum 2025: A Developer\'s Guide to New AI Tools',
+        excerpt: 'Explore the groundbreaking AI developer tools from Samsung AI Forum 2025: Galaxy AI Engine 2.0, Bixby Connect API, and the Tizen AI Framework.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/0a5cf654-16a9-411d-9160-e9ce1e9400cf.png?', // Using the direct URL as per your strategy
+        date: 'September 26, 2025',
+        readTime: '11 min read',
+        tags: ["samsung","ai","developer tools","sdk","api"],
+        isFeatured: false
+    },
+    {
         slug: 'poisoned-ai-genai-supply-chain-attacks-hugging-face',
         title: 'Poisoned AI: Defending Against GenAI Supply Chain Attacks on Hugging Face',
         excerpt: 'OWASP\'s #1 AI risk is real. Learn how attackers poison open-source models on Hugging Face and discover strategies to mitigate these GenAI supply chain threats.',
