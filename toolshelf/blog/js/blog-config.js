@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'digital-twin-technology-110b-market-guide',
+        title: 'Digital Twin Technology: A Guide to the $110B Market Revolution',
+        excerpt: 'Explore the $110B Digital Twin market. Our guide covers its core concepts, real-world applications, IoT integration, and how to get started.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/600cefae-a37d-47c7-bcb6-a944433c461a.png?', // Using the direct URL as per your strategy
+        date: 'September 27, 2025',
+        readTime: '11 min read',
+        tags: ["digital twin","iot","industry 4.0","predictive maintenance","smart manufacturing"],
+        isFeatured: false
+    },
+    {
         slug: 'microsoft-september-2025-patch-tuesday-zero-day-exploits',
         title: 'Microsoft September 2025 Patch Tuesday: Two Zero-Days Under Active Attack',
         excerpt: 'Microsoft\'s Sept 2025 Patch Tuesday addresses 84 flaws, including two zero-days under active attack. Prioritize CVE-2025-12345 & CVE-2025-67890 now.',
