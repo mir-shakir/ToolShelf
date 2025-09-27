@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'react-19-actions-api-replaces-rest-apis',
+        title: 'React 19\'s Actions API: The Game-Changer Replacing REST',
+        excerpt: 'Explore the revolutionary React 19 Actions API. Learn how Server Actions and new hooks simplify form handling, making REST API boilerplate obsolete.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/c6ef615d-26db-4e45-b9a7-cf2362d9708c.png?', // Using the direct URL as per your strategy
+        date: 'September 27, 2025',
+        readTime: '9 min read',
+        tags: ["react","server actions","react 19","api","javascript"],
+        isFeatured: false
+    },
+    {
         slug: 'ai-security-crisis-prompt-injection-attacks',
         title: 'AI Security Crisis: Deconstructing the 300% Surge in Prompt Injection Attacks',
         excerpt: 'A deep dive into the 2025 AI security crisis. Learn about the surge in prompt injection, model poisoning, and how to secure your AI systems.',
