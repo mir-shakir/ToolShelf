@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'ai-finds-zero-day-exploits-in-minutes-ciso-2025-guide',
+        title: 'AI Finds Zero-Day Exploits in Minutes: A CISO\'s 2025 Survival Guide',
+        excerpt: 'AI can now find and exploit zero-day vulnerabilities in minutes. Learn how these AI hacking tools work and the crucial steps CISOs must take to defend their organization.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/3fe51e76-d1e5-43a9-a833-2420c33c5aaf.png?', // Using the direct URL as per your strategy
+        date: 'September 27, 2025',
+        readTime: '10 min read',
+        tags: ["ai","cybersecurity","zero-day","ciso","security"],
+        isFeatured: false
+    },
+    {
         slug: '264b-low-code-boom-developer-guide-to-the-future',
         title: 'The $264B Low-Code Boom: A Developer\'s Guide to the Future',
         excerpt: 'The low-code market is exploding to $264B. Learn its impact on developers, why 70% of new apps will use it, and when to choose it over traditional coding.',
