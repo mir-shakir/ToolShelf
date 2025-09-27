@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: '264b-low-code-boom-developer-guide-to-the-future',
+        title: 'The $264B Low-Code Boom: A Developer\'s Guide to the Future',
+        excerpt: 'The low-code market is exploding to $264B. Learn its impact on developers, why 70% of new apps will use it, and when to choose it over traditional coding.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/1ed1cae8-85ac-4c64-8e60-cd757923e88c.png?', // Using the direct URL as per your strategy
+        date: 'September 27, 2025',
+        readTime: '11 min read',
+        tags: ["low-code","software development","future of tech","developer career","it strategy"],
+        isFeatured: false
+    },
+    {
         slug: 'react-19-actions-api-replaces-rest-apis',
         title: 'React 19\'s Actions API: The Game-Changer Replacing REST',
         excerpt: 'Explore the revolutionary React 19 Actions API. Learn how Server Actions and new hooks simplify form handling, making REST API boilerplate obsolete.',
