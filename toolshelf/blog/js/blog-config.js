@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'digital-twin-technology-developer-guide',
+        title: 'Digital Twins: A Developer\'s Guide to the $110B Tech Revolution',
+        excerpt: 'Explore the $110B digital twin revolution. Learn core concepts, practical applications, and how to implement this transformative tech using IoT and AI.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/bfca06a6-d108-45a1-8dd5-f074082c284d.png?', // Using the direct URL as per your strategy
+        date: 'September 28, 2025',
+        readTime: '14 min read',
+        tags: ["digital twin","iot","cloud computing","ai","industry 4.0"],
+        isFeatured: false
+    },
+    {
         slug: 'digital-twin-technology-powering-110b-market-2028',
         title: 'Digital Twin Technology: How It\'s Powering a $110B Market by 2028',
         excerpt: 'Explore the explosive 61.3% growth of Digital Twin technology. This guide covers its core concepts, IoT integration, and a developer roadmap.',
