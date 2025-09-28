@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'digital-twin-technology-110b-revolution-2028',
+        title: 'Digital Twin Technology: Powering the $110B Revolution by 2028',
+        excerpt: 'Dive into Digital Twin tech\'s $110B market surge. Learn its core concepts, IoT integration, and real-world applications for developers and industry leaders.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/a55966a8-904c-4a26-b164-35c2e151fb3b.png?', // Using the direct URL as per your strategy
+        date: 'September 28, 2025',
+        readTime: '11 min read',
+        tags: ["digital twin","iot","industry 4.0","cloud computing","predictive maintenance"],
+        isFeatured: false
+    },
+    {
         slug: 'digital-twin-technology-110b-market-guide',
         title: 'Digital Twin Technology: A Guide to the $110B Market Revolution',
         excerpt: 'Explore the $110B Digital Twin market. Our guide covers its core concepts, real-world applications, IoT integration, and how to get started.',
