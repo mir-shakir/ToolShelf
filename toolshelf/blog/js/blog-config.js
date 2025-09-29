@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'webassembly-silent-revolution-beyond-browser-2025',
+        title: 'WebAssembly\'s Silent Revolution: Beyond the Browser in 2025',
+        excerpt: 'WebAssembly is reshaping cloud computing, security, and performance-critical apps far beyond the browser. Discover how WASM provides speed and portability.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/02f8e3cc-c57b-4538-9065-36a0cc0f446f.png?', // Using the direct URL as per your strategy
+        date: 'September 29, 2025',
+        readTime: '11 min read',
+        tags: ["webassembly","wasm","serverless","edge-computing","performance"],
+        isFeatured: false
+    },
+    {
         slug: 'agentic-ai-software-development-coder-to-conductor',
         title: 'Agentic AI in Software Development: From Coder to Conductor',
         excerpt: 'Explore how agentic AI is transforming software development. Learn about frameworks like AutoGen & CrewAI and the developer\'s new role as an AI orchestrator.',
