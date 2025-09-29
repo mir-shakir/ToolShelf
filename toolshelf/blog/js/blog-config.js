@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'micro-frontend-reality-check-when-to-break-up-ui',
+        title: 'Micro-Frontend Reality Check: When (and When Not) to Break Up Your UI',
+        excerpt: 'A deep dive into micro-frontends beyond the hype. Learn when this architecture works, when it fails, and if it\'s right for your team and business.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/2f8bb066-3936-4597-a3b5-8c592ded142b.png?', // Using the direct URL as per your strategy
+        date: 'September 29, 2025',
+        readTime: '11 min read',
+        tags: ["micro-frontends","frontend architecture","module federation","web development","monolith"],
+        isFeatured: false
+    },
+    {
         slug: 'webassembly-silent-revolution-beyond-browser-2025',
         title: 'WebAssembly\'s Silent Revolution: Beyond the Browser in 2025',
         excerpt: 'WebAssembly is reshaping cloud computing, security, and performance-critical apps far beyond the browser. Discover how WASM provides speed and portability.',
