@@ -410,11 +410,4 @@
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
-
-    <url>
-        <loc>https://toolshelf.tech/blog/digital-twin-technology-developer-guide/</loc>
-        <lastmod>2025-09-28</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.7</priority>
-    </url>
 </urlset>
