@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'agentic-ai-software-development-coder-to-conductor',
+        title: 'Agentic AI in Software Development: From Coder to Conductor',
+        excerpt: 'Explore how agentic AI is transforming software development. Learn about frameworks like AutoGen & CrewAI and the developer\'s new role as an AI orchestrator.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/c053529a-b883-4a08-89de-f8bf9f88fec0.png?', // Using the direct URL as per your strategy
+        date: 'September 29, 2025',
+        readTime: '12 min read',
+        tags: ["agentic ai","autogen","crewai","automation","developer tools"],
+        isFeatured: false
+    },
+    {
         slug: 'microsoft-september-2025-patch-tuesday-zero-day-exploits',
         title: 'Microsoft September 2025 Patch Tuesday: Two Zero-Days Under Active Attack',
         excerpt: 'Microsoft\'s Sept 2025 Patch Tuesday addresses 84 flaws, including two zero-days under active attack. Prioritize CVE-2025-12345 & CVE-2025-67890 now.',
