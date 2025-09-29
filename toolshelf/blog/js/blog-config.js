@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'digital-twins-for-code-next-frontier-software-engineering',
+        title: 'Digital Twins for Code: The Next Frontier in Software Engineering',
+        excerpt: 'Explore how digital twins for code model development workflows to predict technical debt, optimize team performance, and slash deployment times.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/5632a49b-2f52-4391-9f97-15c14a841859.png?', // Using the direct URL as per your strategy
+        date: 'September 29, 2025',
+        readTime: '10 min read',
+        tags: ["digital twin","devops","technical debt","ai","software engineering"],
+        isFeatured: false
+    },
+    {
         slug: 'micro-frontend-reality-check-when-to-break-up-ui',
         title: 'Micro-Frontend Reality Check: When (and When Not) to Break Up Your UI',
         excerpt: 'A deep dive into micro-frontends beyond the hype. Learn when this architecture works, when it fails, and if it\'s right for your team and business.',
