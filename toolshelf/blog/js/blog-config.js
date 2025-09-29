@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'building-with-agentic-ai-from-code-monkey-to-orchestra-conductor',
+        title: 'Building with Agentic AI: From Code Monkey to Orchestra Conductor',
+        excerpt: 'Explore the shift to agentic AI in software development. Learn about frameworks like AutoGen and CrewAI and the developer\'s new role as an agent orchestrator.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/2d24d2d8-d962-4976-b045-efcc7f12bf2b.png?', // Using the direct URL as per your strategy
+        date: 'September 29, 2025',
+        readTime: '11 min read',
+        tags: ["agentic ai","autogen","crewai","ai development","devops"],
+        isFeatured: false
+    },
+    {
         slug: 'microsoft-september-2025-patch-tuesday-zero-day-exploits',
         title: 'Microsoft September 2025 Patch Tuesday: Two Zero-Days Under Active Attack',
         excerpt: 'Microsoft\'s Sept 2025 Patch Tuesday addresses 84 flaws, including two zero-days under active attack. Prioritize CVE-2025-12345 & CVE-2025-67890 now.',
