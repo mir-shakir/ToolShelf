@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'headless-cms-developers-guide-api-first-revolution',
+        title: 'Headless CMS: A Developer\'s Guide to the API-First Revolution',
+        excerpt: 'Explore the rise of headless CMS. A developer\'s guide comparing Strapi v5 & Payload, solving SEO/preview challenges, and sharing real-world migration data.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/da611079-7e4e-4d8a-9733-c5d1a6066bdf.png?', // Using the direct URL as per your strategy
+        date: 'September 30, 2025',
+        readTime: '9 min read',
+        tags: ["headless-cms","api","jamstack","strapi","payload-cms"],
+        isFeatured: false
+    },
+    {
         slug: 'death-of-full-stack-developer-rise-of-platform-engineering',
         title: 'The Death of the Full-Stack Developer? The Rise of Platform Engineering',
         excerpt: 'Explore why the full-stack developer role is challenged by platform engineering and how IDPs are reshaping software development for higher velocity.',
