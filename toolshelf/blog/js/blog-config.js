@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'quantum-programming-for-developers-qsharp-qiskit-cirq-guide',
+        title: 'Quantum Programming for Developers: A Practical Guide to Q#, Qiskit, and Cirq',
+        excerpt: 'Dive into quantum programming with our practical guide. Learn core concepts like qubits and entanglement, and start coding with Q#, Qiskit, and Cirq today.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/9b3b3fa0-afd6-4518-8d6f-3fd32d8e6dfa.png?', // Using the direct URL as per your strategy
+        date: 'September 30, 2025',
+        readTime: '15 min read',
+        tags: ["quantum computing","q#","qiskit","cirq","programming"],
+        isFeatured: false
+    },
+    {
         slug: 'digital-twins-for-code-next-frontier-software-engineering',
         title: 'Digital Twins for Code: The Next Frontier in Software Engineering',
         excerpt: 'Explore how digital twins for code model development workflows to predict technical debt, optimize team performance, and slash deployment times.',
