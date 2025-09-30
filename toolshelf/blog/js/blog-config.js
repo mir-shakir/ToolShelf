@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'death-of-full-stack-developer-rise-of-platform-engineering',
+        title: 'The Death of the Full-Stack Developer? The Rise of Platform Engineering',
+        excerpt: 'Explore why the full-stack developer role is challenged by platform engineering and how IDPs are reshaping software development for higher velocity.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/43548cd3-6973-44df-ba18-a50b579eaa69.png?', // Using the direct URL as per your strategy
+        date: 'September 30, 2025',
+        readTime: '10 min read',
+        tags: ["platform engineering","devops","developer experience","idp","full-stack"],
+        isFeatured: false
+    },
+    {
         slug: 'quantum-programming-for-developers-qsharp-qiskit-cirq-guide',
         title: 'Quantum Programming for Developers: A Practical Guide to Q#, Qiskit, and Cirq',
         excerpt: 'Dive into quantum programming with our practical guide. Learn core concepts like qubits and entanglement, and start coding with Q#, Qiskit, and Cirq today.',
