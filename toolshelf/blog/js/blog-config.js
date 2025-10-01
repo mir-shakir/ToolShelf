@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'developer-observability-from-apm-to-in-ide-debugging',
+        title: 'Developer Observability: From APM Dashboards to In-IDE Debugging',
+        excerpt: 'Explore the shift from traditional APM to developer observability. See how tools like SigNoz enable code-level debugging directly in your IDE.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/21d61d4e-9672-4461-822b-4595ba66a0d0.png?', // Using the direct URL as per your strategy
+        date: 'October 1, 2025',
+        readTime: '10 min read',
+        tags: ["observability","apm","debugging","developer tools","productivity"],
+        isFeatured: false
+    },
+    {
         slug: 'edge-native-development-guide-distributed-future',
         title: 'Edge-Native Development: A Developer\'s Guide to the Distributed Future',
         excerpt: 'Explore edge-native development to build ultra-fast, resilient global apps. This guide covers core principles, tools like Cloudflare Workers, and key patterns.',
