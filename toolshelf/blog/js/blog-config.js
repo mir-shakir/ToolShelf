@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'webassembly-component-model-polyglot-revolution',
+        title: 'The WebAssembly Component Model: A Revolution in Polyglot Programming',
+        excerpt: 'Discover how the Wasm Component Model enables seamless interoperability between languages like Rust, Python, and Go, revolutionizing polyglot development.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/fa17fd68-e2f3-4ece-922b-4fe6a4540aad.png?', // Using the direct URL as per your strategy
+        date: 'October 1, 2025',
+        readTime: '11 min read',
+        tags: ["webassembly","wasi","polyglot","interoperability","edge-computing"],
+        isFeatured: false
+    },
+    {
         slug: 'low-code-paradox-pro-developers-embrace-no-code',
         title: 'The Low-Code Paradox: Why Pro Developers Are Embracing No-Code Tools',
         excerpt: 'Discover why professional developers are adopting low-code/no-code tools to boost speed, streamline workflows, and focus on complex, high-impact coding tasks.',
