@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'low-code-paradox-pro-developers-embrace-no-code',
+        title: 'The Low-Code Paradox: Why Pro Developers Are Embracing No-Code Tools',
+        excerpt: 'Discover why professional developers are adopting low-code/no-code tools to boost speed, streamline workflows, and focus on complex, high-impact coding tasks.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/321a0fec-ce2a-4ce7-a285-2c034d91d761.png?', // Using the direct URL as per your strategy
+        date: 'October 1, 2025',
+        readTime: '9 min read',
+        tags: ["low-code","no-code","developer tools","pro-code","productivity"],
+        isFeatured: false
+    },
+    {
         slug: 'developer-observability-from-apm-to-in-ide-debugging',
         title: 'Developer Observability: From APM Dashboards to In-IDE Debugging',
         excerpt: 'Explore the shift from traditional APM to developer observability. See how tools like SigNoz enable code-level debugging directly in your IDE.',
