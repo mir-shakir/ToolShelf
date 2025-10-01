@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'edge-native-development-guide-distributed-future',
+        title: 'Edge-Native Development: A Developer\'s Guide to the Distributed Future',
+        excerpt: 'Explore edge-native development to build ultra-fast, resilient global apps. This guide covers core principles, tools like Cloudflare Workers, and key patterns.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/a454f550-b48d-4884-9922-14f2583342a7.png?', // Using the direct URL as per your strategy
+        date: 'October 1, 2025',
+        readTime: '12 min read',
+        tags: ["edge computing","serverless","cloudflare workers","deno","performance"],
+        isFeatured: false
+    },
+    {
         slug: 'headless-cms-developers-guide-api-first-revolution',
         title: 'Headless CMS: A Developer\'s Guide to the API-First Revolution',
         excerpt: 'Explore the rise of headless CMS. A developer\'s guide comparing Strapi v5 & Payload, solving SEO/preview challenges, and sharing real-world migration data.',
