@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'living-therapeutics-engineering-programming-cells',
+        title: 'Living Therapeutics: When Your Code Controls Living Cells',
+        excerpt: 'Explore the revolutionary world of living therapeutics, where scientists program living cells like computer code to fight disease.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/db88bacc-7104-45be-858b-7393503d24db.png?', // Using the direct URL as per your strategy
+        date: 'October 2, 2025',
+        readTime: '11 min read',
+        tags: ["living therapeutics","synthetic biology","cellular engineering","bio-programming","car-t therapy"],
+        isFeatured: false
+    },
+    {
         slug: 'harnessing-the-current-developers-guide-osmotic-power',
         title: 'Harnessing the Current: A Developer\'s Guide to Osmotic Power Programming',
         excerpt: 'Unlock the potential of osmotic power. A developer\'s guide to energy-aware programming, checkpointing, and building self-powered IoT systems.',
