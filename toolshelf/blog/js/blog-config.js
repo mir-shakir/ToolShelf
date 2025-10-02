@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'structural-batteries-massless-energy-storage',
+        title: 'Structural Batteries: The Dawn of \'Massless\' Energy Storage',
+        excerpt: 'Explore structural battery composites, where materials store energy and bear loads, set to revolutionize EVs, IoT, and wearables in 2025.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/5a28460f-8215-4e0e-8f6d-054e9d8ccc1f.png?', // Using the direct URL as per your strategy
+        date: 'October 2, 2025',
+        readTime: '7 min read',
+        tags: ["emerging-tech","materials-science","energy-storage","iot","evs"],
+        isFeatured: false
+    },
+    {
         slug: 'ebpf-explained-developers-guide-to-kernel-code',
         title: 'eBPF Explained: A Developer\'s Guide to Safely Writing Kernel Code',
         excerpt: 'Unlock kernel-level power safely with eBPF. This guide explains what it is, how the Verifier works, and walks you through writing your first program.',
