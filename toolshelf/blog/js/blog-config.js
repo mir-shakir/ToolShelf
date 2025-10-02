@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'ebpf-explained-developers-guide-to-kernel-code',
+        title: 'eBPF Explained: A Developer\'s Guide to Safely Writing Kernel Code',
+        excerpt: 'Unlock kernel-level power safely with eBPF. This guide explains what it is, how the Verifier works, and walks you through writing your first program.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/19dd0137-441e-4acb-a7cf-b48fba37f7ee.png?', // Using the direct URL as per your strategy
+        date: 'October 2, 2025',
+        readTime: '11 min read',
+        tags: ["ebpf","linux","kernel","observability","security"],
+        isFeatured: false
+    },
+    {
         slug: 'webassembly-component-model-polyglot-revolution',
         title: 'The WebAssembly Component Model: A Revolution in Polyglot Programming',
         excerpt: 'Discover how the Wasm Component Model enables seamless interoperability between languages like Rust, Python, and Go, revolutionizing polyglot development.',
