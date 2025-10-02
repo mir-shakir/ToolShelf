@@ -473,4 +473,11 @@
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
+
+    <url>
+        <loc>https://toolshelf.tech/blog/cwasi-slashing-latency-costs-serverless-communication/</loc>
+        <lastmod>2025-10-02</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
 </urlset>
