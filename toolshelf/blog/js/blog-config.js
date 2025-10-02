@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'cwasi-slashing-latency-costs-serverless-communication',
+        title: 'CWASI: Slashing Latency & Costs in Serverless Communication',
+        excerpt: 'Discover CWASI, a novel three-mode communication model that optimizes serverless function calls, reduces latency, and cuts hidden costs.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/14b00df9-d9ea-4474-b5c6-33fc0061a08f.png?', // Using the direct URL as per your strategy
+        date: 'October 2, 2025',
+        readTime: '9 min read',
+        tags: ["serverless","faas","cloud computing","optimization","edge computing"],
+        isFeatured: false
+    },
+    {
         slug: 'structural-batteries-massless-energy-storage',
         title: 'Structural Batteries: The Dawn of \'Massless\' Energy Storage',
         excerpt: 'Explore structural battery composites, where materials store energy and bear loads, set to revolutionize EVs, IoT, and wearables in 2025.',
