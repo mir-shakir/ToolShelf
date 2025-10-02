@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'harnessing-the-current-developers-guide-osmotic-power',
+        title: 'Harnessing the Current: A Developer\'s Guide to Osmotic Power Programming',
+        excerpt: 'Unlock the potential of osmotic power. A developer\'s guide to energy-aware programming, checkpointing, and building self-powered IoT systems.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/b7af27d9-327f-4584-897c-80c3880e290d.png?', // Using the direct URL as per your strategy
+        date: 'October 2, 2025',
+        readTime: '11 min read',
+        tags: ["osmotic power","energy harvesting","low-power computing","iot","sustainable tech"],
+        isFeatured: false
+    },
+    {
         slug: 'structural-batteries-massless-energy-storage',
         title: 'Structural Batteries: The Dawn of \'Massless\' Energy Storage',
         excerpt: 'Explore structural battery composites, where materials store energy and bear loads, set to revolutionize EVs, IoT, and wearables in 2025.',
