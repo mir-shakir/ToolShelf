@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'ai-content-watermarking-technical-arms-race',
+        title: 'AI Content Watermarking: The Technical Arms Race Nobody\'s Talking About',
+        excerpt: 'Explore the technical arms race of AI watermarking, a hidden battle between creating and breaking invisible signals in AI-generated content.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/b44b25b5-d05a-4a0a-b097-531de1d121d4.png?', // Using the direct URL as per your strategy
+        date: 'October 3, 2025',
+        readTime: '6 min read',
+        tags: ["ai","watermarking","security","ethics","generative ai"],
+        isFeatured: false
+    },
+    {
         slug: 'beyond-full-stack-building-high-impact-teams-with-glue-engineers',
         title: 'Beyond Full-Stack: Building High-Impact Teams with Glue Engineers',
         excerpt: 'Explore why the full-stack developer myth is fading and how specialist teams led by \'Glue Engineers\' are the future of high-performance software development.',
