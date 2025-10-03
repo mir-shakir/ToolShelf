@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'abstraction-revolution-ambient-code-generation',
+        title: 'The Abstraction Revolution: How Ambient Code Generation is Reshaping Software',
+        excerpt: 'Explore the shift from active AI assistants to ambient code generation, a revolution translating human intent directly into production-ready software.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/39637931-ffc4-4f05-b609-224c025050b8.png?', // Using the direct URL as per your strategy
+        date: 'October 3, 2025',
+        readTime: '8 min read',
+        tags: ["ai","code generation","developer tools","future of programming","low-code"],
+        isFeatured: false
+    },
+    {
         slug: 'living-therapeutics-engineering-programming-cells',
         title: 'Living Therapeutics: When Your Code Controls Living Cells',
         excerpt: 'Explore the revolutionary world of living therapeutics, where scientists program living cells like computer code to fight disease.',
