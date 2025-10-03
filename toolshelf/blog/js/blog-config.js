@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'beyond-full-stack-building-high-impact-teams-with-glue-engineers',
+        title: 'Beyond Full-Stack: Building High-Impact Teams with Glue Engineers',
+        excerpt: 'Explore why the full-stack developer myth is fading and how specialist teams led by \'Glue Engineers\' are the future of high-performance software development.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/320b761a-5cbe-41f7-861b-c8caec9c01a0.png?', // Using the direct URL as per your strategy
+        date: 'October 3, 2025',
+        readTime: '12 min read',
+        tags: ["engineering management","team structure","career development","full-stack","software architecture"],
+        isFeatured: false
+    },
+    {
         slug: 'wasm-edge-ai-running-llms-in-10mb',
         title: 'Wasm & Edge AI: Running Powerful LLMs in a 10MB Footprint',
         excerpt: 'Discover how WebAssembly (Wasm) and model quantization are shrinking powerful LLMs to just 10MB, enabling private, real-time AI on edge devices.',
