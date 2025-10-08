@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'openai-agent-builder-developers-guide',
+        title: 'OpenAI Agent Builder: A Developer\'s Guide to Building Custom AI',
+        excerpt: 'A complete guide to OpenAI\'s Agent Builder. Learn to create custom AI agents with no-code/low-code, connect APIs, and deploy powerful AI solutions fast.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/1329b80a-2eea-4580-a5cf-1825b0d450c5.png?', // Using the direct URL as per your strategy
+        date: 'October 8, 2025',
+        readTime: '12 min read',
+        tags: ["openai","ai","agentic ai","low-code","gpt-4o"],
+        isFeatured: false
+    },
+    {
         slug: 'n8n-developer-workflow-automation-2025',
         title: 'Why n8n is Every Developer\'s Go-To for Workflow Automation in 2025',
         excerpt: 'Discover why n8n is the essential open-source workflow automation tool for developers in 2025. Learn about self-hosting benefits, agentic AI, and more.',
