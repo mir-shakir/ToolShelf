@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'jules-ai-developer-first-agent-builder-guide',
+        title: 'Jules AI: The Developer-First Agent Builder You Need to Know',
+        excerpt: 'Explore Jules, the new AI agent builder for developers. A deep dive into its code-first scripting, multi-agent orchestration, and developer-centric features.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/5c8f7bdd-35c5-4f93-9a3a-375606693984.png?', // Using the direct URL as per your strategy
+        date: 'October 9, 2025',
+        readTime: '11 min read',
+        tags: ["ai","developer tools","agentic ai","automation","orchestration"],
+        isFeatured: false
+    },
+    {
         slug: 'google-opal-global-launch-developer-guide',
         title: 'Google Opal Launches Globally: The Ultimate Guide for Developers',
         excerpt: 'A complete guide to Google Opal\'s global launch. Explore new features, developer tools, onboarding, use cases, and how it compares to other AI platforms.',
