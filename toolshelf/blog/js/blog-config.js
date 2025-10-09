@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'google-opal-global-launch-developer-guide',
+        title: 'Google Opal Launches Globally: The Ultimate Guide for Developers',
+        excerpt: 'A complete guide to Google Opal\'s global launch. Explore new features, developer tools, onboarding, use cases, and how it compares to other AI platforms.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/0495c915-38c1-4d15-932f-5a2b246e30fb.png?', // Using the direct URL as per your strategy
+        date: 'October 9, 2025',
+        readTime: '14 min read',
+        tags: ["ai","google","agentic ai","cloud","developer tools"],
+        isFeatured: false
+    },
+    {
         slug: 'openai-agent-builder-developers-guide',
         title: 'OpenAI Agent Builder: A Developer\'s Guide to Building Custom AI',
         excerpt: 'A complete guide to OpenAI\'s Agent Builder. Learn to create custom AI agents with no-code/low-code, connect APIs, and deploy powerful AI solutions fast.',
