@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'openai-vs-google-opal-vs-jules-ai-agent-platforms-2025',
+        title: 'OpenAI vs. Google vs. Jules: Choosing Your AI Agent Platform in 2025',
+        excerpt: 'A deep-dive comparison of OpenAI Agent Builder, Google Opal, and Jules. We analyze features, DX, and cost to help you choose the right AI agent platform.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/083b318d-a5ac-42c5-a3b9-0fc7e9cf7bd9.png?', // Using the direct URL as per your strategy
+        date: 'October 10, 2025',
+        readTime: '14 min read',
+        tags: ["ai agents","openai","google cloud","developer tools","llm"],
+        isFeatured: false
+    },
+    {
         slug: 'jules-ai-developer-first-agent-builder-guide',
         title: 'Jules AI: The Developer-First Agent Builder You Need to Know',
         excerpt: 'Explore Jules, the new AI agent builder for developers. A deep dive into its code-first scripting, multi-agent orchestration, and developer-centric features.',
