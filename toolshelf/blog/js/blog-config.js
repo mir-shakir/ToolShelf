@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'secure-github-actions-with-oidc-guide',
+        title: 'Beyond Static Secrets: A Developer\'s Guide to Securing GitHub Actions with OIDC',
+        excerpt: 'Tired of juggling static secrets in GitHub Actions? Learn how to use OpenID Connect (OIDC) to create secure, passwordless CI/CD pipelines with AWS.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/8c47d7af-17b5-46de-8311-8333088b9923.png?', // Using the direct URL as per your strategy
+        date: 'October 23, 2025',
+        readTime: '13 min read',
+        tags: ["github actions","security","ci/cd","oidc","aws"],
+        isFeatured: false
+    },
+    {
         slug: 'next-js-16-deep-dive-universal-adapters-ai-components',
         title: 'Next.js 16 Deep Dive: Universal Adapters, AI Components & The End of Vendor Lock-in',
         excerpt: 'Explore the groundbreaking features of Next.js 16, from Universal Adapters ending vendor lock-in to new AI-powered components. A deep dive for developers.',
