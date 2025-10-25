@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'google-project-idx-developer-guide',
+        title: 'Google Project IDX: A Developer\'s Guide to the AI-Powered Web IDE',
+        excerpt: 'Dive into Google\'s Project IDX, the new AI-powered, browser-based IDE. Learn how to get started, leverage Gemini for coding, and see how it compares to VS Code.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/3ad2758c-c3b5-4053-a673-1dffb450d0fb.png?', // Using the direct URL as per your strategy
+        date: 'October 25, 2025',
+        readTime: '13 min read',
+        tags: ["project idx","ai","ide","google","web development"],
+        isFeatured: false
+    },
+    {
         slug: 'secure-github-actions-with-oidc-guide',
         title: 'Beyond Static Secrets: A Developer\'s Guide to Securing GitHub Actions with OIDC',
         excerpt: 'Tired of juggling static secrets in GitHub Actions? Learn how to use OpenID Connect (OIDC) to create secure, passwordless CI/CD pipelines with AWS.',
