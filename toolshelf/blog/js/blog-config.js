@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'python-3-14-jit-compiler-deep-dive',
+        title: 'Python 3.14\'s JIT Compiler: A Developer\'s Deep Dive',
+        excerpt: 'Explore Python 3.14\'s experimental JIT compiler. Learn how its \'copy-and-patch\' design boosts performance and what it means for your development workflow.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/2ce10d83-c09e-4ae0-a3c3-2acc970b77e8.png?', // Using the direct URL as per your strategy
+        date: 'October 27, 2025',
+        readTime: '10 min read',
+        tags: ["python","jit","performance","cpython","optimization"],
+        isFeatured: false
+    },
+    {
         slug: 'secure-github-actions-with-oidc-guide',
         title: 'Beyond Static Secrets: A Developer\'s Guide to Securing GitHub Actions with OIDC',
         excerpt: 'Tired of juggling static secrets in GitHub Actions? Learn how to use OpenID Connect (OIDC) to create secure, passwordless CI/CD pipelines with AWS.',
