@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'zig-1-0-guide-modern-c-alternative',
+        title: 'Zig 1.0 Arrives: A Practical Guide to the Modern C Alternative',
+        excerpt: 'Zig 1.0 is here. Discover why this modern C alternative is gaining traction for performant systems programming. Get started with our practical guide.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/b8bb608c-9522-46ed-b7f0-18fbcd096b51.png', // Using the direct URL as per your strategy
+        date: 'October 30, 2025',
+        readTime: '14 min read',
+        tags: ["zig","c","rust","systems-programming","performance"],
+        isFeatured: false
+    },
+    {
         slug: 'python-3-14-jit-compiler-deep-dive',
         title: 'Python 3.14\'s JIT Compiler: A Developer\'s Deep Dive',
         excerpt: 'Explore Python 3.14\'s experimental JIT compiler. Learn how its \'copy-and-patch\' design boosts performance and what it means for your development workflow.',
