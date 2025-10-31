@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'run-n8n-free-forever-google-cloud',
+        title: 'How to Run n8n for Free Forever on Google Cloud',
+        excerpt: 'Save $240/year by self-hosting n8n on Google Cloud\'s free tier. This step-by-step guide shows you how to set up unlimited automation for $0/month.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/0aaf17eb-cf16-45f1-b1a9-5d1e54cfb801.png', // Using the direct URL as per your strategy
+        date: 'October 31, 2025',
+        readTime: '11 min read',
+        tags: ["n8n","google cloud","self-hosting","automation","free tier"],
+        isFeatured: false
+    },
+    {
         slug: 'zig-1-0-guide-modern-c-alternative',
         title: 'Zig 1.0 Arrives: A Practical Guide to the Modern C Alternative',
         excerpt: 'Zig 1.0 is here. Discover why this modern C alternative is gaining traction for performant systems programming. Get started with our practical guide.',
