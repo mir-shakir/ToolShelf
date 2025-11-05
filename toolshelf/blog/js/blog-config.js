@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'i-automated-my-developer-blog-6-months-what-i-learned',
+        title: 'I Automated My Developer Blog for 6 Months. Here\'s What I Learned.',
+        excerpt: 'I spent 6 months building an AI system to fully automate my blog. It failed spectacularly. Here\'s the hybrid approach that actually works.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/66b77f85-83b1-456c-b46b-803efa5f6570.png', // Using the direct URL as per your strategy
+        date: 'November 5, 2025',
+        readTime: '10 min read',
+        tags: ["ai","automation","blogging","content creation","n8n"],
+        isFeatured: false
+    },
+    {
         slug: 'run-n8n-free-forever-google-cloud',
         title: 'How to Run n8n for Free Forever on Google Cloud',
         excerpt: 'Save $240/year by self-hosting n8n on Google Cloud\'s free tier. This step-by-step guide shows you how to set up unlimited automation for $0/month.',
