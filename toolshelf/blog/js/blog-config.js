@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'aider-ai-pair-programmer-terminal-guide',
+        title: 'Aider: The AI Pair Programmer That Lives in Your Terminal',
+        excerpt: 'Discover Aider, the AI pair programmer that integrates directly into your terminal and Git workflow. Code faster and safer with atomic, auto-committed changes.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/1f75a972-a238-4479-b126-1898274f4b78.png', // Using the direct URL as per your strategy
+        date: 'November 11, 2025',
+        readTime: '10 min read',
+        tags: ["ai","developer tools","aider","git","pair programming"],
+        isFeatured: false
+    },
+    {
         slug: 'run-n8n-free-forever-google-cloud',
         title: 'How to Run n8n for Free Forever on Google Cloud',
         excerpt: 'Save $240/year by self-hosting n8n on Google Cloud\'s free tier. This step-by-step guide shows you how to set up unlimited automation for $0/month.',
