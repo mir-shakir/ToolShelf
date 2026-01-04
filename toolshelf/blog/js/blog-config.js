@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'java-virtual-threads-concurrency-guide',
+        title: 'Java Virtual Threads: The Complete Guide to High-Throughput Concurrency',
+        excerpt: 'Master Java Virtual Threads in JDK 21+. Learn how Project Loom revolutionizes concurrency, eliminates blocking I/O, and enables high-throughput applications.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/a0a015f3-d898-4692-8c91-ffc754e23705_blog_header.png', // Using the direct URL as per your strategy
+        date: 'January 4, 2026',
+        readTime: '8 min read',
+        tags: ["java","concurrency","performance","backend","virtual threads"],
+        isFeatured: false
+    },
+    {
         slug: 'building-local-first-apps-pglite-postgres-browser',
         title: 'Building Local-First Apps with PGlite: The Power of Postgres in Your Browser',
         excerpt: 'Discover PGlite: Run a full Postgres instance in your browser with WebAssembly. Learn to build zero-latency, local-first apps in this technical guide.',
