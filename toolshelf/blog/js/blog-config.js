@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'java-virtual-threads-developer-guide-high-throughput-concurrency',
+        title: 'Java\'s Virtual Threads: A Developer\'s Guide to High-Throughput Concurrency',
+        excerpt: 'A complete guide to Java\'s virtual threads. Learn how they solve platform thread limitations, master structured concurrency, and unlock massive scalability.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/9abd79c8-b355-4417-83d0-e5d94a393950_blog_header.png', // Using the direct URL as per your strategy
+        date: 'January 4, 2026',
+        readTime: '10 min read',
+        tags: ["java","concurrency","virtual threads","performance","jdk"],
+        isFeatured: false
+    },
+    {
         slug: 'run-n8n-free-forever-google-cloud',
         title: 'How to Run n8n for Free Forever on Google Cloud',
         excerpt: 'Save $240/year by self-hosting n8n on Google Cloud\'s free tier. This step-by-step guide shows you how to set up unlimited automation for $0/month.',
