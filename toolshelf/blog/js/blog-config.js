@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'building-local-first-apps-pglite-postgres-browser',
+        title: 'Building Local-First Apps with PGlite: The Power of Postgres in Your Browser',
+        excerpt: 'Discover PGlite: Run a full Postgres instance in your browser with WebAssembly. Learn to build zero-latency, local-first apps in this technical guide.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/4da09bc5-882c-4450-9182-88cab7634f85_blog_header.png', // Using the direct URL as per your strategy
+        date: 'January 4, 2026',
+        readTime: '8 min read',
+        tags: ["postgres","webassembly","local-first","javascript","database"],
+        isFeatured: false
+    },
+    {
         slug: 'run-n8n-free-forever-google-cloud',
         title: 'How to Run n8n for Free Forever on Google Cloud',
         excerpt: 'Save $240/year by self-hosting n8n on Google Cloud\'s free tier. This step-by-step guide shows you how to set up unlimited automation for $0/month.',

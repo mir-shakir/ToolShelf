@@ -1,0 +1,109 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><!-- Primary Meta Tags --><title>Building Local-First Apps with PGlite: The Power of Postgres in Your Browser</title><meta name="title" content="Building Local-First Apps with PGlite: The Power of Postgres in Your Browser"><meta name="description" content="Discover PGlite: Run a full Postgres instance in your browser with WebAssembly. Learn to build zero-latency, local-first apps in this technical guide."><!-- Canonical URL --><link rel="canonical" href="https://toolshelf.tech/blog/building-local-first-apps-pglite-postgres-browser/"><!-- Open Graph / Facebook --><meta property="og:type" content="article"><meta property="og:url" content="https://toolshelf.tech/blog/building-local-first-apps-pglite-postgres-browser/"><meta property="og:title" content="Building Local-First Apps with PGlite: The Power of Postgres in Your Browser"><meta property="og:description" content="Discover PGlite: Run a full Postgres instance in your browser with WebAssembly. Learn to build zero-latency, local-first apps in this technical guide."><meta property="og:image" content="https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/4da09bc5-882c-4450-9182-88cab7634f85_blog_header.png"><!-- Twitter --><meta property="twitter:card" content="summary_large_image"><meta property="twitter:url" content="https://toolshelf.tech/blog/building-local-first-apps-pglite-postgres-browser/"><meta property="twitter:title" content="Building Local-First Apps with PGlite: The Power of Postgres in Your Browser"><meta property="twitter:description" content="Discover PGlite: Run a full Postgres instance in your browser with WebAssembly. Learn to build zero-latency, local-first apps in this technical guide."><meta property="twitter:image" content="https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/4da09bc5-882c-4450-9182-88cab7634f85_blog_header.png"><!-- Favicon --><link rel="icon" type="image/x-icon" href="../../favicon.ico"><link rel="icon" type="image/png" sizes="32x32" href="../../favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="../../favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="../../apple-touch-icon.png"><link rel="manifest" href="../../manifest.json"><meta name="theme-color" content="#3b82f6"><!-- CSS --><link rel="stylesheet" href="../../shared/css/variables.css"><link rel="stylesheet" href="../../shared/css/base.css"><link rel="stylesheet" href="../../shared/css/layout.css"><link rel="stylesheet" href="../css/blog.css"><!-- Fonts --><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fira+Code&display=swap" rel="stylesheet"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"><!-- Prism.js for Syntax Highlighting --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css"></head><body><div class="scroll-progress-bar"></div><header class="app-header"><div class="header-container"><div class="logo-section"><div class="logo-icon"><i class="fas fa-toolbox"></i></div><a href="../../" class="logo-text">ToolShelf</a></div><nav class="main-nav"><a href="../../" class="nav-link">Home</a><a href="../../#tools" class="nav-link">Tools</a><a href="../" class="nav-link active">Blog</a><a href="../../#about" class="nav-link">About</a></nav><div class="header-actions"><button class="theme-switcher-btn" id="themeSwitcher" title="Switch to dark mode" aria-label="Switch to dark mode"><i class="fas fa-moon"></i></button></div></div></header><main><div class="blog-post-container"><aside class="toc-container" id="tocContainer"><h3>Table of Contents</h3><ul class="toc-list" id="tocList"></ul></aside><article class="blog-post-article"><header class="blog-post-header"><h1 class="blog-post-title">Building Local-First Apps with PGlite: The Power of Postgres in Your Browser</h1><div class="blog-post-meta"><span>By The ToolShelf Team</span><span><i class="fas fa-calendar-alt"></i> January 4, 2026</span><span><i class="fas fa-clock"></i> 8 min read</span></div><div class="blog-post-tags"><span class="tag-badge">Postgres</span><span class="tag-badge">WebAssembly</span><span class="tag-badge">Local-First</span><span class="tag-badge">JavaScript</span><span class="tag-badge">Database</span></div></header><div class="blog-post-content" id="articleContent"><p>For decades, web development has been defined by a fundamental friction: the physical distance between the client's state and the server's database. We have built towers of complexity—loading spinners, optimistic UI updates, and intricate caching layers—just to mask the latency of HTTP requests. We treat the browser as a dumb terminal that merely renders data fetched from a "real" source of truth miles away.</p><p>This paradigm is shifting. The emergence of <strong>Local-First</strong> architecture offers a modern solution to these friction points, flipping the traditional model on its head. In a local-first application, the primary data source is on the user's device, delivering instant interactions and seamless offline capability.</p><p>Enter <strong>PGlite</strong>. Developed by ElectricSQL, PGlite is a lightweight, WebAssembly (Wasm) build of Postgres packaged into a TypeScript client. It isn't a simulation; it is a full Postgres instance running entirely within the browser process.</p><img src="https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/4da09bc5-882c-4450-9182-88cab7634f85_blog_header.png" alt="PGlite Local-First Architecture Diagram" style="width:100%; border-radius:8px; margin:20px 0;"><figcaption style="text-align: center; font-size: 0.9em; color: #666; margin-bottom: 20px;">Figure 1: PGlite Architecture Overview</figcaption><p>PGlite revolutionizes frontend development by allowing developers to run a full, reactive Postgres database directly in the browser. This enables the creation of zero-latency applications with radically simplified state management, bringing the power of the world's most advanced open-source database to the client side.</p><h2 id="what-is-pglite-and-how-does-it-work">What is PGlite and How Does it Work?</h2><p>At its core, PGlite is a repackaging of the PostgreSQL database engine into a format that web browsers can understand and execute. It bridges the gap between server-grade data management and client-side execution environments.</p><h3 id="the-magic-of-webassembly-wasm">The Magic of WebAssembly (Wasm)</h3><p>PGlite leverages WebAssembly (Wasm) to run compiled C code within the JavaScript runtime. The team at ElectricSQL has successfully compiled the actual Postgres source code into Wasm. This is a critical distinction: PGlite is not a JavaScript rewrite of Postgres logic, nor is it a mock interface like <code>pg-mem</code>. It is the genuine Postgres engine, executing the same internal logic as a server-side instance, but sandboxed within your browser tab. This allows it to run with surprising performance, handling complex queries and transactions locally.</p><h3 id="pglite-vs-sqlite-wasm">PGlite vs. SQLite/Wasm</h3><p>Historically, if a developer wanted a SQL database in the browser, SQLite (via Wasm) was the only viable option. While SQLite is excellent, it forces a context switch. Developers often use Postgres on the server and SQLite on the client, leading to "dialect fatigue"—the mental overhead of remembering which SQL features (like specific date functions or JSON operators) are supported in which environment.</p><p>PGlite eliminates this discrepancy. You can use the exact same database engine on both ends of the wire. Furthermore, PGlite brings the rich ecosystem of Postgres extensions to the browser. Features like <code>pgvector</code> can now be run client-side, enabling vector similarity searches for AI applications without ever hitting an API endpoint.</p><h2 id="the-strategic-shift-why-choose-local-first-architecture">The Strategic Shift: Why Choose Local-First Architecture?</h2><p>Adopting PGlite isn't just about changing databases; it's about adopting a Local-First architecture. In this model, the primary copy of the data lives on the client device, while the cloud serves effectively as a backup and synchronization relay.</p><ul><li><strong>Zero Latency:</strong> When your database is in-memory or persisted to IndexedDB within the browser, read and write operations do not traverse the network. Interactions feel instantaneous. There is no "request/response" cycle; there is simply an immediate state change. This responsiveness creates a user experience (UX) that feels more like a native desktop app than a website.</li><li><strong>Offline Capabilities:</strong> In a local-first app, offline support is not an afterthought or a complex service worker retrofit—it is the default state. Because the database is local, the application works perfectly whether the user is in a tunnel, on a plane, or suffering from flaky Wi-Fi. The app remains fully functional, and data syncs when connectivity is restored.</li><li><strong>Simplified State Management:</strong> Modern frontend development is often plagued by state management complexity (Redux, Zustand, Context API) designed to manage server data fetching. With PGlite, the database becomes the single source of truth for your UI. You can query the database directly from your components, significantly reducing the boilerplate code required to manage application state.</li></ul><h2 id="technical-tutorial-building-with-pglite">Technical Tutorial: Building with PGlite</h2><p>Let's look at how to get a PGlite instance running in a standard web project.</p><h3 id="installation-and-initialization">Installation and Initialization</h3><p>First, install the package via npm. It is lightweight and creates no external system dependencies.</p><pre><code class="language-bash">npm install @electric-sql/pglite</code></pre><p>Initializing the database is straightforward. You can import <code>PGlite</code> and instantiate it immediately in your JavaScript or TypeScript file.</p><pre><code class="language-typescript">import { PGlite } from "@electric-sql/pglite";
+
+// Initialize an ephemeral (in-memory) instance
+const db = new PGlite();
+console.log("PGlite started!");</code></pre><h3 id="executing-queries">Executing Queries</h3><p>Interacting with PGlite uses standard SQL. The API is promise-based, making it easy to use with <code>async/await</code>.</p><pre><code class="language-typescript">async function initDB() {
+  // Create a table
+  await db.query(`
+    CREATE TABLE IF NOT EXISTS todo (
+      id SERIAL PRIMARY KEY,
+      task TEXT,
+      done BOOLEAN DEFAULT false
+    );
+  `);
+
+  // Insert data using parameterized queries
+  // Always use parameters ($1, $2) to prevent injection, even locally.
+  await db.query("INSERT INTO todo (task, done) VALUES ($1, $2)", [
+    "Install PGlite",
+    true,
+  ]);
+
+  // Select data
+  const result = await db.query("SELECT * FROM todo");
+  console.log(result.rows);
+  // Output: [{ id: 1, task: 'Install PGlite', done: true }]
+}</code></pre><h3 id="persisting-data">Persisting Data</h3><p>By default, the example above runs in memory. If the user refreshes the page, the data is lost. To make the app truly local-first, we need persistence. PGlite enables this by mapping the Postgres file system to the browser's IndexedDB.</p><p>To enable persistence, simply provide a data directory path prefixed with <code>idb://</code> during initialization:</p><pre><code class="language-typescript">// This will persist data to IndexedDB under the name "my-app-db"
+const db = new PGlite("idb://my-app-db");</code></pre><p>Now, your data survives page reloads and browser restarts.</p><h2 id="integrating-pglite-with-modern-frameworks">Integrating PGlite with Modern Frameworks</h2><p>While raw SQL is powerful, modern web development relies on reactivity—the UI should update automatically when data changes.</p><h3 id="reactivity-in-react-vue">Reactivity in React/Vue</h3><p>PGlite supports the concept of "Live Queries." This allows components to subscribe to a query and re-render whenever the underlying data changes, eliminating the need to manually trigger refetches.</p><p>Here is a conceptual example of a React hook leveraging PGlite's subscription capabilities:</p><pre><code class="language-typescript">import { useState, useEffect } from 'react';
+
+function useLiveQuery(db, sql) {
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    // Subscribe to the query
+    const unsubscribe = db.live.query(sql, [], (results) => {
+      setData(results.rows);
+    });
+
+    // Cleanup subscription on unmount
+    return () => unsubscribe();
+  }, [db, sql]);
+
+  return data;
+}
+
+// Usage in a component
+const TodoList = ({ db }) => {
+  const todos = useLiveQuery(db, "SELECT * FROM todo ORDER BY id DESC");
+
+  return (
+    <ul>
+      {todos.map(t => <li key={t.id}>{t.task}</li>)}
+    </ul>
+  );
+};
+</code></pre><h3 id="handling-synchronization-the-future">Handling Synchronization (The Future)</h3><p>The final piece of the local-first puzzle is getting data off the device and syncing it with other users. While you can build custom REST endpoints to push local changes to a server, this is non-trivial to get right (handling conflict resolution, diffing, etc.).</p><p>This is where protocols like <strong>ElectricSQL</strong> come into play. Designed specifically to pair with PGlite, ElectricSQL handles seamless, bi-directional sync between your local PGlite instance and a central Postgres server. This provides the "multiplayer" functionality modern apps require without the developer needing to write complex sync logic.</p><h2 id="conclusion">Conclusion</h2><p>PGlite represents a significant leap forward for web architecture. By bringing the full power of Postgres into the browser via WebAssembly, it bridges the historical gap between frontend reactivity and backend robustness.</p><p>The benefits are tangible: zero-latency interfaces, inherent offline resilience, and the simplicity of using standard SQL everywhere. For developers, it means less boilerplate code; for users, it means an app that feels instant and reliable.</p><p>If you are planning your next web application, I strongly encourage you to experiment with PGlite. The shift to local-first is not just a trend—it is a better way to build software.</p><p><em>Building secure, privacy-first tools means staying ahead of technology trends. At <a href="https://toolshelf.tech">ToolShelf</a>, we prioritize local-first tools that respect your privacy—your data never leaves your device unless you want it to.</em></p><p>Stay secure &amp; happy coding,<br>&mdash; ToolShelf Team</p></div><div class="blog-post-navigation"><a href="#" id="prevPostLink" class="nav-link-post prev-post hidden"><i class="fas fa-arrow-left"></i><span>Previous Post</span><span class="nav-post-title"></span></a><a href="#" id="nextPostLink" class="nav-link-post next-post hidden"><span>Next Post</span><span class="nav-post-title"></span><i class="fas fa-arrow-right"></i></a></div><section class="related-posts-section"><h2 class="section-title">Also Read</h2><div class="related-posts-grid"><!-- Related posts will be injected here by JavaScript --></div></section></article></div></main><footer class="app-footer"><div class="footer-content"><div class="footer-main"><div class="footer-logo"><div class="logo-icon"><i class="fas fa-toolbox"></i></div><strong>ToolShelf</strong></div><p class="footer-description">Professional online tools that respect your privacy. Built for developers and professionals worldwide.</p></div><div class="footer-links"><div class="footer-section"><h4>Tools</h4><a href="../../json-formatter/">JSON Formatter</a><a href="../../base64-encoder/">Base64 Encoder</a><a href="../../text-transformer/">Text Transformer</a><a href="../../qr-generator/">QR Generator</a><a href="../../hash-generator/">Hash Generator</a></div><div class="footer-section"><h4>Resources</h4><a href="../../#about">About ToolShelf</a><a href="../../privacy/">Privacy Policy</a><a href="../../terms/">Terms of Use</a><a href="../../faq/">FAQs</a><a href="../../contact/">Contact</a></div><div class="footer-section"><h4>Company</h4><a href="../">Blog</a><a href="../../#about">About Us</a><a href="../../contact/">Contact</a></div></div></div><div class="footer-bottom"><p>© 2026 ToolShelf. All tools work offline and respect your privacy.</p></div></footer><script src="../../shared/config/constants.js"></script><script src="../../shared/js/core/utils.js"></script><script src="../../shared/js/core/analytics.js"></script><script src="../../shared/js/core/app.js"></script><script type="module" src="../js/blog-post.js"></script><!-- Prism.js for Syntax Highlighting --><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-css.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-markup.min.js"></script><script>// Minimal Theme Switcher
+    (function () {
+      let currentTheme = 'light';
+
+      function loadTheme() {
+        try {
+          const saved = localStorage.getItem('toolshelf-theme');
+          if (saved === 'dark' || saved === 'light') {
+            currentTheme = saved;
+          } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            currentTheme = 'dark';
+          }
+          document.documentElement.setAttribute('data-theme', currentTheme);
+        } catch (e) {
+          document.documentElement.setAttribute('data-theme', 'light');
+        }
+      }
+
+      function toggleTheme() {
+        currentTheme = currentTheme === 'light' ? 'dark' : 'light';
+        document.documentElement.setAttribute('data-theme', currentTheme);
+        try {
+          localStorage.setItem('toolshelf-theme', currentTheme);
+        } catch (e) { }
+        updateButton();
+      }
+
+      function updateButton() {
+        const btn = document.getElementById('themeSwitcher');
+        if (btn) {
+          const icon = btn.querySelector('i');
+          const isDark = currentTheme === 'dark';
+          if (icon) {
+            icon.className = isDark ? 'fas fa-sun' : 'fas fa-moon';
+          }
+          btn.title = isDark ? 'Switch to light mode' : 'Switch to dark mode';
+          btn.setAttribute('aria-label', btn.title);
+        }
+      }
+
+      // Load theme immediately
+      loadTheme();
+
+      // Setup when DOM is ready
+      document.addEventListener('DOMContentLoaded', function () {
+        updateButton();
+        const btn = document.getElementById('themeSwitcher');
+        if (btn) {
+          btn.addEventListener('click', toggleTheme);
+        }
+      });
+    })();</script><div id="feedbackWidgetContainer"></div><script type="module">import { initFeedbackWidget } from '../../shared/js/core/feedback-widget.js';
+    document.addEventListener('DOMContentLoaded', () => {
+      initFeedbackWidget('Blog Post: ' + document.title);
+    });</script></body></html>
