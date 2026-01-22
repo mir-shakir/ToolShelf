@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'redis-concurrency-vs-parallelism-architecture',
+        title: 'Concurrency vs. Parallelism: How Redis Scales Without Multi-Threading',
+        excerpt: 'Discover how Redis achieves massive throughput with a single-threaded event loop, the reactor pattern, and non-blocking I/O while avoiding context switching.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/345e86b0-c8a6-4442-a2ea-4a4404d68680_blog_header.png', // Using the direct URL as per your strategy
+        date: 'January 22, 2026',
+        readTime: '6 min read',
+        tags: ["redis","concurrency","backend","performance","architecture"],
+        isFeatured: false
+    },
+    {
         slug: 'java-virtual-threads-concurrency-guide',
         title: 'Java Virtual Threads: The Complete Guide to High-Throughput Concurrency',
         excerpt: 'Master Java Virtual Threads in JDK 21+. Learn how Project Loom revolutionizes concurrency, eliminates blocking I/O, and enables high-throughput applications.',
