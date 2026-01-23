@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'vertical-vs-horizontal-scaling-developers-guide',
+        title: 'Vertical vs. Horizontal Scaling: The Developer\'s Guide to Architecture',
+        excerpt: 'Scale Up or Scale Out? A deep dive into the architectural trade-offs between vertical and horizontal scaling, cloud economics, and operational complexity.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/3a5e3f75-d678-4dbd-8bd2-df7cee3c1496_blog_header.png', // Using the direct URL as per your strategy
+        date: 'January 23, 2026',
+        readTime: '8 min read',
+        tags: ["system design","scalability","devops","architecture","infrastructure"],
+        isFeatured: false
+    },
+    {
         slug: 'mastering-nginx-reverse-proxy-configuration-guide',
         title: 'Mastering Nginx: The Ultimate Reverse Proxy Configuration Guide',
         excerpt: 'Learn how to configure Nginx as a production-grade reverse proxy. This guide covers SSL termination, load balancing, performance caching, and security hardening.',
