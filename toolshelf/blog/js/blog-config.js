@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'mastering-nginx-reverse-proxy-configuration-guide',
+        title: 'Mastering Nginx: The Ultimate Reverse Proxy Configuration Guide',
+        excerpt: 'Learn how to configure Nginx as a production-grade reverse proxy. This guide covers SSL termination, load balancing, performance caching, and security hardening.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/4b4ee2dd-4ecf-40be-9137-db64b5d8acab_blog_header.png', // Using the direct URL as per your strategy
+        date: 'January 23, 2026',
+        readTime: '10 min read',
+        tags: ["devops","nginx","web performance","security","server administration"],
+        isFeatured: false
+    },
+    {
         slug: 'ci-cd-pipeline-best-practices-2026',
         title: 'CI/CD Pipeline Best Practices for 2026: Architecting for Speed and Security',
         excerpt: 'Upgrade your DevOps workflow with 2026 standards: advanced caching, shift-left security, blue-green deployments, and optimizing developer feedback loops.',
