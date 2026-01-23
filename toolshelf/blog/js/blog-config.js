@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'linux-permissions-chmod-777-vs-755',
+        title: 'Linux Permissions Guide: Chmod 777 vs 755 Explained',
+        excerpt: 'Master Linux file permissions. Understand the difference between chmod 777 and 755, learn octal notation, and fix \'Permission Denied\' safely.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/0ac667c2-c65f-43e2-b21d-3957cce54bdc_blog_header.png', // Using the direct URL as per your strategy
+        date: 'January 23, 2026',
+        readTime: '8 min read',
+        tags: ["linux","security","devops","server-management","best-practices"],
+        isFeatured: false
+    },
+    {
         slug: 'round-robin-vs-least-connections-load-balancing',
         title: 'Round Robin vs. Least Connections: The Ultimate Load Balancing Showdown',
         excerpt: 'Round Robin vs. Least Connections: A technical deep dive into load balancing algorithms, performance implications, and Nginx configuration strategies.',
