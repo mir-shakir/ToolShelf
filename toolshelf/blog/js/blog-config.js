@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'round-robin-vs-least-connections-load-balancing',
+        title: 'Round Robin vs. Least Connections: The Ultimate Load Balancing Showdown',
+        excerpt: 'Round Robin vs. Least Connections: A technical deep dive into load balancing algorithms, performance implications, and Nginx configuration strategies.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/5057ab43-e517-4195-926c-4480edbe113a_blog_header.png', // Using the direct URL as per your strategy
+        date: 'January 23, 2026',
+        readTime: '6 min read',
+        tags: ["load-balancing","nginx","devops","system-design","backend"],
+        isFeatured: false
+    },
+    {
         slug: 'vertical-vs-horizontal-scaling-developers-guide',
         title: 'Vertical vs. Horizontal Scaling: The Developer\'s Guide to Architecture',
         excerpt: 'Scale Up or Scale Out? A deep dive into the architectural trade-offs between vertical and horizontal scaling, cloud economics, and operational complexity.',
