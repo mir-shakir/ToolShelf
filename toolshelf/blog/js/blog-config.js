@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'blue-green-vs-canary-deployment-strategies',
+        title: 'Blue-Green vs. Canary: Choosing the Right Zero-Downtime Deployment Strategy',
+        excerpt: 'Compare Blue-Green vs. Canary releases. Learn the architecture, risk profiles, and cost implications to choose the right zero-downtime strategy.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/7fd8722b-3add-4460-b684-0aa6510c9fb1_blog_header.png', // Using the direct URL as per your strategy
+        date: 'January 23, 2026',
+        readTime: '8 min read',
+        tags: ["devops","deployment","kubernetes","architecture","ci/cd"],
+        isFeatured: false
+    },
+    {
         slug: 'prometheus-vs-grafana-monitoring-stack',
         title: 'Prometheus vs. Grafana: Building the Ultimate Monitoring Stack',
         excerpt: 'Confused by Prometheus vs Grafana? It\'s not a competition. Learn the difference between the backend engine and frontend dashboard, and how to combine them.',
