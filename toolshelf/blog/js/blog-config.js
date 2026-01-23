@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'kafka-architecture-deep-dive-topics-partitions-brokers',
+        title: 'Kafka Architecture Deep Dive: Topics, Partitions, and Brokers Explained',
+        excerpt: 'Apache Kafka is more than a message queue—it\'s a distributed commit log. Explore the architecture of brokers, topics, partitions, and replication to master data consistency.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/e7b10177-02d9-4bb2-9bd7-06021826d082_blog_header.png', // Using the direct URL as per your strategy
+        date: 'January 23, 2026',
+        readTime: '8 min read',
+        tags: ["apache kafka","distributed systems","data engineering","backend architecture","event-driven"],
+        isFeatured: false
+    },
+    {
         slug: 'redis-persistence-rdb-vs-aof-guide',
         title: 'Redis Persistence Explained: RDB vs AOF vs Hybrid in 2026',
         excerpt: 'Master Redis persistence strategies. Compare RDB snapshots vs AOF logging, understand trade-offs, and learn how to implement hybrid persistence for 2026.',
