@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'spring-transactional-private-methods-cglib-proxy',
+        title: 'Spring Internals: Why @Transactional Fails on Private Methods',
+        excerpt: 'Understand why Spring\'s @Transactional annotation is ignored on private methods. A deep dive into CGLIB proxies, dynamic subclassing, and self-invocation traps.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/3055ec6f-7675-4a4a-b9c1-dc0207e14186_blog_header.png', // Using the direct URL as per your strategy
+        date: 'January 23, 2026',
+        readTime: '5 min read',
+        tags: ["java","spring boot","architecture","debugging","best practices"],
+        isFeatured: false
+    },
+    {
         slug: 'redis-concurrency-vs-parallelism-architecture',
         title: 'Concurrency vs. Parallelism: How Redis Scales Without Multi-Threading',
         excerpt: 'Discover how Redis achieves massive throughput with a single-threaded event loop, the reactor pattern, and non-blocking I/O while avoiding context switching.',
