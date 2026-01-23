@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'kubernetes-architecture-pods-nodes-clusters',
+        title: 'Kubernetes Architecture Demystified: Pods, Nodes, and Clusters Explained',
+        excerpt: 'Master Kubernetes architecture with this simple guide. Learn the differences between Clusters, Nodes, and Pods using easy-to-understand manufacturing analogies.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/8ed5a67c-48da-4717-b604-88bb39a901e9_blog_header.png', // Using the direct URL as per your strategy
+        date: 'January 23, 2026',
+        readTime: '6 min read',
+        tags: ["kubernetes","devops","cloud-computing","containers","architecture"],
+        isFeatured: false
+    },
+    {
         slug: 'docker-vs-podman-daemonless-containerization-2026',
         title: 'Docker vs. Podman in 2026: Is Daemonless the Future of Containerization?',
         excerpt: 'A deep dive into the architectural and security differences between Docker and Podman. Is a daemonless, rootless future inevitable for containerization?',
