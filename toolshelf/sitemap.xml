@@ -585,4 +585,11 @@
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
+
+    <url>
+        <loc>https://toolshelf.tech/blog/spring-transactional-private-methods-cglib-proxy/</loc>
+        <lastmod>2026-01-23</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
 </urlset>
