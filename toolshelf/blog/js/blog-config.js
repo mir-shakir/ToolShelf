@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'database-sharding-vs-partitioning-guide',
+        title: 'Database Sharding vs. Partitioning: A Developer\'s Guide to Scaling Strategies',
+        excerpt: 'Clarify the confusion between database sharding and partitioning. Learn the architectural differences, implementation strategies, and when to scale horizontally.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/4dcb3ec6-cd50-4d53-b560-10e19c48f227_blog_header.png', // Using the direct URL as per your strategy
+        date: 'January 23, 2026',
+        readTime: '8 min read',
+        tags: ["database","sharding","architecture","performance","scaling"],
+        isFeatured: false
+    },
+    {
         slug: 'round-robin-vs-least-connections-load-balancing',
         title: 'Round Robin vs. Least Connections: The Ultimate Load Balancing Showdown',
         excerpt: 'Round Robin vs. Least Connections: A technical deep dive into load balancing algorithms, performance implications, and Nginx configuration strategies.',
