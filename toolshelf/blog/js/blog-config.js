@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'ci-cd-pipeline-best-practices-2026',
+        title: 'CI/CD Pipeline Best Practices for 2026: Architecting for Speed and Security',
+        excerpt: 'Upgrade your DevOps workflow with 2026 standards: advanced caching, shift-left security, blue-green deployments, and optimizing developer feedback loops.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/50a78da1-a687-4fe3-8198-e4c548d3805e_blog_header.png', // Using the direct URL as per your strategy
+        date: 'January 23, 2026',
+        readTime: '6 min read',
+        tags: ["devops","ci/cd","security","automation","best practices"],
+        isFeatured: false
+    },
+    {
         slug: 'git-merge-vs-rebase-visual-workflow-guide',
         title: 'Git Merge vs. Rebase: A Visual Guide to Workflow Harmony',
         excerpt: 'Stop the spaghetti graph. Learn the definitive differences between git merge and git rebase, when to use which, and the golden rule for a clean codebase.',
