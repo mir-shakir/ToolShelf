@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'acid-transactions-distributed-systems-hard-truth',
+        title: 'ACID Transactions in Distributed Systems: The Hard Truth',
+        excerpt: 'Distributed systems break ACID guarantees. Learn why 2PC fails, how the Saga pattern manages chaos, and why eventual consistency is the hard truth of cloud scaling.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/5df83470-f76f-4280-8362-2206a5e1d6ad_blog_header.png', // Using the direct URL as per your strategy
+        date: 'January 23, 2026',
+        readTime: '10 min read',
+        tags: ["distributed-systems","architecture","microservices","database","backend"],
+        isFeatured: false
+    },
+    {
         slug: 'spring-transactional-private-methods-cglib-proxy',
         title: 'Spring Internals: Why @Transactional Fails on Private Methods',
         excerpt: 'Understand why Spring\'s @Transactional annotation is ignored on private methods. A deep dive into CGLIB proxies, dynamic subclassing, and self-invocation traps.',
