@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'prometheus-vs-grafana-monitoring-stack',
+        title: 'Prometheus vs. Grafana: Building the Ultimate Monitoring Stack',
+        excerpt: 'Confused by Prometheus vs Grafana? It\'s not a competition. Learn the difference between the backend engine and frontend dashboard, and how to combine them.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/c2c5c477-2f7f-4cf8-9e92-0360fde08a9a_blog_header.png', // Using the direct URL as per your strategy
+        date: 'January 23, 2026',
+        readTime: '6 min read',
+        tags: ["devops","monitoring","prometheus","grafana","observability"],
+        isFeatured: false
+    },
+    {
         slug: 'rsa-vs-ed25519-ssh-security-guide-2026',
         title: 'RSA vs. Ed25519: The Definitive SSH Security Guide (2026)',
         excerpt: 'Stop using RSA for new SSH keys. Discover why Ed25519 offers superior security, speed, and efficiency for modern infrastructure in our 2026 comparison guide.',
