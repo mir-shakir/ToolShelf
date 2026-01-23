@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'cap-theorem-explained-system-design',
+        title: 'CAP Theorem Explained: A Developer\'s Guide to System Design',
+        excerpt: 'Master the CAP Theorem in distributed systems. Understand the critical trade-offs between Consistency, Availability, and Partition Tolerance.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/ac0f560a-d246-4b8c-850b-fae3143b2660_blog_header.png', // Using the direct URL as per your strategy
+        date: 'January 23, 2026',
+        readTime: '8 min read',
+        tags: ["system design","distributed systems","databases","architecture","backend"],
+        isFeatured: false
+    },
+    {
         slug: 'mastering-nginx-reverse-proxy-configuration-guide',
         title: 'Mastering Nginx: The Ultimate Reverse Proxy Configuration Guide',
         excerpt: 'Learn how to configure Nginx as a production-grade reverse proxy. This guide covers SSL termination, load balancing, performance caching, and security hardening.',
