@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'redis-persistence-rdb-vs-aof-guide',
+        title: 'Redis Persistence Explained: RDB vs AOF vs Hybrid in 2026',
+        excerpt: 'Master Redis persistence strategies. Compare RDB snapshots vs AOF logging, understand trade-offs, and learn how to implement hybrid persistence for 2026.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/b0dc72a5-fd5b-4c3d-8da5-f54cf28ee0b2_blog_header.png', // Using the direct URL as per your strategy
+        date: 'January 23, 2026',
+        readTime: '8 min read',
+        tags: ["redis","database","backend","devops","performance"],
+        isFeatured: false
+    },
+    {
         slug: 'rest-vs-graphql-vs-grpc-api-comparison-2026',
         title: 'REST vs. GraphQL vs. gRPC: Choosing the Right API Style for 2026',
         excerpt: 'A comprehensive guide for developers choosing between REST, GraphQL, and gRPC based on performance, flexibility, and architectural fit in 2026.',
