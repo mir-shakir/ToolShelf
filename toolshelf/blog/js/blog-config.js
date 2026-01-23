@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'dependency-injection-vs-inversion-of-control-spring-boot',
+        title: 'Dependency Injection vs. Inversion of Control: Demystifying the Patterns with Spring Boot',
+        excerpt: 'Clear up the confusion between IoC and DI. Learn how Inversion of Control acts as the principle and Dependency Injection as the implementation in Spring Boot.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/88f62214-4edb-419d-8fd6-ccec1245184f_blog_header.png', // Using the direct URL as per your strategy
+        date: 'January 23, 2026',
+        readTime: '8 min read',
+        tags: ["java","spring boot","design patterns","architecture","backend"],
+        isFeatured: false
+    },
+    {
         slug: 'mastering-solid-principles-java-clean-code-guide',
         title: 'Mastering SOLID Principles in Java: A Guide to Clean Code',
         excerpt: 'Master SOLID principles in Java to write scalable, maintainable code. Learn Single Responsibility, Open/Closed, and more with practical refactoring examples.',
