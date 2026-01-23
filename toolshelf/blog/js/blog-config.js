@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'mastering-solid-principles-java-clean-code-guide',
+        title: 'Mastering SOLID Principles in Java: A Guide to Clean Code',
+        excerpt: 'Master SOLID principles in Java to write scalable, maintainable code. Learn Single Responsibility, Open/Closed, and more with practical refactoring examples.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/d8407822-256d-4e69-961c-c4ca436f5f77_blog_header.png', // Using the direct URL as per your strategy
+        date: 'January 23, 2026',
+        readTime: '10 min read',
+        tags: ["java","clean code","solid principles","architecture","best practices"],
+        isFeatured: false
+    },
+    {
         slug: 'blue-green-vs-canary-deployment-strategies',
         title: 'Blue-Green vs. Canary: Choosing the Right Zero-Downtime Deployment Strategy',
         excerpt: 'Compare Blue-Green vs. Canary releases. Learn the architecture, risk profiles, and cost implications to choose the right zero-downtime strategy.',
