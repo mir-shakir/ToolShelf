@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'rest-vs-graphql-vs-grpc-api-comparison-2026',
+        title: 'REST vs. GraphQL vs. gRPC: Choosing the Right API Style for 2026',
+        excerpt: 'A comprehensive guide for developers choosing between REST, GraphQL, and gRPC based on performance, flexibility, and architectural fit in 2026.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/e589dd41-0db9-45eb-8f73-114c9ee69643_blog_header.png', // Using the direct URL as per your strategy
+        date: 'January 23, 2026',
+        readTime: '8 min read',
+        tags: ["api","architecture","rest","graphql","grpc"],
+        isFeatured: false
+    },
+    {
         slug: 'acid-transactions-distributed-systems-hard-truth',
         title: 'ACID Transactions in Distributed Systems: The Hard Truth',
         excerpt: 'Distributed systems break ACID guarantees. Learn why 2PC fails, how the Saga pattern manages chaos, and why eventual consistency is the hard truth of cloud scaling.',
