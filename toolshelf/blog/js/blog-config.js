@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'stack-vs-heap-memory-developers-guide',
+        title: 'Stack vs. Heap Memory: A Developer\'s Guide to Under-the-Hood Storage',
+        excerpt: 'Demystify RAM by exploring the Stack vs. the Heap. Learn how memory allocation works, why stack overflows happen, and how to write more efficient code.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/449c990c-3347-4ff0-a495-bdbe1119d221_blog_header.png', // Using the direct URL as per your strategy
+        date: 'January 23, 2026',
+        readTime: '6 min read',
+        tags: ["memory management","computer science","performance","javascript","optimization"],
+        isFeatured: false
+    },
+    {
         slug: 'synchronous-vs-asynchronous-programming-event-loop-mastery',
         title: 'Synchronous vs Asynchronous Programming: Mastering the Event Loop',
         excerpt: 'Unravel the mysteries of the Event Loop, understand the difference between blocking and non-blocking code, and learn how to write scalable, high-performance Node.js applications.',
