@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'jwt-vs-session-authentication-guide-2026',
+        title: 'JWT vs Session Authentication: The Definitive Guide 2026',
+        excerpt: 'A comprehensive 2026 comparison of stateful Sessions vs stateless JWTs. Learn about storage security, XSS/CSRF mitigation, and revocation strategies.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/f0e16964-9867-4986-a879-07f0b6c9d26a_blog_header.png', // Using the direct URL as per your strategy
+        date: 'January 23, 2026',
+        readTime: '8 min read',
+        tags: ["authentication","security","jwt","web development","architecture"],
+        isFeatured: false
+    },
+    {
         slug: 'rate-limiting-algorithms-token-bucket-vs-leaky-bucket',
         title: 'Rate Limiting Algorithms Deep Dive: Token Bucket vs. Leaky Bucket',
         excerpt: 'Compare Token Bucket vs. Leaky Bucket algorithms for API rate limiting. Learn about traffic bursting, smoothing, and efficient Redis implementation strategies.',
