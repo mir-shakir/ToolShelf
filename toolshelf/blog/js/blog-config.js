@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'synchronous-vs-asynchronous-programming-event-loop-mastery',
+        title: 'Synchronous vs Asynchronous Programming: Mastering the Event Loop',
+        excerpt: 'Unravel the mysteries of the Event Loop, understand the difference between blocking and non-blocking code, and learn how to write scalable, high-performance Node.js applications.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/5de3a31c-eb87-49ad-a573-81ce684a50c2_blog_header.png', // Using the direct URL as per your strategy
+        date: 'January 23, 2026',
+        readTime: '6 min read',
+        tags: ["javascript","node.js","architecture","performance","async-await"],
+        isFeatured: false
+    },
+    {
         slug: 'dependency-injection-vs-inversion-of-control-spring-boot',
         title: 'Dependency Injection vs. Inversion of Control: Demystifying the Patterns with Spring Boot',
         excerpt: 'Clear up the confusion between IoC and DI. Learn how Inversion of Control acts as the principle and Dependency Injection as the implementation in Spring Boot.',
