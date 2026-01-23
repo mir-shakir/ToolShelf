@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'rate-limiting-algorithms-token-bucket-vs-leaky-bucket',
+        title: 'Rate Limiting Algorithms Deep Dive: Token Bucket vs. Leaky Bucket',
+        excerpt: 'Compare Token Bucket vs. Leaky Bucket algorithms for API rate limiting. Learn about traffic bursting, smoothing, and efficient Redis implementation strategies.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/77f74183-67ca-4313-9e4f-95bdc73ea865_blog_header.png', // Using the direct URL as per your strategy
+        date: 'January 23, 2026',
+        readTime: '8 min read',
+        tags: ["rate limiting","algorithms","redis","api security","backend"],
+        isFeatured: false
+    },
+    {
         slug: 'kafka-architecture-deep-dive-topics-partitions-brokers',
         title: 'Kafka Architecture Deep Dive: Topics, Partitions, and Brokers Explained',
         excerpt: 'Apache Kafka is more than a message queue—it\'s a distributed commit log. Explore the architecture of brokers, topics, partitions, and replication to master data consistency.',
