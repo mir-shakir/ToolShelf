@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'terraform-vs-ansible-infrastructure-configuration-guide',
+        title: 'Terraform vs Ansible: Decoding Infrastructure vs Configuration',
+        excerpt: 'Terraform or Ansible? Stop the confusion. Learn the key differences between infrastructure provisioning and configuration management to build scalable DevOps pipelines.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/1e2eca3f-88d7-4c47-9bd6-d52eb5bb432e_blog_header.png', // Using the direct URL as per your strategy
+        date: 'January 23, 2026',
+        readTime: '6 min read',
+        tags: ["devops","terraform","ansible","infrastructure-as-code","automation"],
+        isFeatured: false
+    },
+    {
         slug: 'kubernetes-architecture-pods-nodes-clusters',
         title: 'Kubernetes Architecture Demystified: Pods, Nodes, and Clusters Explained',
         excerpt: 'Master Kubernetes architecture with this simple guide. Learn the differences between Clusters, Nodes, and Pods using easy-to-understand manufacturing analogies.',
