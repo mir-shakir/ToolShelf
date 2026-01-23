@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'rsa-vs-ed25519-ssh-security-guide-2026',
+        title: 'RSA vs. Ed25519: The Definitive SSH Security Guide (2026)',
+        excerpt: 'Stop using RSA for new SSH keys. Discover why Ed25519 offers superior security, speed, and efficiency for modern infrastructure in our 2026 comparison guide.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/58d9a08f-6298-4485-ad28-21450321e955_blog_header.png', // Using the direct URL as per your strategy
+        date: 'January 23, 2026',
+        readTime: '6 min read',
+        tags: ["devops","security","ssh","cryptography","best-practices"],
+        isFeatured: false
+    },
+    {
         slug: 'linux-permissions-chmod-777-vs-755',
         title: 'Linux Permissions Guide: Chmod 777 vs 755 Explained',
         excerpt: 'Master Linux file permissions. Understand the difference between chmod 777 and 755, learn octal notation, and fix \'Permission Denied\' safely.',
