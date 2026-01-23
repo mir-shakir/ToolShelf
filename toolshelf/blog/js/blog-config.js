@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'git-merge-vs-rebase-visual-workflow-guide',
+        title: 'Git Merge vs. Rebase: A Visual Guide to Workflow Harmony',
+        excerpt: 'Stop the spaghetti graph. Learn the definitive differences between git merge and git rebase, when to use which, and the golden rule for a clean codebase.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/fe3b6a77-b069-403f-a823-05c9d49d4273_blog_header.png', // Using the direct URL as per your strategy
+        date: 'January 23, 2026',
+        readTime: '8 min read',
+        tags: ["git","version control","workflow","best practices","devops"],
+        isFeatured: false
+    },
+    {
         slug: 'terraform-vs-ansible-infrastructure-configuration-guide',
         title: 'Terraform vs Ansible: Decoding Infrastructure vs Configuration',
         excerpt: 'Terraform or Ansible? Stop the confusion. Learn the key differences between infrastructure provisioning and configuration management to build scalable DevOps pipelines.',
