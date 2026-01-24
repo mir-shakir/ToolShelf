@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'mark-and-sweep-garbage-collection-explained',
+        title: 'How \'Mark and Sweep\' Garbage Collection Works: A Deep Dive',
+        excerpt: 'Demystifying memory management: Discover how the Mark and Sweep algorithm handles garbage collection, reachability, and the famous \'Stop-the-World\' pauses.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/e34d7d15-0157-4b12-97b8-aadf797d91f2_blog_header.png', // Using the direct URL as per your strategy
+        date: 'January 24, 2026',
+        readTime: '8 min read',
+        tags: ["garbage collection","memory management","computer science","performance","algorithms"],
+        isFeatured: false
+    },
+    {
         slug: 'mutex-vs-semaphore-demystifying-concurrency-control',
         title: 'Mutex vs Semaphore: Demystifying Concurrency Control',
         excerpt: 'Master concurrency control by understanding the critical differences between Mutex and Semaphore. Learn ownership vs. signaling to prevent deadlocks and bugs.',
