@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'java-stream-api-map-vs-flatmap',
+        title: 'Java Stream API: Map vs FlatMap Explained for Developers',
+        excerpt: 'Master the difference between map and flatMap in Java Streams. Learn one-to-one vs one-to-many transformations with clear visual analogies and code examples.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/a150e220-a468-47cb-8677-12b6001ef8b8_blog_header.png', // Using the direct URL as per your strategy
+        date: 'January 24, 2026',
+        readTime: '6 min read',
+        tags: ["java","stream api","functional programming","backend","tutorial"],
+        isFeatured: false
+    },
+    {
         slug: 'checked-vs-unchecked-exceptions-java-pragmatic-guide',
         title: 'Checked vs Unchecked Exceptions in Java: A Pragmatic Guide to Best Practices',
         excerpt: 'Master the debate between checked and unchecked exceptions in Java. Learn why modern frameworks like Spring prefer runtime exceptions and best practices.',
