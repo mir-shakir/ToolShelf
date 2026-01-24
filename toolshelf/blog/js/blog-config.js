@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'checked-vs-unchecked-exceptions-java-pragmatic-guide',
+        title: 'Checked vs Unchecked Exceptions in Java: A Pragmatic Guide to Best Practices',
+        excerpt: 'Master the debate between checked and unchecked exceptions in Java. Learn why modern frameworks like Spring prefer runtime exceptions and best practices.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/49c4ed8e-7427-4f94-adcb-b149314ad5af_blog_header.png', // Using the direct URL as per your strategy
+        date: 'January 24, 2026',
+        readTime: '8 min read',
+        tags: ["java","error handling","best practices","software architecture","spring framework"],
+        isFeatured: false
+    },
+    {
         slug: 'java-garbage-collectors-g1-vs-zgc-vs-shenandoah',
         title: 'Java Garbage Collectors: G1 vs ZGC vs Shenandoah',
         excerpt: 'A deep dive into Java\'s modern Garbage Collectors. Compare G1, ZGC, and Shenandoah based on latency and throughput to optimize your JVM performance.',
