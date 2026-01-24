@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'spring-data-jpa-repository-comparison',
+        title: 'Spring Data JPA: JpaRepository vs CrudRepository vs PagingAndSortingRepository',
+        excerpt: 'Stop extending JpaRepository by default. Learn the architectural differences between Spring Data interfaces to write cleaner, more efficient data layers.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/691cb49e-aeab-4b98-b842-0b3cb0960ee2_blog_header.png', // Using the direct URL as per your strategy
+        date: 'January 24, 2026',
+        readTime: '6 min read',
+        tags: ["java","spring boot","jpa","backend","best practices"],
+        isFeatured: false
+    },
+    {
         slug: 'java-stream-api-map-vs-flatmap',
         title: 'Java Stream API: Map vs FlatMap Explained for Developers',
         excerpt: 'Master the difference between map and flatMap in Java Streams. Learn one-to-one vs one-to-many transformations with clear visual analogies and code examples.',
