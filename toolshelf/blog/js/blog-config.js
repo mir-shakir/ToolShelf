@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'mastering-dockerfile-best-practices-multi-stage-builds',
+        title: 'Mastering Dockerfile Best Practices: The Power of Multi-Stage Builds',
+        excerpt: 'Stop shipping compilers to production. Learn how to use Docker multi-stage builds to drastically reduce image size, improve layer caching, and secure your containers.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/467f21b2-c07e-41c6-aaad-06dd784a7ce5_blog_header.png', // Using the direct URL as per your strategy
+        date: 'January 24, 2026',
+        readTime: '7 min read',
+        tags: ["docker","devops","security","optimization","containers"],
+        isFeatured: false
+    },
+    {
         slug: 'zero-downtime-deployment-strategies',
         title: 'Zero Downtime Deployment: Blue-Green vs. Canary vs. Rolling Updates',
         excerpt: 'Master zero downtime deployment with our guide on Blue-Green, Canary, and Rolling updates. Learn the best strategies for Kubernetes and high-availability systems.',
