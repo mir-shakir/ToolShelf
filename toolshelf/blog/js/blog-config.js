@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'cdn-push-vs-pull-zones-performance',
+        title: 'CDN Push vs. Pull Zones: Architecting for Maximum Performance',
+        excerpt: 'Deep dive into CDN Push vs. Pull zones. Learn the architectural differences, caching strategies, and when to use each for optimal origin offloading.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/6851c01c-5cda-42bf-b820-2bb3a5d1d722_blog_header.png', // Using the direct URL as per your strategy
+        date: 'January 24, 2026',
+        readTime: '5 min read',
+        tags: ["performance","cdn","architecture","devops","web development"],
+        isFeatured: false
+    },
+    {
         slug: 'cors-demystified-mastering-access-control-allow-origin-web-security',
         title: 'CORS Demystified: Mastering Access-Control-Allow-Origin and Web Security',
         excerpt: 'Stop fearing the red console error. Learn how CORS works, why the Same-Origin Policy exists, and how to configure Access-Control-Allow-Origin correctly.',
