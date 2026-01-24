@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'b-tree-vs-lsm-tree-storage-engines-guide',
+        title: 'B-Trees vs. LSM Trees: The Developer\'s Guide to Storage Engines',
+        excerpt: 'Master database performance by understanding B-Trees and LSM Trees. Learn how storage engines handle reads, writes, and amplification trade-offs in 2026.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/65b165b1-b01e-4eab-8945-048213776c08_blog_header.png', // Using the direct URL as per your strategy
+        date: 'January 24, 2026',
+        readTime: '12 min read',
+        tags: ["databases","backend","system design","performance","architecture"],
+        isFeatured: false
+    },
+    {
         slug: 'redis-vs-memcached-is-memcached-dead',
         title: 'Redis vs Memcached in 2026: Is Memcached Finally Dead?',
         excerpt: 'A deep dive into architecture, threading models, and data structures to decide if Memcached is obsolete or just misunderstood in modern backend engineering.',
