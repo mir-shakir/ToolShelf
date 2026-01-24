@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'java-garbage-collectors-g1-vs-zgc-vs-shenandoah',
+        title: 'Java Garbage Collectors: G1 vs ZGC vs Shenandoah',
+        excerpt: 'A deep dive into Java\'s modern Garbage Collectors. Compare G1, ZGC, and Shenandoah based on latency and throughput to optimize your JVM performance.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/e9012a75-fea3-4c97-96a3-9fabd73eea4e_blog_header.png', // Using the direct URL as per your strategy
+        date: 'January 24, 2026',
+        readTime: '8 min read',
+        tags: ["java","performance","garbage collection","jvm","backend"],
+        isFeatured: false
+    },
+    {
         slug: 'maven-vs-gradle-2026-build-tool-showdown',
         title: 'Maven vs Gradle in 2026: The Ultimate Build Tool Showdown',
         excerpt: 'A deep dive into the Maven vs Gradle debate in 2026. Compare performance, caching strategies, and syntax to choose the right build tool for your JVM project.',
