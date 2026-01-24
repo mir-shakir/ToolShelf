@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'sql-vs-nosql-decision-framework',
+        title: 'SQL vs NoSQL: The Decision Framework for System Architects',
+        excerpt: 'A comprehensive guide for architects on choosing between SQL and NoSQL. We analyze schema rigidity, consistency models (ACID vs BASE), and scaling patterns.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/819688dd-1b82-43d1-99e5-7d402f8c9acd_blog_header.png', // Using the direct URL as per your strategy
+        date: 'January 24, 2026',
+        readTime: '8 min read',
+        tags: ["system architecture","database","sql","nosql","backend"],
+        isFeatured: false
+    },
+    {
         slug: 'java-stream-api-map-vs-flatmap',
         title: 'Java Stream API: Map vs FlatMap Explained for Developers',
         excerpt: 'Master the difference between map and flatMap in Java Streams. Learn one-to-one vs one-to-many transformations with clear visual analogies and code examples.',
