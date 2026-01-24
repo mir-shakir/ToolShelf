@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'process-vs-thread-os-internals-guide',
+        title: 'Process vs Thread: A Developer\'s Deep Dive into OS Internals',
+        excerpt: 'Understand the core differences between processes and threads, memory architecture, context switching costs, and how to choose the right model for your app.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/3e28a85b-7f00-4f90-a64c-fb83fddea2fe_blog_header.png', // Using the direct URL as per your strategy
+        date: 'January 24, 2026',
+        readTime: '8 min read',
+        tags: ["operating systems","concurrency","performance","backend","interview prep"],
+        isFeatured: false
+    },
+    {
         slug: 'big-o-notation-cheat-sheet',
         title: 'Big O Notation Cheat Sheet: A Developer\'s Guide to Time & Space Complexity',
         excerpt: 'Master Big O notation with this developer-friendly cheat sheet covering time and space complexity, from O(1) to O(n^2), with practical code examples.',
