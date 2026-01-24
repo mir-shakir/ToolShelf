@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'mutex-vs-semaphore-demystifying-concurrency-control',
+        title: 'Mutex vs Semaphore: Demystifying Concurrency Control',
+        excerpt: 'Master concurrency control by understanding the critical differences between Mutex and Semaphore. Learn ownership vs. signaling to prevent deadlocks and bugs.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/4edaafcb-0495-48be-bb47-6c86ed3c32cf_blog_header.png', // Using the direct URL as per your strategy
+        date: 'January 24, 2026',
+        readTime: '8 min read',
+        tags: ["concurrency","multithreading","system design","computer science","backend"],
+        isFeatured: false
+    },
+    {
         slug: 'process-vs-thread-os-internals-guide',
         title: 'Process vs Thread: A Developer\'s Deep Dive into OS Internals',
         excerpt: 'Understand the core differences between processes and threads, memory architecture, context switching costs, and how to choose the right model for your app.',
