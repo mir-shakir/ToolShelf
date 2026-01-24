@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'java-interface-vs-abstract-class-guide',
+        title: 'Java Interface vs Abstract Class: The Complete Guide',
+        excerpt: 'Master the architectural differences between Java Interfaces and Abstract Classes. Learn how Java 8 default methods change the game and when to choose state vs behavior.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/37eee49f-d9e3-4ddf-af0a-2233c9402c12_blog_header.png', // Using the direct URL as per your strategy
+        date: 'January 24, 2026',
+        readTime: '8 min read',
+        tags: ["java","oop","architecture","interview","backend"],
+        isFeatured: false
+    },
+    {
         slug: 'spring-bean-scopes-singleton-prototype-request-guide',
         title: 'Spring Bean Scopes Demystified: Singleton vs. Prototype vs. Request',
         excerpt: 'Master Spring Bean Scopes: Singleton, Prototype, and Request. Learn how memory usage, thread safety, and lifecycle management impact your application\'s performance.',
