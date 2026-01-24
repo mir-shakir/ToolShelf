@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'circuit-breaker-pattern-microservices-resilience',
+        title: 'Circuit Breaker Pattern: How to Stop Cascading Failures in Microservices',
+        excerpt: 'Learn how the Circuit Breaker pattern stops cascading failures in microservices. Master the Closed, Open, and Half-Open states with Resilience4j implementation.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/1994a78f-c5eb-40e9-a42c-fc905769d86a_blog_header.png', // Using the direct URL as per your strategy
+        date: 'January 24, 2026',
+        readTime: '8 min read',
+        tags: ["microservices","resilience","java","architecture","spring boot"],
+        isFeatured: false
+    },
+    {
         slug: 'real-time-web-architecture-long-polling-websockets-sse',
         title: 'Real-Time Web Architecture: Long Polling vs WebSockets vs SSE Explained',
         excerpt: 'Master real-time web communication. We compare Long Polling, WebSockets, and Server-Sent Events (SSE) to help you choose the right architecture for your app.',
