@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'eventual-vs-strong-consistency-distributed-data',
+        title: 'Eventual vs. Strong Consistency: Navigating the Distributed Data Trade-off',
+        excerpt: 'Explore the critical trade-offs between strong and eventual consistency. Learn when to pay the latency tax versus handling distributed data complexity.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/219f08d6-2b20-4980-8fed-4b604324e738_blog_header.png', // Using the direct URL as per your strategy
+        date: 'January 24, 2026',
+        readTime: '8 min read',
+        tags: ["distributed-systems","database-design","architecture","consistency","backend"],
+        isFeatured: false
+    },
+    {
         slug: 'saga-pattern-choreography-vs-orchestration-showdown',
         title: 'Saga Pattern: Choreography vs. Orchestration Showdown',
         excerpt: 'Master microservices transactions. Compare Saga Choreography vs. Orchestration, understand compensating transactions, and choose the right strategy.',
