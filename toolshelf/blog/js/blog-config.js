@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'postgres-indexing-deep-dive-btree-gin-gist',
+        title: 'Postgres Indexing Deep Dive: B-Tree, GIN, and GiST Explained',
+        excerpt: 'Stop guessing which index to use. Compare PostgreSQL B-Tree, GIN, and GiST strategies to optimize standard, JSONB, and geospatial queries.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/6854e001-25d9-4627-ab44-1cdf419bd9c2_blog_header.png', // Using the direct URL as per your strategy
+        date: 'January 24, 2026',
+        readTime: '8 min read',
+        tags: ["postgresql","database","performance","sql","backend"],
+        isFeatured: false
+    },
+    {
         slug: 'sql-vs-nosql-decision-framework',
         title: 'SQL vs NoSQL: The Decision Framework for System Architects',
         excerpt: 'A comprehensive guide for architects on choosing between SQL and NoSQL. We analyze schema rigidity, consistency models (ACID vs BASE), and scaling patterns.',
