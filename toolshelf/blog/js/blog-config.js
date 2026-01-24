@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'real-time-web-architecture-long-polling-websockets-sse',
+        title: 'Real-Time Web Architecture: Long Polling vs WebSockets vs SSE Explained',
+        excerpt: 'Master real-time web communication. We compare Long Polling, WebSockets, and Server-Sent Events (SSE) to help you choose the right architecture for your app.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/fb06d2af-3995-4f32-b70d-f9dad59351b8_blog_header.png', // Using the direct URL as per your strategy
+        date: 'January 24, 2026',
+        readTime: '8 min read',
+        tags: ["web architecture","websockets","sse","system design","javascript"],
+        isFeatured: false
+    },
+    {
         slug: 'elasticsearch-vs-clickhouse-log-management-showdown',
         title: 'Elasticsearch vs. ClickHouse: The Modern Log Management Showdown',
         excerpt: 'Is it time to ditch ELK? We compare Elasticsearch and ClickHouse for log management, analyzing performance, cost, and architecture to help you decide.',
