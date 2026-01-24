@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'cors-demystified-mastering-access-control-allow-origin-web-security',
+        title: 'CORS Demystified: Mastering Access-Control-Allow-Origin and Web Security',
+        excerpt: 'Stop fearing the red console error. Learn how CORS works, why the Same-Origin Policy exists, and how to configure Access-Control-Allow-Origin correctly.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/127dc76b-19d7-45e1-9a85-c282f39f53c7_blog_header.png', // Using the direct URL as per your strategy
+        date: 'January 24, 2026',
+        readTime: '8 min read',
+        tags: ["web security","cors","javascript","backend development","http headers"],
+        isFeatured: false
+    },
+    {
         slug: 'saga-pattern-choreography-vs-orchestration-showdown',
         title: 'Saga Pattern: Choreography vs. Orchestration Showdown',
         excerpt: 'Master microservices transactions. Compare Saga Choreography vs. Orchestration, understand compensating transactions, and choose the right strategy.',
