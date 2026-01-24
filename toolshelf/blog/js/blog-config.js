@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'database-normalization-1nf-2nf-3nf-guide',
+        title: 'Database Normalization Guide: 1NF vs 2NF vs 3NF Explained',
+        excerpt: 'Master database normalization with this guide on 1NF, 2NF, and 3NF. Learn to prevent data anomalies and when to intentionally denormalize for performance.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/6739c4ac-4084-43a0-83e0-f27d78334407_blog_header.png', // Using the direct URL as per your strategy
+        date: 'January 24, 2026',
+        readTime: '6 min read',
+        tags: ["database","sql","system-design","backend","best-practices"],
+        isFeatured: false
+    },
+    {
         slug: 'mongodb-vs-cassandra-architecture-performance-guide-2026',
         title: 'MongoDB vs. Cassandra in 2026: The Complete Architecture & Performance Guide',
         excerpt: 'Compare MongoDB vs. Cassandra architecture, replication strategies, and write throughput. Discover which NoSQL database fits your big data needs in 2026.',
