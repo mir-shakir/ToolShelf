@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'mutable-vs-immutable-infrastructure-devops-guide',
+        title: 'Mutable vs. Immutable Infrastructure: The Complete DevOps Guide',
+        excerpt: 'Explore the critical differences between mutable and immutable infrastructure. Learn when to patch servers vs. replace them using Ansible, Terraform, and Docker.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/0396b542-87f3-42ad-9a40-46deba945d56_blog_header.png', // Using the direct URL as per your strategy
+        date: 'January 24, 2026',
+        readTime: '8 min read',
+        tags: ["devops","infrastructure","terraform","ansible","docker"],
+        isFeatured: false
+    },
+    {
         slug: 'github-actions-vs-gitlab-ci-ultimate-comparison-2026',
         title: 'GitHub Actions vs GitLab CI: The Ultimate Pipeline Showdown',
         excerpt: 'A developer-centric comparison of GitHub Actions and GitLab CI for 2026. We analyze architecture, YAML syntax, runner management, and pricing differences.',
