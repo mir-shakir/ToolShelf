@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'mongodb-vs-cassandra-architecture-performance-guide-2026',
+        title: 'MongoDB vs. Cassandra in 2026: The Complete Architecture & Performance Guide',
+        excerpt: 'Compare MongoDB vs. Cassandra architecture, replication strategies, and write throughput. Discover which NoSQL database fits your big data needs in 2026.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/7343caca-7bc6-47c1-bebb-9b919f84e20f_blog_header.png', // Using the direct URL as per your strategy
+        date: 'January 24, 2026',
+        readTime: '8 min read',
+        tags: ["databases","system-design","mongodb","cassandra","backend"],
+        isFeatured: false
+    },
+    {
         slug: 'sql-vs-nosql-decision-framework',
         title: 'SQL vs NoSQL: The Decision Framework for System Architects',
         excerpt: 'A comprehensive guide for architects on choosing between SQL and NoSQL. We analyze schema rigidity, consistency models (ACID vs BASE), and scaling patterns.',
