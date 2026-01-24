@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'aws-compute-showdown-ec2-vs-ecs-vs-lambda',
+        title: 'AWS Compute Showdown: EC2 vs. ECS vs. Lambda',
+        excerpt: 'A developer-focused comparison of AWS compute services. We analyze the trade-offs between Control (EC2), Portability (ECS), and Convenience (Lambda).',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/d03c6a3e-d0dd-4d60-ab1c-733a7810f3e9_blog_header.png', // Using the direct URL as per your strategy
+        date: 'January 24, 2026',
+        readTime: '8 min read',
+        tags: ["aws","cloud computing","devops","serverless","containers"],
+        isFeatured: false
+    },
+    {
         slug: 'github-actions-vs-gitlab-ci-ultimate-comparison-2026',
         title: 'GitHub Actions vs GitLab CI: The Ultimate Pipeline Showdown',
         excerpt: 'A developer-centric comparison of GitHub Actions and GitLab CI for 2026. We analyze architecture, YAML syntax, runner management, and pricing differences.',
