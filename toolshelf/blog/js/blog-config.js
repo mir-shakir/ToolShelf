@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'compiler-vs-interpreter-aot-jit-performance',
+        title: 'Compiler vs Interpreter: The Mechanics of Code Execution',
+        excerpt: 'Dive into the mechanics of code execution. Understand the differences between AOT compilers, JIT compilation, and interpreters to optimize your software.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/6488c856-775e-43f1-abba-da01f8e5c90d_blog_header.png', // Using the direct URL as per your strategy
+        date: 'January 24, 2026',
+        readTime: '8 min read',
+        tags: ["computer-science","performance","compilers","java","python"],
+        isFeatured: false
+    },
+    {
         slug: 'mark-and-sweep-garbage-collection-explained',
         title: 'How \'Mark and Sweep\' Garbage Collection Works: A Deep Dive',
         excerpt: 'Demystifying memory management: Discover how the Mark and Sweep algorithm handles garbage collection, reachability, and the famous \'Stop-the-World\' pauses.',
