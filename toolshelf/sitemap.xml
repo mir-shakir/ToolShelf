@@ -846,7 +846,7 @@
     </url>
 
     <url>
-        <loc>https://toolshelf.tech/blog/redis-vs-memcached-is-memcached-dead/</loc>
+        <loc>https://toolshelf.tech/blog/optimistic-vs-pessimistic-locking-concurrency-guide/</loc>
         <lastmod>2026-01-24</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
