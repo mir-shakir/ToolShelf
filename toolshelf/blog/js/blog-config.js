@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'saga-pattern-choreography-vs-orchestration-showdown',
+        title: 'Saga Pattern: Choreography vs. Orchestration Showdown',
+        excerpt: 'Master microservices transactions. Compare Saga Choreography vs. Orchestration, understand compensating transactions, and choose the right strategy.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/a374d775-7cbc-4901-914a-46293da335d9_blog_header.png', // Using the direct URL as per your strategy
+        date: 'January 24, 2026',
+        readTime: '6 min read',
+        tags: ["microservices","system design","distributed systems","saga pattern","backend"],
+        isFeatured: false
+    },
+    {
         slug: 'real-time-web-architecture-long-polling-websockets-sse',
         title: 'Real-Time Web Architecture: Long Polling vs WebSockets vs SSE Explained',
         excerpt: 'Master real-time web communication. We compare Long Polling, WebSockets, and Server-Sent Events (SSE) to help you choose the right architecture for your app.',
