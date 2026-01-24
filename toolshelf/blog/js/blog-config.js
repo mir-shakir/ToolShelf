@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'zero-downtime-deployment-strategies',
+        title: 'Zero Downtime Deployment: Blue-Green vs. Canary vs. Rolling Updates',
+        excerpt: 'Master zero downtime deployment with our guide on Blue-Green, Canary, and Rolling updates. Learn the best strategies for Kubernetes and high-availability systems.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/1b6d8489-e289-4ae7-aba9-8e6052f1d29a_blog_header.png', // Using the direct URL as per your strategy
+        date: 'January 24, 2026',
+        readTime: '8 min read',
+        tags: ["devops","kubernetes","deployment","sre","architecture"],
+        isFeatured: false
+    },
+    {
         slug: 'mutable-vs-immutable-infrastructure-devops-guide',
         title: 'Mutable vs. Immutable Infrastructure: The Complete DevOps Guide',
         excerpt: 'Explore the critical differences between mutable and immutable infrastructure. Learn when to patch servers vs. replace them using Ansible, Terraform, and Docker.',
