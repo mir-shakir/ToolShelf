@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'http1-vs-http2-vs-http3-evolution',
+        title: 'HTTP/1.1 vs HTTP/2 vs HTTP/3: The Evolution of Web Protocols',
+        excerpt: 'A deep dive into the evolution of HTTP protocols. Explore the technical differences between HTTP/1.1, HTTP/2, and HTTP/3, focusing on multiplexing, binary framing, and the shift to UDP.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/54a6e1f0-0902-4c84-b459-d648100c0d6f_blog_header.png', // Using the direct URL as per your strategy
+        date: 'January 24, 2026',
+        readTime: '8 min read',
+        tags: ["web performance","networking","http","quic","backend"],
+        isFeatured: false
+    },
+    {
         slug: 'saga-pattern-choreography-vs-orchestration-showdown',
         title: 'Saga Pattern: Choreography vs. Orchestration Showdown',
         excerpt: 'Master microservices transactions. Compare Saga Choreography vs. Orchestration, understand compensating transactions, and choose the right strategy.',
