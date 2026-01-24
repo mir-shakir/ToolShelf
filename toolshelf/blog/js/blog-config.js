@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'redis-vs-memcached-is-memcached-dead',
+        title: 'Redis vs Memcached in 2026: Is Memcached Finally Dead?',
+        excerpt: 'A deep dive into architecture, threading models, and data structures to decide if Memcached is obsolete or just misunderstood in modern backend engineering.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/dc36b0ea-83f6-4c50-b5ad-a1d55da6903c_blog_header.png', // Using the direct URL as per your strategy
+        date: 'January 24, 2026',
+        readTime: '7 min read',
+        tags: ["backend","performance","redis","caching","architecture"],
+        isFeatured: false
+    },
+    {
         slug: 'database-normalization-1nf-2nf-3nf-guide',
         title: 'Database Normalization Guide: 1NF vs 2NF vs 3NF Explained',
         excerpt: 'Master database normalization with this guide on 1NF, 2NF, and 3NF. Learn to prevent data anomalies and when to intentionally denormalize for performance.',
