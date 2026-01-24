@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'maven-vs-gradle-2026-build-tool-showdown',
+        title: 'Maven vs Gradle in 2026: The Ultimate Build Tool Showdown',
+        excerpt: 'A deep dive into the Maven vs Gradle debate in 2026. Compare performance, caching strategies, and syntax to choose the right build tool for your JVM project.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/bd5cb37b-1bb8-4721-9f9f-10c68bb8d358_blog_header.png', // Using the direct URL as per your strategy
+        date: 'January 24, 2026',
+        readTime: '8 min read',
+        tags: ["java","maven","gradle","devops","build-tools"],
+        isFeatured: false
+    },
+    {
         slug: 'spring-bean-scopes-singleton-prototype-request-guide',
         title: 'Spring Bean Scopes Demystified: Singleton vs. Prototype vs. Request',
         excerpt: 'Master Spring Bean Scopes: Singleton, Prototype, and Request. Learn how memory usage, thread safety, and lifecycle management impact your application\'s performance.',
