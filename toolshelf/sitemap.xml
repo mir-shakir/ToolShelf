@@ -825,7 +825,7 @@
     </url>
 
     <url>
-        <loc>https://toolshelf.tech/blog/sql-vs-nosql-decision-framework/</loc>
+        <loc>https://toolshelf.tech/blog/postgres-indexing-deep-dive-btree-gin-gist/</loc>
         <lastmod>2026-01-24</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
