@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'github-actions-vs-gitlab-ci-ultimate-comparison-2026',
+        title: 'GitHub Actions vs GitLab CI: The Ultimate Pipeline Showdown',
+        excerpt: 'A developer-centric comparison of GitHub Actions and GitLab CI for 2026. We analyze architecture, YAML syntax, runner management, and pricing differences.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/16c164ae-7e6b-43db-abeb-184188f01079_blog_header.png', // Using the direct URL as per your strategy
+        date: 'January 24, 2026',
+        readTime: '10 min read',
+        tags: ["devops","ci/cd","github","gitlab","automation"],
+        isFeatured: false
+    },
+    {
         slug: 'aws-s3-ebs-efs-storage-guide',
         title: 'AWS S3 vs EBS vs EFS: The Developer\'s Guide to Cloud Storage',
         excerpt: 'Confused by AWS storage? We break down S3 (Object), EBS (Block), and EFS (File) to help developers choose the right architecture for performance and cost.',
