@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'spring-boot-component-vs-service-vs-repository',
+        title: 'Spring Boot Annotations: @Component vs @Service vs @Repository Explained',
+        excerpt: 'Learn the critical differences between @Component, @Service, and @Repository in Spring Boot. Discover why architectural semantics and exception translation matter.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/f7a1203d-ab5c-49e8-976d-c4e22a055b11_blog_header.png', // Using the direct URL as per your strategy
+        date: 'January 24, 2026',
+        readTime: '5 min read',
+        tags: ["spring boot","java","architecture","best practices","backend"],
+        isFeatured: false
+    },
+    {
         slug: 'java-garbage-collectors-g1-vs-zgc-vs-shenandoah',
         title: 'Java Garbage Collectors: G1 vs ZGC vs Shenandoah',
         excerpt: 'A deep dive into Java\'s modern Garbage Collectors. Compare G1, ZGC, and Shenandoah based on latency and throughput to optimize your JVM performance.',
