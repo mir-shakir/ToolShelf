@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'spring-bean-scopes-singleton-prototype-request-guide',
+        title: 'Spring Bean Scopes Demystified: Singleton vs. Prototype vs. Request',
+        excerpt: 'Master Spring Bean Scopes: Singleton, Prototype, and Request. Learn how memory usage, thread safety, and lifecycle management impact your application\'s performance.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/e74f988a-7363-4a7f-811f-f66e616c46d3_blog_header.png', // Using the direct URL as per your strategy
+        date: 'January 24, 2026',
+        readTime: '8 min read',
+        tags: ["spring boot","java","backend","software architecture","best practices"],
+        isFeatured: false
+    },
+    {
         slug: 'static-vs-dynamic-typing-guide-2026',
         title: 'Static vs. Dynamic Typing: The Ultimate Guide to Type Systems in 2026',
         excerpt: 'Master the debate between static and dynamic typing. Learn about compile-time safety, runtime flexibility, type inference, and choosing the right stack.',
