@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'docker-compose-vs-kubernetes-migration-guide',
+        title: 'Docker Compose vs Kubernetes: The 2026 Migration Guide',
+        excerpt: 'Deciding between Docker Compose and Kubernetes? We analyze technical tipping points, scaling limits, and the ROI of migration for modern DevOps teams.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/8e4b5791-b087-43bf-bcab-6a93197fe189_blog_header.png', // Using the direct URL as per your strategy
+        date: 'January 24, 2026',
+        readTime: '9 min read',
+        tags: ["devops","kubernetes","docker","infrastructure","migration"],
+        isFeatured: false
+    },
+    {
         slug: 'cdn-push-vs-pull-zones-performance',
         title: 'CDN Push vs. Pull Zones: Architecting for Maximum Performance',
         excerpt: 'Deep dive into CDN Push vs. Pull zones. Learn the architectural differences, caching strategies, and when to use each for optimal origin offloading.',
