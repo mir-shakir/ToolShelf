@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'optimistic-vs-pessimistic-locking-concurrency-guide',
+        title: 'Optimistic vs. Pessimistic Locking: The Definitive Concurrency Guide',
+        excerpt: 'Master database concurrency control. Learn the critical differences between Optimistic and Pessimistic locking, how to prevent deadlocks, and which strategy fits your architecture.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/b9c50500-d3e1-4d21-bd6a-c890e310ee31_blog_header.png', // Using the direct URL as per your strategy
+        date: 'January 24, 2026',
+        readTime: '8 min read',
+        tags: ["databases","concurrency","backend","sql","architecture"],
+        isFeatured: false
+    },
+    {
         slug: 'redis-vs-memcached-is-memcached-dead',
         title: 'Redis vs Memcached in 2026: Is Memcached Finally Dead?',
         excerpt: 'A deep dive into architecture, threading models, and data structures to decide if Memcached is obsolete or just misunderstood in modern backend engineering.',
