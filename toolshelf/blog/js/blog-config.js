@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'idempotency-in-apis-guide',
+        title: 'Idempotency in APIs: Building Reliable Systems that Handle Retries Gracefully',
+        excerpt: 'Learn why idempotency is crucial for API reliability, how to handle network retries safely, and strategies for implementing idempotent requests using unique keys.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/3402cf26-af29-4f49-8932-37c3c34fed59_blog_header.png', // Using the direct URL as per your strategy
+        date: 'January 24, 2026',
+        readTime: '8 min read',
+        tags: ["api design","backend","reliability","architecture","best practices"],
+        isFeatured: false
+    },
+    {
         slug: 'real-time-web-architecture-long-polling-websockets-sse',
         title: 'Real-Time Web Architecture: Long Polling vs WebSockets vs SSE Explained',
         excerpt: 'Master real-time web communication. We compare Long Polling, WebSockets, and Server-Sent Events (SSE) to help you choose the right architecture for your app.',
