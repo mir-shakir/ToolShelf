@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'static-vs-dynamic-typing-guide-2026',
+        title: 'Static vs. Dynamic Typing: The Ultimate Guide to Type Systems in 2026',
+        excerpt: 'Master the debate between static and dynamic typing. Learn about compile-time safety, runtime flexibility, type inference, and choosing the right stack.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/7bd9042e-262c-49d2-8baa-8e395d91ee44_blog_header.png', // Using the direct URL as per your strategy
+        date: 'January 24, 2026',
+        readTime: '6 min read',
+        tags: ["programming-languages","typescript","software-engineering","type-systems","development"],
+        isFeatured: false
+    },
+    {
         slug: 'compiler-vs-interpreter-aot-jit-performance',
         title: 'Compiler vs Interpreter: The Mechanics of Code Execution',
         excerpt: 'Dive into the mechanics of code execution. Understand the differences between AOT compilers, JIT compilation, and interpreters to optimize your software.',
