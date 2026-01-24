@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'materialized-vs-standard-views-sql-performance-guide',
+        title: 'Materialized vs. Standard Views: SQL Performance Guide for Developers',
+        excerpt: 'Master SQL performance by understanding the trade-offs between Standard and Materialized Views. Learn when to use virtual execution vs. pre-computed storage.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/a2bea8da-a6c9-409e-bdc3-e14c79508346_blog_header.png', // Using the direct URL as per your strategy
+        date: 'January 24, 2026',
+        readTime: '6 min read',
+        tags: ["sql","database performance","backend","system design","optimization"],
+        isFeatured: false
+    },
+    {
         slug: 'redis-vs-memcached-is-memcached-dead',
         title: 'Redis vs Memcached in 2026: Is Memcached Finally Dead?',
         excerpt: 'A deep dive into architecture, threading models, and data structures to decide if Memcached is obsolete or just misunderstood in modern backend engineering.',
