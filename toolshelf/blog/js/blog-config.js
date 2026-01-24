@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'secrets-management-env-vars-kms-vault',
+        title: 'Secrets Management Showdown: Env Vars vs. KMS vs. Vault',
+        excerpt: 'Compare .env files, Cloud KMS, and HashiCorp Vault to find the right security strategy. Learn best practices for secrets management and rotation.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/7c432b0b-a509-4df0-b9eb-1892c933c98c_blog_header.png', // Using the direct URL as per your strategy
+        date: 'January 24, 2026',
+        readTime: '8 min read',
+        tags: ["security","devops","backend","best practices","cloud"],
+        isFeatured: false
+    },
+    {
         slug: 'mastering-dockerfile-best-practices-multi-stage-builds',
         title: 'Mastering Dockerfile Best Practices: The Power of Multi-Stage Builds',
         excerpt: 'Stop shipping compilers to production. Learn how to use Docker multi-stage builds to drastically reduce image size, improve layer caching, and secure your containers.',
