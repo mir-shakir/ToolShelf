@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'elasticsearch-vs-clickhouse-log-management-showdown',
+        title: 'Elasticsearch vs. ClickHouse: The Modern Log Management Showdown',
+        excerpt: 'Is it time to ditch ELK? We compare Elasticsearch and ClickHouse for log management, analyzing performance, cost, and architecture to help you decide.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/9edd5596-4366-4e25-8cbe-69cd55739015_blog_header.png', // Using the direct URL as per your strategy
+        date: 'January 24, 2026',
+        readTime: '8 min read',
+        tags: ["devops","observability","elasticsearch","clickhouse","backend"],
+        isFeatured: false
+    },
+    {
         slug: 'materialized-vs-standard-views-sql-performance-guide',
         title: 'Materialized vs. Standard Views: SQL Performance Guide for Developers',
         excerpt: 'Master SQL performance by understanding the trade-offs between Standard and Materialized Views. Learn when to use virtual execution vs. pre-computed storage.',
