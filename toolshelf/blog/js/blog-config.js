@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'big-o-notation-cheat-sheet',
+        title: 'Big O Notation Cheat Sheet: A Developer\'s Guide to Time & Space Complexity',
+        excerpt: 'Master Big O notation with this developer-friendly cheat sheet covering time and space complexity, from O(1) to O(n^2), with practical code examples.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/c7ba943c-2819-45e1-9732-b823bc3b748b_blog_header.png', // Using the direct URL as per your strategy
+        date: 'January 23, 2026',
+        readTime: '8 min read',
+        tags: ["algorithms","performance","javascript","computer science","interview prep"],
+        isFeatured: false
+    },
+    {
         slug: 'stack-vs-heap-memory-developers-guide',
         title: 'Stack vs. Heap Memory: A Developer\'s Guide to Under-the-Hood Storage',
         excerpt: 'Demystify RAM by exploring the Stack vs. the Heap. Learn how memory allocation works, why stack overflows happen, and how to write more efficient code.',
