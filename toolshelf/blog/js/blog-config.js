@@ -2,6 +2,16 @@
 
 export const blogPosts = [
     {
+        slug: 'monolith-vs-microservices-trade-off-matrix',
+        title: 'Monolith vs Microservices: The Trade-off Matrix for Pragmatic Developers',
+        excerpt: 'Stop guessing your architecture. We analyze the trade-off matrix between Monoliths and Microservices to help you choose the right path based on team size.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/f78567c5-2e9f-4ddb-937a-c87d7b3f4add_blog_header.png', // Using the direct URL as per your strategy
+        date: 'January 24, 2026',
+        readTime: '8 min read',
+        tags: ["architecture","microservices","system design","best practices","scaling"],
+        isFeatured: false
+    },
+    {
         slug: 'elasticsearch-vs-clickhouse-log-management-showdown',
         title: 'Elasticsearch vs. ClickHouse: The Modern Log Management Showdown',
         excerpt: 'Is it time to ditch ELK? We compare Elasticsearch and ClickHouse for log management, analyzing performance, cost, and architecture to help you decide.',
