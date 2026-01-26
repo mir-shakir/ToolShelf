@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let visiblePosts = POSTS_PER_PAGE;
     let currentFilteredPosts = blogPosts.filter(post => !post.isFeatured);
 
-    if (!searchInput || !blogGrid || !tagCloud || !clearTagFilterBtn || !featuredPostSection || !loadMoreBtn) {
+    if (!searchInput || !blogGrid || !featuredPostSection || !loadMoreBtn) {
         return; // Exit if essential elements are not found
     }
 
@@ -80,6 +80,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const renderTagCloud = () => {
+        if (!tagCloud) return;
         const allTags = [...new Set(blogPosts.flatMap(post => post.tags))];
         tagCloud.innerHTML = allTags.map(tag =>
             `<button class="tag-button" data-tag="${tag.toLowerCase()}">${tag}</button>`
@@ -88,7 +89,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const filterPosts = () => {
         const query = searchInput.value.toLowerCase().trim();
-        const activeTag = document.querySelector('.tag-button.active')?.dataset.tag;
+        const activeTag = tagCloud ? tagCloud.querySelector('.active')?.dataset.tag : null;
 
         featuredPostSection.style.display = (query || activeTag) ? 'none' : 'block';
 
@@ -107,7 +108,9 @@ document.addEventListener('DOMContentLoaded', () => {
         visiblePosts = POSTS_PER_PAGE; // Reset visible posts on new filter
         renderBlogPosts();
         blogSearchClearBtn.style.display = query ? 'block' : 'none';
-        clearTagFilterBtn.style.display = activeTag ? 'block' : 'none';
+        if (clearTagFilterBtn) {
+            clearTagFilterBtn.style.display = activeTag ? 'block' : 'none';
+        }
     };
 
     // Event Listeners
@@ -118,27 +121,31 @@ document.addEventListener('DOMContentLoaded', () => {
         filterPosts();
     });
 
-    tagCloud.addEventListener('click', (event) => {
-        const button = event.target.closest('.tag-button');
-        if (button) {
-            const currentActive = tagCloud.querySelector('.active');
+    if (tagCloud) {
+        tagCloud.addEventListener('click', (event) => {
+            const button = event.target.closest('.tag-button');
+            if (button) {
+                const currentActive = tagCloud.querySelector('.active');
+                if (currentActive) {
+                    currentActive.classList.remove('active');
+                }
+                if (currentActive !== button) {
+                    button.classList.add('active');
+                }
+                filterPosts();
+            }
+        });
+    }
+
+    if (clearTagFilterBtn) {
+        clearTagFilterBtn.addEventListener('click', () => {
+            const currentActive = tagCloud ? tagCloud.querySelector('.active') : null;
             if (currentActive) {
                 currentActive.classList.remove('active');
             }
-            if (currentActive !== button) {
-                button.classList.add('active');
-            }
             filterPosts();
-        }
-    });
-
-    clearTagFilterBtn.addEventListener('click', () => {
-        const currentActive = tagCloud.querySelector('.active');
-        if (currentActive) {
-            currentActive.classList.remove('active');
-        }
-        filterPosts();
-    });
+        });
+    }
 
     loadMoreBtn.addEventListener('click', () => {
         visiblePosts += POSTS_PER_PAGE;
