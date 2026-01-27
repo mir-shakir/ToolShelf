@@ -923,7 +923,7 @@
     </url>
 
     <url>
-        <loc>https://toolshelf.tech/blog/mastering-dockerfile-best-practices-multi-stage-builds/</loc>
+        <loc>https://toolshelf.tech/blog/secrets-management-env-vars-kms-vault/</loc>
         <lastmod>2026-01-24</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
