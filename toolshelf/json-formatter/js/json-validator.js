@@ -302,10 +302,25 @@ window.ToolShelf.JSONValidator = class JSONValidator {
      * Update validation status display
      */
     updateValidationStatus(message, type) {
+        // Update legacy validationStatus element if it exists
         const statusElement = this.formatter.elements.validationStatus;
         if (statusElement) {
             statusElement.textContent = message;
             statusElement.className = `validation-status ${type}`;
+        }
+
+        // Update inline validation badge in IDE header
+        const inlineStatus = this.formatter.elements.validationStatusInline;
+        if (inlineStatus) {
+            const icon = inlineStatus.querySelector('i');
+            const span = inlineStatus.querySelector('span');
+            if (span) span.textContent = message;
+            if (icon) {
+                icon.className = type === 'valid' ? 'fas fa-check-circle' :
+                                  type === 'invalid' ? 'fas fa-exclamation-circle' :
+                                  'fas fa-info-circle';
+            }
+            inlineStatus.className = `validation-status-inline ${type === 'neutral' ? '' : type}`;
         }
     }
 
@@ -313,7 +328,7 @@ window.ToolShelf.JSONValidator = class JSONValidator {
      * Reset validation status
      */
     resetValidationStatus() {
-        this.updateValidationStatus('Ready to process JSON', 'neutral');
+        this.updateValidationStatus('Ready', 'neutral');
         this.hideValidationError();
 
         // Reset JSON stats

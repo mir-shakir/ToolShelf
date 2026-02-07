@@ -423,20 +423,26 @@ window.ToolShelf.JSONUIHandlers = class JSONUIHandlers {
         const { elements } = this.formatter;
 
         if (elements.advancedSection) {
-            const isExpanded = elements.advancedSection.classList.contains('expanded');
+            const isExpanded = elements.advancedSection.classList.contains('show');
 
             if (isExpanded) {
-                elements.advancedSection.classList.remove('expanded');
+                elements.advancedSection.classList.remove('show');
             } else {
-                elements.advancedSection.classList.add('expanded');
+                elements.advancedSection.classList.add('show');
             }
 
-            // Update toggle button
+            // Update toggle button icon
             if (elements.advancedToggle) {
-                const icon = elements.advancedToggle.querySelector('i');
+                const icon = elements.advancedToggle.querySelector('.fa-chevron-down, .fa-chevron-up');
                 if (icon) {
-                    icon.className = isExpanded ? 'fas fa-chevron-down' : 'fas fa-chevron-up';
+                    icon.classList.toggle('fa-chevron-down');
+                    icon.classList.toggle('fa-chevron-up');
                 }
+            }
+
+            // Lazy-load JSONPath when opened
+            if (!isExpanded && typeof loadJSONPathLibraryWithTimeout === 'function') {
+                loadJSONPathLibraryWithTimeout(2500);
             }
         }
     }
