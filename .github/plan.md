@@ -1,102 +1,43 @@
-# TASK: Build the "UUID v7 Generator & Decoder" Tool
+# TASK: "Gut Renovation" of the JSON Formatter UX
 
-## 1. Project Context & Architecture
-You are a Senior Frontend Engineer working on "ToolShelf" (toolshelf.tech), a suite of privacy-first, offline-capable developer tools. The codebase uses vanilla JavaScript (ES6+), semantic HTML5, and CSS variables for theming.
+## 1. The Strategic Intent ("The Why")
+You are acting as a Senior Frontend UX Engineer. We are completely overhauling the existing `json-formatter` tool.
 
-**Your Goal:** Create a new tool called **"UUID v7 Generator & Decoder"**.
+**The Problem:** The current design is failing our users. It prioritizes "SEO text" and branding headers above the fold, pushing the actual working area too far down. The input/output boxes are too small for real-world, large JSON payloads. The tool feels cramped and unusable for serious work.
 
-**Existing Architecture to Respect:**
-* **Base Class:** All tools extend `window.ToolShelf.BaseTool` (see `shared/js/tools/base-tool.js`).
-* **Analytics:** We use `window.ToolShelf.Analytics` for tracking.
-* **Styling:** Use the CSS variables defined in `shared/css/variables.css` (e.g., `--primary-color`, `--bg-secondary`, `--text-muted`).
-* **Structure:** The tool must live in `/toolshelf/uuid-v7-generator/`.
+**The Goal:** Shift from an "article-based" layout to an **"IDE-based" layout**.
+Usability is now the #1 priority. We must maximize screen real estate for code. The tool should feel like a lightweight code editor—clean, spacious, and efficient.
 
-## 2. The Strategic Intent ("The Why")
-We are building this specific tool to capture a high-value niche: **Backend Engineers and Architects moving to UUID v7**.
-* **SEO Goal:** Rank for "UUID v7 generator", "sortable UUID", and "decode UUID v7". We are NOT competing for generic "UUID generator" traffic.
-* **User Persona:** A senior developer who knows that v4 UUIDs fragment database indexes and wants v7 for performance. They need to generate test data or debug an existing ID.
-* **Differentiation:** Most tools just generate IDs. Our tool will **Decode** them (prove the timestamp works) and **Visualize** the bit structure.
+## 2. The New UX Blueprint ("The What")
 
-## 3. Feature Requirements
+We are abandoning the current top-down layout. You have freedom to redesign the HTML structure of `toolshelf/json-formatter/index.html` and completely rewrite its CSS.
 
-### A. Core Functionality (The Generator)
-* **Default State:** Generate a valid UUID v7 immediately on page load.
-* **Copy Button:** Prominent button to copy the ID.
-* **Bulk Generation:** A toggle or slider to generate 5, 10, or 50 IDs at once (useful for SQL seeds).
-* **Format Options:**
-    * Standard (hyphenated): `018e...`
-    * Compact (no hyphens).
-    * SQL List (quoted and comma-separated).
+### The New Layout Structure (Split-Pane View)
+1.  **Slim App Header:** The main site navigation (ToolShelf logo, Home, Blog links) must be compacted into a very slim top bar to save vertical space.
+2.  **The Toolbar:** Directly below the slim header, create a horizontal toolbar containing the primary actions:
+    * Left side: "Format", "Minify", "Validate".
+    * Right side: "Copy Output", "Download", "Clear All".
+3.  **The Editor Workspace (The Core):**
+    * Below the toolbar, take up **all remaining vertical screen space**.
+    * Create a **Split-Pane Layout**: Input (left) and Output (right) sitting side-by-side on desktop.
+    * **Independently Scrollable:** The left pane and right pane must scroll independently. If I paste a 5,000-line JSON on the left, I shouldn't lose sight of the start of the output on the right.
+    * **Maximized Area:** The textareas should have minimal padding and borders to maximize space for text.
+4.  **The Footer/SEO:** The large "What is JSON?" text block currently at the top must be moved to the very bottom of the page, below the editors, in a footer section. It is secondary content now.
 
-### B. The "Killer Feature" (The Decoder)
-* **Input:** Allow users to paste *any* UUID v7.
-* **Output:** Instantly extract and display the **Timestamp** (Date & Time) embedded in the ID.
-* **Validation:** If they paste a v4 UUID, politely tell them "This looks like a random v4 UUID (no timestamp found)."
+### Improved Interactions
+* **Error Handling:** If validation fails, do NOT just show a toast notification. Display a prominent error banner directly above or below the Input textarea showing the specific error message and, if possible, the line number (e.g., *"Error: Unexpected token at line 45"*).
+* **Mobile Responsiveness:** On smaller screens, the split-pane must stack vertically (Input on top, Output below), but still maximize available height.
 
-### C. The Visualizer (Educational)
-* Show the UUID broken down into its parts with color coding:
-    * `[Timestamp]` (48 bits) - Green
-    * `[Ver]` (4 bits) - Blue
-    * `[Random]` - Gray
-* This reinforces that v7 is time-ordered.
+## 3. Technical Execution & Constraints
 
-### D. Analytics & Tracking
-You must implement the following events using `window.ToolShelf.Analytics`:
-1.  `tool_usage` -> `action: generate` (when regenerate is clicked).
-2.  `tool_usage` -> `action: decode` (when a valid v7 is decoded).
-3.  `tool_usage` -> `action: bulk_generate` (when bulk mode is used).
-4.  `content_copied` -> `tool: uuid_v7`.
+* **Target Files:**
+    * `toolshelf/json-formatter/index.html` (Major structural changes expected).
+    * `toolshelf/json-formatter/css/json-styles.css` (Complete rewrite expected).
+    * `toolshelf/json-formatter/js/json-formatter.js` & `json-ui-handlers.js` (Update as needed to support the new UI structure, e.g., new button IDs).
+* **Stack:** Stick to vanilla JavaScript and CSS. Do not introduce external code editor libraries (like Monaco or Ace) yet. We want to achieve this "editor feel" using clever CSS grid/flexbox and resilient textareas first.
+* **Styling:** Use the existing CSS variables (`var(--primary-color)`, `var(--background-secondary)`, etc.) to ensure it still feels like part of ToolShelf, just a "pro" version of it.
 
-## 4. Technical Implementation Details
+## 4. Freedom to Act
+You have permission to make radical changes to the HTML structure and CSS of the `json-formatter` directory to achieve this "IDE feel." Look at modern code editors (VS Code) for inspiration on layout density and toolbar placement.
 
-### Pure JS UUID v7 Implementation
-Since we don't use external libraries, use this logic for generating v7:
-* **Timestamp:** Current time in ms (48 bits).
-* **Version:** `0111` (7).
-* **Variant:** `10` (Variant 2).
-* **Random:** Fill the rest with `crypto.getRandomValues`.
-
-### File Structure
-Create the following files:
-1.  `toolshelf/uuid-v7-generator/index.html` (The UI skeleton).
-2.  `toolshelf/uuid-v7-generator/css/uuid-tool.css` (Tool-specific styles).
-3.  `toolshelf/uuid-v7-generator/js/uuid-generator.js` (The main class extending `BaseTool`).
-
-## 5. Design Guidelines
-* **Clean & Professional:** Use the existing card layout found in `json-formatter` or `base64-encoder`.
-* **SEO Content:** The `index.html` must include a rich description section at the bottom explaining "Why UUID v7?" and linking to our blog post (`../blog/the-uuid-gotcha-that-burned-me/`).
-* **Responsiveness:** Must work on mobile (stack the bulk controls).
-
-## 6. Execution Instructions
-1.  Analyze the existing `json-formatter` or `base64-encoder` to understand the DOM structure and class inheritance.
-2.  Write the **HTML** first, ensuring proper meta tags for SEO.
-3.  Write the **CSS** to handle the "Visualizer" color coding.
-4.  Write the **JavaScript** class `UUIDTool`.
-
-## 7. Internal Linking & Navigation Strategy (Crucial for SEO)
-You must not only build the tool but also integrate it into the existing site ecosystem so users and search engines can find it.
-
-**Required Updates:**
-
-### A. Homepage Entry (`toolshelf/index.html`)
-* Add a new **Tool Card** for the UUID Generator in the `#toolsGrid`.
-* **Category:** Tag it under `security` and `encoding`.
-* **Search Tags:** `uuid generator v7 v4 guid sortable unique id decoder`.
-* **Badges:** Add a "New" badge to catch attention.
-
-### B. Blog Cross-Linking (High SEO Value)
-We need to drive traffic from our content to this tool.
-* **Target File:** `toolshelf/blog/the-uuid-gotcha-that-burned-me/index.html`
-* **Action:** Insert a prominent "Call to Action" (CTA) box at the very top (or just after the intro) of this blog post.
-    * *Text:* "Need a valid UUID v7 right now? Use our free **UUID v7 Generator & Decoder**."
-    * *Style:* Use a simple alert/info box style so it stands out.
-
-### C. "Related Tools" Footer (`toolshelf/shared/js/core/render-related-tools.js`)
-* Update the `TOOLS` array in this file to include the new UUID tool.
-* This ensures links to the UUID generator appear automatically at the bottom of the JSON Formatter, Base64 Encoder, etc.
-* **Config:**
-    * `id`: 'uuid-generator'
-    * `title`: 'UUID v7 Generator'
-    * `icon`: 'fa-fingerprint' (or similar FontAwesome icon)
-    * `url`: '../uuid-v7-generator/'
-    * `description`: 'Generate and decode time-sortable UUIDs'
+**Go ahead and propose the restructured HTML and the new CSS for this overhaul.**

@@ -79,6 +79,7 @@ window.ToolShelf.JSONFormatter = class JSONFormatter extends window.ToolShelf.Ba
         const elementIds = [
             'inputText', 'outputText', 'inputCharCount', 'inputBytes',
             'outputCharCount', 'outputBytes', 'validationStatus',
+            'validationStatusInline',
             'errorDisplay', 'pasteBtn', 'clearInput', 'copyOutput',
             'downloadOutput', 'resetAll', 'jsonPathInput', 'jsonPathResult'
         ];
@@ -99,7 +100,7 @@ window.ToolShelf.JSONFormatter = class JSONFormatter extends window.ToolShelf.Ba
 
         // Advanced toggle
         this.elements.advancedToggle = document.getElementById('advancedToggle');
-        this.elements.advancedSection = document.getElementById('advancedSection');
+        this.elements.advancedSection = document.getElementById('advancedOptions');
 
         // JSON stats elements
         this.elements.jsonDepth = document.getElementById('jsonDepth');
