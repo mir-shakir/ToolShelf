@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>
+        const oldDomains = [
+            "toolshelf.onrender.com",
+            "www.toolshelf.onrender.com"
+        ];
+        const newDomain = "https://toolshelf.tech";
+        if (oldDomains.includes(window.location.hostname)) {
+            const newUrl = newDomain + window.location.pathname + window.location.search + window.location.hash;
+            window.location.replace(newUrl);
+        }
+    </script>
+
+    <!-- Primary Meta Tags -->
+    <title>UUID v7 Generator & Decoder – Free Sortable UUID Tool | ToolShelf</title>
+    <meta name="title" content="UUID v7 Generator & Decoder – Free Sortable UUID Tool | ToolShelf">
+    <meta name="description"
+        content="Generate and decode UUID v7 (time-sortable UUIDs) online. Extract timestamps, visualize bit structure, bulk generate for SQL seeds. Free, offline, no signup.">
+
+    <meta name="keywords"
+        content="uuid v7 generator, sortable uuid, decode uuid v7, uuid v7 timestamp, uuid generator, guid generator, time-ordered uuid, uuid bulk generator, uuid decoder">
+    <meta name="author" content="ToolShelf">
+    <meta name="robots" content="index, follow">
+    <meta name="language" content="English">
+    <meta name="revisit-after" content="7 days">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://toolshelf.tech/uuid-v7-generator/">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://toolshelf.tech/uuid-v7-generator/">
+    <meta property="og:title" content="ToolShelf – Free UUID v7 Generator & Decoder">
+    <meta property="og:description"
+        content="Generate time-sortable UUID v7 IDs, decode embedded timestamps, and visualize bit structure. Perfect for database-friendly primary keys.">
+    <meta property="og:image" content="https://toolshelf.tech/assets/images/og-image-toolshelf.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:site_name" content="ToolShelf">
+    <meta property="og:locale" content="en_US">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://toolshelf.tech/uuid-v7-generator/">
+    <meta property="twitter:title" content="ToolShelf – Free UUID v7 Generator & Decoder">
+    <meta property="twitter:description"
+        content="Generate time-sortable UUID v7 IDs, decode timestamps, visualize structure. No signup required!">
+    <meta property="twitter:image" content="https://toolshelf.tech/assets/images/og-image-toolshelf.png">
+
+    <!-- Favicon and Icons -->
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+    <link rel="manifest" href="../manifest.json">
+    <meta name="theme-color" content="#3b82f6">
+
+    <!-- Schema.org structured data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "ToolShelf UUID v7 Generator",
+        "alternateName": "UUID v7 Generator Decoder",
+        "description": "Free online UUID v7 generator and decoder. Generate time-sortable UUIDs, decode embedded timestamps, visualize bit structure, and bulk generate for SQL seeds. Works offline, no registration required.",
+        "url": "https://toolshelf.tech/uuid-v7-generator/",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Web Browser",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        },
+        "creator": {
+            "@type": "Organization",
+            "name": "ToolShelf"
+        },
+        "datePublished": "2026-02-07",
+        "dateModified": "2026-02-07",
+        "inLanguage": "en-US",
+        "isAccessibleForFree": true,
+        "featureList": [
+            "UUID v7 Generation (RFC 9562)",
+            "Timestamp Decoding from UUID v7",
+            "Bit Structure Visualization",
+            "Bulk UUID Generation",
+            "Multiple Output Formats (Standard, Compact, SQL)",
+            "UUID Version Detection",
+            "Offline Functionality",
+            "No Registration Required"
+        ],
+        "screenshot": "https://toolshelf.tech/assets/images/og-image-toolshelf.png"
+    }
+    </script>
+
+    <!-- CSS Modules -->
+    <link rel="stylesheet" href="../shared/css/variables.css">
+    <link rel="stylesheet" href="../shared/css/base.css">
+    <link rel="stylesheet" href="../shared/css/components.css">
+    <link rel="stylesheet" href="../shared/css/tool-layout.css">
+    <link rel="stylesheet" href="../shared/css/responsive.css">
+    <link rel="stylesheet" href="../shared/css/seo-content.css">
+    <link rel="stylesheet" href="css/uuid-tool.css">
+
+    <!-- External Resources -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <link rel="preload" href="../shared/css/variables.css" as="style">
+    <link rel="preload" href="../shared/css/base.css" as="style">
+    <link rel="dns-prefetch" href="//fonts.googleapis.com">
+    <link rel="dns-prefetch" href="//cdnjs.cloudflare.com">
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-GBY4766X5D"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-GBY4766X5D');
+    </script>
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Header with Navigation -->
+        <header class="app-header">
+            <div class="header-container">
+                <div class="logo-section">
+                    <div class="logo-icon">
+                        <i class="fas fa-toolbox"></i>
+                    </div>
+                    <a href="../" class="logo-text">ToolShelf</a>
+                </div>
+
+                <nav class="main-nav">
+                    <a href="../" class="nav-link">Home</a>
+                    <a href="../#tools" class="nav-link active">Tools</a>
+                    <a href="../blog/" class="nav-link">Blog</a>
+                    <a href="../#about" class="nav-link">About</a>
+                </nav>
+
+                <div class="tool-actions">
+                    <button class="theme-switcher-btn" id="themeSwitcher" title="Switch to dark mode" aria-label="Switch to dark mode">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                    <button class="help-btn" id="helpBtn" title="Show instructions"
+                        aria-label="Show help and instructions">
+                        <i class="fas fa-question-circle" aria-hidden="true"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Breadcrumb Navigation -->
+            <div class="breadcrumb-container">
+                <div class="breadcrumb-wrapper">
+                    <nav class="breadcrumb">
+                        <a href="../">Home</a>
+                        <span class="breadcrumb-separator">›</span>
+                        <a href="../#tools">Tools</a>
+                        <span class="breadcrumb-separator">›</span>
+                        <span class="breadcrumb-current">UUID v7 Generator</span>
+                    </nav>
+
+                    <div class="tool-status">
+                        <span class="status-badge">Free</span>
+                        <span class="tool-tag">RFC 9562</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="app-main" role="main">
+            <!-- SEO Content Section -->
+            <section class="seo-content" id="seo-content">
+                <div class="seo-intro">
+                    <h1>Free Online UUID v7 Generator & Decoder</h1>
+                    <p class="lead">Generate time-sortable UUID v7 identifiers, decode embedded timestamps, and
+                        visualize the bit structure. Perfect for database-friendly primary keys — free, offline, no signup.</p>
+
+                    <div class="seo-expandable">
+                        <div class="features-highlight">
+                            <div class="feature-item">
+                                <i class="fas fa-fingerprint" aria-hidden="true"></i>
+                                <span>UUID v7 Generation</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-clock" aria-hidden="true"></i>
+                                <span>Timestamp Decoding</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-th" aria-hidden="true"></i>
+                                <span>Bit Visualizer</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-layer-group" aria-hidden="true"></i>
+                                <span>Bulk Generate</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-database" aria-hidden="true"></i>
+                                <span>SQL Format</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-shield-alt" aria-hidden="true"></i>
+                                <span>100% Private</span>
+                            </div>
+                        </div>
+
+                        <button class="cta-button"
+                            onclick="document.getElementById('uuid-tool').scrollIntoView({ behavior: 'smooth' });">
+                            <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                            Start Generating UUIDs
+                        </button>
+                    </div>
+                </div>
+
+                <button class="seo-toggle" onclick="toggleSeoContent()" aria-label="Show more information"
+                    aria-expanded="false">
+                    <span>Learn More</span>
+                    <i class="fas fa-chevron-down" aria-hidden="true"></i>
+                </button>
+            </section>
+
+            <!-- UUID Tool -->
+            <div id="uuid-tool" class="tool-container active">
+                <div class="uuid-workspace">
+
+                    <!-- Left Sidebar: Controls -->
+                    <aside class="controls-sidebar" role="complementary" aria-label="UUID generation options">
+                        <div class="controls-header">
+                            <h2><i class="fas fa-cogs" aria-hidden="true"></i> UUID Options</h2>
+                            <button id="resetAll" class="btn-reset" title="Reset all settings"
+                                aria-label="Reset all settings">
+                                <i class="fas fa-undo-alt" aria-hidden="true"></i>
+                            </button>
+                        </div>
+
+                        <!-- Generate -->
+                        <div class="control-group">
+                            <div class="control-group-title">
+                                <i class="fas fa-play" aria-hidden="true"></i>
+                                Generate
+                            </div>
+                            <div class="operation-buttons">
+                                <button id="generateBtn" class="operation-btn primary">
+                                    <i class="fas fa-sync-alt" aria-hidden="true"></i>
+                                    Generate New UUID v7
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Output Format -->
+                        <div class="control-group">
+                            <div class="control-group-title">
+                                <i class="fas fa-list-alt" aria-hidden="true"></i>
+                                Output Format
+                            </div>
+                            <div class="format-options">
+                                <label class="format-option">
+                                    <input type="radio" name="uuid-format" value="standard" checked>
+                                    <div class="format-option-content">
+                                        <span class="format-option-label">Standard (Hyphenated)</span>
+                                        <div class="format-option-desc">018e4f8e-a1b2-7c3d-...</div>
+                                    </div>
+                                </label>
+                                <label class="format-option">
+                                    <input type="radio" name="uuid-format" value="compact">
+                                    <div class="format-option-content">
+                                        <span class="format-option-label">Compact (No Hyphens)</span>
+                                        <div class="format-option-desc">018e4f8ea1b27c3d...</div>
+                                    </div>
+                                </label>
+                                <label class="format-option">
+                                    <input type="radio" name="uuid-format" value="sql">
+                                    <div class="format-option-content">
+                                        <span class="format-option-label">SQL List (Quoted)</span>
+                                        <div class="format-option-desc">'018e...', '018e...'</div>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Bulk Generation -->
+                        <div class="control-group">
+                            <div class="control-group-title">
+                                <i class="fas fa-layer-group" aria-hidden="true"></i>
+                                Bulk Generation
+                            </div>
+                            <div class="bulk-controls">
+                                <label class="bulk-count-label" for="bulkCount">Count:</label>
+                                <div class="bulk-count-row">
+                                    <button class="bulk-preset" data-count="1">1</button>
+                                    <button class="bulk-preset" data-count="5">5</button>
+                                    <button class="bulk-preset" data-count="10">10</button>
+                                    <button class="bulk-preset" data-count="50">50</button>
+                                </div>
+                                <input type="range" id="bulkCount" min="1" max="50" value="1" class="bulk-slider">
+                                <div class="bulk-slider-label">
+                                    <span>1</span>
+                                    <span id="bulkCountDisplay">1</span>
+                                    <span>50</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Status Indicator -->
+                        <div class="status-indicator info" id="statusIndicator">
+                            <i class="fas fa-info-circle" aria-hidden="true"></i>
+                            <span>Ready to generate</span>
+                        </div>
+                    </aside>
+
+                    <!-- Right: Main Content Area -->
+                    <div class="uuid-main-area">
+
+                        <!-- Generated Output -->
+                        <section class="uuid-panel output-panel">
+                            <div class="panel-header">
+                                <div class="panel-title">
+                                    <i class="fas fa-fingerprint" aria-hidden="true"></i>
+                                    <span>Generated UUID v7</span>
+                                </div>
+                                <div class="panel-actions">
+                                    <button id="copyOutput" class="icon-btn" title="Copy to clipboard">
+                                        <i class="fas fa-copy" aria-hidden="true"></i>
+                                    </button>
+                                    <button id="downloadOutput" class="icon-btn" title="Download as text file">
+                                        <i class="fas fa-download" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <textarea id="outputText" class="text-area output" readonly spellcheck="false"
+                                aria-label="Generated UUID output" rows="3"></textarea>
+                            <div class="panel-footer">
+                                <div class="stats-row">
+                                    <span class="stat-item">
+                                        <i class="fas fa-hashtag" aria-hidden="true"></i>
+                                        <span id="uuidCount">0</span> UUID(s)
+                                    </span>
+                                    <span class="stat-item">
+                                        <i class="fas fa-font" aria-hidden="true"></i>
+                                        <span id="outputCharCount">0</span> chars
+                                    </span>
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- Bit Visualizer -->
+                        <section class="uuid-panel visualizer-panel">
+                            <div class="panel-header">
+                                <div class="panel-title">
+                                    <i class="fas fa-th" aria-hidden="true"></i>
+                                    <span>Bit Structure Visualizer</span>
+                                </div>
+                            </div>
+                            <div class="visualizer-content" id="visualizerContent">
+                                <div class="visualizer-placeholder">
+                                    <i class="fas fa-eye" aria-hidden="true"></i>
+                                    <span>Generate or decode a UUID to see its structure</span>
+                                </div>
+                            </div>
+                            <div class="visualizer-legend">
+                                <span class="legend-item legend-timestamp"><span class="legend-swatch"></span> Timestamp (48 bits)</span>
+                                <span class="legend-item legend-version"><span class="legend-swatch"></span> Version (4 bits)</span>
+                                <span class="legend-item legend-variant"><span class="legend-swatch"></span> Variant (2 bits)</span>
+                                <span class="legend-item legend-random"><span class="legend-swatch"></span> Random (62 bits)</span>
+                            </div>
+                        </section>
+
+                        <!-- Decoder -->
+                        <section class="uuid-panel decoder-panel">
+                            <div class="panel-header">
+                                <div class="panel-title">
+                                    <i class="fas fa-search" aria-hidden="true"></i>
+                                    <span>Decode UUID</span>
+                                </div>
+                            </div>
+                            <div class="decoder-input-row">
+                                <input type="text" id="decodeInput" class="decode-input"
+                                    placeholder="Paste any UUID to decode (v4 or v7)..."
+                                    spellcheck="false" autocomplete="off"
+                                    aria-label="UUID to decode">
+                                <button id="decodeBtn" class="operation-btn primary">
+                                    <i class="fas fa-unlock" aria-hidden="true"></i>
+                                    Decode
+                                </button>
+                            </div>
+                            <div class="decode-result" id="decodeResult">
+                                <div class="decode-placeholder">
+                                    <i class="fas fa-info-circle" aria-hidden="true"></i>
+                                    <span>Paste a UUID v7 above to extract its embedded timestamp</span>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SEO Bottom Content: Why UUID v7? -->
+            <section class="seo-bottom-content">
+                <div class="seo-bottom-container">
+                    <h2>Why UUID v7? The Case for Time-Sortable IDs</h2>
+                    <p>UUID v4 is the most common UUID version, but it has a significant drawback for databases: it's completely random. This randomness causes <strong>B-tree index fragmentation</strong> in databases like PostgreSQL and MySQL, leading to slower inserts and larger index sizes over time.</p>
+                    <p><strong>UUID v7</strong> (defined in <a href="https://www.rfc-editor.org/rfc/rfc9562" target="_blank" rel="noopener noreferrer">RFC 9562</a>) solves this by embedding a Unix timestamp in the first 48 bits. This makes UUIDs <strong>naturally time-ordered</strong>, which means:</p>
+                    <ul>
+                        <li><strong>Better index performance</strong> — new rows always append to the end of the B-tree</li>
+                        <li><strong>Built-in created-at</strong> — the timestamp is embedded in the ID itself</li>
+                        <li><strong>Drop-in replacement</strong> — same 128-bit format as UUID v4, works in any UUID column</li>
+                        <li><strong>Still globally unique</strong> — 62 random bits provide collision resistance</li>
+                    </ul>
+                    <p>If you've been burned by UUID v4 index fragmentation, <a href="../blog/the-uuid-gotcha-that-burned-me/">read our deep dive on the UUID gotcha</a> and switch to v7.</p>
+                </div>
+            </section>
+        </main>
+
+        <div id="related-tools" class="related-tools-section"></div>
+
+        <!-- Footer -->
+        <footer class="app-footer">
+            <div class="footer-content">
+                <div class="footer-main">
+                    <div class="footer-logo">
+                        <div class="logo-icon">
+                            <i class="fas fa-toolbox"></i>
+                        </div>
+                        <strong>ToolShelf</strong>
+                    </div>
+                    <p class="footer-description">
+                        Professional online tools that respect your privacy. Built for developers and professionals worldwide.
+                    </p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-section">
+                        <h4>Tools</h4>
+                        <a href="../json-formatter/">JSON Formatter</a>
+                        <a href="../base64-encoder/">Base64 Encoder</a>
+                        <a href="../text-transformer/">Text Transformer</a>
+                        <a href="../qr-generator/">QR Generator</a>
+                        <a href="../hash-generator/">Hash Generator</a>
+                        <a href="../jwt-decoder/">JWT Decoder</a>
+                    </div>
+                    <div class="footer-section">
+                        <h4>Resources</h4>
+                        <a href="../#about">About ToolShelf</a>
+                        <a href="../privacy/">Privacy Policy</a>
+                        <a href="../terms/">Terms of Use</a>
+                        <a href="../faq/">FAQs</a>
+                        <a href="../contact/">Contact</a>
+                    </div>
+                    <div class="footer-section">
+                        <h4>Company</h4>
+                        <a href="../blog/">Blog</a>
+                        <a href="../#about">About Us</a>
+                        <a href="../contact/">Contact</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 ToolShelf. All tools work offline and respect your privacy.</p>
+            </div>
+        </footer>
+
+        <!-- Help Modal -->
+        <div id="helpModal" class="help-modal" role="dialog" aria-labelledby="help-title" aria-hidden="true">
+            <div class="help-content">
+                <div class="help-header">
+                    <h2 id="help-title"><i class="fas fa-info-circle" aria-hidden="true"></i> How to Use UUID v7 Generator</h2>
+                    <button class="help-close" id="helpClose" aria-label="Close help dialog">
+                        <i class="fas fa-times" aria-hidden="true"></i>
+                    </button>
+                </div>
+                <div class="help-body">
+                    <div class="help-section">
+                        <h3>Quick Start:</h3>
+                        <ol>
+                            <li>A valid <strong>UUID v7</strong> is generated instantly on page load</li>
+                            <li>Click <strong>Generate</strong> to create a new one</li>
+                            <li>Use <strong>Bulk Generation</strong> to create up to 50 UUIDs at once</li>
+                            <li>Copy or download your results when ready</li>
+                        </ol>
+                    </div>
+                    <div class="help-section">
+                        <h3>Features:</h3>
+                        <ul>
+                            <li><strong>Decoder:</strong> Paste any UUID to extract its version and embedded timestamp</li>
+                            <li><strong>Visualizer:</strong> See the color-coded bit structure of the UUID</li>
+                            <li><strong>Formats:</strong> Standard (hyphenated), Compact, or SQL list output</li>
+                            <li><strong>Bulk Mode:</strong> Generate 1–50 UUIDs for SQL seeds or test data</li>
+                        </ul>
+                    </div>
+                    <div class="help-section">
+                        <h3>What is UUID v7?</h3>
+                        <p>UUID v7 (RFC 9562) embeds a Unix millisecond timestamp in the first 48 bits, making IDs time-sortable. This improves database index performance compared to random UUID v4.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Toast Notification -->
+        <div id="toast" class="toast" role="alert" aria-live="assertive">
+            <div class="toast-content">
+                <i class="toast-icon fas fa-check-circle" aria-hidden="true"></i>
+                <span id="toastMessage"></span>
+            </div>
+            <button class="toast-close" onclick="this.parentElement.classList.remove('show')">
+                <i class="fas fa-times" aria-hidden="true"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="../shared/js/components/help-modal.js"></script>
+    <script src="../shared/config/constants.js"></script>
+    <script src="../shared/js/core/utils.js"></script>
+    <script src="../shared/js/core/events.js"></script>
+    <script src="../shared/js/core/analytics.js"></script>
+    <script src="../shared/js/components/toast.js"></script>
+    <script src="../shared/js/components/navigation.js"></script>
+    <script src="../shared/js/components/seo-content.js"></script>
+    <script src="../shared/js/components/keyboard.js"></script>
+    <script src="../shared/js/tools/base-tool.js"></script>
+    <script src="js/uuid-generator.js"></script>
+
+    <!-- Initialize UUID Tool -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            window.ToolShelf = window.ToolShelf || {};
+
+            try {
+                if (window.ToolShelf.Toast && !window.ToolShelf.Toast.element) {
+                    const toastInitialized = window.ToolShelf.Toast.init();
+                    if (!toastInitialized) {
+                        console.warn('⚠️ Toast system failed to initialize');
+                    }
+                }
+
+                const uuidTool = new window.ToolShelf.UUIDTool();
+                window.ToolShelf.currentTool = uuidTool;
+
+                console.log('🎉 UUID v7 Generator initialized successfully');
+            } catch (error) {
+                console.error('❌ Failed to initialize UUID v7 Generator:', error);
+            }
+        });
+
+        function toggleSeoContent() {
+            const seoContent = document.getElementById('seo-content');
+            seoContent.classList.toggle('expanded');
+        }
+
+        // Minimal Theme Switcher
+        (function() {
+            let currentTheme = 'light';
+
+            function loadTheme() {
+                try {
+                    const saved = localStorage.getItem('toolshelf-theme');
+                    if (saved === 'dark' || saved === 'light') {
+                        currentTheme = saved;
+                    } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                        currentTheme = 'dark';
+                    }
+                    document.documentElement.setAttribute('data-theme', currentTheme);
+                } catch (e) {
+                    document.documentElement.setAttribute('data-theme', 'light');
+                }
+            }
+
+            function toggleTheme() {
+                currentTheme = currentTheme === 'light' ? 'dark' : 'light';
+                document.documentElement.setAttribute('data-theme', currentTheme);
+                try {
+                    localStorage.setItem('toolshelf-theme', currentTheme);
+                } catch (e) {}
+                updateButton();
+            }
+
+            function updateButton() {
+                const btn = document.getElementById('themeSwitcher');
+                if (btn) {
+                    const icon = btn.querySelector('i');
+                    const isDark = currentTheme === 'dark';
+                    if (icon) {
+                        icon.className = isDark ? 'fas fa-sun' : 'fas fa-moon';
+                    }
+                    btn.title = isDark ? 'Switch to light mode' : 'Switch to dark mode';
+                    btn.setAttribute('aria-label', btn.title);
+                }
+            }
+
+            loadTheme();
+
+            document.addEventListener('DOMContentLoaded', function() {
+                updateButton();
+                const btn = document.getElementById('themeSwitcher');
+                if (btn) {
+                    btn.addEventListener('click', toggleTheme);
+                }
+            });
+        })();
+    </script>
+
+    <script type="module">
+        import { renderRelatedTools } from '../shared/js/core/render-related-tools.js';
+        import { initFeedbackWidget } from '../shared/js/core/feedback-widget.js';
+
+        initFeedbackWidget("uuid-v7-generator");
+        renderRelatedTools("uuid-v7-generator");
+    </script>
+</body>
+
+</html>

@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
         <loc>https://toolshelf.tech/</loc>
-        <lastmod>2025-09-12</lastmod>
+        <lastmod>2026-02-07</lastmod>
         <changefreq>weekly</changefreq>
         <priority>1.0</priority>
     </url>
@@ -43,6 +43,12 @@
         <priority>0.7</priority>
     </url>
     <url>
+        <loc>https://toolshelf.tech/uuid-v7-generator/</loc>
+        <lastmod>2026-02-07</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
         <loc>https://toolshelf.tech/faq/</loc>
         <lastmod>2025-07-12</lastmod>
         <changefreq>monthly</changefreq>
@@ -80,7 +86,7 @@
     </url>
     <url>
         <loc>https://toolshelf.tech/blog/the-uuid-gotcha-that-burned-me/</loc>
-        <lastmod>2025-07-19</lastmod>
+        <lastmod>2026-02-07</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
