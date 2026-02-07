@@ -191,8 +191,16 @@ window.ToolShelf.JSONUIHandlers = class JSONUIHandlers {
         const buttonHandlers = {
             pasteBtn: () => this.formatter.pasteFromClipboard(),
             clearInput: () => this.formatter.clearInput(),
-            copyOutput: () => this.formatter.copyOutput(),
-            downloadOutput: () => this.formatter.downloadOutput(),
+            copyOutput: () => {
+                if (window.ToolShelf?.Analytics) 
+                    window.ToolShelf.Analytics.trackEvent('content_copied', { tool: 'json_formatter' });
+                this.formatter.copyOutput();
+            },
+            downloadOutput: () => {
+                if (window.ToolShelf?.Analytics) 
+                    window.ToolShelf.Analytics.trackEvent('content_downloaded', { tool: 'json_formatter', file_type: 'json' });
+                this.formatter.downloadOutput();
+            },
             resetAll: () => this.formatter.resetAll()
         };
 
@@ -226,6 +234,9 @@ window.ToolShelf.JSONUIHandlers = class JSONUIHandlers {
      * Handle format button click
      */
     onFormatClick() {
+        if (window.ToolShelf?.Analytics) {
+            window.ToolShelf.Analytics.trackToolUsage('json_formatter', 'format_click');
+        }
         const input = this.formatter.elements.inputText.value.trim();
 
         if (!input) {
@@ -255,6 +266,9 @@ window.ToolShelf.JSONUIHandlers = class JSONUIHandlers {
      * Handle minify button click
      */
     onMinifyClick() {
+        if (window.ToolShelf?.Analytics) {
+            window.ToolShelf.Analytics.trackToolUsage('json_formatter', 'minify_click');
+        }
         const input = this.formatter.elements.inputText.value.trim();
 
         if (!input) {

@@ -42,6 +42,12 @@ window.ToolShelf.QRUIHandlers = class QRUIHandlers {
      * Switch QR type and update UI
      */
     switchQRType(type) {
+        if (window.ToolShelf?.Analytics && this.generator.currentType !== type) {
+            window.ToolShelf.Analytics.trackEvent('feature_used', {
+                tool: 'qr_generator',
+                feature: `switch_to_${type}`
+            });
+        }
         // Update current type
         this.generator.currentType = type;
 
@@ -481,10 +487,11 @@ window.ToolShelf.QRUIHandlers = class QRUIHandlers {
             this.generator.showToast(`QR code downloaded as ${format.toUpperCase()}`, 'success');
 
             // Track analytics
-            if (window.ToolShelf.Analytics) {
-                window.ToolShelf.Analytics.trackToolUsage('qr_generator', 'download', {
+            if (window.ToolShelf?.Analytics) {
+                window.ToolShelf.Analytics.trackEvent('content_downloaded', {
+                    tool: 'qr_generator',
                     format: format,
-                    type: this.generator.currentType
+                    qr_type: this.generator.currentType // Track if it was WiFi, URL, etc.
                 });
             }
 

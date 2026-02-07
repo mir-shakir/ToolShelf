@@ -43,6 +43,7 @@
         // Initial animation
         animateToolsLoad();
 
+        setupFeaturedTracking();
         console.log('🏠 Homepage initialized with', toolCards.length, 'tools');
     }
 
@@ -80,6 +81,20 @@
                 }
             });
         });
+    }
+
+    function setupFeaturedTracking() {
+        const featuredLink = document.querySelector('.featured-card a');
+        if (featuredLink) {
+            featuredLink.addEventListener('click', () => {
+                if (window.ToolShelf?.Analytics) {
+                    window.ToolShelf.Analytics.trackEvent('promotion_click', {
+                        location: 'homepage_featured',
+                        project: 'LayoutCraft'
+                    });
+                }
+            });
+        }
     }
 
     /**

@@ -64,15 +64,17 @@ window.ToolShelf.Analytics = {
         this.setupGlobalFunctions();
     },
 
-    // Get tool name from current path
+
     getToolNameFromPath() {
         const path = window.location.pathname;
         if (path.includes('text-transformer')) return 'text_transformer';
         if (path.includes('base64-encoder')) return 'base64_encoder';
-        // Add more tools as needed
-        return null;
+        if (path.includes('json-formatter')) return 'json_formatter'; 
+        if (path.includes('qr-generator')) return 'qr_generator';     
+        if (path.includes('hash-generator')) return 'hash_generator'; 
+        if (path.includes('jwt-decoder')) return 'jwt_decoder';       
+        return 'homepage'; // Default to homepage if no tool found
     },
-
     // Setup global functions for footer links
     setupGlobalFunctions() {
         window.showPrivacyInfo = () => this.showPrivacyInfo();

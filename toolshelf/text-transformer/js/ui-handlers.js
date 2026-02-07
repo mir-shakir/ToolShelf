@@ -140,6 +140,14 @@ window.ToolShelf.TextTransformerUI = {
     onTransformChange(control) {
         if (this.transformer) {
             const transform = control.getAttribute('data-transform');
+            if ((control.type === 'checkbox' && control.checked) || control.tagName === 'BUTTON') {
+                if (window.ToolShelf?.Analytics) {
+                    window.ToolShelf.Analytics.trackEvent('feature_used', {
+                        tool: 'text_transformer',
+                        feature: transform
+                    });
+                }
+            }
             this.transformer.handleTransformChange(control, transform);
         }
     },
@@ -176,6 +184,10 @@ window.ToolShelf.TextTransformerUI = {
      */
     async onCopyOutput() {
         if (this.transformer) {
+            // [TRACKING]
+            if (window.ToolShelf?.Analytics) {
+                window.ToolShelf.Analytics.trackEvent('content_copied', { tool: 'text_transformer' });
+            }
             await this.transformer.copyOutput();
         }
     },
