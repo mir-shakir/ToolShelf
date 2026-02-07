@@ -171,6 +171,12 @@ window.ToolShelf.HashUIHandlers = class HashUIHandlers {
     * Switch input type (updated for better file handling)
     */
     switchInputType(inputType) {
+        if (window.ToolShelf?.Analytics) {
+            window.ToolShelf.Analytics.trackEvent('input_method_changed', {
+                tool: 'hash_generator',
+                method: inputType
+            });
+        }
         // Update generator state
         this.generator.currentInputType = inputType;
 
@@ -779,6 +785,12 @@ window.ToolShelf.HashUIHandlers = class HashUIHandlers {
 
         try {
             await navigator.clipboard.writeText(this.generator.currentHash);
+            if (window.ToolShelf?.Analytics) {
+                window.ToolShelf.Analytics.trackEvent('content_copied', {
+                    tool: 'hash_generator',
+                    algorithm: this.generator.currentAlgorithm
+                });
+            }
             // this.generator.showToast('Hash copied to clipboard!', 'success');
         } catch (error) {
             this.generator.showToast('Failed to copy hash', 'error');

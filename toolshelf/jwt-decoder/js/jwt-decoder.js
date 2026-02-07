@@ -46,6 +46,9 @@ window.ToolShelf.JWTDecoder = class JWTDecoder extends window.ToolShelf.BaseTool
             this.clearOutput();
             return;
         }
+        if (window.ToolShelf?.Analytics) {
+            window.ToolShelf.Analytics.trackToolUsage('jwt_decoder', 'decode_success');
+        }
 
         try {
             const parts = token.split('.');

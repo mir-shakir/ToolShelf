@@ -296,7 +296,7 @@ window.ToolShelf.Base64Tool = class Base64Tool extends window.ToolShelf.BaseTool
             if (!isAuto) {
                 this.showToast('Text encoded successfully!', 'success',1000);
                 // Track usage
-                if (window.ToolShelf.Analytics) {
+                if (window.ToolShelf?.Analytics) {
                     window.ToolShelf.Analytics.trackToolUsage('base64_encoder', 'encode');
                 }
             }
@@ -330,7 +330,7 @@ window.ToolShelf.Base64Tool = class Base64Tool extends window.ToolShelf.BaseTool
             if (!isAuto) {
                 this.showToast('Base64 decoded successfully!', 'success',1000);
                 // Track usage
-                if (window.ToolShelf.Analytics) {
+                if (window.ToolShelf?.Analytics) {
                     window.ToolShelf.Analytics.trackToolUsage('base64_encoder', 'decode');
                 }
             }
