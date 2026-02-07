@@ -73,6 +73,7 @@ window.ToolShelf.Analytics = {
         if (path.includes('qr-generator')) return 'qr_generator';     
         if (path.includes('hash-generator')) return 'hash_generator'; 
         if (path.includes('jwt-decoder')) return 'jwt_decoder';       
+        if (path.includes('uuid-v7-generator')) return 'uuid_v7_generator';
         return 'homepage'; // Default to homepage if no tool found
     },
     // Setup global functions for footer links

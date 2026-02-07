@@ -5,7 +5,8 @@ export const RELATED_TOOLS = {
     "text-transformer": ["json-formatter", "base64-encoder", "qr-generator"],
     "qr-generator": ["json-formatter", "base64-encoder", "text-transformer"],
     "hash-generator": ["json-formatter", "base64-encoder", "jwt-decoder"],
-    "jwt-decoder": ["hash-generator", "base64-encoder", "json-formatter"],
+    "jwt-decoder": ["hash-generator", "base64-encoder", "uuid-v7-generator"],
+    "uuid-v7-generator": ["hash-generator", "jwt-decoder", "json-formatter"],
 };
 
 export const TOOL_LABELS = {
@@ -15,6 +16,7 @@ export const TOOL_LABELS = {
     "qr-generator": "QR Generator",
     "hash-generator": "Hash Generator",
     "jwt-decoder": "JWT Decoder",
+    "uuid-v7-generator": "UUID v7 Generator",
 };
 
 export function renderRelatedTools(currentTool, containerId = "related-tools") {

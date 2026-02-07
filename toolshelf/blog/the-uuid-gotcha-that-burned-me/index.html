@@ -107,6 +107,11 @@
                 </header>
 
                 <div class="blog-post-content" id="articleContent">
+                    <div style="background: var(--info-background, #f0f9ff); border: 1px solid var(--info-border, #bae6fd); border-radius: 0.5rem; padding: 1rem 1.25rem; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap;">
+                        <i class="fas fa-fingerprint" style="color: var(--primary-color, #3b82f6); font-size: 1.25rem;"></i>
+                        <span style="font-size: 0.95rem; color: var(--text-primary, #111827);">Need a valid UUID v7 right now? Use our free <a href="../../uuid-v7-generator/" style="font-weight: 600; color: var(--link-color, #2563eb);">UUID v7 Generator &amp; Decoder</a>.</span>
+                    </div>
+
                     <p>Three months ago, I was investigating a bizarre bug in our distributed job processing system.
                         Jobs were occasionally getting assigned to the wrong workers, and the pattern made no sense. The
                         job IDs were UUIDs, supposedly unique and random. The worker assignment was based on consistent
