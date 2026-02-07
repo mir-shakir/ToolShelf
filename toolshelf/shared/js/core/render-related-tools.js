@@ -7,6 +7,7 @@ export const RELATED_TOOLS = {
     "hash-generator": ["json-formatter", "base64-encoder", "jwt-decoder"],
     "jwt-decoder": ["hash-generator", "base64-encoder", "uuid-v7-generator"],
     "uuid-v7-generator": ["hash-generator", "jwt-decoder", "json-formatter"],
+    "mock-data-generator": ["json-formatter", "uuid-v7-generator", "base64-encoder"],
 };
 
 export const TOOL_LABELS = {
@@ -17,6 +18,7 @@ export const TOOL_LABELS = {
     "hash-generator": "Hash Generator",
     "jwt-decoder": "JWT Decoder",
     "uuid-v7-generator": "UUID v7 Generator",
+    "mock-data-generator": "Mock Data Generator",
 };
 
 export function renderRelatedTools(currentTool, containerId = "related-tools") {

@@ -49,6 +49,12 @@
         <priority>0.8</priority>
     </url>
     <url>
+        <loc>https://toolshelf.tech/mock-data-generator/</loc>
+        <lastmod>2026-02-07</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
         <loc>https://toolshelf.tech/faq/</loc>
         <lastmod>2025-07-12</lastmod>
         <changefreq>monthly</changefreq>

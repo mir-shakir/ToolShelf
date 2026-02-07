@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Redirect naked domain to www (production) -->
+    <script>
+        if (window.location.hostname === 'toolshelf.tech') {
+            window.location.href = window.location.href.replace('toolshelf.tech', 'www.toolshelf.tech');
+        }
+    </script>
+
+    <!-- Primary Meta Tags -->
+    <title>Free Mock Data Generator (Unlimited SQL, JSON, CSV) - ToolShelf</title>
+    <meta name="title" content="Free Mock Data Generator (Unlimited SQL, JSON, CSV) - ToolShelf">
+    <meta name="description"
+        content="Generate unlimited rows of realistic mock data in JSON, CSV, or SQL format. 100% client-side, no signup, no row limits. The free Mockaroo alternative for developers.">
+    <meta name="keywords"
+        content="mock data generator, fake data generator, dummy data generator free, mockaroo alternative, generate sql test data, csv generator, json mock data, seed data generator, test data free, generate 1 million rows sql, import create table, sql to mock data, create table parser, generate insert statements, sql schema import tool">
+    <meta name="author" content="ToolShelf">
+    <meta name="robots" content="index, follow">
+    <meta name="language" content="English">
+    <meta name="revisit-after" content="7 days">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://toolshelf.tech/mock-data-generator/">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://toolshelf.tech/mock-data-generator/">
+    <meta property="og:title" content="Free Mock Data Generator (Unlimited SQL, JSON, CSV) - ToolShelf">
+    <meta property="og:description"
+        content="Generate unlimited rows of realistic mock data for testing. JSON, CSV, SQL formats. No signup, no row limits. 100% private — everything runs in your browser.">
+    <meta property="og:image" content="https://toolshelf.tech/assets/images/og-image-mock-data.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:site_name" content="ToolShelf">
+    <meta property="og:locale" content="en_US">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://toolshelf.tech/mock-data-generator/">
+    <meta property="twitter:title" content="Free Mock Data Generator (Unlimited SQL, JSON, CSV) - ToolShelf">
+    <meta property="twitter:description"
+        content="Generate unlimited mock data for SQL, JSON, CSV. 100% client-side. No signup required. The free alternative to Mockaroo.">
+    <meta property="twitter:image" content="https://toolshelf.tech/assets/images/og-image-mock-data.png">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+    <link rel="manifest" href="../manifest.json">
+    <meta name="theme-color" content="#3b82f6">
+
+    <!-- JSON-LD Schema -->
+    <script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "WebApplication",
+        "name": "ToolShelf Mock Data Generator",
+        "alternateName": "Free Mock Data Generator",
+        "description": "Generate unlimited rows of realistic mock data in JSON, CSV, or SQL format. 100% client-side, no signup, free alternative to Mockaroo.",
+        "url": "https://toolshelf.tech/mock-data-generator/",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Web Browser",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        },
+        "creator": {
+            "@type": "Organization",
+            "name": "ToolShelf"
+        },
+        "datePublished": "2026-02-07",
+        "dateModified": "2026-02-07",
+        "inLanguage": "en-US",
+        "isAccessibleForFree": true,
+        "featureList": [
+            "Unlimited Row Generation",
+            "JSON Format Export",
+            "CSV Format Export",
+            "SQL INSERT Statement Export",
+            "Custom Schema Builder",
+            "Import Schema from SQL CREATE TABLE",
+            "MySQL, PostgreSQL, SQLite, SQL Server DDL Support",
+            "Automatic SQL-to-Faker Type Mapping",
+            "Realistic Fake Data via Faker.js",
+            "100% Client-Side Processing",
+            "No Signup Required",
+            "Live Preview",
+            "Drag-and-Drop Field Reordering",
+            "Preset Templates",
+            "Offline Capable"
+        ],
+        "screenshot": "https://toolshelf.tech/assets/images/og-image-mock-data.png"
+    }
+    </script>
+
+    <!-- FAQPage Schema -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "Is there really no row limit on this mock data generator?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Yes. Since all data is generated in your browser using JavaScript, there are no server costs and therefore no artificial limits. We recommend staying under 100,000 rows for a smooth experience."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Is my generated mock data private?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "100% private. No data is ever sent to any server. The mock data is generated entirely in your browser using the Faker.js library."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Can I import a schema from SQL CREATE TABLE?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Yes. Click the Import SQL button in the Schema Builder and paste any CREATE TABLE statement. The parser supports MySQL, PostgreSQL, SQLite, and SQL Server DDL syntax. Column types are automatically mapped to Faker data types."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "What SQL dialects are supported for schema import?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "The parser handles standard ANSI SQL, MySQL (backtick-quoted identifiers, AUTO_INCREMENT), PostgreSQL (SERIAL, IDENTITY), SQLite (AUTOINCREMENT), and SQL Server (bracket-quoted identifiers, IDENTITY)."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Is this a good free alternative to Mockaroo?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "ToolShelf is designed as a free, unlimited alternative to Mockaroo. While Mockaroo limits free users to 1,000 rows and requires signup, ToolShelf lets you generate up to 100,000 rows with no account, no limits, and complete privacy."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "What output formats are supported?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Currently JSON (array of objects), CSV (with header row), and SQL (INSERT INTO statements). More formats may be added based on user feedback."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Does the tool work without an internet connection?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "After the initial page load (which caches the Faker.js library), the tool works completely offline. All data generation happens in your browser's JavaScript engine."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "How fast is mock data generation?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "1,000 rows generate instantly, 10,000 rows in under a second, and 100,000 rows in roughly 3-5 seconds. Large datasets are generated in chunks to keep the browser responsive."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Can I generate unique values for each row?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Fields like UUID, Email, and ID (auto-increment) automatically produce unique values. For other types like Name or City, values are randomly generated and may occasionally repeat, similar to real-world data distribution."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "What is Faker.js?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Faker.js is the most popular open-source JavaScript library for generating realistic fake data including names, emails, addresses, phone numbers, dates, and more in multiple locales."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Can I generate mock data for multiple related tables?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Each generation session produces data for a single table. For related tables, generate each separately using matching ID ranges to maintain referential integrity."
+                }
+            }
+        ]
+    }
+    </script>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="../shared/css/variables.css">
+    <link rel="stylesheet" href="../shared/css/base.css">
+    <link rel="stylesheet" href="../shared/css/components.css">
+    <link rel="stylesheet" href="../shared/css/tool-layout.css">
+    <link rel="stylesheet" href="../shared/css/responsive.css">
+    <link rel="stylesheet" href="../shared/css/seo-content.css">
+    <link rel="stylesheet" href="css/mock-tool.css">
+
+    <!-- External -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <link rel="preload" href="../shared/css/variables.css" as="style">
+    <link rel="preload" href="../shared/css/base.css" as="style">
+    <link rel="dns-prefetch" href="//fonts.googleapis.com">
+    <link rel="dns-prefetch" href="//cdnjs.cloudflare.com">
+    <link rel="dns-prefetch" href="//esm.sh">
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-GBY4766X5D"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-GBY4766X5D');
+    </script>
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="header-container">
+                <div class="logo-section">
+                    <div class="logo-icon"><i class="fas fa-toolbox"></i></div>
+                    <a href="../" class="logo-text">ToolShelf</a>
+                </div>
+                <nav class="main-nav">
+                    <a href="../" class="nav-link">Home</a>
+                    <a href="../#tools" class="nav-link active">Tools</a>
+                    <a href="../blog/" class="nav-link">Blog</a>
+                    <a href="../#about" class="nav-link">About</a>
+                </nav>
+                <div class="tool-actions">
+                    <button class="theme-switcher-btn" id="themeSwitcher" title="Switch to dark mode"
+                        aria-label="Switch to dark mode">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                    <button class="help-btn" id="helpBtn" title="Show instructions"
+                        aria-label="Show help and instructions">
+                        <i class="fas fa-question-circle" aria-hidden="true"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="breadcrumb-container">
+                <div class="breadcrumb-wrapper">
+                    <nav class="breadcrumb">
+                        <a href="../">Home</a>
+                        <span class="breadcrumb-separator">›</span>
+                        <a href="../#tools">Tools</a>
+                        <span class="breadcrumb-separator">›</span>
+                        <span class="breadcrumb-current">Mock Data Generator</span>
+                    </nav>
+                    <div class="tool-status">
+                        <span class="status-badge available">Free</span>
+                        <span class="popularity-badge">New</span>
+                        <span class="tool-tag">Unlimited</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main -->
+        <main class="app-main" role="main">
+            <!-- SEO Intro (slim) -->
+            <section class="seo-content" id="seo-content">
+                <div class="seo-intro">
+                    <h1>Free Mock Data Generator — Unlimited SQL, JSON, CSV</h1>
+                    <p class="lead">Generate realistic test data with zero limits. Define your schema manually, import from a
+                        <code>CREATE TABLE</code> statement, or pick a preset — then download up to 100,000+ rows instantly.
+                        Everything runs in your browser — no data leaves your device.</p>
+                </div>
+            </section>
+
+            <!-- ============ TOOL ============ -->
+            <div id="mock-data-tool" class="tool-container active">
+                <div class="mock-workspace">
+
+                    <!-- ===== CONTROL BAR ===== -->
+                    <div class="mock-control-bar">
+                        <div class="control-bar-left">
+                            <!-- Format Selector -->
+                            <div class="control-group-inline">
+                                <label class="control-label" for="outputFormat"><i class="fas fa-file-export"></i> Format</label>
+                                <select id="outputFormat" class="mock-select">
+                                    <option value="json" selected>JSON</option>
+                                    <option value="csv">CSV</option>
+                                    <option value="sql">SQL</option>
+                                </select>
+                            </div>
+
+                            <!-- SQL Table Name (shown only for SQL) -->
+                            <div class="control-group-inline sql-only" id="sqlTableGroup" style="display:none;">
+                                <label class="control-label" for="sqlTableName">Table</label>
+                                <input type="text" id="sqlTableName" class="mock-input" value="users" placeholder="table_name">
+                            </div>
+
+                            <!-- Row Count -->
+                            <div class="control-group-inline">
+                                <label class="control-label" for="rowCount"><i class="fas fa-layer-group"></i> Rows</label>
+                                <input type="number" id="rowCount" class="mock-input row-count-input" value="100" min="1" max="100000" step="1">
+                            </div>
+
+                            <!-- Preset Selector -->
+                            <div class="control-group-inline">
+                                <label class="control-label" for="presetSelect"><i class="fas fa-bookmark"></i> Preset</label>
+                                <select id="presetSelect" class="mock-select">
+                                    <option value="user">Users</option>
+                                    <option value="product">Products</option>
+                                    <option value="order">Orders</option>
+                                    <option value="company">Companies</option>
+                                    <option value="custom">Custom</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="control-bar-right">
+                            <button id="previewBtn" class="mock-btn secondary" title="Preview first 10 rows">
+                                <i class="fas fa-eye"></i> <span class="btn-text">Preview</span>
+                            </button>
+                            <button id="generateBtn" class="mock-btn primary" title="Generate & Download">
+                                <i class="fas fa-download"></i> <span class="btn-text">Generate & Download</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Large row warning -->
+                    <div class="mock-warning" id="largeRowWarning" style="display:none;">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <span>Generating large datasets (>10,000 rows) may take a few seconds and temporarily freeze the UI.</span>
+                        <button class="warning-dismiss" id="dismissWarning" title="Dismiss"><i class="fas fa-times"></i></button>
+                    </div>
+
+                    <!-- ===== SPLIT PANE ===== -->
+                    <div class="mock-split-pane">
+
+                        <!-- LEFT: Schema Builder -->
+                        <div class="mock-schema-pane">
+                            <div class="pane-header">
+                                <h2 class="pane-title"><i class="fas fa-columns"></i> Schema Builder</h2>
+                                <div class="pane-header-actions">
+                                    <button id="importSqlBtn" class="mock-btn-sm" title="Import schema from SQL CREATE TABLE">
+                                        <i class="fas fa-database"></i> Import SQL
+                                    </button>
+                                    <button id="addFieldBtn" class="mock-btn-sm accent" title="Add new field">
+                                        <i class="fas fa-plus"></i> Add Field
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="schema-table-header">
+                                <span class="schema-col col-handle"></span>
+                                <span class="schema-col col-name">Field Name</span>
+                                <span class="schema-col col-type">Type</span>
+                                <span class="schema-col col-options">Options</span>
+                                <span class="schema-col col-actions"></span>
+                            </div>
+
+                            <div class="schema-rows" id="schemaRows">
+                                <!-- Dynamic schema rows inserted here by JS -->
+                            </div>
+                        </div>
+
+                        <!-- RIGHT: Preview -->
+                        <div class="mock-preview-pane">
+                            <div class="pane-header">
+                                <h2 class="pane-title"><i class="fas fa-code"></i> Preview</h2>
+                                <div class="pane-header-actions">
+                                    <button id="copyPreviewBtn" class="mock-btn-sm" title="Copy preview" disabled>
+                                        <i class="fas fa-copy"></i>
+                                    </button>
+                                    <span class="preview-info" id="previewInfo">Showing first 10 rows</span>
+                                </div>
+                            </div>
+                            <textarea id="previewOutput" class="mock-preview-editor" readonly spellcheck="false"
+                                placeholder="Click 'Preview' to see your mock data here..."></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Generation progress -->
+                    <div class="mock-progress" id="generationProgress" style="display:none;">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progressFill"></div>
+                        </div>
+                        <span class="progress-text" id="progressText">Generating...</span>
+                    </div>
+
+                </div>
+            </div>
+            <!-- END TOOL -->
+
+            <!-- Related Tools -->
+            <div id="related-tools" class="related-tools-section"></div>
+
+            <!-- ============ SEO CONTENT (Bottom) ============ -->
+            <section class="seo-content" id="seo-bottom">
+                <div class="seo-intro">
+                    <h2>Why ToolShelf Mock Data Generator?</h2>
+                    <p class="lead">Most mock data tools limit free usage or require server uploads. ToolShelf runs 100% in
+                        your browser — no row limits, no account, no privacy concerns.</p>
+                </div>
+                <button class="seo-toggle" onclick="toggleSeoExpanded()" aria-label="Show more"
+                    aria-expanded="false">
+                    <span>Learn More</span>
+                    <i class="fas fa-chevron-down" aria-hidden="true"></i>
+                </button>
+            </section>
+
+            <section class="seo-expanded" id="seo-expanded" style="display:none;">
+                <!-- Comparison Table -->
+                <div class="content-section comparison-section">
+                    <h2>How We Compare to Other Mock Data Tools</h2>
+                    <div class="comparison-table-wrapper">
+                        <table class="comparison-table">
+                            <thead>
+                                <tr>
+                                    <th>Feature</th>
+                                    <th class="highlight-col">ToolShelf <i class="fas fa-star"></i></th>
+                                    <th>Mockaroo</th>
+                                    <th>Others</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Row Limit (Free)</td>
+                                    <td class="highlight-col"><strong>Unlimited</strong></td>
+                                    <td>1,000</td>
+                                    <td>Varies (100–5,000)</td>
+                                </tr>
+                                <tr>
+                                    <td>Signup Required</td>
+                                    <td class="highlight-col"><i class="fas fa-times-circle text-success"></i> No</td>
+                                    <td><i class="fas fa-check-circle text-error"></i> Yes</td>
+                                    <td><i class="fas fa-check-circle text-error"></i> Often</td>
+                                </tr>
+                                <tr>
+                                    <td>Data Privacy</td>
+                                    <td class="highlight-col"><i class="fas fa-shield-alt text-success"></i> 100% Local</td>
+                                    <td>Server-side</td>
+                                    <td>Server-side</td>
+                                </tr>
+                                <tr>
+                                    <td>Output Formats</td>
+                                    <td class="highlight-col">JSON, CSV, SQL</td>
+                                    <td>JSON, CSV, SQL, XML</td>
+                                    <td>Varies</td>
+                                </tr>
+                                <tr>
+                                    <td>Speed (100k rows)</td>
+                                    <td class="highlight-col">~3 seconds</td>
+                                    <td>N/A (paid tier)</td>
+                                    <td>N/A</td>
+                                </tr>
+                                <tr>
+                                    <td>Offline Support</td>
+                                    <td class="highlight-col"><i class="fas fa-check-circle text-success"></i> Yes</td>
+                                    <td><i class="fas fa-times-circle text-error"></i> No</td>
+                                    <td><i class="fas fa-times-circle text-error"></i> No</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="content-grid">
+                    <!-- What is Mock Data? -->
+                    <div class="content-section">
+                        <h2>What is Mock Data?</h2>
+                        <p>Mock data (also called fake data, dummy data, or seed data) is synthetically generated
+                            information that mimics real-world data structures. Developers use it to populate databases
+                            for testing, build UI prototypes, conduct load testing, and validate data pipelines
+                            — all without risking real user information.</p>
+
+                        <h3>Common Use Cases</h3>
+                        <ul>
+                            <li><strong>Database Seeding:</strong> Populate development and staging databases with realistic test records</li>
+                            <li><strong>API Prototyping:</strong> Generate sample payloads for endpoint testing before real data exists</li>
+                            <li><strong>Load Testing:</strong> Produce thousands of rows to stress-test queries and indexes</li>
+                            <li><strong>UI Development:</strong> Create realistic data for frontend component development</li>
+                            <li><strong>Data Migration Testing:</strong> Verify ETL pipelines with large sample datasets</li>
+                            <li><strong>Demo Environments:</strong> Fill demo apps with believable data for presentations</li>
+                        </ul>
+                    </div>
+
+                    <div class="content-section">
+                        <h2>Supported Data Types</h2>
+                        <div class="use-cases-grid">
+                            <div class="use-case">
+                                <h4><i class="fas fa-user"></i> Names</h4>
+                                <p>Full names, first names, and last names from diverse locales using Faker.js data sets.</p>
+                            </div>
+                            <div class="use-case">
+                                <h4><i class="fas fa-envelope"></i> Emails</h4>
+                                <p>Realistic email addresses with common providers and realistic username patterns.</p>
+                            </div>
+                            <div class="use-case">
+                                <h4><i class="fas fa-phone"></i> Phone Numbers</h4>
+                                <p>Properly formatted phone numbers with realistic area codes and prefixes.</p>
+                            </div>
+                            <div class="use-case">
+                                <h4><i class="fas fa-calendar"></i> Dates</h4>
+                                <p>ISO dates, Unix timestamps, and custom format dates across realistic ranges.</p>
+                            </div>
+                            <div class="use-case">
+                                <h4><i class="fas fa-fingerprint"></i> UUIDs</h4>
+                                <p>Universally unique identifiers for primary keys and reference IDs.</p>
+                            </div>
+                            <div class="use-case">
+                                <h4><i class="fas fa-city"></i> Addresses</h4>
+                                <p>Cities, countries, street addresses, zip codes, and geographic coordinates.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ -->
+                <div class="faq-section">
+                    <h2>Frequently Asked Questions</h2>
+                    <div class="faq-grid">
+                        <div class="faq-item">
+                            <h3>Is there really no row limit?</h3>
+                            <p>Yes. Since all data is generated in your browser using JavaScript, there are no server costs
+                                and therefore no artificial limits. We recommend staying under 100,000 rows for a smooth
+                                experience, but the tool won't stop you.</p>
+                        </div>
+                        <div class="faq-item">
+                            <h3>Is my data private?</h3>
+                            <p>100% private. No data is ever sent to any server. The mock data is generated entirely in your
+                                browser using the Faker.js library. ToolShelf doesn't even see what you generate.</p>
+                        </div>
+                        <div class="faq-item">
+                            <h3>What formats are supported?</h3>
+                            <p>Currently JSON (array of objects), CSV (with header row), and SQL (INSERT INTO statements).
+                                More formats may be added based on user feedback.</p>
+                        </div>
+                        <div class="faq-item">
+                            <h3>Can I customize the field types?</h3>
+                            <p>Yes. Use the Schema Builder to define any number of fields, each with a chosen data type.
+                                Some types have additional options like date format or number range.</p>
+                        </div>
+                        <div class="faq-item">
+                            <h3>Can I import a schema from SQL?</h3>
+                            <p>Yes! Click the <strong>Import SQL</strong> button in the Schema Builder and paste any
+                                <code>CREATE TABLE</code> statement. The parser supports MySQL, PostgreSQL, SQLite,
+                                and SQL Server DDL syntax. Column types are automatically mapped to the closest Faker
+                                data type so you get realistic test data that matches your production schema.</p>
+                        </div>
+                        <div class="faq-item">
+                            <h3>How does SQL schema import work?</h3>
+                            <p>The parser extracts column names and SQL data types from your DDL statement, then uses
+                                a combination of type-based and name-based heuristics to select the best Faker generator.
+                                For example, a <code>VARCHAR</code> column named "email" maps to the Email generator,
+                                while a <code>TIMESTAMP</code> column becomes a DateTime field. You can review and
+                                adjust the mapping before applying.</p>
+                        </div>
+                        <div class="faq-item">
+                            <h3>What SQL dialects are supported for import?</h3>
+                            <p>The parser handles standard ANSI SQL, MySQL (backtick-quoted identifiers, AUTO_INCREMENT),
+                                PostgreSQL (SERIAL, IDENTITY, quoted identifiers), SQLite (AUTOINCREMENT, flexible types),
+                                and SQL Server (bracket-quoted identifiers, IDENTITY). Table constraints like PRIMARY KEY,
+                                FOREIGN KEY, and UNIQUE are skipped — only column definitions are extracted.</p>
+                        </div>
+                        <div class="faq-item">
+                            <h3>Is this a good alternative to Mockaroo?</h3>
+                            <p>ToolShelf is designed as a free, unlimited alternative to Mockaroo. While Mockaroo limits
+                                free users to 1,000 rows and requires signup, ToolShelf lets you generate up to 100,000
+                                rows with no account, no limits, and complete privacy — all processing runs in your browser.
+                                Plus, the SQL import feature lets you generate test data directly from your database schema.</p>
+                        </div>
+                        <div class="faq-item">
+                            <h3>Does the tool work without an internet connection?</h3>
+                            <p>After the initial page load (which caches the Faker.js library), the tool works completely
+                                offline. All data generation happens in your browser's JavaScript engine, so you can generate
+                                mock data even without internet access — perfect for air-gapped development environments.</p>
+                        </div>
+                        <div class="faq-item">
+                            <h3>How fast is mock data generation?</h3>
+                            <p>Typical performance: 1,000 rows generate instantly, 10,000 rows in under a second, and
+                                100,000 rows in roughly 3–5 seconds depending on your device. For very large datasets,
+                                generation runs in chunks to keep the browser responsive.</p>
+                        </div>
+                        <div class="faq-item">
+                            <h3>Can I generate unique values for each row?</h3>
+                            <p>Fields like UUID, Email, and ID (auto-increment) automatically produce unique values.
+                                For other types like Name or City, values are randomly generated and may occasionally
+                                repeat — similar to real-world data distribution.</p>
+                        </div>
+                        <div class="faq-item">
+                            <h3>What is Faker.js and why does this tool use it?</h3>
+                            <p>Faker.js is the most popular open-source library for generating realistic fake data.
+                                It produces locale-aware names, addresses, phone numbers, and more. ToolShelf loads
+                                Faker.js directly in your browser, giving you the same data quality used by thousands
+                                of production test suites worldwide.</p>
+                        </div>
+                        <div class="faq-item">
+                            <h3>Can I generate mock data for multiple related tables?</h3>
+                            <p>Currently, each generation session produces data for a single table. For related tables,
+                                generate each table separately using matching ID ranges. For example, generate a "users"
+                                table with IDs 1–1000, then an "orders" table with user_id as an Integer
+                                (range 1–1000) to create realistic referential data.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- How to Use Guide -->
+                <div class="content-section">
+                    <h2>How to Generate Mock Data for Your Database</h2>
+                    <p>Follow these steps to create realistic test data for any SQL database, REST API, or frontend prototype:</p>
+                    <ol class="seo-steps-list">
+                        <li><strong>Define your schema</strong> — Use the Schema Builder to add columns with names and data types, or import directly from a <code>CREATE TABLE</code> statement.</li>
+                        <li><strong>Choose your output format</strong> — Select JSON for API testing, CSV for spreadsheets and data imports, or SQL for direct database seeding with <code>INSERT INTO</code> statements.</li>
+                        <li><strong>Set the row count</strong> — Generate anywhere from 1 to 100,000 rows. Large datasets are generated in chunks to keep the browser responsive.</li>
+                        <li><strong>Preview and download</strong> — Click Preview to inspect the first 10 rows, then Generate &amp; Download for the full dataset as a file.</li>
+                    </ol>
+                </div>
+
+                <!-- Additional Keyword-Rich Content -->
+                <div class="content-grid">
+                    <div class="content-section">
+                        <h2>Generate SQL INSERT Statements for Testing</h2>
+                        <p>Need to populate a development database quickly? ToolShelf generates ready-to-use
+                            <code>INSERT INTO</code> statements that you can run directly in MySQL, PostgreSQL, or any
+                            SQL-compatible database. Set the table name, define your columns, and download thousands of
+                            realistic INSERT statements in seconds.</p>
+                        <p>The SQL output properly escapes string values, handles NULLs, and formats booleans correctly
+                            for your target database. Unlike other tools that charge for SQL output, ToolShelf provides
+                            this completely free.</p>
+                    </div>
+                    <div class="content-section">
+                        <h2>Import CREATE TABLE to Generate Test Data</h2>
+                        <p>The SQL Schema Import feature parses your existing <code>CREATE TABLE</code> DDL and automatically
+                            builds the corresponding mock data schema. It understands common SQL types like <code>VARCHAR</code>,
+                            <code>INT</code>, <code>TIMESTAMP</code>, <code>BOOLEAN</code>, <code>UUID</code>, and more.</p>
+                        <p>Smart column-name heuristics ensure that a column named "email" gets realistic email addresses,
+                            "city" gets real city names, and "phone" gets properly formatted phone numbers — even if the
+                            SQL type is just <code>VARCHAR(255)</code>.</p>
+                    </div>
+                </div>
+
+                <!-- Benefits -->
+                <div class="content-grid">
+                    <div class="content-section">
+                        <h2>Why Developers Choose ToolShelf</h2>
+                        <div class="benefits-grid">
+                            <div class="benefit">
+                                <i class="fas fa-infinity"></i>
+                                <h4>Unlimited Generation</h4>
+                                <p>No row limits, no paid tiers. Generate as much test data as your browser can handle.</p>
+                            </div>
+                            <div class="benefit">
+                                <i class="fas fa-shield-alt"></i>
+                                <h4>100% Private</h4>
+                                <p>All data generation runs locally. Nothing is uploaded, tracked, or stored on any server.</p>
+                            </div>
+                            <div class="benefit">
+                                <i class="fas fa-bolt"></i>
+                                <h4>Blazing Fast</h4>
+                                <p>Generate 10,000 rows in under a second. Powered by Faker.js optimized for browser use.</p>
+                            </div>
+                            <div class="benefit">
+                                <i class="fas fa-wifi-slash"></i>
+                                <h4>Works Offline</h4>
+                                <p>After initial load, the tool works without an internet connection.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Glossary -->
+                <div class="content-section">
+                    <h2>Mock Data Glossary for Developers</h2>
+                    <ul>
+                        <li><strong>Mock Data (Fake Data):</strong> Synthetically generated information that mimics real-world data structures. Used in development, testing, and prototyping without exposing real user information.</li>
+                        <li><strong>Seed Data:</strong> Initial data loaded into a database to establish a baseline for testing or development. Mock data generators are the most common way to create seed datasets.</li>
+                        <li><strong>Faker.js:</strong> The most widely-used open-source JavaScript library for generating realistic fake data — names, emails, addresses, dates, and more — in multiple locales.</li>
+                        <li><strong>DDL (Data Definition Language):</strong> SQL statements like <code>CREATE TABLE</code> that define database schema structure. ToolShelf can parse DDL to auto-generate mock data schemas.</li>
+                        <li><strong>Schema:</strong> The structure of a database table or data object — column names, data types, constraints, and relationships. The Schema Builder lets you define or import this structure.</li>
+                        <li><strong>Test Fixtures:</strong> Pre-defined data sets used to establish a repeatable test environment. Mock data generators create fixtures dynamically instead of maintaining static fixture files.</li>
+                        <li><strong>INSERT Statement:</strong> A SQL command that adds new rows to a database table. ToolShelf generates ready-to-run INSERT statements for MySQL, PostgreSQL, SQLite, and other SQL databases.</li>
+                        <li><strong>CSV (Comma-Separated Values):</strong> A plain-text format where each line is a data record and fields are separated by commas. Widely supported by databases, spreadsheets, and ETL tools.</li>
+                    </ul>
+                </div>
+
+                <!-- Best Practices -->
+                <div class="content-section">
+                    <h2>Mock Data Best Practices for Developers</h2>
+                    <ul>
+                        <li><strong>Match your production schema:</strong> Use the SQL Import feature to copy your exact <code>CREATE TABLE</code> structure. This ensures your test data fits your constraints and foreign keys.</li>
+                        <li><strong>Use realistic value ranges:</strong> Set Integer and Float min/max values that mirror production data. An age column should use 18–90, not 0–1,000,000.</li>
+                        <li><strong>Test edge cases first:</strong> Generate small datasets (5–10 rows) to verify formatting and column types, then scale up to thousands for load testing and performance benchmarks.</li>
+                        <li><strong>Keep column names semantic:</strong> The tool uses column name heuristics to assign Faker types automatically. Naming a column "email" instead of "e" gets you realistic email addresses.</li>
+                        <li><strong>Mix output formats:</strong> Generate the same schema in JSON, CSV, and SQL to test all your application's data import paths and ensure format-specific edge cases are covered.</li>
+                        <li><strong>Validate before seeding:</strong> Always preview mock data before bulk-importing into staging databases. Check that types, formats, and value ranges match your application's expectations.</li>
+                        <li><strong>Use consistent ID ranges:</strong> When generating data for related tables, use matching ID ranges across tables to maintain referential integrity in your test dataset.</li>
+                    </ul>
+                </div>
+
+                <!-- Use cases -->
+                <div class="content-section">
+                    <h2>Popular Use Cases for Mock Data Generation</h2>
+                    <div class="use-cases-grid">
+                        <div class="use-case">
+                            <h4><i class="fas fa-database"></i> Database Seeding</h4>
+                            <p>Populate MySQL, PostgreSQL, or SQLite development databases with thousands of realistic records using generated INSERT statements.</p>
+                        </div>
+                        <div class="use-case">
+                            <h4><i class="fas fa-server"></i> API Prototyping</h4>
+                            <p>Generate JSON mock payloads to test REST and GraphQL endpoints before your backend produces real data.</p>
+                        </div>
+                        <div class="use-case">
+                            <h4><i class="fas fa-tachometer-alt"></i> Load &amp; Performance Testing</h4>
+                            <p>Produce 10,000–100,000 row datasets to stress-test database queries, indexes, and application response times.</p>
+                        </div>
+                        <div class="use-case">
+                            <h4><i class="fas fa-laptop-code"></i> Frontend Development</h4>
+                            <p>Create realistic JSON datasets to power UI component development, table pagination, and search features.</p>
+                        </div>
+                        <div class="use-case">
+                            <h4><i class="fas fa-exchange-alt"></i> Data Migration Testing</h4>
+                            <p>Verify ETL pipelines and data migration scripts with large sample datasets before touching production data.</p>
+                        </div>
+                        <div class="use-case">
+                            <h4><i class="fas fa-chalkboard-teacher"></i> Demos &amp; Training</h4>
+                            <p>Fill demo applications with believable data for client presentations, workshops, and developer onboarding.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="app-footer">
+            <div class="footer-content">
+                <div class="footer-main">
+                    <div class="footer-logo">
+                        <div class="logo-icon"><i class="fas fa-toolbox"></i></div>
+                        <strong>ToolShelf</strong>
+                    </div>
+                    <p class="footer-description">Professional online tools that respect your privacy. Built for
+                        developers and professionals worldwide.</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-section">
+                        <h4>Tools</h4>
+                        <a href="../json-formatter/">JSON Formatter</a>
+                        <a href="../base64-encoder/">Base64 Encoder</a>
+                        <a href="../text-transformer/">Text Transformer</a>
+                        <a href="../qr-generator/">QR Generator</a>
+                        <a href="../hash-generator/">Hash Generator</a>
+                        <a href="../jwt-decoder/">JWT Decoder</a>
+                        <a href="../uuid-v7-generator/">UUID v7 Generator</a>
+                        <a href="../mock-data-generator/">Mock Data Generator</a>
+                    </div>
+                    <div class="footer-section">
+                        <h4>Resources</h4>
+                        <a href="../#about">About ToolShelf</a>
+                        <a href="../privacy/">Privacy Policy</a>
+                        <a href="../terms/">Terms of Use</a>
+                        <a href="../faq/">FAQs</a>
+                        <a href="../contact/">Contact</a>
+                    </div>
+                    <div class="footer-section">
+                        <h4>Company</h4>
+                        <a href="../blog/">Blog</a>
+                        <a href="../#about">About Us</a>
+                        <a href="../contact/">Contact</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 ToolShelf. All tools work offline and respect your privacy.</p>
+            </div>
+        </footer>
+
+        <!-- Help Modal -->
+        <div id="helpModal" class="help-modal" role="dialog" aria-labelledby="help-title" aria-hidden="true">
+            <div class="help-content">
+                <div class="help-header">
+                    <h2 id="help-title"><i class="fas fa-info-circle" aria-hidden="true"></i> Mock Data Generator Guide</h2>
+                    <button class="help-close" id="helpClose" aria-label="Close help dialog">
+                        <i class="fas fa-times" aria-hidden="true"></i>
+                    </button>
+                </div>
+                <div class="help-body">
+                    <div class="help-section">
+                        <h3>Quick Start</h3>
+                        <ol>
+                            <li>Define your schema using the <strong>Schema Builder</strong> on the left</li>
+                            <li>Choose an output format (JSON, CSV, or SQL)</li>
+                            <li>Set the number of rows you need</li>
+                            <li>Click <strong>Preview</strong> to see a sample, or <strong>Generate &amp; Download</strong> for the full dataset</li>
+                        </ol>
+                    </div>
+                    <div class="help-section">
+                        <h3>Schema Builder</h3>
+                        <ul>
+                            <li><strong>Add Field:</strong> Click the + button to add a new column</li>
+                            <li><strong>Import SQL:</strong> Click "Import SQL" to parse a CREATE TABLE statement and auto-populate the schema</li>
+                            <li><strong>Remove Field:</strong> Click the trash icon on any row</li>
+                            <li><strong>Reorder:</strong> Use the up/down arrows to change field order</li>
+                            <li><strong>Presets:</strong> Choose a preset template to quickly populate common schemas</li>
+                        </ul>
+                    </div>
+                    <div class="help-section">
+                        <h3>Available Data Types</h3>
+                        <div class="shortcuts-grid">
+                            <div class="shortcut-item"><kbd>ID</kbd> <span>Auto-incrementing integer</span></div>
+                            <div class="shortcut-item"><kbd>UUID</kbd> <span>Random v4 UUID</span></div>
+                            <div class="shortcut-item"><kbd>Name</kbd> <span>Full person name</span></div>
+                            <div class="shortcut-item"><kbd>First</kbd> <span>First name only</span></div>
+                            <div class="shortcut-item"><kbd>Last</kbd> <span>Last name only</span></div>
+                            <div class="shortcut-item"><kbd>Email</kbd> <span>Realistic email address</span></div>
+                            <div class="shortcut-item"><kbd>Phone</kbd> <span>Phone number</span></div>
+                            <div class="shortcut-item"><kbd>Date</kbd> <span>ISO 8601 date/datetime</span></div>
+                            <div class="shortcut-item"><kbd>Boolean</kbd> <span>true / false</span></div>
+                            <div class="shortcut-item"><kbd>Integer</kbd> <span>Random integer (range)</span></div>
+                            <div class="shortcut-item"><kbd>Float</kbd> <span>Decimal number (range)</span></div>
+                            <div class="shortcut-item"><kbd>City</kbd> <span>City name</span></div>
+                            <div class="shortcut-item"><kbd>Country</kbd> <span>Country name</span></div>
+                            <div class="shortcut-item"><kbd>Address</kbd> <span>Street address</span></div>
+                            <div class="shortcut-item"><kbd>Company</kbd> <span>Company name</span></div>
+                            <div class="shortcut-item"><kbd>URL</kbd> <span>Web URL</span></div>
+                            <div class="shortcut-item"><kbd>IP</kbd> <span>IPv4 address</span></div>
+                            <div class="shortcut-item"><kbd>Paragraph</kbd> <span>Lorem ipsum text</span></div>
+                            <div class="shortcut-item"><kbd>Sentence</kbd> <span>Single sentence</span></div>
+                        </div>
+                    </div>
+                    <div class="help-section">
+                        <h3>Keyboard Shortcuts</h3>
+                        <div class="shortcuts-grid">
+                            <div class="shortcut-item"><kbd>Ctrl+G</kbd> <span>Generate &amp; Download</span></div>
+                            <div class="shortcut-item"><kbd>Ctrl+P</kbd> <span>Preview</span></div>
+                            <div class="shortcut-item"><kbd>Ctrl+Enter</kbd> <span>Copy preview</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SQL Import Modal -->
+        <div id="sqlImportModal" class="sql-import-modal" role="dialog" aria-labelledby="sql-import-title" aria-hidden="true">
+            <div class="sql-import-backdrop"></div>
+            <div class="sql-import-content">
+                <div class="sql-import-header">
+                    <h2 id="sql-import-title"><i class="fas fa-database" aria-hidden="true"></i> Import Schema from SQL</h2>
+                    <button class="sql-import-close" id="sqlImportClose" aria-label="Close dialog">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="sql-import-body">
+                    <p class="sql-import-desc">Paste a <code>CREATE TABLE</code> statement below. The parser supports MySQL, PostgreSQL, SQLite, and SQL Server DDL syntax.</p>
+                    <div class="sql-import-input-wrap">
+                        <textarea id="sqlImportInput" class="sql-import-textarea" spellcheck="false" placeholder="CREATE TABLE users (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(255) NOT NULL,
+  email VARCHAR(100) UNIQUE,
+  age INT DEFAULT 0,
+  created_at TIMESTAMP DEFAULT NOW()
+);"></textarea>
+                    </div>
+                    <div class="sql-import-error" id="sqlImportError" style="display:none;">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <span id="sqlImportErrorMsg"></span>
+                    </div>
+                    <div class="sql-import-preview" id="sqlImportPreview" style="display:none;">
+                        <div class="sql-preview-header">
+                            <span><i class="fas fa-check-circle"></i> Parsed <strong id="sqlParsedCount">0</strong> columns from <code id="sqlParsedTable">—</code></span>
+                        </div>
+                        <div class="sql-preview-table" id="sqlPreviewTable"></div>
+                    </div>
+                </div>
+                <div class="sql-import-footer">
+                    <button class="mock-btn secondary" id="sqlImportCancelBtn">Cancel</button>
+                    <button class="mock-btn" id="sqlImportParseBtn">
+                        <i class="fas fa-search"></i> Parse SQL
+                    </button>
+                    <button class="mock-btn primary" id="sqlImportApplyBtn" disabled>
+                        <i class="fas fa-check"></i> Apply Schema
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Toast -->
+        <div id="toast" class="toast" role="alert" aria-live="assertive">
+            <div class="toast-content">
+                <i class="toast-icon fas fa-check-circle" aria-hidden="true"></i>
+                <span id="toastMessage"></span>
+            </div>
+            <button class="toast-close" onclick="this.parentElement.classList.remove('show')"
+                aria-label="Close notification">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+
+        <!-- Scripts: Shared -->
+        <script src="../shared/js/components/help-modal.js"></script>
+        <script src="../shared/config/constants.js"></script>
+        <script src="../shared/js/core/utils.js"></script>
+        <script src="../shared/js/core/events.js"></script>
+        <script src="../shared/js/core/analytics.js"></script>
+        <script src="../shared/js/components/toast.js"></script>
+        <script src="../shared/js/components/navigation.js"></script>
+        <script src="../shared/js/components/seo-content.js"></script>
+        <script src="../shared/js/components/keyboard.js"></script>
+        <script src="../shared/js/tools/base-tool.js"></script>
+
+        <!-- Scripts: Mock Data Generator -->
+        <script src="js/generator.js"></script>
+        <script src="js/sql-parser.js"></script>
+        <script src="js/ui.js"></script>
+
+        <!-- Init -->
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                window.ToolShelf = window.ToolShelf || {};
+                try {
+                    if (window.ToolShelf.Toast && !window.ToolShelf.Toast.element) {
+                        window.ToolShelf.Toast.init();
+                    }
+                    if (window.ToolShelf.HelpModal) {
+                        window.ToolShelf.HelpModal.init();
+                    }
+                    const tool = new window.ToolShelf.MockDataGenerator();
+                    window.ToolShelf.currentTool = tool;
+                    console.log('🎉 Mock Data Generator initialized');
+                } catch (error) {
+                    console.error('❌ Failed to initialize Mock Data Generator:', error);
+                    if (window.ToolShelf.Toast) {
+                        window.ToolShelf.Toast.show('Failed to initialize tool. Please refresh.', 'error');
+                    }
+                }
+            });
+
+            function toggleSeoExpanded() {
+                const trigger = document.getElementById('seo-bottom');
+                const expanded = document.getElementById('seo-expanded');
+                const isOpen = expanded.style.display !== 'none';
+                expanded.style.display = isOpen ? 'none' : 'block';
+                const icon = trigger.querySelector('.seo-toggle i');
+                const text = trigger.querySelector('.seo-toggle span');
+                if (icon) icon.className = isOpen ? 'fas fa-chevron-down' : 'fas fa-chevron-up';
+                if (text) text.textContent = isOpen ? 'Learn More' : 'Show Less';
+            }
+        </script>
+
+        <!-- Theme Switcher -->
+        <script>
+            (function () {
+                let currentTheme = 'light';
+                function loadTheme() {
+                    try {
+                        const saved = localStorage.getItem('toolshelf-theme');
+                        if (saved === 'dark' || saved === 'light') currentTheme = saved;
+                        else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) currentTheme = 'dark';
+                        document.documentElement.setAttribute('data-theme', currentTheme);
+                    } catch (e) { document.documentElement.setAttribute('data-theme', 'light'); }
+                }
+                function toggleTheme() {
+                    currentTheme = currentTheme === 'light' ? 'dark' : 'light';
+                    document.documentElement.setAttribute('data-theme', currentTheme);
+                    try { localStorage.setItem('toolshelf-theme', currentTheme); } catch (e) { }
+                    updateButton();
+                }
+                function updateButton() {
+                    const btn = document.getElementById('themeSwitcher');
+                    if (btn) {
+                        const icon = btn.querySelector('i');
+                        const isDark = currentTheme === 'dark';
+                        if (icon) icon.className = isDark ? 'fas fa-sun' : 'fas fa-moon';
+                        btn.title = isDark ? 'Switch to light mode' : 'Switch to dark mode';
+                        btn.setAttribute('aria-label', btn.title);
+                    }
+                }
+                loadTheme();
+                document.addEventListener('DOMContentLoaded', function () {
+                    updateButton();
+                    const btn = document.getElementById('themeSwitcher');
+                    if (btn) btn.addEventListener('click', toggleTheme);
+                });
+            })();
+        </script>
+
+        <!-- Module imports -->
+        <script type="module">
+            import { renderRelatedTools } from '../shared/js/core/render-related-tools.js';
+            import { initFeedbackWidget } from '../shared/js/core/feedback-widget.js';
+            initFeedbackWidget("mock-data-generator");
+            renderRelatedTools("mock-data-generator");
+        </script>
+    </div>
+</body>
+
+</html>
