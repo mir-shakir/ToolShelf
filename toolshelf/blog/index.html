@@ -102,7 +102,7 @@
                 </div>
 
                 <!-- Search Bar for Blog Posts -->
-                <div class="search-container" style="margin-bottom: 3rem;">
+                <div class="search-container" style="margin-bottom: 2rem;">
                     <div class="search-input-wrapper">
                         <i class="fas fa-search search-icon"></i>
                         <input type="text" id="blogSearchInput" class="search-input"
@@ -113,58 +113,54 @@
                     </div>
                 </div>
 
-                <!-- Tag Filter Section -->
-                <!--
-                <section class="tag-filter-section">
-                    <div class="tag-filter-header">
-                        <h3>Explore by Topic:</h3>
-                        <button id="clearTagFilter" class="clear-filter-btn" style="display: none;">Clear Filter</button>
-                    </div>
-                    <div class="tag-cloud" id="tagCloud">
-                        <!- - Tags will be dynamically loaded here by JavaScript - ->
-                    </div>
-                </section>
-                -->
+                <!-- 2-Column Layout: Sidebar + Main Content -->
+                <div class="blog-layout">
+                    <!-- Left: Category Sidebar -->
+                    <aside id="blog-sidebar-container" class="blog-sidebar"></aside>
 
-                <!-- Featured Post Section -->
-                <section class="featured-post-section">
-                    <div class="featured-post-card">
-                        <div class="featured-post-header">
-                            <span class="featured-badge"><i class="fas fa-star"></i> Featured Article</span>
-                            <h2 class="featured-post-title"></h2>
-                        </div>
-                        <div class="featured-post-body">
-                            <div class="featured-post-thumbnail"></div>
-                            <div class="featured-post-content">
-                                <p class="featured-post-excerpt"></p>
-                                <div class="featured-post-meta">
-                                    <span></span>
-                                    <span></span>
+                    <!-- Right: Main Blog Content -->
+                    <div class="blog-main-content">
+                        <!-- Featured Post Section -->
+                        <section class="featured-post-section">
+                            <div class="featured-post-card">
+                                <div class="featured-post-header">
+                                    <span class="featured-badge"><i class="fas fa-star"></i> Featured Article</span>
+                                    <h2 class="featured-post-title"></h2>
                                 </div>
-                                <a href="#" class="featured-post-button">
-                                    Read Article <i class="fas fa-arrow-right"></i>
-                                </a>
+                                <div class="featured-post-body">
+                                    <div class="featured-post-thumbnail"></div>
+                                    <div class="featured-post-content">
+                                        <p class="featured-post-excerpt"></p>
+                                        <div class="featured-post-meta">
+                                            <span></span>
+                                            <span></span>
+                                        </div>
+                                        <a href="#" class="featured-post-button">
+                                            Read Article <i class="fas fa-arrow-right"></i>
+                                        </a>
+                                    </div>
+                                </div>
                             </div>
+                        </section>
+
+                        <div class="blog-grid">
+                            <!-- Blog posts will be dynamically loaded here by JavaScript -->
+                        </div>
+
+                        <!-- No Results Message -->
+                        <div class="no-results" id="noBlogResults" style="display: none;">
+                            <div class="no-results-icon">
+                                <i class="fas fa-search"></i>
+                            </div>
+                            <h3>No blog posts found</h3>
+                            <p>Try adjusting your search query.</p>
+                        </div>
+
+                        <!-- Load More Button -->
+                        <div class="load-more-container" style="text-align: center; margin-top: 2rem;">
+                            <button id="loadMoreBtn" class="btn-primary" style="padding: 0.8rem 2rem; font-size: 1rem;">Load More</button>
                         </div>
                     </div>
-                </section>
-
-                <div class="blog-grid">
-                    <!-- Blog posts will be dynamically loaded here by JavaScript -->
-                </div>
-
-                <!-- No Results Message -->
-                <div class="no-results" id="noBlogResults" style="display: none;">
-                    <div class="no-results-icon">
-                        <i class="fas fa-search"></i>
-                    </div>
-                    <h3>No blog posts found</h3>
-                    <p>Try adjusting your search query.</p>
-                </div>
-
-                <!-- Load More Button -->
-                <div class="load-more-container" style="text-align: center; margin-top: 2rem;">
-                    <button id="loadMoreBtn" class="btn-primary" style="padding: 0.8rem 2rem; font-size: 1rem;">Load More</button>
                 </div>
             </div>
         </section>

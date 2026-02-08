@@ -1,5 +1,6 @@
 // /blog/js/blog-post.js
 import { blogPosts } from './blog-config.js';
+import { initBlogSidebar } from './sidebar.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     const articleContent = document.getElementById('articleContent');
@@ -9,6 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const prevPostLink = document.getElementById('prevPostLink');
     const nextPostLink = document.getElementById('nextPostLink');
     const relatedPostsGrid = document.querySelector('.related-posts-grid');
+    const postContainer = document.querySelector('.blog-post-container');
 
     // Ensure we are on a blog post page with the necessary elements
     if (!articleContent || !tocList || !progressBar || !tocContainer || !prevPostLink || !nextPostLink || !relatedPostsGrid) {
@@ -19,6 +21,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const currentPath = window.location.pathname;
     const currentSlugMatch = currentPath.match(/\/blog\/([^\/]+)\/$/);
     const currentSlug = currentSlugMatch ? currentSlugMatch[1] : null;
+
+    // Inject collapsible "Browse Topics" panel inside the article (above header)
+    const article = document.querySelector('.blog-post-article');
+    if (article && currentSlug) {
+        const topicsContainer = document.createElement('div');
+        topicsContainer.id = 'blog-topics-container';
+        article.insertBefore(topicsContainer, article.firstChild);
+        initBlogSidebar('#blog-topics-container', { mode: 'post', currentSlug });
+    }
 
     // 1. Generate Table of Contents
     const headings = articleContent.querySelectorAll('h2, h3'); // Include H3 for TOC
