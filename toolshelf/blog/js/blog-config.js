@@ -1,5 +1,18 @@
 // /blog/js/blog-config.js
 
+/**
+ * Blog Categories — used by sidebar and filtering.
+ * `order` controls display order in the sidebar accordion.
+ */
+export const BLOG_CATEGORIES = [
+    { key: 'devops',    label: 'DevOps & Cloud',        icon: '⚙️', order: 1 },
+    { key: 'backend',   label: 'Backend Engineering',    icon: '🖥️', order: 2 },
+    { key: 'frontend',  label: 'Frontend & Web',         icon: '🎨', order: 3 },
+    { key: 'security',  label: 'Security & Auth',        icon: '🔒', order: 4 },
+    { key: 'ai',        label: 'AI & Emerging Tech',     icon: '🤖', order: 5 },
+    { key: 'cs',        label: 'Computer Science',       icon: '🧮', order: 6 },
+];
+
 export const blogPosts = [
     {
         slug: 'mastering-dockerfile-best-practices-multi-stage-builds',
@@ -9,7 +22,8 @@ export const blogPosts = [
         date: 'January 24, 2026',
         readTime: '7 min read',
         tags: ["docker","devops","security","optimization","containers"],
-        isFeatured: false
+        isFeatured: false,
+        category: 'security'
     },
     {
         slug: 'zero-downtime-deployment-strategies',
@@ -19,7 +33,8 @@ export const blogPosts = [
         date: 'January 24, 2026',
         readTime: '8 min read',
         tags: ["devops","kubernetes","deployment","sre","architecture"],
-        isFeatured: false
+        isFeatured: false,
+        category: 'devops'
     },
     {
         slug: 'mutable-vs-immutable-infrastructure-devops-guide',
@@ -29,7 +44,8 @@ export const blogPosts = [
         date: 'January 24, 2026',
         readTime: '8 min read',
         tags: ["devops","infrastructure","terraform","ansible","docker"],
-        isFeatured: false
+        isFeatured: false,
+        category: 'devops'
     },
     {
         slug: 'github-actions-vs-gitlab-ci-ultimate-comparison-2026',
@@ -39,17 +55,19 @@ export const blogPosts = [
         date: 'January 24, 2026',
         readTime: '10 min read',
         tags: ["devops","ci/cd","github","gitlab","automation"],
-        isFeatured: false
+        isFeatured: false,
+        category: 'devops'
     },
     {
         slug: 'aws-s3-ebs-efs-storage-guide',
         title: 'AWS S3 vs EBS vs EFS: The Developer\'s Guide to Cloud Storage',
         excerpt: 'Confused by AWS storage? We break down S3 (Object), EBS (Block), and EFS (File) to help developers choose the right architecture for performance and cost.',
-        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/d99fcf87-1975-4904-a91e-49200751a3aa_blog_header.png', // Using the direct URL as per your strategy
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/d99fcf87-1975-4904-a91e-49200751a3aa_blog_header.png', // Using the direct URL as per your strategy,
         date: 'January 24, 2026',
         readTime: '8 min read',
         tags: ["aws","cloud architecture","devops","backend","storage"],
-        isFeatured: false
+        isFeatured: false,
+        category: 'devops'
     },
     {
         slug: 'cdn-push-vs-pull-zones-performance',
@@ -59,7 +77,8 @@ export const blogPosts = [
         date: 'January 24, 2026',
         readTime: '5 min read',
         tags: ["performance","cdn","architecture","devops","web development"],
-        isFeatured: false
+        isFeatured: false,
+        category: 'devops'
     },
     {
         slug: 'cors-demystified-mastering-access-control-allow-origin-web-security',
@@ -69,7 +88,8 @@ export const blogPosts = [
         date: 'January 24, 2026',
         readTime: '8 min read',
         tags: ["web security","cors","javascript","backend development","http headers"],
-        isFeatured: false
+        isFeatured: false,
+        category: 'security'
     },
     {
         slug: 'saga-pattern-choreography-vs-orchestration-showdown',
@@ -79,7 +99,8 @@ export const blogPosts = [
         date: 'January 24, 2026',
         readTime: '6 min read',
         tags: ["microservices","system design","distributed systems","saga pattern","backend"],
-        isFeatured: false
+        isFeatured: false,
+        category: 'backend'
     },
     {
         slug: 'real-time-web-architecture-long-polling-websockets-sse',
@@ -89,7 +110,8 @@ export const blogPosts = [
         date: 'January 24, 2026',
         readTime: '8 min read',
         tags: ["web architecture","websockets","sse","system design","javascript"],
-        isFeatured: false
+        isFeatured: false,
+        category: 'frontend'
     },
     {
         slug: 'elasticsearch-vs-clickhouse-log-management-showdown',
@@ -99,7 +121,8 @@ export const blogPosts = [
         date: 'January 24, 2026',
         readTime: '8 min read',
         tags: ["devops","observability","elasticsearch","clickhouse","backend"],
-        isFeatured: false
+        isFeatured: false,
+        category: 'devops',
     },
     {
         slug: 'materialized-vs-standard-views-sql-performance-guide',
@@ -109,7 +132,8 @@ export const blogPosts = [
         date: 'January 24, 2026',
         readTime: '6 min read',
         tags: ["sql","database performance","backend","system design","optimization"],
-        isFeatured: false
+        isFeatured: false,
+        category: 'backend'
     },
     {
         slug: 'redis-vs-memcached-is-memcached-dead',
@@ -119,7 +143,8 @@ export const blogPosts = [
         date: 'January 24, 2026',
         readTime: '7 min read',
         tags: ["backend","performance","redis","caching","architecture"],
-        isFeatured: false
+        isFeatured: false,
+        category: 'frontend'
     },
     {
         slug: 'database-normalization-1nf-2nf-3nf-guide',
@@ -129,7 +154,8 @@ export const blogPosts = [
         date: 'January 24, 2026',
         readTime: '6 min read',
         tags: ["database","sql","system-design","backend","best-practices"],
-        isFeatured: false
+        isFeatured: false,
+        category: 'backend'
     },
     {
         slug: 'mongodb-vs-cassandra-architecture-performance-guide-2026',
@@ -139,17 +165,19 @@ export const blogPosts = [
         date: 'January 24, 2026',
         readTime: '8 min read',
         tags: ["databases","system-design","mongodb","cassandra","backend"],
-        isFeatured: false
+        isFeatured: false,
+        category: 'backend'
     },
     {
         slug: 'sql-vs-nosql-decision-framework',
         title: 'SQL vs NoSQL: The Decision Framework for System Architects',
         excerpt: 'A comprehensive guide for architects on choosing between SQL and NoSQL. We analyze schema rigidity, consistency models (ACID vs BASE), and scaling patterns.',
-        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/819688dd-1b82-43d1-99e5-7d402f8c9acd_blog_header.png', // Using the direct URL as per your strategy
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/819688dd-1b82-43d1-99e5-7d402f8c9acd_blog_header.png', // Using the direct URL as per your strategy,
         date: 'January 24, 2026',
         readTime: '8 min read',
         tags: ["system architecture","database","sql","nosql","backend"],
-        isFeatured: false
+        isFeatured: false,
+        category: 'backend'
     },
     {
         slug: 'java-stream-api-map-vs-flatmap',
@@ -159,7 +187,8 @@ export const blogPosts = [
         date: 'January 24, 2026',
         readTime: '6 min read',
         tags: ["java","stream api","functional programming","backend","tutorial"],
-        isFeatured: false
+        isFeatured: false,
+        category: 'backend'
     },
     {
         slug: 'checked-vs-unchecked-exceptions-java-pragmatic-guide',
@@ -169,7 +198,8 @@ export const blogPosts = [
         date: 'January 24, 2026',
         readTime: '8 min read',
         tags: ["java","error handling","best practices","software architecture","spring framework"],
-        isFeatured: false
+        isFeatured: false,
+        category: 'backend'
     },
     {
         slug: 'java-garbage-collectors-g1-vs-zgc-vs-shenandoah',
@@ -179,7 +209,8 @@ export const blogPosts = [
         date: 'January 24, 2026',
         readTime: '8 min read',
         tags: ["java","performance","garbage collection","jvm","backend"],
-        isFeatured: false
+        isFeatured: false,
+        category: 'frontend'
     },
     {
         slug: 'maven-vs-gradle-2026-build-tool-showdown',
@@ -189,7 +220,8 @@ export const blogPosts = [
         date: 'January 24, 2026',
         readTime: '8 min read',
         tags: ["java","maven","gradle","devops","build-tools"],
-        isFeatured: false
+        isFeatured: false,
+        category: 'devops'
     },
     {
         slug: 'spring-bean-scopes-singleton-prototype-request-guide',
@@ -199,7 +231,8 @@ export const blogPosts = [
         date: 'January 24, 2026',
         readTime: '8 min read',
         tags: ["spring boot","java","backend","software architecture","best practices"],
-        isFeatured: false
+        isFeatured: false,
+        category: 'backend',
     },
     {
         slug: 'static-vs-dynamic-typing-guide-2026',
@@ -209,7 +242,8 @@ export const blogPosts = [
         date: 'January 24, 2026',
         readTime: '6 min read',
         tags: ["programming-languages","typescript","software-engineering","type-systems","development"],
-        isFeatured: false
+        isFeatured: false,
+        category: 'cs'
     },
     {
         slug: 'compiler-vs-interpreter-aot-jit-performance',
@@ -219,7 +253,8 @@ export const blogPosts = [
         date: 'January 24, 2026',
         readTime: '8 min read',
         tags: ["computer-science","performance","compilers","java","python"],
-        isFeatured: false
+        isFeatured: false,
+        category: 'frontend'
     },
     {
         slug: 'mark-and-sweep-garbage-collection-explained',
@@ -229,7 +264,8 @@ export const blogPosts = [
         date: 'January 24, 2026',
         readTime: '8 min read',
         tags: ["garbage collection","memory management","computer science","performance","algorithms"],
-        isFeatured: false
+        isFeatured: false,
+        category: 'cs'
     },
     {
         slug: 'mutex-vs-semaphore-demystifying-concurrency-control',
@@ -239,17 +275,19 @@ export const blogPosts = [
         date: 'January 24, 2026',
         readTime: '8 min read',
         tags: ["concurrency","multithreading","system design","computer science","backend"],
-        isFeatured: false
+        isFeatured: false,
+        category: 'cs'
     },
     {
         slug: 'process-vs-thread-os-internals-guide',
         title: 'Process vs Thread: A Developer\'s Deep Dive into OS Internals',
         excerpt: 'Understand the core differences between processes and threads, memory architecture, context switching costs, and how to choose the right model for your app.',
-        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/3e28a85b-7f00-4f90-a64c-fb83fddea2fe_blog_header.png', // Using the direct URL as per your strategy
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/3e28a85b-7f00-4f90-a64c-fb83fddea2fe_blog_header.png', // Using the direct URL as per your strategy,
         date: 'January 24, 2026',
         readTime: '8 min read',
         tags: ["operating systems","concurrency","performance","backend","interview prep"],
-        isFeatured: false
+        isFeatured: false,
+        category: 'cs'
     },
     {
         slug: 'big-o-notation-cheat-sheet',
@@ -259,7 +297,8 @@ export const blogPosts = [
         date: 'January 23, 2026',
         readTime: '8 min read',
         tags: ["algorithms","performance","javascript","computer science","interview prep"],
-        isFeatured: false
+        isFeatured: false,
+        category: 'cs'
     },
     {
         slug: 'stack-vs-heap-memory-developers-guide',
@@ -269,7 +308,8 @@ export const blogPosts = [
         date: 'January 23, 2026',
         readTime: '6 min read',
         tags: ["memory management","computer science","performance","javascript","optimization"],
-        isFeatured: false
+        isFeatured: false,
+        category: 'cs'
     },
     {
         slug: 'synchronous-vs-asynchronous-programming-event-loop-mastery',
@@ -279,7 +319,8 @@ export const blogPosts = [
         date: 'January 23, 2026',
         readTime: '6 min read',
         tags: ["javascript","node.js","architecture","performance","async-await"],
-        isFeatured: false
+        isFeatured: false,
+        category: 'frontend'
     },
     {
         slug: 'dependency-injection-vs-inversion-of-control-spring-boot',
@@ -289,7 +330,8 @@ export const blogPosts = [
         date: 'January 23, 2026',
         readTime: '8 min read',
         tags: ["java","spring boot","design patterns","architecture","backend"],
-        isFeatured: false
+        isFeatured: false,
+        category: 'backend'
     },
     {
         slug: 'mastering-solid-principles-java-clean-code-guide',
@@ -299,7 +341,8 @@ export const blogPosts = [
         date: 'January 23, 2026',
         readTime: '10 min read',
         tags: ["java","clean code","solid principles","architecture","best practices"],
-        isFeatured: false
+        isFeatured: false,
+        category: 'backend',
     },
     {
         slug: 'blue-green-vs-canary-deployment-strategies',
@@ -309,7 +352,8 @@ export const blogPosts = [
         date: 'January 23, 2026',
         readTime: '8 min read',
         tags: ["devops","deployment","kubernetes","architecture","ci/cd"],
-        isFeatured: false
+        isFeatured: false,
+        category: 'devops'
     },
     {
         slug: 'prometheus-vs-grafana-monitoring-stack',
@@ -319,7 +363,8 @@ export const blogPosts = [
         date: 'January 23, 2026',
         readTime: '6 min read',
         tags: ["devops","monitoring","prometheus","grafana","observability"],
-        isFeatured: false
+        isFeatured: false,
+        category: 'devops'
     },
     {
         slug: 'rsa-vs-ed25519-ssh-security-guide-2026',
@@ -329,7 +374,8 @@ export const blogPosts = [
         date: 'January 23, 2026',
         readTime: '6 min read',
         tags: ["devops","security","ssh","cryptography","best-practices"],
-        isFeatured: false
+        isFeatured: false,
+        category: 'security'
     },
     {
         slug: 'linux-permissions-chmod-777-vs-755',
@@ -339,17 +385,19 @@ export const blogPosts = [
         date: 'January 23, 2026',
         readTime: '8 min read',
         tags: ["linux","security","devops","server-management","best-practices"],
-        isFeatured: false
+        isFeatured: false,
+        category: 'security'
     },
     {
         slug: 'round-robin-vs-least-connections-load-balancing',
         title: 'Round Robin vs. Least Connections: The Ultimate Load Balancing Showdown',
         excerpt: 'Round Robin vs. Least Connections: A technical deep dive into load balancing algorithms, performance implications, and Nginx configuration strategies.',
-        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/5057ab43-e517-4195-926c-4480edbe113a_blog_header.png', // Using the direct URL as per your strategy
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/5057ab43-e517-4195-926c-4480edbe113a_blog_header.png', // Using the direct URL as per your strategy,
         date: 'January 23, 2026',
         readTime: '6 min read',
         tags: ["load-balancing","nginx","devops","system-design","backend"],
-        isFeatured: false
+        isFeatured: false,
+        category: 'devops'
     },
     {
         slug: 'vertical-vs-horizontal-scaling-developers-guide',
@@ -359,7 +407,8 @@ export const blogPosts = [
         date: 'January 23, 2026',
         readTime: '8 min read',
         tags: ["system design","scalability","devops","architecture","infrastructure"],
-        isFeatured: false
+        isFeatured: false,
+        category: 'devops'
     },
     {
         slug: 'mastering-nginx-reverse-proxy-configuration-guide',
@@ -369,7 +418,8 @@ export const blogPosts = [
         date: 'January 23, 2026',
         readTime: '10 min read',
         tags: ["devops","nginx","web performance","security","server administration"],
-        isFeatured: false
+        isFeatured: false,
+        category: 'security'
     },
     {
         slug: 'ci-cd-pipeline-best-practices-2026',
@@ -379,7 +429,8 @@ export const blogPosts = [
         date: 'January 23, 2026',
         readTime: '6 min read',
         tags: ["devops","ci/cd","security","automation","best practices"],
-        isFeatured: false
+        isFeatured: false,
+        category: 'security'
     },
     {
         slug: 'git-merge-vs-rebase-visual-workflow-guide',
@@ -389,7 +440,8 @@ export const blogPosts = [
         date: 'January 23, 2026',
         readTime: '8 min read',
         tags: ["git","version control","workflow","best practices","devops"],
-        isFeatured: false
+        isFeatured: false,
+        category: 'devops'
     },
     {
         slug: 'terraform-vs-ansible-infrastructure-configuration-guide',
@@ -399,7 +451,8 @@ export const blogPosts = [
         date: 'January 23, 2026',
         readTime: '6 min read',
         tags: ["devops","terraform","ansible","infrastructure-as-code","automation"],
-        isFeatured: false
+        isFeatured: false,
+        category: 'devops',
     },
     {
         slug: 'kubernetes-architecture-pods-nodes-clusters',
@@ -409,7 +462,8 @@ export const blogPosts = [
         date: 'January 23, 2026',
         readTime: '6 min read',
         tags: ["kubernetes","devops","cloud-computing","containers","architecture"],
-        isFeatured: false
+        isFeatured: false,
+        category: 'devops'
     },
     {
         slug: 'docker-vs-podman-daemonless-containerization-2026',
@@ -419,7 +473,8 @@ export const blogPosts = [
         date: 'January 23, 2026',
         readTime: '8 min read',
         tags: ["devops","containers","docker","podman","security"],
-        isFeatured: false
+        isFeatured: false,
+        category: 'security'
     },
     {
         slug: 'jwt-vs-session-authentication-guide-2026',
@@ -429,7 +484,8 @@ export const blogPosts = [
         date: 'January 23, 2026',
         readTime: '8 min read',
         tags: ["authentication","security","jwt","web development","architecture"],
-        isFeatured: false
+        isFeatured: false,
+        category: 'security'
     },
     {
         slug: 'rate-limiting-algorithms-token-bucket-vs-leaky-bucket',
@@ -439,17 +495,19 @@ export const blogPosts = [
         date: 'January 23, 2026',
         readTime: '8 min read',
         tags: ["rate limiting","algorithms","redis","api security","backend"],
-        isFeatured: false
+        isFeatured: false,
+        category: 'backend'
     },
     {
         slug: 'kafka-architecture-deep-dive-topics-partitions-brokers',
         title: 'Kafka Architecture Deep Dive: Topics, Partitions, and Brokers Explained',
         excerpt: 'Apache Kafka is more than a message queue—it\'s a distributed commit log. Explore the architecture of brokers, topics, partitions, and replication to master data consistency.',
-        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/e7b10177-02d9-4bb2-9bd7-06021826d082_blog_header.png', // Using the direct URL as per your strategy
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/e7b10177-02d9-4bb2-9bd7-06021826d082_blog_header.png', // Using the direct URL as per your strategy,
         date: 'January 23, 2026',
         readTime: '8 min read',
         tags: ["apache kafka","distributed systems","data engineering","backend architecture","event-driven"],
-        isFeatured: false
+        isFeatured: false,
+        category: 'backend'
     },
     {
         slug: 'redis-persistence-rdb-vs-aof-guide',
@@ -459,7 +517,8 @@ export const blogPosts = [
         date: 'January 23, 2026',
         readTime: '8 min read',
         tags: ["redis","database","backend","devops","performance"],
-        isFeatured: false
+        isFeatured: false,
+        category: 'devops'
     },
     {
         slug: 'rest-vs-graphql-vs-grpc-api-comparison-2026',
@@ -469,7 +528,8 @@ export const blogPosts = [
         date: 'January 23, 2026',
         readTime: '8 min read',
         tags: ["api","architecture","rest","graphql","grpc"],
-        isFeatured: false
+        isFeatured: false,
+        category: 'backend'
     },
     {
         slug: 'acid-transactions-distributed-systems-hard-truth',
@@ -479,7 +539,8 @@ export const blogPosts = [
         date: 'January 23, 2026',
         readTime: '10 min read',
         tags: ["distributed-systems","architecture","microservices","database","backend"],
-        isFeatured: false
+        isFeatured: false,
+        category: 'backend'
     },
     {
         slug: 'spring-transactional-private-methods-cglib-proxy',
@@ -489,7 +550,8 @@ export const blogPosts = [
         date: 'January 23, 2026',
         readTime: '5 min read',
         tags: ["java","spring boot","architecture","debugging","best practices"],
-        isFeatured: false
+        isFeatured: false,
+        category: 'devops'
     },
     {
         slug: 'redis-concurrency-vs-parallelism-architecture',
@@ -499,7 +561,8 @@ export const blogPosts = [
         date: 'January 22, 2026',
         readTime: '6 min read',
         tags: ["redis","concurrency","backend","performance","architecture"],
-        isFeatured: false
+        isFeatured: false,
+        category: 'frontend',
     },
     {
         slug: 'java-virtual-threads-concurrency-guide',
@@ -509,7 +572,8 @@ export const blogPosts = [
         date: 'January 4, 2026',
         readTime: '8 min read',
         tags: ["java","concurrency","performance","backend","virtual threads"],
-        isFeatured: false
+        isFeatured: false,
+        category: 'frontend'
     },
     {
         slug: 'building-local-first-apps-pglite-postgres-browser',
@@ -519,7 +583,8 @@ export const blogPosts = [
         date: 'January 4, 2026',
         readTime: '8 min read',
         tags: ["postgres","webassembly","local-first","javascript","database"],
-        isFeatured: false
+        isFeatured: false,
+        category: 'frontend'
     },
     {
         slug: 'run-n8n-free-forever-google-cloud',
@@ -529,7 +594,8 @@ export const blogPosts = [
         date: 'October 31, 2025',
         readTime: '11 min read',
         tags: ["n8n","google cloud","self-hosting","automation","free tier"],
-        isFeatured: false
+        isFeatured: false,
+        category: 'devops'
     },
     {
         slug: 'zig-1-0-guide-modern-c-alternative',
@@ -539,17 +605,19 @@ export const blogPosts = [
         date: 'October 30, 2025',
         readTime: '14 min read',
         tags: ["zig","c","rust","systems-programming","performance"],
-        isFeatured: false
+        isFeatured: false,
+        category: 'frontend'
     },
     {
         slug: 'python-3-14-jit-compiler-deep-dive',
         title: 'Python 3.14\'s JIT Compiler: A Developer\'s Deep Dive',
         excerpt: 'Explore Python 3.14\'s experimental JIT compiler. Learn how its \'copy-and-patch\' design boosts performance and what it means for your development workflow.',
-        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/2ce10d83-c09e-4ae0-a3c3-2acc970b77e8.png?', // Using the direct URL as per your strategy
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/2ce10d83-c09e-4ae0-a3c3-2acc970b77e8.png?', // Using the direct URL as per your strategy,
         date: 'October 27, 2025',
         readTime: '10 min read',
         tags: ["python","jit","performance","cpython","optimization"],
-        isFeatured: false
+        isFeatured: false,
+        category: 'frontend'
     },
     {
         slug: 'secure-github-actions-with-oidc-guide',
@@ -559,7 +627,8 @@ export const blogPosts = [
         date: 'October 23, 2025',
         readTime: '13 min read',
         tags: ["github actions","security","ci/cd","oidc","aws"],
-        isFeatured: false
+        isFeatured: false,
+        category: 'security'
     },
     {
         slug: 'next-js-16-deep-dive-universal-adapters-ai-components',
@@ -569,7 +638,8 @@ export const blogPosts = [
         date: 'October 22, 2025',
         readTime: '11 min read',
         tags: ["next.js","react","ai","web development","serverless"],
-        isFeatured: false
+        isFeatured: false,
+        category: 'ai'
     },
     {
         slug: 'openai-agent-builder-developers-guide',
@@ -579,7 +649,8 @@ export const blogPosts = [
         date: 'October 8, 2025',
         readTime: '12 min read',
         tags: ["openai","ai","agentic ai","low-code","gpt-4o"],
-        isFeatured: false
+        isFeatured: false,
+        category: 'ai'
     },
     {
         slug: 'n8n-developer-workflow-automation-2025',
@@ -589,7 +660,8 @@ export const blogPosts = [
         date: 'October 6, 2025',
         readTime: '10 min read',
         tags: ["n8n","automation","devops","open-source","api"],
-        isFeatured: false
+        isFeatured: false,
+        category: 'devops'
     },
     {
         slug: 'ai-content-watermarking-technical-arms-race',
@@ -599,7 +671,8 @@ export const blogPosts = [
         date: 'October 3, 2025',
         readTime: '6 min read',
         tags: ["ai","watermarking","security","ethics","generative ai"],
-        isFeatured: false
+        isFeatured: false,
+        category: 'security',
     },
     {
         slug: 'beyond-full-stack-building-high-impact-teams-with-glue-engineers',
@@ -609,7 +682,8 @@ export const blogPosts = [
         date: 'October 3, 2025',
         readTime: '12 min read',
         tags: ["engineering management","team structure","career development","full-stack","software architecture"],
-        isFeatured: false
+        isFeatured: false,
+        category: 'ai'
     },
     {
         slug: 'wasm-edge-ai-running-llms-in-10mb',
@@ -619,7 +693,8 @@ export const blogPosts = [
         date: 'October 3, 2025',
         readTime: '12 min read',
         tags: ["webassembly","ai","edge computing","llm","privacy"],
-        isFeatured: false
+        isFeatured: false,
+        category: 'ai'
     },
     {
         slug: 'abstraction-revolution-ambient-code-generation',
@@ -629,7 +704,8 @@ export const blogPosts = [
         date: 'October 3, 2025',
         readTime: '8 min read',
         tags: ["ai","code generation","developer tools","future of programming","low-code"],
-        isFeatured: false
+        isFeatured: false,
+        category: 'ai'
     },
     {
         slug: 'living-therapeutics-engineering-programming-cells',
@@ -639,17 +715,19 @@ export const blogPosts = [
         date: 'October 2, 2025',
         readTime: '11 min read',
         tags: ["living therapeutics","synthetic biology","cellular engineering","bio-programming","car-t therapy"],
-        isFeatured: false
+        isFeatured: false,
+        category: 'ai'
     },
     {
         slug: 'harnessing-the-current-developers-guide-osmotic-power',
         title: 'Harnessing the Current: A Developer\'s Guide to Osmotic Power Programming',
         excerpt: 'Unlock the potential of osmotic power. A developer\'s guide to energy-aware programming, checkpointing, and building self-powered IoT systems.',
-        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/b7af27d9-327f-4584-897c-80c3880e290d.png?', // Using the direct URL as per your strategy
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/b7af27d9-327f-4584-897c-80c3880e290d.png?', // Using the direct URL as per your strategy,
         date: 'October 2, 2025',
         readTime: '11 min read',
         tags: ["osmotic power","energy harvesting","low-power computing","iot","sustainable tech"],
-        isFeatured: false
+        isFeatured: false,
+        category: 'ai'
     },
     {
         slug: 'structural-batteries-massless-energy-storage',
@@ -659,7 +737,8 @@ export const blogPosts = [
         date: 'October 2, 2025',
         readTime: '7 min read',
         tags: ["emerging-tech","materials-science","energy-storage","iot","evs"],
-        isFeatured: false
+        isFeatured: false,
+        category: 'ai'
     },
     {
         slug: 'ebpf-explained-developers-guide-to-kernel-code',
@@ -669,7 +748,8 @@ export const blogPosts = [
         date: 'October 2, 2025',
         readTime: '11 min read',
         tags: ["ebpf","linux","kernel","observability","security"],
-        isFeatured: false
+        isFeatured: false,
+        category: 'security'
     },
     {
         slug: 'webassembly-component-model-polyglot-revolution',
@@ -679,7 +759,8 @@ export const blogPosts = [
         date: 'October 1, 2025',
         readTime: '11 min read',
         tags: ["webassembly","wasi","polyglot","interoperability","edge-computing"],
-        isFeatured: false
+        isFeatured: false,
+        category: 'frontend'
     },
     {
         slug: 'low-code-paradox-pro-developers-embrace-no-code',
@@ -689,7 +770,8 @@ export const blogPosts = [
         date: 'October 1, 2025',
         readTime: '9 min read',
         tags: ["low-code","no-code","developer tools","pro-code","productivity"],
-        isFeatured: false
+        isFeatured: false,
+        category: 'ai'
     },
     {
         slug: 'developer-observability-from-apm-to-in-ide-debugging',
@@ -699,7 +781,8 @@ export const blogPosts = [
         date: 'October 1, 2025',
         readTime: '10 min read',
         tags: ["observability","apm","debugging","developer tools","productivity"],
-        isFeatured: false
+        isFeatured: false,
+        category: 'devops',
     },
     {
         slug: 'edge-native-development-guide-distributed-future',
@@ -709,7 +792,8 @@ export const blogPosts = [
         date: 'October 1, 2025',
         readTime: '12 min read',
         tags: ["edge computing","serverless","cloudflare workers","deno","performance"],
-        isFeatured: false
+        isFeatured: false,
+        category: 'frontend'
     },
     {
         slug: 'headless-cms-developers-guide-api-first-revolution',
@@ -719,7 +803,8 @@ export const blogPosts = [
         date: 'September 30, 2025',
         readTime: '9 min read',
         tags: ["headless-cms","api","jamstack","strapi","payload-cms"],
-        isFeatured: false
+        isFeatured: false,
+        category: 'frontend'
     },
     {
         slug: 'death-of-full-stack-developer-rise-of-platform-engineering',
@@ -729,7 +814,8 @@ export const blogPosts = [
         date: 'September 30, 2025',
         readTime: '10 min read',
         tags: ["platform engineering","devops","developer experience","idp","full-stack"],
-        isFeatured: false
+        isFeatured: false,
+        category: 'devops'
     },
     {
         slug: 'quantum-programming-for-developers-qsharp-qiskit-cirq-guide',
@@ -739,17 +825,19 @@ export const blogPosts = [
         date: 'September 30, 2025',
         readTime: '15 min read',
         tags: ["quantum computing","q#","qiskit","cirq","programming"],
-        isFeatured: false
+        isFeatured: false,
+        category: 'ai'
     },
     {
         slug: 'digital-twins-for-code-next-frontier-software-engineering',
         title: 'Digital Twins for Code: The Next Frontier in Software Engineering',
         excerpt: 'Explore how digital twins for code model development workflows to predict technical debt, optimize team performance, and slash deployment times.',
-        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/5632a49b-2f52-4391-9f97-15c14a841859.png?', // Using the direct URL as per your strategy
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/5632a49b-2f52-4391-9f97-15c14a841859.png?', // Using the direct URL as per your strategy,
         date: 'September 29, 2025',
         readTime: '10 min read',
         tags: ["digital twin","devops","technical debt","ai","software engineering"],
-        isFeatured: false
+        isFeatured: false,
+        category: 'ai'
     },
     {
         slug: 'micro-frontend-reality-check-when-to-break-up-ui',
@@ -759,7 +847,8 @@ export const blogPosts = [
         date: 'September 29, 2025',
         readTime: '11 min read',
         tags: ["micro-frontends","frontend architecture","module federation","web development","monolith"],
-        isFeatured: false
+        isFeatured: false,
+        category: 'frontend'
     },
     {
         slug: 'webassembly-silent-revolution-beyond-browser-2025',
@@ -769,7 +858,8 @@ export const blogPosts = [
         date: 'September 29, 2025',
         readTime: '11 min read',
         tags: ["webassembly","wasm","serverless","edge-computing","performance"],
-        isFeatured: false
+        isFeatured: false,
+        category: 'frontend'
     },
     {
         slug: 'agentic-ai-software-development-coder-to-conductor',
@@ -779,7 +869,8 @@ export const blogPosts = [
         date: 'September 29, 2025',
         readTime: '12 min read',
         tags: ["agentic ai","autogen","crewai","automation","developer tools"],
-        isFeatured: false
+        isFeatured: false,
+        category: 'ai'
     },
     {
         slug: 'microsoft-september-2025-patch-tuesday-zero-day-exploits',
@@ -789,7 +880,8 @@ export const blogPosts = [
         date: 'September 27, 2025',
         readTime: '7 min read',
         tags: ["microsoft","patch tuesday","security","zero-day","cybersecurity"],
-        isFeatured: false
+        isFeatured: false,
+        category: 'security'
     },
     {
         slug: 'ai-finds-zero-day-exploits-in-minutes-ciso-2025-guide',
@@ -799,7 +891,8 @@ export const blogPosts = [
         date: 'September 27, 2025',
         readTime: '10 min read',
         tags: ["ai","cybersecurity","zero-day","ciso","security"],
-        isFeatured: false
+        isFeatured: false,
+        category: 'security',
     },
     {
         slug: '264b-low-code-boom-developer-guide-to-the-future',
@@ -809,7 +902,8 @@ export const blogPosts = [
         date: 'September 27, 2025',
         readTime: '11 min read',
         tags: ["low-code","software development","future of tech","developer career","it strategy"],
-        isFeatured: false
+        isFeatured: false,
+        category: 'ai'
     },
     {
         slug: 'react-19-actions-api-replaces-rest-apis',
@@ -819,7 +913,8 @@ export const blogPosts = [
         date: 'September 27, 2025',
         readTime: '9 min read',
         tags: ["react","server actions","react 19","api","javascript"],
-        isFeatured: false
+        isFeatured: false,
+        category: 'frontend'
     },
     {
         slug: 'ai-security-crisis-prompt-injection-attacks',
@@ -829,7 +924,8 @@ export const blogPosts = [
         date: 'September 26, 2025',
         readTime: '10 min read',
         tags: ["ai security","prompt injection","llm","cybersecurity","owasp"],
-        isFeatured: false
+        isFeatured: false,
+        category: 'security'
     },
     {
         slug: 'caas-revolution-why-startups-outsource-security',
@@ -839,17 +935,19 @@ export const blogPosts = [
         date: 'September 26, 2025',
         readTime: '10 min read',
         tags: ["security","caas","startups","cybersecurity","cloud security"],
-        isFeatured: false
+        isFeatured: false,
+        category: 'security'
     },
     {
         slug: 'samsung-ai-forum-2025-developer-tools-guide',
         title: 'Samsung AI Forum 2025: A Developer\'s Guide to New AI Tools',
         excerpt: 'Explore the groundbreaking AI developer tools from Samsung AI Forum 2025: Galaxy AI Engine 2.0, Bixby Connect API, and the Tizen AI Framework.',
-        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/0a5cf654-16a9-411d-9160-e9ce1e9400cf.png?', // Using the direct URL as per your strategy
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/0a5cf654-16a9-411d-9160-e9ce1e9400cf.png?', // Using the direct URL as per your strategy,
         date: 'September 26, 2025',
         readTime: '11 min read',
         tags: ["samsung","ai","developer tools","sdk","api"],
-        isFeatured: false
+        isFeatured: false,
+        category: 'ai'
     },
     {
         slug: 'poisoned-ai-genai-supply-chain-attacks-hugging-face',
@@ -859,7 +957,8 @@ export const blogPosts = [
         date: 'September 26, 2025',
         readTime: '9 min read',
         tags: ["genai","security","hugging face","owasp","supply chain"],
-        isFeatured: false
+        isFeatured: false,
+        category: 'security'
     },
     {
         slug: 'digital-twins-developers-guide-110b-revolution',
@@ -869,7 +968,8 @@ export const blogPosts = [
         date: 'September 26, 2025',
         readTime: '10 min read',
         tags: ["digital twin","iot","ai","cloud computing","predictive maintenance"],
-        isFeatured: false
+        isFeatured: false,
+        category: 'ai'
     },
     {
         slug: 'microsoft-patch-tuesday-september-2025-zero-day-analysis',
@@ -879,7 +979,8 @@ export const blogPosts = [
         date: 'September 26, 2025',
         readTime: '9 min read',
         tags: ["security","microsoft","patch tuesday","zero-day","vulnerability"],
-        isFeatured: false
+        isFeatured: false,
+        category: 'security'
     },
     {
         slug: 'ai-discovers-exploits-zero-days-in-minutes',
@@ -889,8 +990,9 @@ export const blogPosts = [
         date: 'September 25, 2025',
         readTime: '14 min read',
         tags: ["ai","cybersecurity","zero-day","threat intelligence","automation"],
-        isFeatured: false
-      },
+        isFeatured: false,
+        category: 'security'
+    },
     {
         slug: 'low-code-surge-is-traditional-development-obsolete',
         title: 'Low-Code\'s $264B Surge: Is Traditional Development Obsolete?',
@@ -899,8 +1001,9 @@ export const blogPosts = [
         date: 'September 25, 2025',
         readTime: '11 min read',
         tags: ["low-code","no-code","software development","career","future of tech"],
-        isFeatured: false
-      },
+        isFeatured: false,
+        category: 'ai'
+    },
     {
         slug: 'react-19-actions-api-replacing-rest',
         title: 'React 19\'s Actions API: Replacing REST with Simpler, More Powerful Forms',
@@ -909,7 +1012,8 @@ export const blogPosts = [
         date: 'September 24, 2025',
         readTime: '11 min read',
         tags: ["react","react 19","server actions","javascript","web development"],
-        isFeatured: false
+        isFeatured: false,
+        category: 'frontend'
     },
     {
         slug: 'docker-genai-developers-guide-local-llms',
@@ -919,7 +1023,8 @@ export const blogPosts = [
         date: 'September 24, 2025',
         readTime: '10 min read',
         tags: ["docker","genai","llm","local development","ai"],
-        isFeatured: false
+        isFeatured: false,
+        category: 'ai',
     },
     {
         slug: 'ai-security-crisis-prompt-injection-surge-guide',
@@ -929,7 +1034,8 @@ export const blogPosts = [
         date: 'September 24, 2025',
         readTime: '10 min read',
         tags: ["ai","security","prompt injection","llm","cybersecurity"],
-        isFeatured: false
+        isFeatured: false,
+        category: 'security'
     },
     {
         slug: 'htmx-2-practical-guide-ditching-complex-javascript',
@@ -939,7 +1045,8 @@ export const blogPosts = [
         date: 'September 23, 2025',
         readTime: '10 min read',
         tags: ["htmx","frontend","javascript","web development","hypermedia"],
-        isFeatured: false
+        isFeatured: false,
+        category: 'frontend'
     },
     {
         slug: 'typescript-6-0-guide-upgrading-new-features',
@@ -949,17 +1056,19 @@ export const blogPosts = [
         date: 'September 24, 2025',
         readTime: '10 min read',
         tags: ["typescript","javascript","webdev","guide","programming"],
-        isFeatured: false
+        isFeatured: false,
+        category: 'frontend'
     },
     {
         slug: 'build-an-idp-backstage-kubernetes-guide-2025',
         title: 'Build an IDP: A Step-by-Step Guide with Backstage & Kubernetes for 2025',
         excerpt: 'Step-by-step guide to building an Internal Developer Platform (IDP) with Backstage and Kubernetes. Enhance developer experience and accelerate delivery in 2025.',
-        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/4399373c-bb0d-43f7-bfec-c0fc098cb927.png?', // Using the direct URL as per your strategy
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/4399373c-bb0d-43f7-bfec-c0fc098cb927.png?', // Using the direct URL as per your strategy,
         date: 'September 23, 2025',
         readTime: '15 min read',
         tags: ["idp","backstage","kubernetes","platform engineering","devops"],
-        isFeatured: false
+        isFeatured: false,
+        category: 'devops'
     },
     {
         slug: 'mistral-constellation-developers-guide-on-device-ai',
@@ -969,7 +1078,8 @@ export const blogPosts = [
         date: 'September 23, 2025',
         readTime: '12 min read',
         tags: ["mistral","slm","on-device ai","ai","python"],
-        isFeatured: false
+        isFeatured: false,
+        category: 'ai'
     },
     {
         slug: 'github-copilot-workspace-first-look-ai-native-ide',
@@ -979,7 +1089,8 @@ export const blogPosts = [
         date: 'September 23, 2025',
         readTime: '10 min read',
         tags: ["github","copilot","ai","ide","developer tools"],
-        isFeatured: false
+        isFeatured: false,
+        category: 'ai'
     },
     {
         slug: 'react-compiler-usememo-usecallback-obsolete',
@@ -989,7 +1100,8 @@ export const blogPosts = [
         date: 'September 23, 2025',
         readTime: '9 min read',
         tags: ["react","javascript","performance","frontend","compiler"],
-        isFeatured: false
+        isFeatured: false,
+        category: 'frontend'
     },
     {
         slug: 'postgres-18-developers-guide-ai-performance-upgrades',
@@ -999,7 +1111,8 @@ export const blogPosts = [
         date: 'September 22, 2025',
         readTime: '15 min read',
         tags: ["postgresql","database","ai","vector search","performance"],
-        isFeatured: false
+        isFeatured: false,
+        category: 'ai'
     },
     {
         slug: 'mastering-type-safe-python-pydantic-mypy-2025',
@@ -1009,7 +1122,8 @@ export const blogPosts = [
         date: 'September 22, 2025',
         readTime: '8 min read',
         tags: ["python","pydantic","mypy","type-safety","best-practices"],
-        isFeatured: false
+        isFeatured: false,
+        category: 'backend',
     },
     {
         slug: 'zed-editor-2025-rust-guide',
@@ -1019,7 +1133,8 @@ export const blogPosts = [
         date: 'September 22, 2025',
         readTime: '9 min read',
         tags: ["zed","rust","code editor","developer tools","vs code"],
-        isFeatured: false
+        isFeatured: false,
+        category: 'ai'
     },
     {
         slug: 'build-high-performance-rest-api-with-go-2025-guide',
@@ -1029,7 +1144,9 @@ export const blogPosts = [
         date: 'September 21, 2025',
         readTime: '15 min read',
         tags: ["go","golang","rest api","backend","tutorial"],
-      },
+        isFeatured: false,
+        category: 'backend'
+    },
   {
         slug: 'structured-logging-go-1-25-slog-guide',
         title: 'Go 1.25\'s slog Package: A Practical Guide to Structured Logging',
@@ -1038,7 +1155,8 @@ export const blogPosts = [
         date: 'September 21, 2025',
         readTime: '10 min read',
         tags: ["go","golang","slog","structured-logging","observability"],
-        isFeatured: false
+        isFeatured: false,
+        category: 'devops'
     },
     {
         slug: 'terraform-vs-pulumi-vs-opentofu-2025-iac-showdown',
@@ -1048,7 +1166,8 @@ export const blogPosts = [
         date: 'September 21, 2025',
         readTime: '11 min read',
         tags: ["iac","terraform","pulumi","opentofu","devops"],
-        isFeatured: false
+        isFeatured: false,
+        category: 'devops'
     },
     {
         slug: 'build-rust-cli-tool-with-clap-guide',
@@ -1058,7 +1177,8 @@ export const blogPosts = [
         date: 'September 21, 2025',
         readTime: '14 min read',
         tags: ["rust","cli","clap","tutorial","programming"],
-        isFeatured: false
+        isFeatured: false,
+        category: 'backend'
     },
     {
         slug: 'svelte-5-runes-reactivity-guide',
@@ -1068,7 +1188,8 @@ export const blogPosts = [
         date: 'September 20, 2025',
         readTime: '10 min read',
         tags: ["svelte","javascript","frontend","reactivity","web development"],
-        isFeatured: false
+        isFeatured: false,
+        category: 'frontend'
     },
     {
         slug: 'ci-cd-showdown-2025-github-actions-gitlab-jenkins',
@@ -1078,7 +1199,8 @@ export const blogPosts = [
         date: 'September 20, 2025',
         readTime: '12 min read',
         tags: ["ci/cd","devops","github actions","gitlab ci","jenkins"],
-        isFeatured: false
+        isFeatured: false,
+        category: 'devops'
     },
     {
         slug: 'server-side-webassembly-wasm-guide-2025',
@@ -1088,7 +1210,8 @@ export const blogPosts = [
         date: 'September 20, 2025',
         readTime: '9 min read',
         tags: ["webassembly","wasm","backend","serverless","rust"],
-        isFeatured: false
+        isFeatured: false,
+        category: 'frontend'
     },
     {
         slug: 'pinecone-vs-weaviate-vs-qdrant-vector-database-comparison-2025',
@@ -1098,7 +1221,8 @@ export const blogPosts = [
         date: 'September 20, 2025',
         readTime: '14 min read',
         tags: ["vector database","pinecone","weaviate","qdrant","ai"],
-        isFeatured: false
+        isFeatured: false,
+        category: 'ai'
     },
     {
         slug: 'bun-vs-nodejs-2025-javascript-runtimes',
@@ -1108,7 +1232,8 @@ export const blogPosts = [
         date: 'September 20, 2025',
         readTime: '10 min read',
         tags: ["bun","nodejs","javascript","performance","runtime"],
-        isFeatured: false
+        isFeatured: false,
+        category: 'frontend'
     },
     {
         slug: 'apple-intelligence-developers-guide-building-smarter-apps',
@@ -1118,7 +1243,8 @@ export const blogPosts = [
         date: 'September 20, 2025',
         readTime: '11 min read',
         tags: ["apple intelligence","wwdc 2024","ios 18","swiftui","core ml"],
-        isFeatured: false
+        isFeatured: false,
+        category: 'ai'
     },
     {
         slug: 'build-ai-agent-with-agentcraft-langchain-alternative',
@@ -1128,7 +1254,8 @@ export const blogPosts = [
         date: 'September 20, 2025',
         readTime: '11 min read',
         tags: ["ai","python","agentcraft","langchain","llm"],
-        isFeatured: false
+        isFeatured: false,
+        category: 'ai'
     },
     {
         slug: 'run-llama-3-locally-ollama-developer-guide',
@@ -1138,7 +1265,8 @@ export const blogPosts = [
         date: 'September 19, 2025',
         readTime: '10 min read',
         tags: ["llama3","ollama","local llm","ai","development"],
-        isFeatured: false
+        isFeatured: false,
+        category: 'ai'
     },
     {
         slug: 'beyond-jwts-implementing-passkeys-with-webauthn-guide',
@@ -1148,7 +1276,8 @@ export const blogPosts = [
         date: 'September 19, 2025',
         readTime: '14 min read',
         tags: ["webauthn","passkeys","authentication","security","jwt"],
-        isFeatured: false
+        isFeatured: false,
+        category: 'security'
     },
     {
         slug: 'jwt-explained-ultimate-guide-api-authentication',
@@ -1158,7 +1287,8 @@ export const blogPosts = [
         date: 'September 19, 2025',
         readTime: '10 min read',
         tags: ["jwt","authentication","api","security","json"],
-        isFeatured: false
+        isFeatured: false,
+        category: 'security'
     },
     {
         slug: 'the-hidden-cost-of-your-hash-functions',
@@ -1168,7 +1298,8 @@ export const blogPosts = [
         date: 'July 11, 2025',
         readTime: '8 min read',
         tags: ['Performance', 'Security', 'Hashing', 'API'],
-        isFeatured: false
+        isFeatured: false,
+        category: 'security'
     },
     {
         slug: 'the-uuid-gotcha-that-burned-me',
@@ -1177,7 +1308,8 @@ export const blogPosts = [
         thumbnail: '../blog/assets/images/blog-cover-uuid.png',
         date: 'July 11, 2025',
         readTime: '8 min read',
-        tags: ['UUID', 'Performance', 'Randomness', 'Distributed Systems', 'Node.js']
+        tags: ['UUID', 'Performance', 'Randomness', 'Distributed Systems', 'Node.js'],
+        category: 'frontend'
     },
     {
         slug: 'why-your-llm-api-costs-are-through-the-roof',
@@ -1186,7 +1318,8 @@ export const blogPosts = [
         thumbnail: '../blog/assets/images/blog-cover-llm.png',
         date: 'July 11, 2025',
         readTime: '10 min read',
-        tags: ['LLM', 'API Costs', 'Optimization', 'AI', 'Performance', 'Engineering']
+        tags: ['LLM', 'API Costs', 'Optimization', 'AI', 'Performance', 'Engineering'],
+        category: 'ai'
     },
     {
         slug: 'database-migrations-disasters',
@@ -1196,6 +1329,7 @@ export const blogPosts = [
         date: '2025-07-12',
         readTime: '9 min read',
         tags: ['Database', 'Migrations', 'Production', 'DevOps', 'PostgreSQL'],
+        category: 'devops'
     },
     {
         slug: 'privacy-first-dev-tools',
@@ -1204,7 +1338,8 @@ export const blogPosts = [
         thumbnail: '../blog/assets/images/blog-cover-privacyfeatured.png',
         date: 'July 19, 2025',
         readTime: '6 min read',
-        tags: ['Productivity', 'Privacy', 'DevTools', 'Story']
+        tags: ['Productivity', 'Privacy', 'DevTools', 'Story'],
+        category: 'ai'
     },
     {
         slug: 'why-ai-cant-design',
@@ -1214,7 +1349,8 @@ export const blogPosts = [
         date: 'August 1, 2025',
         readTime: '5 min read',
         tags: ['AI', 'Design', 'Generative Art', 'Productivity'],
-        isFeatured: true 
+        isFeatured: true,
+        category: 'ai'
     },
     {
         slug: 'hash-function-security-2025-developers-guide',
@@ -1224,7 +1360,8 @@ export const blogPosts = [
         date: 'September 12, 2025',
         readTime: '12 min read',
         tags: ['Security', 'Hashing', 'Cryptography', 'Quantum Computing', 'Best Practices'],
-        isFeatured: false
+        isFeatured: false,
+        category: 'security'
     },
     {
         slug: 'md5-vs-sha256-vs-sha512-which-hash-should-you-use',
@@ -1234,7 +1371,8 @@ export const blogPosts = [
         date: 'October 5, 2025',
         readTime: '10 min read',
         tags: ['Hashing', 'MD5', 'SHA256', 'SHA512', 'Security', 'Performance'],
-        isFeatured: false
+        isFeatured: false,
+        category: 'security'
     }
 
 ];

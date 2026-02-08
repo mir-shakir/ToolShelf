@@ -1,67 +1,47 @@
-# TASK: Build the "Massive Mock Data Generator" (The Mockaroo Alternative)
+# TASK: Implement Categorized Blog Sidebar & Layout Restructure
 
-## 1. Strategic Intent ("The Why")
-You are a Product Engineer building a high-value tool for `toolshelf`.
-**The Problem:** Developers need dummy data (SQL/CSV/JSON) for testing. The market leader (Mockaroo) limits free users to 1,000 rows and charges for more.
-**Our Solution:** A **Client-Side** generator. Since it runs in the user's browser, we have $0 server costs, allowing us to offer **Unlimited Rows** for free.
-**The USP:** "Generate 100,000+ rows of SQL/JSON/CSV for free. 100% Private. No Signup."
+## 1. Strategic Goal
+The current blog homepage is a flat list of random articles. We need to restructure the blog section into a professional **Documentation/Knowledge Base layout**.
+**Key Features:**
+* **Persistent Sidebar:** Visible on the Blog Home AND all individual Blog Posts.
+* **Categorization:** Group posts by topic (e.g., "Backend", "Frontend", "Security").
+* **Expandable Nav:** Accordion-style menu in the sidebar.
 
-## 2. Technical Architecture
-* **Directory:** `toolshelf/mock-data-generator/`
-* **External Library:** Use **Faker.js** via ES Module CDN.
-    * Import URL: `https://esm.sh/@faker-js/faker@8.4.1`
-    * *Note:* Use this exact ESM import so no build step is required.
-* **Base Class:** Extend `window.ToolShelf.BaseTool`.
+## 2. Technical Implementation Steps
 
-## 3. Feature Requirements
+### Step 1: Update Data Structure (`toolshelf/blog/js/blog-config.js`)
+* Analyze the existing `blogPosts` array.
+* Add a new `category` property to every post object.
+* **Infer the category** based on the existing `tags` or `title`. Use these standard buckets:
+    * **Backend Engineering** (Java, Kafka, Redis, SQL)
+    * **Frontend & UI** (CSS, JavaScript, React, UX)
+    * **DevOps & Security** (Docker, Kubernetes, Auth, SSL)
+    * **AI & Emerging Tech** (LLMs, UUID v7, Tools)
+    * **Career & Soft Skills** (Glue Engineers, Management)
 
-### A. The Schema Builder (Left Pane)
-Create a dynamic list where users define their columns.
-* **Rows:** Each row has:
-    * `Field Name` (Input, e.g., "user_email")
-    * `Type` (Dropdown: Name, Email, Phone, Date, UUID, City, Boolean, ID)
-    * `Options` (Optional: e.g., if "Date", show "Format").
-* **Actions:** "Add Field", "Remove Field", "Drag to Reorder" (nice to have, but simple Up/Down buttons work too).
-* **Presets:** On load, populate with a default "User" schema (id, name, email, created_at) so the tool isn't empty.
+### Step 2: Create the Sidebar Component (`toolshelf/blog/js/sidebar.js`)
+Create a class `BlogSidebar` that:
+1.  **Groups Data:** Iterates over `blogPosts` and groups them by `category`.
+2.  **Renders HTML:** Generates an accordion UI.
+    * Header: Category Name (Clickable to toggle).
+    * Body: List of links to posts in that category.
+    * *State:* If the user is on a specific post, the corresponding category should be **expanded** and the current post **highlighted** automatically.
+3.  **Injects:** Finds `#blog-sidebar-container` and populates it.
 
-### B. The Control Center (Top Bar)
-* **Format Selector:** JSON, CSV, SQL (TableName input required if SQL selected).
-* **Row Count:** A standard input or slider. Range: 1 to 100,000.
-    * *Performance Note:* If > 10,000, show a warning: "Generating large datasets may freeze your browser for a few seconds."
-* **Action:** Big "Generate & Download" button.
-* **Preview:** A "Refresh Preview" button to show just the first 5 rows.
+### Step 3: Redesign Blog Home (`toolshelf/blog/index.html`)
+* Change the main container to a **CSS Grid** layout (`280px 1fr`).
+* **Left Column:** `<aside id="blog-sidebar-container"></aside>`
+* **Right Column:** The existing post grid (but filtered).
+    * *Change:* Instead of a random list, show "Latest Articles" at the top, followed by "Browse by Category" sections.
 
-### C. The Output/Preview (Right Pane)
-* Show a code editor view (textarea) displaying the **First 10 Rows** of the result.
-* Do NOT try to display 100,000 rows in the DOM. Only preview the sample. The full data is for download only.
+### Step 4: Styles (`toolshelf/blog/css/blog-sidebar.css`)
+* **Sticky Position:** The sidebar must stick to the viewport top as the user scrolls down long articles.
+* **Mobile Responsiveness:** On mobile, the sidebar should become a collapsible "Topics" dropdown at the top of the page, or a slide-out drawer. Do NOT just stack it at the very bottom.
 
-## 4. SEO & Content Strategy (Crucial)
-You must design the `index.html` to aggressively target competitors' weaknesses.
-* **Page Title:** `Free Mock Data Generator (Unlimited SQL, JSON, CSV) - ToolShelf`
-* **Comparison Section (Bottom):** Create a "Why use this?" table:
-    * **Competitors:** 1,000 row limit, Requires Signup, Data sent to server (Privacy Risk).
-    * **ToolShelf:** **Unlimited** rows, **No** Signup, **100% Local** (Privacy Safe).
-* **Keywords to Embed:** "mockaroo alternative", "generate 1 million rows sql", "dummy data generator free", "seed data generator".
+## 3. Execution Instructions
+1.  **Refactor `blog-config.js`** first to add categories.
+2.  **Create `sidebar.js`** and the CSS.
+3.  **Update `index.html`** to use the new 2-column layout.
+4.  **Instruction for me:** Tell me exactly where to add the `<aside>` tag in my individual blog post HTML files so I can update them (or write a script to update them if you can).
 
-## 5. Implementation Steps
-Generate the following files:
-
-1.  `toolshelf/mock-data-generator/index.html`:
-    * The UI skeleton using the "Split Pane" layout (Schema Builder on Left, Preview on Right).
-    * Include the comparison SEO section.
-2.  `toolshelf/mock-data-generator/css/mock-tool.css`:
-    * Style the schema rows to look like a clean grid.
-    * Make the "Download" button prominent (Primary Color).
-3.  `toolshelf/mock-data-generator/js/generator.js`:
-    * The Logic Class. Import `faker` from the CDN.
-    * Implement `generateJSON`, `generateCSV`, `generateSQL`.
-    * *Optimization:* For huge datasets, build the string in chunks to avoid memory crashes.
-4.  `toolshelf/mock-data-generator/js/ui.js`:
-    * Handle adding/removing schema rows.
-    * Handle the Preview vs Download logic.
-
-## 6. Analytics Tracking
-* `tool_usage` -> `action: generate`, `count: 5000`, `format: sql`.
-* `tool_usage` -> `action: download`.
-
-**Go ahead and write the code for these files.**
+**Go ahead and start with Step 1: Categorizing the data.**
