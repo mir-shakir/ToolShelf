@@ -477,6 +477,9 @@
 }
 
 .ide-pane-stats {
+    display: flex;
+    align-items: center;
+    gap: 4px;
     color: var(--text-muted);
     font-family: var(--font-family-mono);
     font-size: 0.68rem;
@@ -540,10 +543,118 @@
     background: var(--border-color);
     cursor: col-resize;
     transition: background var(--transition-fast);
+    position: relative;
 }
 
-.ide-gutter:hover {
+.ide-gutter:hover,
+.ide-gutter.active {
     background: var(--primary-color);
+}
+
+/* Widen grab area without changing visual width */
+.ide-gutter::before {
+    content: '';
+    position: absolute;
+    inset: 0 -4px;
+    z-index: 1;
+}
+
+/* Drag handle dots */
+.ide-gutter::after {
+    content: '···';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(90deg);
+    font-size: 10px;
+    letter-spacing: 1px;
+    color: var(--text-muted);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity var(--transition-fast);
+}
+
+.ide-gutter:hover::after,
+.ide-gutter.active::after {
+    opacity: 1;
+    color: var(--text-white);
+}
+
+/* Prevent text selection while dragging */
+body.ide-resizing {
+    cursor: col-resize !important;
+    user-select: none !important;
+    -webkit-user-select: none !important;
+}
+
+/* ===== SYNTAX HIGHLIGHTING OVERLAY ===== */
+
+/* The output pane needs relative positioning so the overlay anchors correctly */
+.ide-pane {
+    position: relative;
+}
+
+.syntax-overlay {
+    position: absolute;
+    top: 29px; /* height of .ide-pane-tab (28px) + 1px border */
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: 0;
+    padding: var(--space-2) var(--space-3);
+    border: none;
+    background: transparent;
+    color: var(--text-primary);
+    font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+    font-size: 13px;
+    line-height: 1.6;
+    tab-size: 2;
+    white-space: pre;
+    word-wrap: normal;
+    overflow: auto;
+    pointer-events: none;
+    display: none;
+    z-index: 2;
+    box-sizing: border-box;
+}
+
+/* When highlighting is active, make textarea text invisible */
+.ide-editor.output.hl-active {
+    color: transparent;
+    caret-color: transparent;
+}
+
+/* JSON syntax token colours — light theme */
+.json-key       { color: #0451a5; }
+.json-string    { color: #a31515; }
+.json-number    { color: #098658; }
+.json-boolean   { color: #0000ff; }
+.json-null      { color: #0000ff; }
+.json-bracket   { color: #6b7280; }
+
+/* JSON syntax token colours — dark theme */
+[data-theme="dark"] .json-key       { color: #9cdcfe; }
+[data-theme="dark"] .json-string    { color: #ce9178; }
+[data-theme="dark"] .json-number    { color: #b5cea8; }
+[data-theme="dark"] .json-boolean   { color: #569cd6; }
+[data-theme="dark"] .json-null      { color: #569cd6; }
+[data-theme="dark"] .json-bracket   { color: #d4d4d4; }
+
+/* Syntax highlight toggle button in pane tab */
+.syntax-hl-toggle {
+    width: 22px;
+    height: 22px;
+    font-size: 0.68rem;
+    margin-right: 6px;
+    vertical-align: middle;
+    border-radius: var(--radius-sm);
+    opacity: 0.5;
+    transition: all var(--transition-fast);
+}
+
+.syntax-hl-toggle.active {
+    opacity: 1;
+    color: var(--primary-color);
 }
 
 /* ===== BELOW-THE-FOLD SEO WRAPPER ===== */
@@ -597,6 +708,20 @@
 
     .ide-gutter {
         cursor: row-resize;
+    }
+
+    /* Horizontal drag handle on mobile */
+    .ide-gutter::after {
+        transform: translate(-50%, -50%);
+    }
+
+    body.ide-resizing {
+        cursor: row-resize !important;
+    }
+
+    .syntax-overlay {
+        font-size: 12px;
+        padding: var(--space-2);
     }
 
     /* Wrap toolbar */
@@ -781,7 +906,9 @@
 
     .ide-toolbar,
     .ide-header-right,
-    .ide-gutter {
+    .ide-gutter,
+    .syntax-overlay,
+    .syntax-hl-toggle {
         display: none;
     }
 
@@ -794,5 +921,6 @@
         height: auto;
         overflow: visible;
         white-space: pre-wrap;
+        color: var(--text-primary) !important;
     }
 }

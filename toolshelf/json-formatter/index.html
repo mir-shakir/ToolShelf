@@ -286,14 +286,18 @@
                     placeholder="Paste or type your JSON here...&#10;&#10;Drag & drop .json files supported&#10;&#10;Example:&#10;{&#10;  &quot;name&quot;: &quot;John Doe&quot;,&#10;  &quot;age&quot;: 30,&#10;  &quot;skills&quot;: [&quot;JavaScript&quot;, &quot;Python&quot;]&#10;}"></textarea>
             </div>
 
-            <!-- Gutter Divider -->
-            <div class="ide-gutter" aria-hidden="true"></div>
+            <!-- Gutter Divider — drag to resize panes -->
+            <div class="ide-gutter" role="separator" aria-label="Drag to resize panes" title="Drag to resize"></div>
 
             <!-- Output Pane -->
             <div class="ide-pane">
                 <div class="ide-pane-tab">
                     <span class="ide-pane-title"><i class="fas fa-code"></i> Output</span>
                     <span class="ide-pane-stats">
+                        <button id="syntaxToggleBtn" class="ide-icon-btn syntax-hl-toggle active"
+                            title="Toggle syntax highlighting" aria-label="Toggle syntax highlighting">
+                            <i class="fas fa-paint-brush" aria-hidden="true"></i>
+                        </button>
                         <span id="outputCharCount">0</span> chars &middot;
                         <span id="outputBytes">0</span> bytes &middot;
                         <span id="operationStatus" class="ide-op-status">Ready</span>

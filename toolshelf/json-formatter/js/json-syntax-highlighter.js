@@ -1,5 +1,10 @@
 /**
- * ToolShelf JSON Syntax Highlighter - Lightweight Syntax Highlighting Module
+ * ToolShelf JSON Syntax Highlighter — Overlay-based Approach
+ *
+ * Creates a <pre> overlay on top of the output textarea.
+ * When enabled the textarea's text is made transparent so
+ * only the colour-coded overlay is visible. Scroll sync
+ * keeps the two layers aligned.
  */
 window.ToolShelf = window.ToolShelf || {};
 
@@ -7,268 +12,205 @@ window.ToolShelf.JSONSyntaxHighlighter = class JSONSyntaxHighlighter {
     constructor(formatter) {
         this.formatter = formatter;
         this.syntaxOverlay = null;
-        this.isEnabled = false; // DISABLED FOR NOW
+        this.isEnabled = true; // ON by default per plan.md
+
+        // Persist preference
+        try {
+            const saved = localStorage.getItem('toolshelf-json-syntax-hl');
+            if (saved !== null) this.isEnabled = saved === 'true';
+        } catch (_) { /* ignore */ }
 
         this.debouncedHighlight = window.ToolShelf.Utils.debounce(() => {
             this.applySyntaxHighlighting();
-        }, 200);
+        }, 120);
 
-        // COMMENTED OUT TO FIX DUPLICATION ISSUE
-        // this.setupSyntaxOverlay();
+        this.setupSyntaxOverlay();
     }
 
-    /**
-     * Setup syntax highlighting overlay
-     */
-    setupSyntaxOverlay() {
-        // TEMPORARILY DISABLED
-        return;
+    /* -------------------------------------------------- */
+    /*  Setup                                              */
+    /* -------------------------------------------------- */
 
-        /* ORIGINAL CODE COMMENTED OUT
+    /** Build the <pre> overlay and wire scroll sync */
+    setupSyntaxOverlay() {
         const outputTextArea = this.formatter.elements.outputText;
         if (!outputTextArea) return;
 
-        const outputPanel = outputTextArea.parentElement;
+        const pane = outputTextArea.parentElement;
 
-        // Create syntax overlay
-        this.syntaxOverlay = document.createElement('div');
+        // Create overlay
+        this.syntaxOverlay = document.createElement('pre');
         this.syntaxOverlay.className = 'syntax-overlay';
         this.syntaxOverlay.id = 'syntaxOverlay';
+        this.syntaxOverlay.setAttribute('aria-hidden', 'true');
 
-        // Add container class for positioning
-        outputPanel.classList.add('syntax-highlighted');
-        outputPanel.appendChild(this.syntaxOverlay);
+        // Append to the pane (CSS handles position: relative on .ide-pane)
+        pane.appendChild(this.syntaxOverlay);
 
-        // Sync scrolling between textarea and overlay
-        this.syncScrolling(outputTextArea, this.syntaxOverlay);
-
-        console.log('🎨 Syntax highlighting overlay setup complete');
-        */
-    }
-
-    /**
-     * Sync scrolling between textarea and overlay
-     */
-    syncScrolling(textarea, overlay) {
-        // TEMPORARILY DISABLED
-        return;
-
-        /* ORIGINAL CODE
-        textarea.addEventListener('scroll', () => {
-            overlay.scrollTop = textarea.scrollTop;
-            overlay.scrollLeft = textarea.scrollLeft;
+        // Scroll sync: textarea → overlay
+        outputTextArea.addEventListener('scroll', () => {
+            if (!this.syntaxOverlay) return;
+            this.syntaxOverlay.scrollTop = outputTextArea.scrollTop;
+            this.syntaxOverlay.scrollLeft = outputTextArea.scrollLeft;
         });
-        */
+
+        // Initial state
+        if (this.isEnabled) {
+            outputTextArea.classList.add('hl-active');
+        }
+
+        console.log('🎨 Syntax highlighting overlay ready');
     }
 
-    /**
-     * Apply syntax highlighting to the output
-     */
+    /* -------------------------------------------------- */
+    /*  Core highlighting                                  */
+    /* -------------------------------------------------- */
+
+    /** Re-render the overlay from the current output value */
     applySyntaxHighlighting() {
-        // TEMPORARILY DISABLED - THIS WAS CAUSING THE DUPLICATION
-        return;
-
-        /* ORIGINAL CODE COMMENTED OUT
-        if (!this.isEnabled || !this.syntaxOverlay) return;
-
         const outputTextArea = this.formatter.elements.outputText;
+        if (!outputTextArea || !this.syntaxOverlay) return;
+
         const jsonText = outputTextArea.value;
 
-        if (!jsonText.trim()) {
+        if (!this.isEnabled || !jsonText.trim()) {
             this.clearHighlighting();
             return;
         }
 
         try {
-            // Only highlight if it's valid JSON and formatted (not minified)
-            if (this.formatter.validationResult.isValid && !this.isMinified(jsonText)) {
-                const highlighted = this.highlightJson(jsonText);
-                this.syntaxOverlay.innerHTML = highlighted;
-                this.syntaxOverlay.style.display = 'block';
-
-                // Hide the actual text and show overlay
-                outputTextArea.classList.add('has-content');
-
-                console.log('🎨 Syntax highlighting applied');
-            } else {
+            // Only highlight formatted (multi-line) output
+            if (this.isMinified(jsonText)) {
                 this.clearHighlighting();
+                return;
             }
+
+            const highlighted = this.highlightJson(jsonText);
+            this.syntaxOverlay.innerHTML = highlighted;
+            this.syntaxOverlay.style.display = 'block';
+            outputTextArea.classList.add('hl-active');
+
+            // Sync scroll position immediately
+            this.syntaxOverlay.scrollTop = outputTextArea.scrollTop;
+            this.syntaxOverlay.scrollLeft = outputTextArea.scrollLeft;
         } catch (error) {
             console.warn('Syntax highlighting failed:', error);
             this.clearHighlighting();
         }
-        */
     }
 
-    /**
-     * Force clear highlighting (for emergency cleanup)
-     */
-    forceClear() {
-        const outputTextArea = this.formatter.elements.outputText;
-
-        if (this.syntaxOverlay) {
-            this.syntaxOverlay.innerHTML = '';
-            this.syntaxOverlay.style.display = 'none';
-        }
-
-        if (outputTextArea) {
-            outputTextArea.classList.remove('has-content');
-            outputTextArea.style.color = '';
-
-            // Force a repaint
-            outputTextArea.offsetHeight;
-        }
-
-        console.log('🎨 Syntax highlighting force cleared');
-    }
-
-    /**
-     * Check if JSON is minified (single line, no indentation)
-     */
-    isMinified(jsonText) {
-        const lines = jsonText.split('\n').filter(line => line.trim());
-        return lines.length === 1 || jsonText.length > 1000 && lines.length < 10;
-    }
-
-    /**
-     * Custom JSON syntax highlighter
-     */
+    /** Tokenise JSON string into coloured spans */
     highlightJson(jsonString) {
-        // KEEP THIS METHOD FOR FUTURE USE
-        // Escape HTML characters first
-        let highlighted = jsonString
+        // Escape HTML
+        let h = jsonString
             .replace(/&/g, '&amp;')
             .replace(/</g, '&lt;')
             .replace(/>/g, '&gt;');
 
-        // Apply syntax highlighting with improved regex patterns
-        highlighted = highlighted
-            // Property keys (before colons)
-            .replace(/("(?:[^"\\]|\\.)*")\s*:/g, '<span class="json-key">$1</span>:')
+        // Property keys
+        h = h.replace(/("(?:[^"\\]|\\.)*")\s*:/g, '<span class="json-key">$1</span>:');
 
-            // String values (after colons or in arrays)
-            .replace(/:\s*("(?:[^"\\]|\\.)*")/g, ': <span class="json-string">$1</span>')
-            .replace(/\[\s*("(?:[^"\\]|\\.)*")/g, '[<span class="json-string">$1</span>')
-            .replace(/,\s*("(?:[^"\\]|\\.)*")/g, ', <span class="json-string">$1</span>')
+        // String values (after colon, in arrays, after commas)
+        h = h.replace(/:\s*("(?:[^"\\]|\\.)*")/g, ': <span class="json-string">$1</span>');
+        h = h.replace(/\[\s*("(?:[^"\\]|\\.)*")/g, '[<span class="json-string">$1</span>');
+        h = h.replace(/,\s*("(?:[^"\\]|\\.)*")/g, ', <span class="json-string">$1</span>');
 
-            // Boolean values
-            .replace(/:\s*(true|false)\b/g, ': <span class="json-boolean">$1</span>')
-            .replace(/\[\s*(true|false)\b/g, '[<span class="json-boolean">$1</span>')
-            .replace(/,\s*(true|false)\b/g, ', <span class="json-boolean">$1</span>')
+        // Booleans
+        h = h.replace(/(:\s*|[\[,]\s*)(true|false)\b/g, '$1<span class="json-boolean">$2</span>');
 
-            // Null values
-            .replace(/:\s*(null)\b/g, ': <span class="json-null">$1</span>')
-            .replace(/\[\s*(null)\b/g, '[<span class="json-null">$1</span>')
-            .replace(/,\s*(null)\b/g, ', <span class="json-null">$1</span>')
+        // Null
+        h = h.replace(/(:\s*|[\[,]\s*)(null)\b/g, '$1<span class="json-null">$2</span>');
 
-            // Number values (including negative, decimal, scientific notation)
-            .replace(/:\s*(-?\d+(?:\.\d+)?(?:[eE][+-]?\d+)?)\b/g, ': <span class="json-number">$1</span>')
-            .replace(/\[\s*(-?\d+(?:\.\d+)?(?:[eE][+-]?\d+)?)\b/g, '[<span class="json-number">$1</span>')
-            .replace(/,\s*(-?\d+(?:\.\d+)?(?:[eE][+-]?\d+)?)\b/g, ', <span class="json-number">$1</span>')
+        // Numbers
+        h = h.replace(/(:\s*|[\[,]\s*)(-?\d+(?:\.\d+)?(?:[eE][+-]?\d+)?)\b/g,
+            '$1<span class="json-number">$2</span>');
 
-            // Punctuation (braces, brackets, commas)
-            .replace(/([{}[\],])/g, '<span class="json-punctuation">$1</span>');
+        // Braces, brackets, commas
+        h = h.replace(/([{}[\]])/g, '<span class="json-bracket">$1</span>');
 
-        return highlighted;
+        return h;
     }
 
-    /**
-     * Clear syntax highlighting and handle empty states
-     */
+    /** Heuristic: is the text a single minified line? */
+    isMinified(jsonText) {
+        const lines = jsonText.split('\n').filter(l => l.trim());
+        return lines.length <= 1;
+    }
+
+    /* -------------------------------------------------- */
+    /*  Public API                                         */
+    /* -------------------------------------------------- */
+
+    /** Called by operations whenever the output textarea value changes */
+    onOutputChange() {
+        if (this.isEnabled) {
+            this.debouncedHighlight();
+        } else {
+            this.clearHighlighting();
+        }
+    }
+
+    setEnabled(enabled) {
+        this.isEnabled = enabled;
+        try { localStorage.setItem('toolshelf-json-syntax-hl', String(enabled)); } catch (_) { /* */ }
+
+        const outputTextArea = this.formatter.elements.outputText;
+        if (!enabled) {
+            this.clearHighlighting();
+            if (outputTextArea) outputTextArea.classList.remove('hl-active');
+        } else {
+            if (outputTextArea) outputTextArea.classList.add('hl-active');
+            if (outputTextArea && outputTextArea.value.trim()) {
+                this.applySyntaxHighlighting();
+            }
+        }
+    }
+
+    toggle() {
+        this.setEnabled(!this.isEnabled);
+        return this.isEnabled;
+    }
+
+    isHighlightingEnabled() {
+        return this.isEnabled;
+    }
+
+    /** Remove overlay content and restore textarea visibility */
     clearHighlighting() {
         if (this.syntaxOverlay) {
             this.syntaxOverlay.innerHTML = '';
             this.syntaxOverlay.style.display = 'none';
         }
-
-        // Ensure output textarea shows placeholder properly
-        const outputTextArea = this.formatter.elements.outputText;
+        // Always remove the transparent-text class so the real text is visible
+        const outputTextArea = this.formatter?.elements?.outputText;
         if (outputTextArea) {
-            outputTextArea.classList.remove('has-content');
-            // Force reset the color to ensure placeholder is visible
+            outputTextArea.classList.remove('hl-active');
+        }
+    }
+
+    /** Emergency wipe */
+    forceClear() {
+        const outputTextArea = this.formatter.elements.outputText;
+        if (this.syntaxOverlay) {
+            this.syntaxOverlay.innerHTML = '';
+            this.syntaxOverlay.style.display = 'none';
+        }
+        if (outputTextArea) {
+            outputTextArea.classList.remove('hl-active');
             outputTextArea.style.color = '';
         }
-
-        console.log('🎨 Syntax highlighting cleared');
     }
 
-    /**
-     * Enable/disable syntax highlighting
-     */
-    setEnabled(enabled) {
-        this.isEnabled = false; // FORCE DISABLED FOR NOW
+    /* Stubs kept for compatibility */
+    highlightError() { }
+    clearErrorHighlighting() { }
 
-        /* ORIGINAL CODE
-        this.isEnabled = enabled;
-
-        if (!enabled) {
-            this.clearHighlighting();
-        } else if (this.formatter.elements.outputText.value) {
-            this.debouncedHighlight();
-        }
-        */
-    }
-
-    /**
-     * Toggle syntax highlighting
-     */
-    toggle() {
-        // DISABLED FOR NOW
-        return false;
-
-        /* ORIGINAL CODE
-        this.setEnabled(!this.isEnabled);
-        return this.isEnabled;
-        */
-    }
-
-    /**
-     * Get current highlighting state
-     */
-    isHighlightingEnabled() {
-        return false; // FORCE DISABLED
-    }
-
-    /**
-     * Highlight specific line or range (for error highlighting)
-     */
-    highlightError(line, column = null) {
-        // TEMPORARILY DISABLED
-        return;
-    }
-
-    /**
-     * Remove error highlighting
-     */
-    clearErrorHighlighting() {
-        // TEMPORARILY DISABLED
-        return;
-    }
-
-    /**
-     * Update highlighting when output changes
-     */
-    onOutputChange() {
-        // TEMPORARILY DISABLED
-        return;
-
-        /* ORIGINAL CODE
-        if (this.isEnabled) {
-            this.debouncedHighlight();
-        }
-        */
-    }
-
-    /**
-     * Cleanup
-     */
+    /** Cleanup */
     destroy() {
         this.clearHighlighting();
-
         if (this.syntaxOverlay && this.syntaxOverlay.parentElement) {
             this.syntaxOverlay.parentElement.removeChild(this.syntaxOverlay);
         }
-
         this.formatter = null;
         this.syntaxOverlay = null;
         this.debouncedHighlight = null;

@@ -46,6 +46,8 @@ window.ToolShelf.JSONUIHandlers = class JSONUIHandlers {
         this.setupAdvancedOptions();
         this.setupPanelButtons();
         this.setupJsonPathHandlers();
+        this.setupGutterResize();
+        this.setupSyntaxHighlightToggle();
 
         console.log('🎨 JSON UI event listeners setup complete');
     }
@@ -524,6 +526,106 @@ window.ToolShelf.JSONUIHandlers = class JSONUIHandlers {
             reader.onerror = () => reject(new Error('Failed to read file'));
             reader.readAsText(file);
         });
+    }
+
+    /* ======================================================= */
+    /*  Gutter Resize — drag the center divider to resize panes */
+    /* ======================================================= */
+
+    setupGutterResize() {
+        const gutter = document.querySelector('.ide-gutter');
+        const workspace = document.querySelector('.ide-workspace');
+        if (!gutter || !workspace) return;
+
+        let dragging = false;
+        let isVertical = false; // true on mobile (stacked layout)
+
+        const getDirection = () => {
+            // On mobile (<=768px) the grid switches to rows
+            return window.innerWidth <= 768 ? 'vertical' : 'horizontal';
+        };
+
+        const onPointerDown = (e) => {
+            e.preventDefault();
+            dragging = true;
+            isVertical = getDirection() === 'vertical';
+            document.body.classList.add('ide-resizing');
+            gutter.classList.add('active');
+        };
+
+        const onPointerMove = (e) => {
+            if (!dragging) return;
+            e.preventDefault();
+
+            const rect = workspace.getBoundingClientRect();
+            const MIN_FRAC = 0.15; // minimum 15 % per pane
+
+            if (isVertical) {
+                const y = (e.clientY || e.touches?.[0]?.clientY) - rect.top;
+                let frac = y / rect.height;
+                frac = Math.max(MIN_FRAC, Math.min(1 - MIN_FRAC, frac));
+                workspace.style.gridTemplateRows = `${frac}fr 4px ${1 - frac}fr`;
+                workspace.style.gridTemplateColumns = '1fr';
+            } else {
+                const x = (e.clientX || e.touches?.[0]?.clientX) - rect.left;
+                let frac = x / rect.width;
+                frac = Math.max(MIN_FRAC, Math.min(1 - MIN_FRAC, frac));
+                workspace.style.gridTemplateColumns = `${frac}fr 4px ${1 - frac}fr`;
+            }
+        };
+
+        const onPointerUp = () => {
+            if (!dragging) return;
+            dragging = false;
+            document.body.classList.remove('ide-resizing');
+            gutter.classList.remove('active');
+        };
+
+        // Mouse events
+        gutter.addEventListener('mousedown', onPointerDown);
+        document.addEventListener('mousemove', onPointerMove);
+        document.addEventListener('mouseup', onPointerUp);
+
+        // Touch events (mobile)
+        gutter.addEventListener('touchstart', onPointerDown, { passive: false });
+        document.addEventListener('touchmove', onPointerMove, { passive: false });
+        document.addEventListener('touchend', onPointerUp);
+
+        console.log('↔️ Gutter resize initialized');
+    }
+
+    /* ======================================================= */
+    /*  Syntax Highlighting Toggle                              */
+    /* ======================================================= */
+
+    setupSyntaxHighlightToggle() {
+        const btn = document.getElementById('syntaxToggleBtn');
+        if (!btn) return;
+
+        // Reflect initial state
+        this.updateHighlightToggleBtn(btn, this.formatter.highlighter.isHighlightingEnabled());
+
+        btn.addEventListener('click', () => {
+            const nowEnabled = this.formatter.highlighter.toggle();
+            this.formatter.enableSyntaxHighlighting = nowEnabled;
+            this.updateHighlightToggleBtn(btn, nowEnabled);
+
+            this.formatter.showToast(
+                `Syntax highlighting ${nowEnabled ? 'enabled' : 'disabled'}`,
+                'info', 2000
+            );
+        });
+    }
+
+    /** Update the toggle button icon & tooltip */
+    updateHighlightToggleBtn(btn, enabled) {
+        const icon = btn.querySelector('i');
+        if (icon) {
+            icon.className = enabled ? 'fas fa-paint-brush' : 'fas fa-paint-brush';
+        }
+        btn.classList.toggle('active', enabled);
+        btn.title = enabled ? 'Disable syntax highlighting' : 'Enable syntax highlighting';
+        btn.setAttribute('aria-label', btn.title);
     }
 
     /**

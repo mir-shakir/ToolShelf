@@ -17,7 +17,7 @@ window.ToolShelf.JSONFormatter = class JSONFormatter extends window.ToolShelf.Ba
         // State management
         this.currentIndentation = 2;
         this.sortKeys = false;
-        this.enableSyntaxHighlighting = true;
+        this.enableSyntaxHighlighting = true; // default on, overridden by localStorage in highlighter
         this.autoValidate = true;
         this.currentOperation = 'format';
 
@@ -125,6 +125,9 @@ window.ToolShelf.JSONFormatter = class JSONFormatter extends window.ToolShelf.Ba
 
         // Initialize syntax highlighter
         this.highlighter = new window.ToolShelf.JSONSyntaxHighlighter(this);
+
+        // Sync formatter state with highlighter's persisted preference
+        this.enableSyntaxHighlighting = this.highlighter.isHighlightingEnabled();
 
         // Initialize operations handler
         this.operations = new window.ToolShelf.JSONOperations(this);
