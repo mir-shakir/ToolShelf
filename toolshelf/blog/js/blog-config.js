@@ -15,6 +15,16 @@ export const BLOG_CATEGORIES = [
 
 export const blogPosts = [
     {
+        slug: 'secure-infrastructure-agentic-era-developers',
+        title: 'Beyond the Prompt: Building a Secure Infrastructure for the Agentic Era',
+        excerpt: 'Build a Secure Agentic Architecture for AI developer tools using isolation, networking constraints, and resource management to protect your infrastructure.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/046942ff-c820-4ff4-a3df-d710ac90b14b_blog_header.png', // Using the direct URL as per your strategy
+        date: 'February 21, 2026',
+        readTime: '8 min read',
+        tags: ["security","ai-agents","architecture","devsecops","docker"],
+        isFeatured: false
+    },
+    {
         slug: 'mastering-dockerfile-best-practices-multi-stage-builds',
         title: 'Mastering Dockerfile Best Practices: The Power of Multi-Stage Builds',
         excerpt: 'Stop shipping compilers to production. Learn how to use Docker multi-stage builds to drastically reduce image size, improve layer caching, and secure your containers.',
