@@ -15,6 +15,16 @@ export const BLOG_CATEGORIES = [
 
 export const blogPosts = [
     {
+        slug: 'debugging-spring-boot-claude-code-mcp-server',
+        title: 'Debugging Spring Boot with Claude Code and MCP: A Developer\'s Guide',
+        excerpt: 'Learn how to embed a Model Context Protocol (MCP) server in your Spring Boot app to let Claude Code diagnose bugs directly from your IDE.',
+        thumbnail: 'https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/e05effdb-3131-43fc-bf74-142b4829aef5_blog_header.png', // Using the direct URL as per your strategy
+        date: 'February 28, 2026',
+        readTime: '10 min read',
+        tags: ["spring boot","claude code","mcp","debugging","spring ai"],
+        isFeatured: false
+    },
+    {
         slug: 'secure-infrastructure-agentic-era-developers',
         title: 'Beyond the Prompt: Building a Secure Infrastructure for the Agentic Era',
         excerpt: 'Build a Secure Agentic Architecture for AI developer tools using isolation, networking constraints, and resource management to protect your infrastructure.',
