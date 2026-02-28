@@ -1,0 +1,169 @@
+<!DOCTYPE html><html lang="en"><head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Primary Meta Tags --> <title>Debugging Spring Boot with Claude Code and MCP: A Developer's Guide</title> <meta name="title" content="Debugging Spring Boot with Claude Code and MCP: A Developer's Guide"> <meta name="description" content="Learn how to embed a Model Context Protocol (MCP) server in your Spring Boot app to let Claude Code diagnose bugs directly from your IDE."> <!-- Canonical URL --> <link rel="canonical" href="https://toolshelf.tech/blog/debugging-spring-boot-claude-code-mcp-server/"> <!-- Open Graph / Facebook --> <meta property="og:type" content="article"> <meta property="og:url" content="https://toolshelf.tech/blog/debugging-spring-boot-claude-code-mcp-server/"> <meta property="og:title" content="Debugging Spring Boot with Claude Code and MCP: A Developer's Guide"> <meta property="og:description" content="Learn how to embed a Model Context Protocol (MCP) server in your Spring Boot app to let Claude Code diagnose bugs directly from your IDE."> <meta property="og:image" content="https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/e05effdb-3131-43fc-bf74-142b4829aef5_blog_header.png"> <!-- Twitter --> <meta property="twitter:card" content="summary_large_image"> <meta property="twitter:url" content="https://toolshelf.tech/blog/debugging-spring-boot-claude-code-mcp-server/"> <meta property="twitter:title" content="Debugging Spring Boot with Claude Code and MCP: A Developer's Guide"> <meta property="twitter:description" content="Learn how to embed a Model Context Protocol (MCP) server in your Spring Boot app to let Claude Code diagnose bugs directly from your IDE."> <meta property="twitter:image" content="https://dszufhozbgwxgoanxljq.supabase.co/storage/v1/object/public/generations/2a6977e2-cb1b-4027-ab46-b33c5c0a7ddc/e05effdb-3131-43fc-bf74-142b4829aef5_blog_header.png"> <!-- Favicon --> <link rel="icon" type="image/x-icon" href="../../favicon.ico"> <link rel="icon" type="image/png" sizes="32x32" href="../../favicon-32x32.png"> <link rel="icon" type="image/png" sizes="16x16" href="../../favicon-16x16.png"> <link rel="apple-touch-icon" sizes="180x180" href="../../apple-touch-icon.png"> <link rel="manifest" href="../../manifest.json"> <meta name="theme-color" content="#3b82f6"> <!-- CSS --> <link rel="stylesheet" href="../../shared/css/variables.css"> <link rel="stylesheet" href="../../shared/css/base.css"> <link rel="stylesheet" href="../../shared/css/layout.css"> <link rel="stylesheet" href="../css/blog.css"> <!-- Fonts --> <link rel="preconnect" href="https://fonts.googleapis.com"> <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fira+Code&display=swap" rel="stylesheet"> <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"> <!-- Prism.js for Syntax Highlighting --> <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css"></head><body> <div class="scroll-progress-bar"></div> <header class="app-header"> <div class="header-container"> <div class="logo-section"> <div class="logo-icon"> <i class="fas fa-toolbox"></i> </div> <a href="../../" class="logo-text">ToolShelf</a> </div> <nav class="main-nav"> <a href="../../" class="nav-link">Home</a> <a href="../../#tools" class="nav-link">Tools</a> <a href="../" class="nav-link active">Blog</a> <a href="../../#about" class="nav-link">About</a> </nav> <div class="header-actions"> <button class="theme-switcher-btn" id="themeSwitcher" title="Switch to dark mode" aria-label="Switch to dark mode"> <i class="fas fa-moon"></i> </button> </div> </div> </header> <main> <div class="blog-post-container"> <aside class="toc-container" id="tocContainer"> <h3>Table of Contents</h3> <ul class="toc-list" id="tocList"></ul> </aside> <article class="blog-post-article"> <header class="blog-post-header"> <h1 class="blog-post-title">Debugging Spring Boot with Claude Code and MCP: A Developer's Guide</h1> <div class="blog-post-meta"> <span>By The ToolShelf Team</span> <span><i class="fas fa-calendar-alt"></i> February 28, 2026</span> <span><i class="fas fa-clock"></i> 10 min read</span> </div> <div class="blog-post-tags"> <span class="tag-badge">spring boot</span> <span class="tag-badge">claude code</span> <span class="tag-badge">mcp</span> <span class="tag-badge">debugging</span> <span class="tag-badge">spring ai</span> </div> </header> <div class="blog-post-content" id="articleContent"> <h2 id="introduction">Introduction</h2> <p>There's a class of bug that every backend engineer knows too well: the bug you can only reproduce in a staging or production-like environment. Your local setup doesn't have the right data. You can't attach a debugger to staging. You end up either adding temporary log statements and redeploying, or writing a throwaway admin endpoint, poking around manually, and deleting it later.</p> <p>This article shows a third option: embed a small, read-only diagnostic server directly in your Spring Boot application, then connect Claude Code to it. Claude can then call your business logic directly from the IDE &mdash; inspecting records, running eligibility checks, tracing through validation steps &mdash; while you describe the problem in plain English. This represents a massive leap in <a href="https://toolshelf.tech/blog/developer-observability-from-apm-to-in-ide-debugging/">in-IDE debugging and observability</a>.</p> <p>The integration is built on MCP (Model Context Protocol), an open standard for connecting AI models to external tools. Spring AI provides first-class support for hosting an MCP server inside a Spring Boot application with almost no boilerplate.</p> <p>By the end of this guide, you'll have:</p> <ul> <li>An MCP server running inside your Spring Boot app</li> <li>A set of custom diagnostic tools callable from Claude Code</li> <li>A workflow where you describe a bug and Claude uses your tools to find the root cause</li> </ul> <h2 id="what-is-mcp-and-why-does-it-fit-spring-boot">What is MCP and Why Does It Fit Spring Boot?</h2> <p>MCP (Model Context Protocol) is a protocol that lets AI assistants call external tools and receive structured results. Instead of just reading code, an AI can execute functions and reason about the output.</p> <p>Spring AI (the AI integration layer of the Spring ecosystem) added an MCP server module that lets you expose Spring beans as callable tools. The transport layer uses <a href="https://toolshelf.tech/blog/real-time-web-architecture-long-polling-websockets-sse/">Server-Sent Events (SSE) transport</a> over HTTP &mdash; so your MCP server is just another endpoint on your existing application. No separate process, no sidecar, no infrastructure changes.</p> <p>The pattern that emerges is powerful: your existing service layer becomes the diagnostic interface. You write a thin wrapper that calls your repositories and services in read-only mode, annotate the methods, and Claude Code can invoke them from the IDE while you describe a problem in plain language.</p> <h2 id="prerequisites">Prerequisites</h2> <ul> <li>Spring Boot 3.x (tested with 3.2+)</li> <li>Java 17 or 21</li> <li>Claude Code installed (CLI: <code>npm install -g @anthropic-ai/claude-code</code>)</li> <li>Maven or Gradle build</li> </ul> <h2 id="step-1-add-the-dependency">Step 1: Add the Dependency</h2> <p>Add the Spring AI MCP server dependency to your <code>pom.xml</code>:</p> <pre><code class="language-xml">&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.ai&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-ai-starter-mcp-server-webmvc&lt;/artifactId&gt;
+    &lt;version&gt;1.0.3&lt;/version&gt;
+&lt;/dependency&gt;</code></pre> <p>If you use Gradle:</p> <pre><code class="language-groovy">implementation 'org.springframework.ai:spring-ai-starter-mcp-server-webmvc:1.0.3'</code></pre> <p>This single dependency brings in the MCP protocol handling, SSE transport, and the <code>@Tool</code> / <code>@ToolParam</code> annotations. No additional Spring AI BOM is required for the MCP server module alone, but check the Spring AI documentation for the latest version compatibility with your Spring Boot version.</p> <h2 id="step-2-design-your-tool-service">Step 2: Design Your Tool Service</h2> <p>Create a Spring service class that holds your diagnostic tools. This is where you write the actual logic that Claude will call.</p> <p>The key principle: every method in this class should be read-only and have zero side effects. No writes, no cache invalidations, no event publishing. This service is an inspection layer, not an action layer.</p> <p>Here's the pattern:</p> <pre><code class="language-java">package com.example.myapp.mcp;
+
+import org.springframework.ai.tool.annotation.Tool;
+import org.springframework.ai.tool.annotation.ToolParam;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+@Service
+public class DiagnosticToolService {
+
+    private final OrderRepository orderRepository;
+    private final CustomerRepository customerRepository;
+    private final PricingService pricingService;
+
+    public DiagnosticToolService(
+        OrderRepository orderRepository,
+        CustomerRepository customerRepository,
+        PricingService pricingService
+    ) {
+        this.orderRepository = orderRepository;
+        this.customerRepository = customerRepository;
+        this.pricingService = pricingService;
+    }
+
+    @Tool(description = "Fetch full details for a customer by ID including their membership tier, active subscriptions, and last order date")
+    @Transactional(readOnly = true)
+    public String getCustomerDetails(
+        @ToolParam(description = "The customer's ID") Long customerId
+    ) {
+        Customer customer = customerRepository.findById(customerId).orElse(null);
+        if (customer == null) {
+            return "Customer not found: " + customerId;
+        }
+        return """
+            Customer ID: %d
+            Name: %s
+            Tier: %s
+            Active Subscriptions: %s
+            Last Order: %s
+            """.formatted(
+                customer.getId(),
+                customer.getName(),
+                customer.getTier(),
+                customer.getActiveSubscriptions(),
+                customer.getLastOrderDate()
+            );
+    }
+
+    @Tool(description = "Run eligibility checks for a discount code against a customer and return a step-by-step audit trail explaining why the code is or isn't valid")
+    @Transactional(readOnly = true)
+    public String debugDiscountEligibility(
+        @ToolParam(description = "The customer ID") Long customerId,
+        @ToolParam(description = "The discount code to check") String discountCode
+    ) {
+        StringBuilder result = new StringBuilder();
+
+        // Check 1: Does the discount code exist?
+        DiscountCode discount = discountRepository.findByCode(discountCode);
+        if (discount == null) {
+            result.append("[FAILED] Discount code not found: ").append(discountCode).append("\n");
+            return result.toString();
+        }
+        result.append("[PASSED] Discount code exists\n");
+
+        // Check 2: Is it currently active?
+        if (!discount.isActive()) {
+            result.append("[FAILED] Discount is inactive\n");
+            return result.toString();
+        }
+        result.append("[PASSED] Discount is active\n");
+
+        // Check 3: Is the customer in the eligible segment?
+        Customer customer = customerRepository.findById(customerId).orElse(null);
+        if (customer == null) {
+            result.append("[FAILED] Customer not found\n");
+            return result.toString();
+        }
+        if (!discount.getEligibleTiers().contains(customer.getTier())) {
+            result.append("[FAILED] Customer tier '").append(customer.getTier())
+                  .append("' not in eligible tiers: ").append(discount.getEligibleTiers()).append("\n");
+            return result.toString();
+        }
+        result.append("[PASSED] Customer tier eligible\n");
+
+        // Check 4: Has the customer already used this discount?
+        long usageCount = orderRepository.countByCustomerIdAndDiscountCode(customerId, discountCode);
+        if (usageCount &gt;= discount.getMaxUsagePerCustomer()) {
+            result.append("[FAILED] Customer has already used this discount ")
+                  .append(usageCount).append(" time(s), limit is ")
+                  .append(discount.getMaxUsagePerCustomer()).append("\n");
+            return result.toString();
+        }
+        result.append("[PASSED] Usage limit not exceeded (used ").append(usageCount).append(" time(s))\n");
+
+        result.append("\n[RESULT] Customer IS eligible for this discount.");
+        return result.toString();
+    }
+}</code></pre> <p>Key things to notice:</p> <ol> <li><code>@Tool(description = ...)</code> &mdash; The description is what Claude reads to decide whether to call this method. Write it as if you're describing the tool to a new teammate. Be specific about what it returns and what parameters mean.</li> <li><code>@ToolParam(description = ...)</code> &mdash; Same principle for parameters. Claude uses these descriptions to understand what value to pass.</li> <li><strong>Return String</strong> &mdash; Tools should return human-readable strings. Claude reads the output and reasons about it. Structured text (with labels like [PASSED], [FAILED]) works much better than JSON objects.</li> <li><code>@Transactional(readOnly = true)</code> &mdash; Mark everything read-only at the database level. Understanding <a href="https://toolshelf.tech/blog/spring-transactional-private-methods-cglib-proxy/">Spring @Transactional annotation mechanics</a> is crucial here as this is an explicit guarantee that prevents accidental writes.</li> <li><strong>Fail fast with descriptive messages</strong> &mdash; When a check fails, return immediately with a clear reason. The step-by-step audit trail pattern (check &rarr; fail with reason &rarr; return) is more useful to Claude than a generic error.</li> </ol> <h2 id="step-3-register-the-tools-via-configuration">Step 3: Register the Tools via Configuration</h2> <p>Create a configuration class that registers your tool service with Spring AI's MCP infrastructure:</p> <pre><code class="language-java">package com.example.myapp.config;
+
+import com.example.myapp.mcp.DiagnosticToolService;
+import org.springframework.ai.tool.ToolCallbackProvider;
+import org.springframework.ai.tool.method.MethodToolCallbackProvider;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+public class McpServerConfig {
+
+    @Bean
+    public ToolCallbackProvider diagnosticTools(DiagnosticToolService diagnosticToolService) {
+        return MethodToolCallbackProvider.builder()
+                .toolObjects(diagnosticToolService)
+                .build();
+    }
+}</code></pre> <p><code>MethodToolCallbackProvider</code> scans the service object for methods annotated with <code>@Tool</code> and registers them automatically. You don't need to list them individually &mdash; adding <code>@Tool</code> to a new method in your service is enough to make it available.</p> <p>You can register multiple service classes by chaining <code>.toolObjects(...)</code> calls or creating separate <code>ToolCallbackProvider</code> beans for different domains.</p> <h2 id="step-4-configure-application-properties">Step 4: Configure Application Properties</h2> <p>Add the MCP server configuration to your <code>application.properties</code>:</p> <pre><code class="language-properties"># Enable the MCP server
+spring.ai.mcp.server.enabled=true
+
+# Use SSE (Server-Sent Events) transport over HTTP
+spring.ai.mcp.server.transport=sse
+
+# Server name — this is what Claude Code will display and how you'll identify this server
+spring.ai.mcp.server.name=my-app-debugger
+
+# Version string — useful for tracking your tool set
+spring.ai.mcp.server.version=1.0.0</code></pre> <p>The SSE endpoint will be available at <code>http://localhost:{server.port}/sse</code> by default when you run the application. No additional URL configuration is needed.</p> <p>If you only want the MCP server active in certain environments (local, staging), use Spring profiles:</p> <pre><code class="language-properties"># application-local.properties
+spring.ai.mcp.server.enabled=true
+
+# application.properties (base)
+spring.ai.mcp.server.enabled=false</code></pre> <h2 id="step-5-connect-claude-code">Step 5: Connect Claude Code</h2> <p>With your Spring Boot application running, configure Claude Code to connect to it.</p> <p>Create or edit <code>.claude/settings.local.json</code> in your project root:</p> <pre><code class="language-json">{
+  "mcpServers": {
+    "my-app-debugger": {
+      "type": "sse",
+      "url": "http://localhost:8080/sse"
+    }
+  }
+}</code></pre> <p>Replace <code>8080</code> with your actual server port and <code>my-app-debugger</code> with the name you set in application properties.</p> <p>To verify the connection, restart Claude Code and run <code>/mcp</code> in the Claude Code terminal. You should see your server listed as connected with the tools enumerated.</p> <p><strong>Important:</strong> <code>settings.local.json</code> is for local developer configuration. Add it to <code>.gitignore</code> if you don't want it committed. For team-wide MCP server configuration, use <code>settings.json</code> (committed) instead, but be careful not to hardcode environment-specific URLs there.</p> <h2 id="step-6-use-it">Step 6: Use It</h2> <p>Start your Spring Boot application, open Claude Code in your project, and start a conversation. You don't need to tell Claude which tools to use &mdash; it reads the tool descriptions and decides based on your question.</p> <p>Example interactions:</p> <p><strong>Scenario 1: Why isn't a discount applying?</strong></p> <blockquote> <p><strong>You:</strong> Customer ID 84231 is saying their SUMMER20 discount isn't working at checkout. Can you figure out why?</p> <p><strong>Claude:</strong> Let me check that. [calls debugDiscountEligibility(84231, "SUMMER20")] The discount code exists and is active, but the check failed at step 3: the customer is on the "BASIC" tier, but SUMMER20 is only eligible for "PREMIUM" and "GOLD" tiers. The customer would need to upgrade their membership to use this code.</p> </blockquote> <p><strong>Scenario 2: Inspecting a customer's current state</strong></p> <blockquote> <p><strong>You:</strong> What does customer 84231's account look like right now?</p> <p><strong>Claude:</strong> [calls getCustomerDetails(84231)] Customer 84231 is John Smith, on the BASIC tier since March 2024. He has 2 active subscriptions (Weekly Box, Newsletter). Last order was 3 days ago. No premium features are active.</p> </blockquote> <p><strong>Scenario 3: Compound investigation</strong></p> <blockquote> <p><strong>You:</strong> We have 3 customers complaining they're not getting the free shipping offer. IDs are 10241, 10889, and 11002. What's going on?</p> <p><strong>Claude:</strong> [calls debugDiscountEligibility for each customer in sequence]<br> After checking all three:<br> - 10241: Fails at usage limit &mdash; they've already used free shipping twice this month (limit is 2)<br> - 10889: Fails at tier check &mdash; they're BASIC, offer requires PREMIUM<br> - 11002: Offer expired yesterday &mdash; valid until Feb 27, 2026<br> These are three separate issues, not a systemic bug.</p> </blockquote> <p>Notice that in all three cases, you described the problem in plain language. This is a perfect example of <a href="https://toolshelf.tech/blog/agentic-ai-software-development-coder-to-conductor/">Agentic AI tool execution</a>, where Claude decides which tools to call, passes the right parameters, and synthesizes the results into an explanation. You never had to look up customer IDs in Postman or run a manual SQL query.</p> <h2 id="design-principles-for-good-mcp-tools">Design Principles for Good MCP Tools</h2> <h3>1. One tool per question type, not one tool per table</h3> <p>Don't create <code>getCustomer()</code>, <code>getOrders()</code>, <code>getDiscounts()</code> and make Claude assemble the picture. Create <code>debugDiscountEligibility()</code> that answers the actual question you ask most often. Tools should mirror the diagnostic questions your team asks, not the data model.</p> <h3>2. The description is the interface contract</h3> <p>Claude decides whether to call your tool entirely based on its <code>@Tool(description)</code>. Write descriptions that answer: What question does this tool answer? What does it return? When should someone call it?</p> <ul> <li><strong>Bad:</strong> "Get customer data"</li> <li><strong>Good:</strong> "Fetch a customer's full profile including tier, active subscriptions, last order date, and account flags — use this to understand a customer's current state before investigating offer or discount issues"</li> </ul> <h3>3. Return narrative strings, not raw data</h3> <p>Tools that return <code>Customer{id=84231, tier=BASIC, ...}</code> force Claude to parse and interpret. Tools that return labeled, human-readable text let Claude reason faster and give better explanations. Format your output the way you'd write a Slack message explaining the situation.</p> <h3>4. Step-by-step audit trails over boolean results</h3> <p>For eligibility checks, validation flows, or multi-condition logic: don't return true or false. Return every check with its result. "Passed franchise check, passed segment check, FAILED at usage limit: customer has used this 5 times, limit is 3" is infinitely more useful than "ineligible". Claude can then explain exactly which condition failed and why.</p> <h3>5. Enforce read-only at every layer</h3> <p>Use <code>@Transactional(readOnly = true)</code> on every tool method. Avoid injecting any service that has write operations &mdash; or if you must inject it, don't call those methods. The rule is simple: if a method changes state, it doesn't belong in your diagnostic service.</p> <h3>6. Handle missing data gracefully</h3> <p>Return a clear, descriptive string when an entity isn't found rather than throwing an exception. Claude can communicate "Customer 99999 was not found" much more helpfully than a stack trace.</p> <h2 id="keeping-it-safe">Keeping It Safe</h2> <p>A few guardrails worth explicitly building in:</p> <ul> <li><strong>Profile-gate the MCP server.</strong> Use <code>spring.ai.mcp.server.enabled=false</code> in production properties and true only in local/staging profiles. This ensures the diagnostic surface never accidentally exposes to production.</li> <li><strong>Don't expose credentials or PII in tool output.</strong> Filter out password hashes, payment tokens, and full PII from tool responses. Design tool output for your engineering team, not for end users.</li> <li><strong>Log tool invocations.</strong> Even though tools are read-only, logging which tools Claude called and with which parameters gives you an audit trail, which is useful both for debugging and for understanding how Claude is using your tools.</li> <li><strong>Avoid calling downstream services that have rate limits or costs.</strong> If your tool calls a third-party API to fulfill a diagnostic query, be aware that each Claude invocation triggers a real API call.</li> </ul> <h2 id="what-to-build-next">What to Build Next</h2> <p>Once you have the basic pattern working, natural extensions include:</p> <ul> <li><strong>Multi-system correlation tools:</strong> Instead of checking eligibility in one service, build a tool that calls across multiple microservices (via Feign or RestTemplate) and returns a unified picture. Claude can then investigate cross-service bugs that would normally require switching between multiple dashboards.</li> <li><strong>Schema-aware query tools:</strong> Expose a tool like <code>runNamedQuery(queryName, params)</code> that executes pre-approved, parameterized JPQL queries by name. You get the flexibility of ad-hoc queries without exposing raw SQL.</li> <li><strong>Health check and configuration tools:</strong> Expose tools that check feature flag states, current configuration values (from database or config server), or active scheduler states. Useful for debugging "why isn't this job running?" questions.</li> <li><strong>Deployment-aware tools:</strong> If your app has a concept of "current version" or "deployed feature set", expose it as a tool. Claude can factor deployment state into its investigation.</li> </ul> <h2 id="full-reference-minimal-working-implementation">Full Reference: Minimal Working Implementation</h2> <p>For a complete picture, here's what a minimal integration looks like end-to-end:</p> <p><strong>pom.xml</strong> (one new dependency):</p> <pre><code class="language-xml">&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.ai&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-ai-starter-mcp-server-webmvc&lt;/artifactId&gt;
+    &lt;version&gt;1.0.3&lt;/version&gt;
+&lt;/dependency&gt;</code></pre> <p><strong>DiagnosticToolService.java</strong> (your tools):</p> <pre><code class="language-java">@Service
+public class DiagnosticToolService {
+    // inject your existing repositories and services
+
+    @Tool(description = "...")
+    @Transactional(readOnly = true)
+    public String yourTool(@ToolParam(description = "...") YourParam param) {
+        // call your existing code, return a descriptive string
+    }
+}</code></pre> <p><strong>McpServerConfig.java</strong> (wire it up):</p> <pre><code class="language-java">@Configuration
+public class McpServerConfig {
+    @Bean
+    public ToolCallbackProvider tools(DiagnosticToolService service) {
+        return MethodToolCallbackProvider.builder().toolObjects(service).build();
+    }
+}</code></pre> <p><strong>application.properties</strong> (enable and name):</p> <pre><code class="language-properties">spring.ai.mcp.server.enabled=true
+spring.ai.mcp.server.transport=sse
+spring.ai.mcp.server.name=my-app-debugger
+spring.ai.mcp.server.version=1.0.0</code></pre> <p><strong>.claude/settings.local.json</strong> (connect Claude Code):</p> <pre><code class="language-json">{
+  "mcpServers": {
+    "my-app-debugger": {
+      "type": "sse",
+      "url": "http://localhost:8080/sse"
+    }
+  }
+}</code></pre> <p>Five files. No new infrastructure. Your Spring Boot app is now a Claude Code tool.</p> <h2 id="closing-thoughts">Closing Thoughts</h2> <p>The MCP integration isn't about replacing your debugger. It's about making the questions you ask ten times a day &mdash; "why isn't this offer showing?", "why is this customer getting this error?", "what state is this record in?" &mdash; answerable in seconds from the IDE, a hallmark of modern <a href="https://toolshelf.tech/blog/github-copilot-workspace-first-look-ai-native-ide/">AI-native IDE integrations</a>, instead of minutes of context-switching.</p> <p>The key insight is that the code to answer these questions already exists in your service layer. You've already written the eligibility checks, the validation flows, the lookup queries. MCP just gives Claude a way to call that code, so instead of writing the same diagnostic queries over and over, you describe the problem and Claude does the legwork.</p> <p>Start small: pick the three questions your team asks most often when something goes wrong. Build one tool for each. Connect Claude Code. See how the debugging workflow changes.</p> </div> <div class="blog-post-navigation"> <a href="#" id="prevPostLink" class="nav-link-post prev-post hidden"> <i class="fas fa-arrow-left"></i> <span>Previous Post</span> <span class="nav-post-title"></span> </a> <a href="#" id="nextPostLink" class="nav-link-post next-post hidden"> <span>Next Post</span> <span class="nav-post-title"></span> <i class="fas fa-arrow-right"></i> </a> </div> <section class="related-posts-section"> <h2 class="section-title">Also Read</h2> <div class="related-posts-grid"> <!-- Related posts will be injected here by JavaScript --> </div> </section> </article> </div> </main> <footer class="app-footer"> <div class="footer-content"> <div class="footer-main"> <div class="footer-logo"> <div class="logo-icon"> <i class="fas fa-toolbox"></i> </div> <strong>ToolShelf</strong> </div> <p class="footer-description"> Professional online tools that respect your privacy. Built for developers and professionals worldwide. </p> </div> <div class="footer-links"> <div class="footer-section"> <h4>Tools</h4> <a href="../../json-formatter/">JSON Formatter</a> <a href="../../base64-encoder/">Base64 Encoder</a> <a href="../../text-transformer/">Text Transformer</a> <a href="../../qr-generator/">QR Generator</a> <a href="../../hash-generator/">Hash Generator</a> </div> <div class="footer-section"> <h4>Resources</h4> <a href="../../#about">About ToolShelf</a> <a href="../../privacy/">Privacy Policy</a> <a href="../../terms/">Terms of Use</a> <a href="../../faq/">FAQs</a> <a href="../../contact/">Contact</a> </div> <div class="footer-section"> <h4>Company</h4> <a href="../">Blog</a> <a href="../../#about">About Us</a> <a href="../../contact/">Contact</a> </div> </div> </div> <div class="footer-bottom"> <p>© 2026 ToolShelf. All tools work offline and respect your privacy.</p> </div> </footer> <script src="../../shared/config/constants.js"></script> <script src="../../shared/js/core/utils.js"></script> <script src="../../shared/js/core/analytics.js"></script> <script src="../../shared/js/core/app.js"></script> <script type="module" src="../js/blog-post.js"></script> <!-- Prism.js for Syntax Highlighting --> <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script> <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js"></script> <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-java.min.js"></script> <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-css.min.js"></script> <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-markup.min.js"></script> <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-json.min.js"></script> <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-properties.min.js"></script> <script> // Minimal Theme Switcher (function () { let currentTheme = 'light'; function loadTheme() { try { const saved = localStorage.getItem('toolshelf-theme'); if (saved === 'dark' || saved === 'light') { currentTheme = saved; } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) { currentTheme = 'dark'; } document.documentElement.setAttribute('data-theme', currentTheme); } catch (e) { document.documentElement.setAttribute('data-theme', 'light'); } } function toggleTheme() { currentTheme = currentTheme === 'light' ? 'dark' : 'light'; document.documentElement.setAttribute('data-theme', currentTheme); try { localStorage.setItem('toolshelf-theme', currentTheme); } catch (e) { } updateButton(); } function updateButton() { const btn = document.getElementById('themeSwitcher'); if (btn) { const icon = btn.querySelector('i'); const isDark = currentTheme === 'dark'; if (icon) { icon.className = isDark ? 'fas fa-sun' : 'fas fa-moon'; } btn.title = isDark ? 'Switch to light mode' : 'Switch to dark mode'; btn.setAttribute('aria-label', btn.title); } } // Load theme immediately loadTheme(); // Setup when DOM is ready document.addEventListener('DOMContentLoaded', function () { updateButton(); const btn = document.getElementById('themeSwitcher'); if (btn) { btn.addEventListener('click', toggleTheme); } }); })(); </script> <div id="feedbackWidgetContainer"></div> <script type="module"> import { initFeedbackWidget } from '../../shared/js/core/feedback-widget.js'; document.addEventListener('DOMContentLoaded', () => { initFeedbackWidget('Blog Post: ' + document.title); }); </script></body></html>
