@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pillar 10 — Behavioural & Engineering Mindset | SDE 2 Prep</title>
+<style>
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg-primary: #1a1b2e;
+  --bg-secondary: #232540;
+  --bg-tertiary: #2a2d4a;
+  --bg-hover: #32355a;
+  --text-primary: #e2e4f0;
+  --text-secondary: #a0a3bd;
+  --text-muted: #6b6f8a;
+  --border: #3a3d5c;
+  --accent: #6c63ff;
+  --green: #4ade80;
+  --green-bg: rgba(74,222,128,0.12);
+  --orange: #fb923c;
+  --orange-bg: rgba(251,146,60,0.12);
+  --red: #f87171;
+  --red-bg: rgba(248,113,113,0.12);
+  --cyan: #22d3ee;
+  --cyan-bg: rgba(34,211,238,0.12);
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+/* ===== Sticky Header ===== */
+header {
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border);
+  padding: 16px 24px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.header-inner {
+  max-width: 960px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.header-text h1 {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.header-text .subtitle {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  margin-top: 2px;
+}
+
+.back-link {
+  color: var(--accent);
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+  white-space: nowrap;
+}
+.back-link:hover { text-decoration: underline; }
+
+/* ===== Main Container ===== */
+.container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 32px 24px 80px;
+}
+
+/* ===== Table of Contents ===== */
+.toc {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 24px 28px;
+  margin-bottom: 40px;
+}
+.toc h2 {
+  font-size: 1.05rem;
+  color: var(--text-primary);
+  margin-bottom: 14px;
+}
+.toc ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.toc a {
+  color: var(--cyan);
+  text-decoration: none;
+  font-size: 0.92rem;
+}
+.toc a:hover { text-decoration: underline; }
+.toc .toc-badge {
+  font-size: 0.72rem;
+  padding: 2px 8px;
+  border-radius: 999px;
+  margin-left: 8px;
+  font-weight: 600;
+  vertical-align: middle;
+}
+
+/* ===== Section Headings ===== */
+.section-heading {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 48px 0 8px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.context-badge {
+  font-size: 0.72rem;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+}
+.context-badge.light {
+  background: var(--green-bg);
+  color: var(--green);
+}
+.context-badge.full-focus {
+  background: var(--red-bg);
+  color: var(--red);
+}
+.context-badge.both {
+  background: var(--orange-bg);
+  color: var(--orange);
+}
+
+/* ===== Callout / Tip Box ===== */
+.callout {
+  background: var(--cyan-bg);
+  border-left: 4px solid var(--cyan);
+  border-radius: 6px;
+  padding: 14px 18px;
+  margin: 12px 0 24px;
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  line-height: 1.55;
+}
+.callout strong {
+  color: var(--cyan);
+}
+
+/* ===== Category Sub-headings ===== */
+.category-heading {
+  font-size: 1.08rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 32px 0 16px;
+  padding-left: 14px;
+  border-left: 4px solid var(--accent);
+}
+
+/* ===== Topic Cards ===== */
+.topic-card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 22px 24px;
+  margin-bottom: 18px;
+  scroll-margin-top: 80px;
+  transition: border-color 0.2s;
+}
+.topic-card:hover {
+  border-color: var(--accent);
+}
+.topic-card:target {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px rgba(108,99,255,0.25);
+}
+
+.topic-card h4 {
+  font-size: 1.02rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 6px;
+}
+.topic-card .topic-id {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+.topic-card .description {
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  margin-bottom: 12px;
+  line-height: 1.55;
+}
+.topic-card ul {
+  list-style: disc;
+  padding-left: 20px;
+  margin-bottom: 14px;
+}
+.topic-card li {
+  font-size: 0.86rem;
+  color: var(--text-secondary);
+  margin-bottom: 5px;
+  line-height: 1.5;
+}
+.topic-card .resources {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 6px;
+}
+.topic-card .resources a {
+  font-size: 0.8rem;
+  color: var(--accent);
+  text-decoration: none;
+  padding: 4px 10px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  transition: background 0.15s;
+}
+.topic-card .resources a:hover {
+  background: var(--bg-hover);
+  text-decoration: underline;
+}
+
+/* ===== Star Structure Box ===== */
+.star-box {
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 14px 18px;
+  margin: 10px 0 14px;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+.star-box .label {
+  font-weight: 600;
+  color: var(--orange);
+  margin-bottom: 4px;
+}
+.star-box p { margin-bottom: 4px; }
+
+/* ===== Recommended Resources ===== */
+.resources-section {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 28px;
+  margin-top: 48px;
+}
+.resources-section h2 {
+  font-size: 1.2rem;
+  margin-bottom: 18px;
+  color: var(--text-primary);
+}
+.resources-section h3 {
+  font-size: 0.95rem;
+  color: var(--cyan);
+  margin: 18px 0 8px;
+}
+.resources-section ul {
+  list-style: disc;
+  padding-left: 20px;
+}
+.resources-section li {
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  margin-bottom: 6px;
+  line-height: 1.5;
+}
+.resources-section a {
+  color: var(--accent);
+  text-decoration: none;
+}
+.resources-section a:hover { text-decoration: underline; }
+
+/* ===== Responsive ===== */
+@media (max-width: 640px) {
+  header { padding: 12px 16px; }
+  .header-inner { flex-direction: column; align-items: flex-start; }
+  .header-text h1 { font-size: 1.1rem; }
+  .container { padding: 20px 16px 60px; }
+  .toc { padding: 18px 16px; }
+  .section-heading { font-size: 1.15rem; }
+  .topic-card { padding: 16px 18px; }
+  .resources-section { padding: 20px 16px; }
+}
+
+</style>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<header>
+  <div class="header-inner">
+    <div class="header-text">
+      <h1>Pillar 10 &mdash; Behavioural &amp; Engineering Mindset</h1>
+      <div class="subtitle">SDE 2 bar includes ownership, tradeoff thinking, and communication</div>
+    </div>
+    <a href="index.html" class="back-link">&larr; Back to Tracker</a>
+  </div>
+</header>
+
+<div class="container">
+
+  <!-- ===== TABLE OF CONTENTS ===== -->
+  <nav class="toc">
+    <h2>Table of Contents</h2>
+    <ul>
+      <li>
+        <a href="#section-star-stories">STAR Stories Preparation</a>
+        <span class="toc-badge" style="background:var(--green-bg);color:var(--green);">Light</span>
+      </li>
+      <li>
+        <a href="#section-technical-communication">Technical Communication</a>
+        <span class="toc-badge" style="background:var(--green-bg);color:var(--green);">Light</span>
+      </li>
+      <li>
+        <a href="#section-resources">Recommended Resources</a>
+      </li>
+    </ul>
+  </nav>
+
+
+  <!-- ============================================================ -->
+  <!-- SECTION 1 — STAR Stories Preparation                         -->
+  <!-- ============================================================ -->
+  <h2 class="section-heading" id="section-star-stories">
+    STAR Stories Preparation
+    <span class="context-badge light">Light</span>
+  </h2>
+
+  <div class="callout">
+    <strong>Tip:</strong> Map each story to your actual work. You have strong material &mdash; offer engine, analytics platform, referral microservice migration. Prepare these tightly using the STAR format: <strong>Situation &rarr; Task &rarr; Action &rarr; Result</strong>. Every story should be anchored to real projects you can speak about with genuine depth.
+  </div>
+
+  <h3 class="category-heading">STAR Stories</h3>
+
+  <!-- Topic 352 -->
+  <div class="topic-card" id="topic-352">
+    <h4>Led a complex migration (monolith to microservice)</h4>
+    <div class="topic-id">Topic #352</div>
+    <div class="description">
+      Demonstrates your ability to plan and execute a large-scale architectural transformation, manage risk, and deliver incrementally without breaking production.
+    </div>
+    <div class="star-box">
+      <div class="label">Scenario Type: Architectural Ownership</div>
+      <p><strong>What to demonstrate:</strong> Technical decision-making, stakeholder alignment, phased rollout strategy, rollback planning, and measurable outcomes.</p>
+      <p><strong>Example STAR structure:</strong></p>
+    </div>
+    <ul>
+      <li><strong>S:</strong> Monolith was causing deployment bottlenecks; a critical module needed independent scaling</li>
+      <li><strong>T:</strong> Own the decomposition plan, define service boundaries, and migrate without downtime</li>
+      <li><strong>A:</strong> Identified bounded contexts, introduced strangler-fig pattern, set up contract testing, ran shadow traffic before cutover</li>
+      <li><strong>R:</strong> Deployment frequency increased 3x, P95 latency dropped, zero downtime during migration</li>
+      <li>Highlight how you handled data migration and backward compatibility</li>
+    </ul>
+    <div class="resources">
+      <a href="https://www.youtube.com/results?search_query=monolith+to+microservice+migration+interview" target="_blank">YouTube: Migration Stories</a>
+      <a href="https://www.levels.fyi/blog/" target="_blank">levels.fyi Blog</a>
+      <a href="https://www.teamblind.com/post/Behavioral-interview-tips" target="_blank">Blind: Behavioral Tips</a>
+    </div>
+  </div>
+
+  <!-- Topic 353 -->
+  <div class="topic-card" id="topic-353">
+    <h4>Improved performance under pressure</h4>
+    <div class="topic-id">Topic #353</div>
+    <div class="description">
+      Shows your composure during high-stakes situations and ability to deliver meaningful optimization when timelines are tight.
+    </div>
+    <div class="star-box">
+      <div class="label">Scenario Type: Performance &amp; Resilience</div>
+      <p><strong>What to demonstrate:</strong> Profiling methodology, prioritization under constraints, iterative optimization, and quantified impact.</p>
+      <p><strong>Example STAR structure:</strong></p>
+    </div>
+    <ul>
+      <li><strong>S:</strong> A key API endpoint degraded to multi-second response times during a high-traffic event</li>
+      <li><strong>T:</strong> Diagnose the root cause and restore performance within a tight SLA window</li>
+      <li><strong>A:</strong> Used APM tools to identify N+1 queries, added targeted caching, and batched database calls</li>
+      <li><strong>R:</strong> Response time dropped from 4s to 200ms; system handled 5x normal traffic during the next event</li>
+      <li>Emphasize how you stayed calm, communicated status updates, and documented the fix</li>
+    </ul>
+    <div class="resources">
+      <a href="https://www.youtube.com/results?search_query=behavioral+interview+pressure+performance" target="_blank">YouTube: Pressure Stories</a>
+      <a href="https://www.levels.fyi/blog/" target="_blank">levels.fyi Blog</a>
+    </div>
+  </div>
+
+  <!-- Topic 354 -->
+  <div class="topic-card" id="topic-354">
+    <h4>Handled prod incident &amp; RCA</h4>
+    <div class="topic-id">Topic #354</div>
+    <div class="description">
+      Reveals your incident management maturity &mdash; how you triage, communicate during outages, and drive meaningful post-mortems to prevent recurrence.
+    </div>
+    <div class="star-box">
+      <div class="label">Scenario Type: Incident Response &amp; Ownership</div>
+      <p><strong>What to demonstrate:</strong> Systematic debugging, cross-team coordination during incidents, blameless RCA process, and follow-through on action items.</p>
+      <p><strong>Example STAR structure:</strong></p>
+    </div>
+    <ul>
+      <li><strong>S:</strong> Production payment service started failing silently, affecting a significant percentage of orders</li>
+      <li><strong>T:</strong> Lead incident response, restore service, and deliver a thorough root cause analysis</li>
+      <li><strong>A:</strong> Set up war room, correlated logs with deployment timeline, identified a config change as root cause, rolled back, wrote RCA doc with 5-whys</li>
+      <li><strong>R:</strong> Service restored in 25 minutes; RCA led to automated config validation in CI/CD pipeline</li>
+      <li>Focus on communication during the incident and the systemic improvements you drove afterward</li>
+    </ul>
+    <div class="resources">
+      <a href="https://www.youtube.com/results?search_query=production+incident+interview+story+rca" target="_blank">YouTube: Incident Stories</a>
+      <a href="https://www.teamblind.com/post/How-to-talk-about-incidents-in-interviews" target="_blank">Blind: Incident Discussion</a>
+    </div>
+  </div>
+
+  <!-- Topic 355 -->
+  <div class="topic-card" id="topic-355">
+    <h4>Influenced a technical decision</h4>
+    <div class="topic-id">Topic #355</div>
+    <div class="description">
+      Demonstrates leadership without authority &mdash; convincing teammates or management to adopt a better technical direction through data and reasoning.
+    </div>
+    <div class="star-box">
+      <div class="label">Scenario Type: Technical Leadership</div>
+      <p><strong>What to demonstrate:</strong> Structured proposal writing, data-driven argumentation, ability to anticipate objections, and collaborative consensus-building.</p>
+      <p><strong>Example STAR structure:</strong></p>
+    </div>
+    <ul>
+      <li><strong>S:</strong> Team was about to adopt a technology that wouldn't scale for the anticipated load</li>
+      <li><strong>T:</strong> Present a well-reasoned alternative without creating friction or blocking progress</li>
+      <li><strong>A:</strong> Ran benchmarks comparing both approaches, wrote a one-pager with tradeoffs, presented to the team with a prototype</li>
+      <li><strong>R:</strong> Team adopted the alternative; it scaled smoothly to 10x the initial load with lower operational cost</li>
+      <li>Show that you respected others' perspectives while advocating for technical excellence</li>
+    </ul>
+    <div class="resources">
+      <a href="https://www.youtube.com/results?search_query=influence+without+authority+interview" target="_blank">YouTube: Influence Skills</a>
+      <a href="https://www.levels.fyi/blog/" target="_blank">levels.fyi Blog</a>
+    </div>
+  </div>
+
+  <!-- Topic 356 -->
+  <div class="topic-card" id="topic-356">
+    <h4>Navigated ambiguous requirements</h4>
+    <div class="topic-id">Topic #356</div>
+    <div class="description">
+      SDE 2 is expected to handle ambiguity independently. This story shows you can break down vague asks into actionable plans and deliver despite incomplete information.
+    </div>
+    <div class="star-box">
+      <div class="label">Scenario Type: Ambiguity &amp; Problem Framing</div>
+      <p><strong>What to demonstrate:</strong> Clarifying questions methodology, iterative scoping, MVP thinking, and stakeholder expectation management.</p>
+      <p><strong>Example STAR structure:</strong></p>
+    </div>
+    <ul>
+      <li><strong>S:</strong> Product team requested a "recommendation engine" with no technical spec or clear success metrics</li>
+      <li><strong>T:</strong> Define scope, propose an MVP, and deliver a working first version in the sprint</li>
+      <li><strong>A:</strong> Interviewed stakeholders to clarify goals, defined success metrics, proposed a phased approach starting with rule-based logic before ML</li>
+      <li><strong>R:</strong> MVP shipped in 2 weeks, validated the approach with real data, and set the foundation for the full ML-based version</li>
+      <li>Emphasize how you converted ambiguity into a structured plan with clear milestones</li>
+    </ul>
+    <div class="resources">
+      <a href="https://www.youtube.com/results?search_query=ambiguous+requirements+behavioral+interview" target="_blank">YouTube: Ambiguity Stories</a>
+      <a href="https://www.teamblind.com/" target="_blank">Blind Community</a>
+    </div>
+  </div>
+
+  <!-- Topic 357 -->
+  <div class="topic-card" id="topic-357">
+    <h4>Disagreed with a senior and handled it constructively</h4>
+    <div class="topic-id">Topic #357</div>
+    <div class="description">
+      One of the most commonly asked behavioural questions. Shows your ability to push back respectfully, use data to support your position, and commit to a decision once made.
+    </div>
+    <div class="star-box">
+      <div class="label">Scenario Type: Conflict Resolution &amp; Disagree-and-Commit</div>
+      <p><strong>What to demonstrate:</strong> Respectful pushback, evidence-based reasoning, willingness to escalate appropriately, and commitment after the decision.</p>
+      <p><strong>Example STAR structure:</strong></p>
+    </div>
+    <ul>
+      <li><strong>S:</strong> A senior engineer proposed a caching strategy you believed would cause data consistency issues</li>
+      <li><strong>T:</strong> Voice your concern constructively without undermining the relationship or blocking progress</li>
+      <li><strong>A:</strong> Prepared a concise analysis showing the consistency edge cases, proposed a hybrid approach, and discussed it 1-on-1 before the team meeting</li>
+      <li><strong>R:</strong> The hybrid approach was adopted, preventing a production consistency bug; the senior appreciated the thorough analysis</li>
+      <li>Never frame the senior as wrong &mdash; frame it as collaborative problem-solving</li>
+    </ul>
+    <div class="resources">
+      <a href="https://www.youtube.com/results?search_query=disagree+and+commit+behavioral+interview" target="_blank">YouTube: Disagree &amp; Commit</a>
+      <a href="https://www.levels.fyi/blog/" target="_blank">levels.fyi Blog</a>
+    </div>
+  </div>
+
+  <!-- Topic 358 -->
+  <div class="topic-card" id="topic-358">
+    <h4>Mentored a junior developer</h4>
+    <div class="topic-id">Topic #358</div>
+    <div class="description">
+      SDE 2 is a multiplier role. This story demonstrates you can uplift others, give effective code reviews, and invest in team growth beyond your own deliverables.
+    </div>
+    <div class="star-box">
+      <div class="label">Scenario Type: Mentorship &amp; Team Growth</div>
+      <p><strong>What to demonstrate:</strong> Teaching approach, patience, structured onboarding, measurable growth in the mentee, and balance with your own work.</p>
+      <p><strong>Example STAR structure:</strong></p>
+    </div>
+    <ul>
+      <li><strong>S:</strong> A new hire was struggling with the codebase and taking significantly longer on tasks</li>
+      <li><strong>T:</strong> Help them ramp up without it becoming a bottleneck for your own deliverables</li>
+      <li><strong>A:</strong> Set up weekly pairing sessions, created a curated onboarding doc for the service, gave targeted code review feedback with explanations</li>
+      <li><strong>R:</strong> Within 6 weeks the mentee was independently shipping features; they later credited your guidance in their review</li>
+      <li>Highlight specific techniques: pairing, progressive complexity in task assignment, praise-critique-praise in reviews</li>
+    </ul>
+    <div class="resources">
+      <a href="https://www.youtube.com/results?search_query=mentoring+junior+developer+behavioral+interview" target="_blank">YouTube: Mentoring Stories</a>
+      <a href="https://www.teamblind.com/" target="_blank">Blind Community</a>
+    </div>
+  </div>
+
+
+  <!-- ============================================================ -->
+  <!-- SECTION 2 — Technical Communication                          -->
+  <!-- ============================================================ -->
+  <h2 class="section-heading" id="section-technical-communication">
+    Technical Communication
+    <span class="context-badge light">Light</span>
+  </h2>
+
+  <h3 class="category-heading">Communication Skills</h3>
+
+  <!-- Topic 359 -->
+  <div class="topic-card" id="topic-359">
+    <h4>How to explain tradeoffs</h4>
+    <div class="topic-id">Topic #359</div>
+    <div class="description">
+      Every design question at SDE 2 level expects you to articulate tradeoffs clearly. This is less about knowing the right answer and more about demonstrating structured thinking.
+    </div>
+    <ul>
+      <li>Use the <strong>"Option A vs Option B"</strong> framework: state each option, its pros/cons, and which you'd pick given the constraints</li>
+      <li>Always tie tradeoffs back to business context &mdash; latency, cost, developer velocity, data consistency</li>
+      <li>Avoid binary thinking; acknowledge that "it depends" is valid only when followed by <em>what</em> it depends on</li>
+      <li>Practice by picking any two databases (e.g., Postgres vs DynamoDB) and explaining when you'd choose each</li>
+      <li>Use concrete numbers when possible: "Option A adds 50ms latency but halves storage cost"</li>
+    </ul>
+    <p class="description" style="margin-top:8px"><strong>How to practice:</strong> During every system design mock, force yourself to state at least 3 tradeoffs. Record yourself and check if each tradeoff has a clear "because" clause.</p>
+    <div class="resources">
+      <a href="https://www.youtube.com/results?search_query=system+design+tradeoffs+interview" target="_blank">YouTube: Design Tradeoffs</a>
+      <a href="https://www.levels.fyi/blog/" target="_blank">levels.fyi Blog</a>
+      <a href="https://www.teamblind.com/" target="_blank">Blind Community</a>
+    </div>
+  </div>
+
+  <!-- Topic 360 -->
+  <div class="topic-card" id="topic-360">
+    <h4>How to structure an HLD response</h4>
+    <div class="topic-id">Topic #360</div>
+    <div class="description">
+      A well-structured HLD response separates SDE 2 candidates from SDE 1. Interviewers evaluate your ability to communicate at the right level of abstraction.
+    </div>
+    <ul>
+      <li><strong>Step 1 &mdash; Clarify:</strong> Ask 2-3 questions about scale, users, and key constraints before drawing anything</li>
+      <li><strong>Step 2 &mdash; API Design:</strong> Define the core APIs first (REST or event-driven); this anchors the discussion</li>
+      <li><strong>Step 3 &mdash; High-level components:</strong> Draw the major boxes (client, LB, services, DB, cache, queue) and explain data flow</li>
+      <li><strong>Step 4 &mdash; Deep dive:</strong> Pick 1-2 critical components and explain schema, scaling, or failure handling in detail</li>
+      <li><strong>Step 5 &mdash; Tradeoffs &amp; extensions:</strong> Proactively discuss what you'd change at 10x/100x scale</li>
+    </ul>
+    <p class="description" style="margin-top:8px"><strong>How to practice:</strong> Set a 35-minute timer. Spend 5 min clarifying, 5 min on APIs, 10 min drawing, 10 min deep-diving, 5 min on tradeoffs. Repeat weekly with a different problem.</p>
+    <div class="resources">
+      <a href="https://www.youtube.com/results?search_query=how+to+structure+system+design+HLD+interview" target="_blank">YouTube: HLD Structure</a>
+      <a href="https://www.levels.fyi/blog/" target="_blank">levels.fyi Blog</a>
+    </div>
+  </div>
+
+  <!-- Topic 361 -->
+  <div class="topic-card" id="topic-361">
+    <h4>How to ask clarifying questions systematically</h4>
+    <div class="topic-id">Topic #361</div>
+    <div class="description">
+      Jumping straight into a solution without clarifying is a common SDE 2 rejection reason. Systematic questioning shows maturity and product thinking.
+    </div>
+    <ul>
+      <li>Use the <strong>UFCS framework</strong>: Users (who?), Functionality (what?), Constraints (how much?), Scale (how big?)</li>
+      <li>For coding problems: clarify input range, edge cases, expected output format, and whether optimization is required</li>
+      <li>For design problems: clarify read vs write ratio, consistency requirements, geography, and SLA expectations</li>
+      <li>Write your assumptions on the whiteboard/doc so the interviewer can correct them early</li>
+    </ul>
+    <p class="description" style="margin-top:8px"><strong>How to practice:</strong> Before solving any LeetCode problem, write down 3 clarifying questions you would ask. For system design, maintain a checklist of 8-10 standard questions and drill them until they're automatic.</p>
+    <div class="resources">
+      <a href="https://www.youtube.com/results?search_query=clarifying+questions+coding+interview" target="_blank">YouTube: Clarifying Questions</a>
+      <a href="https://www.teamblind.com/" target="_blank">Blind Community</a>
+    </div>
+  </div>
+
+  <!-- Topic 362 -->
+  <div class="topic-card" id="topic-362">
+    <h4>How to handle &lsquo;I don&rsquo;t know&rsquo; gracefully</h4>
+    <div class="topic-id">Topic #362</div>
+    <div class="description">
+      Admitting gaps is a strength at SDE 2, but only if you follow it with structured reasoning about what you do know and how you'd find the answer.
+    </div>
+    <ul>
+      <li>Never bluff &mdash; interviewers detect it instantly and it erodes all trust built in the session</li>
+      <li>Use the formula: <strong>"I haven't worked with X directly, but based on my understanding of Y (related concept), I'd approach it by..."</strong></li>
+      <li>Pivot to adjacent knowledge: if you don't know Kafka internals, discuss what you know about message queues and distributed logs</li>
+      <li>Show learning instinct: "I'd look into the official docs for X and run a local benchmark to validate"</li>
+    </ul>
+    <p class="description" style="margin-top:8px"><strong>How to practice:</strong> Have a mock partner ask you questions outside your comfort zone. Practice the pivot technique until it feels natural rather than rehearsed.</p>
+    <div class="resources">
+      <a href="https://www.youtube.com/results?search_query=handling+unknown+questions+interview" target="_blank">YouTube: Handling Unknowns</a>
+      <a href="https://www.levels.fyi/blog/" target="_blank">levels.fyi Blog</a>
+    </div>
+  </div>
+
+  <!-- Topic 363 -->
+  <div class="topic-card" id="topic-363">
+    <h4>Drawing clean diagrams under time pressure</h4>
+    <div class="topic-id">Topic #363</div>
+    <div class="description">
+      In system design rounds, your diagram is your primary communication tool. A messy diagram makes even a great design look unstructured.
+    </div>
+    <ul>
+      <li>Use a consistent layout: clients on the left, backend services in the middle, databases on the right</li>
+      <li>Label every arrow with the protocol or action (HTTP, gRPC, publish, subscribe, read, write)</li>
+      <li>Use boxes for services, cylinders for databases, clouds for external services &mdash; keep symbols consistent</li>
+      <li>Start with the happy path flow, then layer in failure handling, caching, and async paths</li>
+      <li>Practice on Excalidraw or a physical whiteboard weekly &mdash; tool familiarity saves minutes under pressure</li>
+    </ul>
+    <p class="description" style="margin-top:8px"><strong>How to practice:</strong> Redraw one of your past system designs every weekend. Time yourself and aim for a clean, labeled diagram in under 8 minutes. Compare with previous attempts to track improvement.</p>
+    <div class="resources">
+      <a href="https://www.youtube.com/results?search_query=system+design+diagram+whiteboard+interview" target="_blank">YouTube: Diagramming Tips</a>
+      <a href="https://www.teamblind.com/" target="_blank">Blind Community</a>
+    </div>
+  </div>
+
+
+  <!-- ============================================================ -->
+  <!-- RECOMMENDED RESOURCES                                        -->
+  <!-- ============================================================ -->
+  <div class="resources-section" id="section-resources">
+    <h2>Recommended Resources</h2>
+
+    <h3>Books</h3>
+    <ul>
+      <li><strong>Cracking the Coding Interview</strong> by Gayle Laakmann McDowell &mdash; Chapter on Behavioral Questions covers the STAR method, common question patterns, and how to structure compelling stories</li>
+      <li><strong>The Manager's Path</strong> by Camille Fournier &mdash; Chapters on Tech Lead and Senior Engineer help understand the expectations at SDE 2 level</li>
+      <li><strong>Staff Engineer</strong> by Will Larson &mdash; Useful for understanding "influence without authority" stories and technical decision-making narratives</li>
+      <li><strong>Designing Data-Intensive Applications</strong> by Martin Kleppmann &mdash; Helps articulate tradeoffs in system design discussions with depth</li>
+    </ul>
+
+    <h3>YouTube Channels</h3>
+    <ul>
+      <li><a href="https://www.youtube.com/results?search_query=behavioral+interview+questions+software+engineer" target="_blank">Behavioral Interview Prep</a> &mdash; Search for STAR method walkthroughs, Amazon LP examples, and mock behavioral rounds</li>
+      <li><a href="https://www.youtube.com/results?search_query=system+design+interview+communication" target="_blank">System Design Communication</a> &mdash; Focus on how top candidates structure and communicate their designs</li>
+      <li><a href="https://www.youtube.com/results?search_query=tech+lead+interview+tips" target="_blank">Tech Lead Interview Tips</a> &mdash; SDE 2 is evaluated on emerging tech lead qualities; these videos cover the leadership bar</li>
+    </ul>
+
+    <h3>Communities &amp; Platforms</h3>
+    <ul>
+      <li><a href="https://www.levels.fyi/" target="_blank">levels.fyi</a> &mdash; Compensation benchmarks and interview experience reports from real candidates</li>
+      <li><a href="https://www.teamblind.com/" target="_blank">Blind</a> &mdash; Anonymous discussions about interview processes, behavioral round tips, and company-specific advice</li>
+      <li><a href="https://www.youtube.com/results?search_query=mock+behavioral+interview+software+engineer" target="_blank">Mock Interview Videos</a> &mdash; Watch mock behavioral rounds to see how strong candidates structure their answers</li>
+    </ul>
+
+    <h3>Practice Tips</h3>
+    <ul>
+      <li>Prepare <strong>7-8 stories</strong> total that can be adapted to different behavioral questions (each story should cover 2-3 themes)</li>
+      <li>Record yourself answering questions and listen back &mdash; check for filler words, unclear transitions, and missing results</li>
+      <li>Keep each STAR answer under <strong>2-3 minutes</strong>; practice with a timer</li>
+      <li>For communication skills, do at least <strong>2 mock system design rounds per week</strong> where you focus on explaining, not just solving</li>
+      <li>Build a personal "story bank" document with Situation/Task/Action/Result bullets for each story, and review it before every interview</li>
+    </ul>
+  </div>
+
+</div>
+
+</body>
+</html>

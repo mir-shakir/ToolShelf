@@ -1,0 +1,1242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pillar 3 — Databases | SDE 2 Prep Tracker</title>
+<style>
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg-primary: #1a1b2e;
+  --bg-secondary: #232540;
+  --bg-tertiary: #2a2d4a;
+  --bg-hover: #32355a;
+  --text-primary: #e2e4f0;
+  --text-secondary: #a0a3bd;
+  --text-muted: #6b6f8a;
+  --border: #3a3d5c;
+  --accent: #6c63ff;
+  --green: #4ade80;
+  --green-bg: rgba(74,222,128,0.12);
+  --orange: #fb923c;
+  --orange-bg: rgba(251,146,60,0.12);
+  --red: #f87171;
+  --red-bg: rgba(248,113,113,0.12);
+  --cyan: #22d3ee;
+  --cyan-bg: rgba(34,211,238,0.12);
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+/* Header */
+header {
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border);
+  padding: 16px 24px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+header .header-inner {
+  max-width: 960px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+header .back-link {
+  color: var(--accent);
+  text-decoration: none;
+  font-size: 0.9rem;
+  white-space: nowrap;
+}
+header .back-link:hover { text-decoration: underline; }
+header h1 {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+header .subtitle {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  width: 100%;
+}
+
+/* Main */
+main {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 32px 24px 80px;
+}
+
+/* Table of Contents */
+.toc {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 24px 28px;
+  margin-bottom: 40px;
+}
+.toc h2 {
+  font-size: 1.1rem;
+  margin-bottom: 14px;
+  color: var(--text-primary);
+}
+.toc ul {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 6px 24px;
+}
+.toc a {
+  color: var(--cyan);
+  text-decoration: none;
+  font-size: 0.9rem;
+  display: block;
+  padding: 3px 0;
+}
+.toc a:hover { text-decoration: underline; }
+
+/* Section */
+.section {
+  margin-bottom: 48px;
+}
+.section-heading {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+}
+.section-heading h2 {
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+
+/* Context badge pill */
+.badge {
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 20px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.badge-green  { background: var(--green-bg);  color: var(--green); }
+.badge-red    { background: var(--red-bg);    color: var(--red); }
+.badge-orange { background: var(--orange-bg); color: var(--orange); }
+
+/* Tip callout */
+.tip-callout {
+  background: var(--cyan-bg);
+  border-left: 3px solid var(--cyan);
+  border-radius: 0 8px 8px 0;
+  padding: 12px 18px;
+  margin-bottom: 24px;
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+}
+.tip-callout strong {
+  color: var(--cyan);
+}
+
+/* Category */
+.category {
+  margin-bottom: 32px;
+}
+.category-heading {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  border-left: 3px solid var(--accent);
+  padding-left: 14px;
+  margin-bottom: 16px;
+}
+
+/* Topic card */
+.topic-card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 20px 24px;
+  margin-bottom: 14px;
+  scroll-margin-top: 80px;
+  transition: border-color 0.2s;
+}
+.topic-card:hover {
+  border-color: var(--accent);
+}
+.topic-card h4 {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: var(--text-primary);
+}
+.topic-card .desc {
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  margin-bottom: 10px;
+}
+.topic-card ul {
+  margin: 0 0 12px 18px;
+  font-size: 0.86rem;
+  color: var(--text-secondary);
+}
+.topic-card ul li {
+  margin-bottom: 3px;
+}
+.topic-card .resources {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.topic-card .resources a {
+  font-size: 0.78rem;
+  color: var(--accent);
+  background: var(--bg-tertiary);
+  padding: 3px 10px;
+  border-radius: 6px;
+  text-decoration: none;
+  border: 1px solid var(--border);
+}
+.topic-card .resources a:hover {
+  background: var(--bg-hover);
+  border-color: var(--accent);
+}
+
+/* Recommended resources */
+.recommended {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 24px 28px;
+  margin-top: 48px;
+}
+.recommended h2 {
+  font-size: 1.2rem;
+  margin-bottom: 14px;
+}
+.recommended ul {
+  list-style: none;
+}
+.recommended ul li {
+  margin-bottom: 8px;
+}
+.recommended a {
+  color: var(--cyan);
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+.recommended a:hover { text-decoration: underline; }
+.recommended .res-desc {
+  color: var(--text-muted);
+  font-size: 0.82rem;
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  header { padding: 12px 16px; }
+  main { padding: 20px 16px 60px; }
+  .toc ul { grid-template-columns: 1fr; }
+  .section-heading h2 { font-size: 1.2rem; }
+  .topic-card { padding: 16px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="back-link">&larr; Back to Tracker</a>
+    <h1>Pillar 3 &mdash; Databases</h1>
+    <div class="subtitle">MySQL, ClickHouse, MongoDB, Redis &mdash; deep on all four</div>
+  </div>
+</header>
+
+<main>
+
+<!-- ===== TABLE OF CONTENTS ===== -->
+<nav class="toc">
+  <h2>Table of Contents</h2>
+  <ul>
+    <li><a href="#sec-mysql">MySQL Internals</a></li>
+    <li><a href="#sec-mongodb">MongoDB</a></li>
+    <li><a href="#sec-clickhouse">ClickHouse &amp; OLAP</a></li>
+    <li><a href="#sec-redis">Redis Deep Dive</a></li>
+    <li><a href="#sec-cap">Database Selection &amp; CAP Theory</a></li>
+  </ul>
+</nav>
+
+
+<!-- ============================================================ -->
+<!--  SECTION 1 — MySQL Internals                                 -->
+<!-- ============================================================ -->
+<div class="section" id="sec-mysql">
+  <div class="section-heading">
+    <h2>MySQL Internals</h2>
+    <span class="badge badge-red">Full-Focus</span>
+  </div>
+  <div class="tip-callout">
+    <strong>Tip:</strong> Know how to read EXPLAIN output cold. Very common at product companies. Practice on real queries.
+  </div>
+
+  <!-- Category: Indexing -->
+  <div class="category">
+    <h3 class="category-heading">Indexing</h3>
+
+    <div class="topic-card" id="topic-77">
+      <h4>B-Tree Structure</h4>
+      <p class="desc">InnoDB stores data in a B+ tree. Understanding the node layout, page splits, and pointer-following is key to explaining why some queries are fast and others aren't.</p>
+      <ul>
+        <li>B+ tree leaf nodes hold row data (clustered) or PK pointers (secondary)</li>
+        <li>Page size defaults to 16 KB; controls how many keys fit per node</li>
+        <li>Balanced height (typically 3-4 levels for millions of rows) means O(log n) lookups</li>
+        <li>Inserts into a full page cause a page split, impacting write performance</li>
+      </ul>
+      <div class="resources">
+        <a href="https://dev.mysql.com/doc/refman/8.0/en/innodb-index-types.html" target="_blank">MySQL Docs: InnoDB Index Types</a>
+        <a href="https://www.baeldung.com/cs/b-trees-vs-btrees" target="_blank">Baeldung: B-Tree vs B+ Tree</a>
+      </div>
+    </div>
+
+    <div class="topic-card" id="topic-78">
+      <h4>Clustered vs Secondary Index</h4>
+      <p class="desc">InnoDB has exactly one clustered index (the PK). Every secondary index stores a copy of the PK, so lookups via secondary indexes require a double lookup unless the index covers the query.</p>
+      <ul>
+        <li>Clustered index = data is physically ordered by PK</li>
+        <li>Secondary index leaf stores PK value, not a row pointer</li>
+        <li>Double lookup: secondary index &rarr; PK value &rarr; clustered index &rarr; row</li>
+        <li>Wide PKs bloat every secondary index</li>
+      </ul>
+      <div class="resources">
+        <a href="https://dev.mysql.com/doc/refman/8.0/en/innodb-index-types.html" target="_blank">MySQL Docs: Clustered &amp; Secondary</a>
+        <a href="https://www.baeldung.com/cs/primary-vs-secondary-index" target="_blank">Baeldung: Primary vs Secondary Index</a>
+      </div>
+    </div>
+
+    <div class="topic-card" id="topic-79">
+      <h4>Composite Index &mdash; Column Order Matters</h4>
+      <p class="desc">A composite index on (A, B, C) can serve queries filtering on A, (A,B), or (A,B,C) efficiently, but not on B alone or C alone. The leftmost prefix rule is one of the most frequently tested MySQL concepts.</p>
+      <ul>
+        <li>Leftmost prefix rule: index is useful only from the leftmost column</li>
+        <li>Range condition on a column stops index use for subsequent columns</li>
+        <li>ORDER BY can also leverage the index if column order matches</li>
+        <li>Use EXPLAIN to verify which key_len portion of the index is actually used</li>
+      </ul>
+      <div class="resources">
+        <a href="https://dev.mysql.com/doc/refman/8.0/en/multiple-column-indexes.html" target="_blank">MySQL Docs: Multiple-Column Indexes</a>
+        <a href="https://www.baeldung.com/jpa-composite-indexes" target="_blank">Baeldung: Composite Indexes</a>
+      </div>
+    </div>
+
+    <div class="topic-card" id="topic-80">
+      <h4>Covering Index</h4>
+      <p class="desc">When an index contains all the columns a query needs, MySQL reads data entirely from the index without touching the clustered index. EXPLAIN shows "Using index" in the Extra column.</p>
+      <ul>
+        <li>Eliminates the secondary-to-clustered lookup ("bookmark lookup")</li>
+        <li>Significantly reduces I/O for read-heavy queries</li>
+        <li>Trade-off: wider indexes consume more storage and slow writes</li>
+      </ul>
+      <div class="resources">
+        <a href="https://dev.mysql.com/doc/refman/8.0/en/index-merge-optimization.html" target="_blank">MySQL Docs: Index Optimization</a>
+        <a href="https://www.baeldung.com/jpa-covering-index" target="_blank">Baeldung: Covering Index</a>
+      </div>
+    </div>
+
+    <div class="topic-card" id="topic-81">
+      <h4>Index Selectivity</h4>
+      <p class="desc">Selectivity measures how many distinct values an index column has relative to total rows. High selectivity (e.g., email) makes an index effective; low selectivity (e.g., boolean) often doesn't justify an index.</p>
+      <ul>
+        <li>Selectivity = COUNT(DISTINCT col) / COUNT(*)</li>
+        <li>MySQL optimizer may skip a low-selectivity index in favour of a full scan</li>
+        <li>Cardinality stats in SHOW INDEX help assess selectivity</li>
+        <li>Prefix indexes can help on long strings, but reduce selectivity</li>
+      </ul>
+      <div class="resources">
+        <a href="https://dev.mysql.com/doc/refman/8.0/en/show-index.html" target="_blank">MySQL Docs: SHOW INDEX</a>
+        <a href="https://www.baeldung.com/sql-indexes" target="_blank">Baeldung: SQL Indexes</a>
+      </div>
+    </div>
+
+    <div class="topic-card" id="topic-82">
+      <h4>EXPLAIN Output Reading</h4>
+      <p class="desc">The EXPLAIN statement shows the query execution plan: which indexes MySQL chose, the join order, estimated rows, and access type. Mastering this output is essential for diagnosing slow queries.</p>
+      <ul>
+        <li>Key columns: type (ALL, ref, range, const), key, rows, Extra</li>
+        <li>type=ALL means full table scan &mdash; usually bad</li>
+        <li>Look for "Using filesort" and "Using temporary" as red flags</li>
+        <li>EXPLAIN ANALYZE (MySQL 8.0.18+) shows actual execution times</li>
+        <li>FORMAT=JSON gives cost estimates and optimizer decisions</li>
+      </ul>
+      <div class="resources">
+        <a href="https://dev.mysql.com/doc/refman/8.0/en/explain-output.html" target="_blank">MySQL Docs: EXPLAIN Output</a>
+        <a href="https://dev.mysql.com/doc/refman/8.0/en/using-explain.html" target="_blank">MySQL Docs: Using EXPLAIN</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Category: DB Transactions -->
+  <div class="category">
+    <h3 class="category-heading">DB Transactions</h3>
+
+    <div class="topic-card" id="topic-83">
+      <h4>ACID Guarantees</h4>
+      <p class="desc">Atomicity, Consistency, Isolation, Durability form the reliability contract of relational databases. Interview discussions often test whether you understand the trade-offs each property implies.</p>
+      <ul>
+        <li>Atomicity: undo log ensures all-or-nothing via rollback</li>
+        <li>Consistency: application + DB constraints enforce valid state transitions</li>
+        <li>Isolation: MVCC + locking prevent concurrent transaction interference</li>
+        <li>Durability: redo log (WAL) ensures committed data survives crash</li>
+      </ul>
+      <div class="resources">
+        <a href="https://dev.mysql.com/doc/refman/8.0/en/mysql-acid.html" target="_blank">MySQL Docs: ACID Compliance</a>
+        <a href="https://www.baeldung.com/cs/acid-transactions" target="_blank">Baeldung: ACID Transactions</a>
+      </div>
+    </div>
+
+    <div class="topic-card" id="topic-84">
+      <h4>MVCC in InnoDB</h4>
+      <p class="desc">Multi-Version Concurrency Control lets readers see a consistent snapshot without blocking writers. InnoDB implements this using hidden row versions, undo log chains, and read views.</p>
+      <ul>
+        <li>Each row has hidden DB_TRX_ID and DB_ROLL_PTR columns</li>
+        <li>Readers construct a read view at transaction start (REPEATABLE READ) or statement start (READ COMMITTED)</li>
+        <li>Undo log chains let old versions be reconstructed on the fly</li>
+        <li>Purge thread cleans up versions no longer visible to any transaction</li>
+      </ul>
+      <div class="resources">
+        <a href="https://dev.mysql.com/doc/refman/8.0/en/innodb-multi-versioning.html" target="_blank">MySQL Docs: InnoDB Multi-Versioning</a>
+        <a href="https://www.baeldung.com/cs/multiversion-concurrency-control" target="_blank">Baeldung: MVCC</a>
+      </div>
+    </div>
+
+    <div class="topic-card" id="topic-85">
+      <h4>Isolation Levels &mdash; Read Phenomena</h4>
+      <p class="desc">The four standard isolation levels (READ UNCOMMITTED, READ COMMITTED, REPEATABLE READ, SERIALIZABLE) trade off consistency against concurrency. Understand which read phenomena each level permits.</p>
+      <ul>
+        <li>Dirty read: seeing uncommitted data (only RU)</li>
+        <li>Non-repeatable read: row changes between two reads in same txn (RU, RC)</li>
+        <li>Phantom read: new rows appear in range query (RU, RC; InnoDB RR prevents via gap locks)</li>
+        <li>InnoDB default is REPEATABLE READ, which avoids phantoms via next-key locks</li>
+        <li>SERIALIZABLE adds shared locks on all reads &mdash; safe but slow</li>
+      </ul>
+      <div class="resources">
+        <a href="https://dev.mysql.com/doc/refman/8.0/en/innodb-transaction-isolation-levels.html" target="_blank">MySQL Docs: Isolation Levels</a>
+        <a href="https://www.baeldung.com/cs/transaction-isolation-levels" target="_blank">Baeldung: Isolation Levels</a>
+      </div>
+    </div>
+
+    <div class="topic-card" id="topic-86">
+      <h4>Gap Locks vs Record Locks vs Next-Key Locks</h4>
+      <p class="desc">InnoDB uses three lock types to prevent phantoms and ensure isolation. Understanding the difference is critical for debugging deadlocks and designing concurrent writes.</p>
+      <ul>
+        <li>Record lock: locks a single index record</li>
+        <li>Gap lock: locks the gap between two index records (prevents inserts)</li>
+        <li>Next-key lock = record lock + gap lock on the gap before the record</li>
+        <li>Gap locks are only used at REPEATABLE READ and above</li>
+        <li>Can cause unexpected deadlocks when concurrent transactions lock overlapping gaps</li>
+      </ul>
+      <div class="resources">
+        <a href="https://dev.mysql.com/doc/refman/8.0/en/innodb-locking.html" target="_blank">MySQL Docs: InnoDB Locking</a>
+        <a href="https://www.baeldung.com/mysql-innodb-gap-locks" target="_blank">Baeldung: Gap Locks</a>
+      </div>
+    </div>
+
+    <div class="topic-card" id="topic-87">
+      <h4>Deadlock in DB Layer</h4>
+      <p class="desc">A deadlock occurs when two transactions each hold a lock the other needs. InnoDB automatically detects deadlocks and rolls back one transaction. Knowing how to prevent and debug them is essential.</p>
+      <ul>
+        <li>InnoDB runs a wait-for graph detector; victim is the transaction with least undo</li>
+        <li>SHOW ENGINE INNODB STATUS shows the last detected deadlock</li>
+        <li>Prevention: always lock rows in the same order across transactions</li>
+        <li>Keep transactions short and avoid holding locks during external calls</li>
+      </ul>
+      <div class="resources">
+        <a href="https://dev.mysql.com/doc/refman/8.0/en/innodb-deadlocks.html" target="_blank">MySQL Docs: Deadlocks</a>
+        <a href="https://www.baeldung.com/cs/deadlock" target="_blank">Baeldung: Deadlock</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Category: Query Optimization -->
+  <div class="category">
+    <h3 class="category-heading">Query Optimization</h3>
+
+    <div class="topic-card" id="topic-88">
+      <h4>Query Execution Plan</h4>
+      <p class="desc">MySQL's optimizer transforms SQL into a physical execution plan: choosing join order, index access paths, and temp-table strategies. Understanding this pipeline helps you write queries the optimizer can handle well.</p>
+      <ul>
+        <li>Parser &rarr; Resolver &rarr; Optimizer &rarr; Executor pipeline</li>
+        <li>Cost-based optimizer uses table statistics and index cardinality</li>
+        <li>ANALYZE TABLE refreshes statistics for better plans</li>
+        <li>Subquery vs JOIN: optimizer may convert correlated subqueries to joins</li>
+      </ul>
+      <div class="resources">
+        <a href="https://dev.mysql.com/doc/refman/8.0/en/select-optimization.html" target="_blank">MySQL Docs: SELECT Optimization</a>
+        <a href="https://www.baeldung.com/sql-query-optimization" target="_blank">Baeldung: Query Optimization</a>
+      </div>
+    </div>
+
+    <div class="topic-card" id="topic-89">
+      <h4>Index Hints</h4>
+      <p class="desc">USE INDEX, FORCE INDEX, and IGNORE INDEX let you override the optimizer's index choice. Use sparingly &mdash; the optimizer is usually right, but sometimes stale statistics lead it astray.</p>
+      <ul>
+        <li>USE INDEX(idx): suggest an index, optimizer may still ignore</li>
+        <li>FORCE INDEX(idx): only consider this index or full scan</li>
+        <li>IGNORE INDEX(idx): exclude a specific index from consideration</li>
+        <li>Hints are a band-aid; prefer fixing statistics or restructuring queries</li>
+      </ul>
+      <div class="resources">
+        <a href="https://dev.mysql.com/doc/refman/8.0/en/index-hints.html" target="_blank">MySQL Docs: Index Hints</a>
+        <a href="https://www.baeldung.com/jpa-query-hints" target="_blank">Baeldung: Query Hints</a>
+      </div>
+    </div>
+
+    <div class="topic-card" id="topic-90">
+      <h4>Slow Query Log</h4>
+      <p class="desc">MySQL can log queries that exceed a time threshold. This is the primary tool for identifying performance bottlenecks in production without code changes.</p>
+      <ul>
+        <li>Enable with slow_query_log=ON and long_query_time (seconds)</li>
+        <li>log_queries_not_using_indexes captures unindexed queries</li>
+        <li>mysqldumpslow or pt-query-digest aggregate and rank slow queries</li>
+        <li>Performance Schema provides more granular profiling data</li>
+      </ul>
+      <div class="resources">
+        <a href="https://dev.mysql.com/doc/refman/8.0/en/slow-query-log.html" target="_blank">MySQL Docs: Slow Query Log</a>
+        <a href="https://www.baeldung.com/mysql-slow-queries" target="_blank">Baeldung: MySQL Slow Queries</a>
+      </div>
+    </div>
+
+    <div class="topic-card" id="topic-91">
+      <h4>Partitioning Strategies</h4>
+      <p class="desc">Table partitioning splits a large table into smaller physical pieces while keeping it logically unified. It can dramatically speed up range scans and bulk deletes on very large tables.</p>
+      <ul>
+        <li>RANGE partitioning: ideal for time-series data (partition by month/year)</li>
+        <li>LIST partitioning: discrete categories (status codes, regions)</li>
+        <li>HASH partitioning: even distribution when no natural range exists</li>
+        <li>Partition pruning: optimizer skips irrelevant partitions when WHERE matches the partition key</li>
+        <li>Unique indexes must include the partition key</li>
+      </ul>
+      <div class="resources">
+        <a href="https://dev.mysql.com/doc/refman/8.0/en/partitioning.html" target="_blank">MySQL Docs: Partitioning</a>
+        <a href="https://www.baeldung.com/database-table-partitioning" target="_blank">Baeldung: Table Partitioning</a>
+      </div>
+    </div>
+
+    <div class="topic-card" id="topic-92">
+      <h4>Sharding vs Partitioning</h4>
+      <p class="desc">Partitioning is a single-server optimization; sharding distributes data across multiple database servers. Knowing when to use each (and the operational cost of sharding) is a common system design question.</p>
+      <ul>
+        <li>Partitioning: same server, transparent to application, limited by single-node resources</li>
+        <li>Sharding: multiple servers, application-aware routing, near-linear horizontal scale</li>
+        <li>Shard key selection is critical: poor keys cause hot spots</li>
+        <li>Cross-shard joins and transactions are expensive &mdash; design to avoid them</li>
+        <li>Resharding is painful; plan the key carefully upfront</li>
+      </ul>
+      <div class="resources">
+        <a href="https://dev.mysql.com/doc/refman/8.0/en/partitioning.html" target="_blank">MySQL Docs: Partitioning</a>
+        <a href="https://www.baeldung.com/cs/database-sharding" target="_blank">Baeldung: Database Sharding</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ============================================================ -->
+<!--  SECTION 2 — MongoDB                                         -->
+<!-- ============================================================ -->
+<div class="section" id="sec-mongodb">
+  <div class="section-heading">
+    <h2>MongoDB</h2>
+    <span class="badge badge-orange">Both</span>
+  </div>
+
+  <!-- Category: MongoDB Core -->
+  <div class="category">
+    <h3 class="category-heading">MongoDB Core</h3>
+
+    <div class="topic-card" id="topic-93">
+      <h4>Document Model &mdash; Embedding vs Referencing</h4>
+      <p class="desc">MongoDB stores data as BSON documents. The key design decision is whether to embed related data inside one document or use references across collections &mdash; each has performance and consistency trade-offs.</p>
+      <ul>
+        <li>Embed when data is read together and the subdocument won't grow unboundedly</li>
+        <li>Reference when the related data is large, changes independently, or is shared</li>
+        <li>Embedded reads are atomic and fast (single document fetch)</li>
+        <li>References require application-level joins ($lookup) which are slower</li>
+        <li>16 MB document size limit constrains embedding</li>
+      </ul>
+      <div class="resources">
+        <a href="https://www.mongodb.com/docs/manual/core/data-model-design/" target="_blank">MongoDB Docs: Data Model Design</a>
+        <a href="https://www.baeldung.com/java-mongodb-embedded-documents" target="_blank">Baeldung: Embedded Documents</a>
+      </div>
+    </div>
+
+    <div class="topic-card" id="topic-94">
+      <h4>Index Types (Compound, Text, Geo, TTL)</h4>
+      <p class="desc">MongoDB supports several specialized index types beyond the default single-field B-tree. Choosing the right one directly impacts query performance and enables features like full-text search and auto-expiry.</p>
+      <ul>
+        <li>Compound index: multi-field, follows leftmost prefix rule like MySQL</li>
+        <li>Text index: full-text search with stemming and scoring</li>
+        <li>2dsphere / 2d index: geospatial queries ($near, $geoWithin)</li>
+        <li>TTL index: automatically deletes documents after a specified time</li>
+        <li>Wildcard index: indexes all fields in a document (useful for dynamic schemas)</li>
+      </ul>
+      <div class="resources">
+        <a href="https://www.mongodb.com/docs/manual/indexes/" target="_blank">MongoDB Docs: Indexes</a>
+        <a href="https://www.baeldung.com/mongodb-indexes" target="_blank">Baeldung: MongoDB Indexes</a>
+      </div>
+    </div>
+
+    <div class="topic-card" id="topic-95">
+      <h4>Aggregation Pipeline Stages</h4>
+      <p class="desc">The aggregation pipeline processes documents through a sequence of stages ($match, $group, $project, etc.). It is MongoDB's equivalent of SQL GROUP BY + subqueries and is heavily used in interviews.</p>
+      <ul>
+        <li>$match early to reduce pipeline volume (uses indexes)</li>
+        <li>$group: accumulate values (sum, avg, push to array)</li>
+        <li>$lookup: left outer join to another collection</li>
+        <li>$unwind: flatten arrays for per-element processing</li>
+        <li>$facet: run multiple pipelines in parallel on the same input</li>
+      </ul>
+      <div class="resources">
+        <a href="https://www.mongodb.com/docs/manual/core/aggregation-pipeline/" target="_blank">MongoDB Docs: Aggregation Pipeline</a>
+        <a href="https://www.baeldung.com/java-mongodb-aggregations" target="_blank">Baeldung: MongoDB Aggregations</a>
+      </div>
+    </div>
+
+    <div class="topic-card" id="topic-96">
+      <h4>Write Concern &amp; Read Preference</h4>
+      <p class="desc">Write concern controls how many replica nodes must acknowledge a write before it's confirmed. Read preference controls which node serves reads. Together they define the consistency-availability trade-off.</p>
+      <ul>
+        <li>w:1 (default): acknowledged by primary only</li>
+        <li>w:"majority": acknowledged by majority of nodes &mdash; durable across failover</li>
+        <li>Read preference: primary (strong consistency), secondary (eventual, reduced primary load)</li>
+        <li>primaryPreferred: reads from primary, falls back to secondary if unavailable</li>
+      </ul>
+      <div class="resources">
+        <a href="https://www.mongodb.com/docs/manual/reference/write-concern/" target="_blank">MongoDB Docs: Write Concern</a>
+        <a href="https://www.mongodb.com/docs/manual/core/read-preference/" target="_blank">MongoDB Docs: Read Preference</a>
+      </div>
+    </div>
+
+    <div class="topic-card" id="topic-97">
+      <h4>Replica Sets</h4>
+      <p class="desc">A replica set is a group of MongoDB nodes that maintain the same data. One primary handles writes; secondaries replicate via the oplog. This is the foundation of MongoDB high availability.</p>
+      <ul>
+        <li>Minimum 3 members (or 2 + arbiter) for automatic failover</li>
+        <li>Oplog: capped collection on primary that secondaries tail</li>
+        <li>Election uses Raft-like consensus; priority and votes are configurable</li>
+        <li>Secondaries can serve reads (read preference), reducing primary load</li>
+      </ul>
+      <div class="resources">
+        <a href="https://www.mongodb.com/docs/manual/replication/" target="_blank">MongoDB Docs: Replication</a>
+        <a href="https://www.baeldung.com/mongodb-replica-set" target="_blank">Baeldung: Replica Sets</a>
+      </div>
+    </div>
+
+    <div class="topic-card" id="topic-98">
+      <h4>Transactions in MongoDB 4+</h4>
+      <p class="desc">Starting with version 4.0, MongoDB supports multi-document ACID transactions across replica sets (and sharded clusters from 4.2). They work like SQL transactions but have performance caveats.</p>
+      <ul>
+        <li>Use sessions and startTransaction / commitTransaction APIs</li>
+        <li>Snapshot isolation: reads see a consistent point-in-time view</li>
+        <li>60-second default time limit; long transactions risk oplog pressure</li>
+        <li>Design for single-document atomicity first; use multi-doc transactions only when necessary</li>
+      </ul>
+      <div class="resources">
+        <a href="https://www.mongodb.com/docs/manual/core/transactions/" target="_blank">MongoDB Docs: Transactions</a>
+        <a href="https://www.baeldung.com/java-mongodb-transactions" target="_blank">Baeldung: MongoDB Transactions</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Category: Schema Design -->
+  <div class="category">
+    <h3 class="category-heading">Schema Design</h3>
+
+    <div class="topic-card" id="topic-99">
+      <h4>Design for Access Patterns</h4>
+      <p class="desc">In MongoDB, schema design is driven by how you query the data, not by normalization rules. Map out your read/write patterns first, then structure documents to serve the most common queries efficiently.</p>
+      <ul>
+        <li>Group data that is queried together into the same document</li>
+        <li>Separate data that is updated independently or has different access frequencies</li>
+        <li>Denormalize read-heavy paths; accept some write duplication</li>
+        <li>Use the bucket pattern for time-series or IoT data</li>
+      </ul>
+      <div class="resources">
+        <a href="https://www.mongodb.com/docs/manual/core/data-model-design/" target="_blank">MongoDB Docs: Data Model Design</a>
+        <a href="https://www.mongodb.com/docs/manual/data-modeling/" target="_blank">MongoDB Docs: Data Modeling</a>
+      </div>
+    </div>
+
+    <div class="topic-card" id="topic-100">
+      <h4>Avoid Unbounded Arrays</h4>
+      <p class="desc">Appending endlessly to an array field will eventually hit the 16 MB document limit and degrade performance due to document growth and in-place update failures. This is a classic MongoDB anti-pattern.</p>
+      <ul>
+        <li>Arrays that grow without bound cause document migrations (larger BSON)</li>
+        <li>Large arrays slow down reads even if you only need a subset</li>
+        <li>Solution: cap arrays or move overflow to a separate collection (bucket pattern)</li>
+        <li>Use $slice or $push with $each and $position to limit array size</li>
+      </ul>
+      <div class="resources">
+        <a href="https://www.mongodb.com/docs/manual/tutorial/model-embedded-one-to-many-relationships-between-documents/" target="_blank">MongoDB Docs: One-to-Many Patterns</a>
+        <a href="https://www.mongodb.com/docs/manual/reference/operator/update/slice/" target="_blank">MongoDB Docs: $slice</a>
+      </div>
+    </div>
+
+    <div class="topic-card" id="topic-101">
+      <h4>When to Normalize vs Denormalize</h4>
+      <p class="desc">Normalization (references) avoids duplication but requires joins. Denormalization (embedding) duplicates data but gives fast, atomic reads. The right balance depends on your read/write ratio and consistency needs.</p>
+      <ul>
+        <li>Denormalize for read-heavy workloads where consistency lag is acceptable</li>
+        <li>Normalize for data that changes frequently and is shared across documents</li>
+        <li>Hybrid: embed summary fields, reference the full record</li>
+        <li>Duplicated data requires an update strategy (change streams, batch sync)</li>
+      </ul>
+      <div class="resources">
+        <a href="https://www.mongodb.com/docs/manual/core/data-model-design/" target="_blank">MongoDB Docs: Data Model Design</a>
+        <a href="https://www.baeldung.com/cs/database-normalization-vs-denormalization" target="_blank">Baeldung: Normalization vs Denormalization</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ============================================================ -->
+<!--  SECTION 3 — ClickHouse & OLAP                               -->
+<!-- ============================================================ -->
+<div class="section" id="sec-clickhouse">
+  <div class="section-heading">
+    <h2>ClickHouse &amp; OLAP</h2>
+    <span class="badge badge-green">Light</span>
+  </div>
+  <div class="tip-callout">
+    <strong>Tip:</strong> You have real production experience here &mdash; mostly conceptual revision to nail the vocabulary.
+  </div>
+
+  <!-- Category: OLAP Concepts -->
+  <div class="category">
+    <h3 class="category-heading">OLAP Concepts</h3>
+
+    <div class="topic-card" id="topic-102">
+      <h4>Column-Store Advantages</h4>
+      <p class="desc">Column-oriented storage reads only the columns a query needs, enabling massive compression ratios and vectorized processing. This is why OLAP databases like ClickHouse can scan billions of rows per second.</p>
+      <ul>
+        <li>Only touched columns are loaded from disk &mdash; dramatic I/O reduction</li>
+        <li>Same-type values compress 5-10x better than row-oriented storage</li>
+        <li>Vectorized execution: operates on column batches, CPU-cache friendly</li>
+        <li>Poor for point lookups or row-level updates (OLTP workloads)</li>
+      </ul>
+      <div class="resources">
+        <a href="https://clickhouse.com/docs/en/concepts/why-clickhouse-is-so-fast" target="_blank">ClickHouse Docs: Why ClickHouse is Fast</a>
+        <a href="https://www.baeldung.com/cs/columnar-databases" target="_blank">Baeldung: Columnar Databases</a>
+      </div>
+    </div>
+
+    <div class="topic-card" id="topic-103">
+      <h4>MergeTree Engine</h4>
+      <p class="desc">MergeTree is ClickHouse's primary table engine. Data is written in sorted "parts" that are merged in the background. The primary key defines sort order and enables efficient range scans.</p>
+      <ul>
+        <li>Data is stored in sorted parts; background merges reduce part count</li>
+        <li>Primary key is a sparse index (not unique like RDBMS) &mdash; stores one entry per granule (8192 rows default)</li>
+        <li>ORDER BY clause defines sort order; primary key defaults to it</li>
+        <li>Supports data skipping indexes (minmax, set, bloom_filter)</li>
+      </ul>
+      <div class="resources">
+        <a href="https://clickhouse.com/docs/en/engines/table-engines/mergetree-family/mergetree" target="_blank">ClickHouse Docs: MergeTree</a>
+        <a href="https://clickhouse.com/docs/en/guides/creating-tables" target="_blank">ClickHouse Docs: Creating Tables</a>
+      </div>
+    </div>
+
+    <div class="topic-card" id="topic-104">
+      <h4>Materialized Views</h4>
+      <p class="desc">ClickHouse materialized views act as insert triggers: they transform data on the fly as it arrives and store results in a target table. This enables real-time pre-aggregation without ETL pipelines.</p>
+      <ul>
+        <li>Triggered on INSERT to the source table; processes only new data</li>
+        <li>Target table typically uses AggregatingMergeTree or SummingMergeTree</li>
+        <li>Great for dashboards that need sub-second aggregations on live data</li>
+        <li>Multiple materialized views can consume the same source table</li>
+      </ul>
+      <div class="resources">
+        <a href="https://clickhouse.com/docs/en/sql-reference/statements/create/view#materialized-view" target="_blank">ClickHouse Docs: Materialized Views</a>
+        <a href="https://clickhouse.com/docs/en/guides/developer/cascading-materialized-views" target="_blank">ClickHouse Docs: Cascading MVs</a>
+      </div>
+    </div>
+
+    <div class="topic-card" id="topic-105">
+      <h4>ReplicatedMergeTree</h4>
+      <p class="desc">ReplicatedMergeTree adds replication to MergeTree using ZooKeeper (or ClickHouse Keeper) for coordination. Each replica independently fetches and merges data parts, providing high availability.</p>
+      <ul>
+        <li>ZooKeeper/Keeper stores metadata and coordinates part transfers</li>
+        <li>Each replica is eventually consistent; INSERT waits for configurable quorum</li>
+        <li>insert_quorum setting controls how many replicas must confirm a write</li>
+        <li>Replicas auto-recover missing parts from peers</li>
+      </ul>
+      <div class="resources">
+        <a href="https://clickhouse.com/docs/en/engines/table-engines/mergetree-family/replication" target="_blank">ClickHouse Docs: Replication</a>
+        <a href="https://clickhouse.com/docs/en/architecture/replication" target="_blank">ClickHouse Docs: Replication Architecture</a>
+      </div>
+    </div>
+
+    <div class="topic-card" id="topic-106">
+      <h4>ClickHouse vs Druid vs BigQuery</h4>
+      <p class="desc">All three are OLAP systems, but they differ in architecture, operational model, and cost. Being able to articulate when you'd pick one over another shows depth in data platform thinking.</p>
+      <ul>
+        <li>ClickHouse: self-hosted, SQL-native, fastest for single-table scans, needs ops investment</li>
+        <li>Druid: real-time ingestion focus, segment-based, good for mixed real-time + historical</li>
+        <li>BigQuery: fully managed, serverless, pay-per-query, best for irregular/batch workloads</li>
+        <li>ClickHouse shines when you need low-latency on high-QPS analytic queries</li>
+      </ul>
+      <div class="resources">
+        <a href="https://clickhouse.com/docs/en/concepts/why-clickhouse-is-so-fast" target="_blank">ClickHouse Docs: Why ClickHouse</a>
+        <a href="https://clickhouse.com/docs/en/about-us/distinctive-features" target="_blank">ClickHouse Docs: Distinctive Features</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Category: OLAP Query Patterns -->
+  <div class="category">
+    <h3 class="category-heading">OLAP Query Patterns</h3>
+
+    <div class="topic-card" id="topic-107">
+      <h4>Aggregation at Scale</h4>
+      <p class="desc">ClickHouse excels at aggregating billions of rows in seconds. Understanding how it parallelizes GROUP BY across cores and merges partial states is key to writing efficient analytic queries.</p>
+      <ul>
+        <li>Parallel GROUP BY: each thread aggregates its data part, then results are merged</li>
+        <li>Approximate functions (uniq, quantileTDigest) trade accuracy for speed</li>
+        <li>Hash tables used for GROUP BY must fit in memory; large cardinality may spill to disk</li>
+        <li>Pre-filter with WHERE before GROUP BY to reduce data volume</li>
+      </ul>
+      <div class="resources">
+        <a href="https://clickhouse.com/docs/en/sql-reference/statements/select/group-by" target="_blank">ClickHouse Docs: GROUP BY</a>
+        <a href="https://clickhouse.com/docs/en/sql-reference/aggregate-functions/" target="_blank">ClickHouse Docs: Aggregate Functions</a>
+      </div>
+    </div>
+
+    <div class="topic-card" id="topic-108">
+      <h4>Pre-aggregation Strategies</h4>
+      <p class="desc">For dashboards requiring sub-second latency, pre-aggregating data at insert time (via materialized views or summary tables) avoids scanning raw data on every query.</p>
+      <ul>
+        <li>SummingMergeTree: auto-sums numeric columns during merges</li>
+        <li>AggregatingMergeTree: stores intermediate aggregate states (count, avg, quantile)</li>
+        <li>Materialized views populate summary tables on INSERT</li>
+        <li>Trade-off: more storage and complexity for faster reads</li>
+      </ul>
+      <div class="resources">
+        <a href="https://clickhouse.com/docs/en/engines/table-engines/mergetree-family/summingmergetree" target="_blank">ClickHouse Docs: SummingMergeTree</a>
+        <a href="https://clickhouse.com/docs/en/engines/table-engines/mergetree-family/aggregatingmergetree" target="_blank">ClickHouse Docs: AggregatingMergeTree</a>
+      </div>
+    </div>
+
+    <div class="topic-card" id="topic-109">
+      <h4>TTL for Data Lifecycle</h4>
+      <p class="desc">ClickHouse supports TTL rules at column and table level to automatically delete or move old data. This is essential for managing storage costs on high-volume event data.</p>
+      <ul>
+        <li>Table TTL: DELETE or MOVE TO VOLUME/DISK after a time expression</li>
+        <li>Column TTL: set individual columns to default value after expiry</li>
+        <li>Enables tiered storage: hot SSD &rarr; cold HDD &rarr; delete</li>
+        <li>TTL is evaluated during part merges, not continuously</li>
+      </ul>
+      <div class="resources">
+        <a href="https://clickhouse.com/docs/en/guides/developer/ttl" target="_blank">ClickHouse Docs: TTL</a>
+        <a href="https://clickhouse.com/docs/en/sql-reference/statements/alter/ttl" target="_blank">ClickHouse Docs: ALTER TTL</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ============================================================ -->
+<!--  SECTION 4 — Redis Deep Dive                                 -->
+<!-- ============================================================ -->
+<div class="section" id="sec-redis">
+  <div class="section-heading">
+    <h2>Redis Deep Dive</h2>
+    <span class="badge badge-orange">Both</span>
+  </div>
+
+  <!-- Category: Redis Data Structures -->
+  <div class="category">
+    <h3 class="category-heading">Redis Data Structures</h3>
+
+    <div class="topic-card" id="topic-110">
+      <h4>String / Hash / List / Set / ZSet Internals</h4>
+      <p class="desc">Redis's five core data structures each use optimized internal encodings. Knowing the underlying representations helps you pick the right structure and predict memory usage.</p>
+      <ul>
+        <li>String: SDS (Simple Dynamic String); int encoding for numbers &le; LLONG_MAX</li>
+        <li>Hash: ziplist for small hashes (&le;128 entries), hashtable for larger</li>
+        <li>List: quicklist (linked list of ziplists) since Redis 3.2</li>
+        <li>Set: intset for all-integer small sets, hashtable otherwise</li>
+        <li>ZSet (Sorted Set): skiplist + hashtable for O(log n) rank operations</li>
+      </ul>
+      <div class="resources">
+        <a href="https://redis.io/docs/latest/develop/data-types/" target="_blank">Redis Docs: Data Types</a>
+        <a href="https://www.baeldung.com/redis-data-types" target="_blank">Baeldung: Redis Data Types</a>
+      </div>
+    </div>
+
+    <div class="topic-card" id="topic-111">
+      <h4>HyperLogLog</h4>
+      <p class="desc">HyperLogLog is a probabilistic data structure that estimates the cardinality of a set using ~12 KB of memory, regardless of set size. Perfect for counting unique visitors, IPs, or events at scale.</p>
+      <ul>
+        <li>PFADD adds elements; PFCOUNT returns approximate unique count</li>
+        <li>Standard error: ~0.81% &mdash; accurate enough for analytics</li>
+        <li>PFMERGE combines multiple HLLs (e.g., merge daily counts into weekly)</li>
+        <li>Fixed 12 KB regardless of millions or billions of elements</li>
+      </ul>
+      <div class="resources">
+        <a href="https://redis.io/docs/latest/develop/data-types/probabilistic/hyperloglogs/" target="_blank">Redis Docs: HyperLogLog</a>
+        <a href="https://www.baeldung.com/redis-hyperloglog" target="_blank">Baeldung: Redis HyperLogLog</a>
+      </div>
+    </div>
+
+    <div class="topic-card" id="topic-112">
+      <h4>Bloom Filter (RedisBloom)</h4>
+      <p class="desc">A Bloom filter answers "is this element in the set?" with no false negatives but possible false positives. RedisBloom module adds native BF.ADD / BF.EXISTS commands to Redis.</p>
+      <ul>
+        <li>Space-efficient: uses bit array + multiple hash functions</li>
+        <li>False positive rate configurable at creation (e.g., 1%)</li>
+        <li>Use case: prevent duplicate processing, cache penetration protection</li>
+        <li>Cannot delete elements (use Cuckoo filter if deletions needed)</li>
+      </ul>
+      <div class="resources">
+        <a href="https://redis.io/docs/latest/develop/data-types/probabilistic/bloom-filter/" target="_blank">Redis Docs: Bloom Filter</a>
+        <a href="https://www.baeldung.com/cs/bloom-filter" target="_blank">Baeldung: Bloom Filter</a>
+      </div>
+    </div>
+
+    <div class="topic-card" id="topic-113">
+      <h4>Streams</h4>
+      <p class="desc">Redis Streams is an append-only log data structure with consumer group support, similar to Kafka. It enables event-driven architectures with exactly-once-style processing semantics within Redis.</p>
+      <ul>
+        <li>XADD appends entries; XREAD reads from a position; XRANGE scans a range</li>
+        <li>Consumer groups: multiple consumers share work, with per-consumer acknowledgement</li>
+        <li>XACK confirms processing; pending entries list (PEL) tracks unacked messages</li>
+        <li>Suitable for lightweight event streaming without deploying Kafka</li>
+      </ul>
+      <div class="resources">
+        <a href="https://redis.io/docs/latest/develop/data-types/streams/" target="_blank">Redis Docs: Streams</a>
+        <a href="https://www.baeldung.com/redis-streams" target="_blank">Baeldung: Redis Streams</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Category: Caching Patterns -->
+  <div class="category">
+    <h3 class="category-heading">Caching Patterns</h3>
+
+    <div class="topic-card" id="topic-114">
+      <h4>Cache-Aside vs Write-Through vs Write-Behind</h4>
+      <p class="desc">The three fundamental caching strategies differ in how they synchronize cache and database. Choosing the right one affects consistency, latency, and complexity.</p>
+      <ul>
+        <li>Cache-aside (lazy loading): app checks cache, loads from DB on miss, populates cache</li>
+        <li>Write-through: every write goes to cache AND DB synchronously &mdash; strong consistency but higher write latency</li>
+        <li>Write-behind (write-back): writes go to cache first, async flush to DB &mdash; fast writes but risk data loss</li>
+        <li>Cache-aside is most common in practice; write-through for strict consistency needs</li>
+      </ul>
+      <div class="resources">
+        <a href="https://redis.io/docs/latest/develop/use/client-side-caching/" target="_blank">Redis Docs: Client-Side Caching</a>
+        <a href="https://www.baeldung.com/cs/caching-strategies" target="_blank">Baeldung: Caching Strategies</a>
+      </div>
+    </div>
+
+    <div class="topic-card" id="topic-115">
+      <h4>TTL Expiry Strategies</h4>
+      <p class="desc">Redis uses a combination of lazy expiry (check on access) and active expiry (periodic sampling) to remove expired keys. Understanding this prevents surprises with memory usage and stale data.</p>
+      <ul>
+        <li>Lazy expiry: key is checked on GET; if expired, it is deleted and returns nil</li>
+        <li>Active expiry: Redis samples 20 random keys with TTL 10 times/sec, deleting expired ones</li>
+        <li>If &gt;25% of sampled keys are expired, it repeats immediately (adaptive)</li>
+        <li>Very short TTLs on many keys can cause CPU spikes during active expiry</li>
+      </ul>
+      <div class="resources">
+        <a href="https://redis.io/docs/latest/commands/expire/" target="_blank">Redis Docs: EXPIRE</a>
+        <a href="https://www.baeldung.com/redis-ttl" target="_blank">Baeldung: Redis TTL</a>
+      </div>
+    </div>
+
+    <div class="topic-card" id="topic-116">
+      <h4>Cache Stampede &mdash; Mutex Lock Solution</h4>
+      <p class="desc">When a popular key expires, many concurrent requests may simultaneously attempt to rebuild the cache, overwhelming the database. The mutex lock pattern ensures only one thread rebuilds while others wait.</p>
+      <ul>
+        <li>SET key NX EX (SETNX with TTL) acquires a distributed lock on the rebuild key</li>
+        <li>The lock winner fetches from DB and populates cache; losers retry with backoff</li>
+        <li>Alternative: probabilistic early expiration (stagger TTLs)</li>
+        <li>Another approach: never expire, use background refresh with logical TTL</li>
+      </ul>
+      <div class="resources">
+        <a href="https://redis.io/docs/latest/commands/set/" target="_blank">Redis Docs: SET (NX option)</a>
+        <a href="https://www.baeldung.com/redis-cache-stampede" target="_blank">Baeldung: Cache Stampede</a>
+      </div>
+    </div>
+
+    <div class="topic-card" id="topic-117">
+      <h4>Distributed Lock (Redlock)</h4>
+      <p class="desc">Redlock is an algorithm for distributed locking across multiple independent Redis instances. It is used when correctness matters more than what a single-instance SETNX lock can guarantee.</p>
+      <ul>
+        <li>Acquire lock on N/2+1 of N independent Redis masters with clock-bounded TTL</li>
+        <li>If majority acquired within validity time, lock is held</li>
+        <li>Controversial: Martin Kleppmann argued it is unsafe under clock skew and GC pauses</li>
+        <li>For most practical cases, single-instance SETNX with fencing tokens suffices</li>
+      </ul>
+      <div class="resources">
+        <a href="https://redis.io/docs/latest/develop/use/patterns/distributed-locks/" target="_blank">Redis Docs: Distributed Locks</a>
+        <a href="https://www.baeldung.com/redis-redlock" target="_blank">Baeldung: Redlock</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Category: Redis Clustering -->
+  <div class="category">
+    <h3 class="category-heading">Redis Clustering</h3>
+
+    <div class="topic-card" id="topic-118">
+      <h4>Sentinel vs Cluster Mode</h4>
+      <p class="desc">Sentinel provides automatic failover for a single master-replica setup. Cluster mode shards data across multiple masters. The choice depends on whether you need HA only or HA + horizontal scaling.</p>
+      <ul>
+        <li>Sentinel: monitors one master + replicas, promotes replica on failure, no sharding</li>
+        <li>Cluster: data partitioned across 16384 hash slots on multiple masters</li>
+        <li>Sentinel is simpler and sufficient when data fits on one node</li>
+        <li>Cluster is required when dataset exceeds single-node memory</li>
+      </ul>
+      <div class="resources">
+        <a href="https://redis.io/docs/latest/operate/oss_and_stack/management/sentinel/" target="_blank">Redis Docs: Sentinel</a>
+        <a href="https://redis.io/docs/latest/operate/oss_and_stack/management/scaling/" target="_blank">Redis Docs: Cluster</a>
+      </div>
+    </div>
+
+    <div class="topic-card" id="topic-119">
+      <h4>Hash Slots</h4>
+      <p class="desc">Redis Cluster divides the key space into 16384 hash slots. Each master owns a subset of slots, and clients route commands based on CRC16(key) mod 16384.</p>
+      <ul>
+        <li>CRC16 hash of the key determines the slot; slot maps to a specific master</li>
+        <li>Hash tags: {user:123}.profile forces keys to the same slot for multi-key commands</li>
+        <li>Resharding moves slots between nodes with minimal downtime (MIGRATE)</li>
+        <li>MOVED and ASK redirections tell clients to retry on the correct node</li>
+      </ul>
+      <div class="resources">
+        <a href="https://redis.io/docs/latest/operate/oss_and_stack/reference/cluster-spec/" target="_blank">Redis Docs: Cluster Specification</a>
+        <a href="https://www.baeldung.com/redis-cluster" target="_blank">Baeldung: Redis Cluster</a>
+      </div>
+    </div>
+
+    <div class="topic-card" id="topic-120">
+      <h4>Hot Key Problem</h4>
+      <p class="desc">When a single key receives disproportionate traffic, it overloads the node owning that slot. This is a common Redis scaling bottleneck in high-traffic systems like flash sales or viral content.</p>
+      <ul>
+        <li>All requests for one key route to one node &mdash; no cluster parallelism</li>
+        <li>Solution 1: key splitting &mdash; shard the value across key:1, key:2, ..., key:N</li>
+        <li>Solution 2: local caching with short TTL to absorb reads</li>
+        <li>Solution 3: read replicas for the hot key's slot (cluster read replicas)</li>
+      </ul>
+      <div class="resources">
+        <a href="https://redis.io/docs/latest/operate/oss_and_stack/management/optimization/benchmarks/" target="_blank">Redis Docs: Benchmarks</a>
+        <a href="https://www.baeldung.com/redis-cluster" target="_blank">Baeldung: Redis Cluster</a>
+      </div>
+    </div>
+
+    <div class="topic-card" id="topic-121">
+      <h4>Memory Eviction Policies</h4>
+      <p class="desc">When Redis hits maxmemory, it must evict keys to make room. The eviction policy determines which keys are removed. Choosing the wrong policy can silently drop important data.</p>
+      <ul>
+        <li>noeviction: return errors on writes when full (safe but disruptive)</li>
+        <li>allkeys-lru: evict least recently used across all keys (most common)</li>
+        <li>volatile-lru: evict LRU only among keys with TTL set</li>
+        <li>allkeys-lfu: evict least frequently used (Redis 4.0+, better for skewed access)</li>
+        <li>volatile-ttl: evict keys closest to expiration</li>
+      </ul>
+      <div class="resources">
+        <a href="https://redis.io/docs/latest/develop/reference/eviction/" target="_blank">Redis Docs: Eviction</a>
+        <a href="https://www.baeldung.com/redis-eviction-policies" target="_blank">Baeldung: Redis Eviction Policies</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ============================================================ -->
+<!--  SECTION 5 — Database Selection & CAP Theory                  -->
+<!-- ============================================================ -->
+<div class="section" id="sec-cap">
+  <div class="section-heading">
+    <h2>Database Selection &amp; CAP Theory</h2>
+    <span class="badge badge-green">Light</span>
+  </div>
+
+  <!-- Category: CAP Theory -->
+  <div class="category">
+    <h3 class="category-heading">CAP Theory</h3>
+
+    <div class="topic-card" id="topic-122">
+      <h4>CAP Theorem Applied to Real Systems</h4>
+      <p class="desc">CAP states a distributed system can only guarantee two of Consistency, Availability, and Partition tolerance simultaneously. In practice, P is non-negotiable, so the real choice is between C and A during partitions.</p>
+      <ul>
+        <li>CP systems (e.g., ZooKeeper, HBase): reject requests during partition to stay consistent</li>
+        <li>AP systems (e.g., Cassandra, DynamoDB): serve requests during partition, may return stale data</li>
+        <li>MySQL single-node is CA &mdash; but CA is meaningless in distributed contexts</li>
+        <li>Most real systems are tunable: MongoDB (w:majority = CP, w:1 = AP-leaning)</li>
+      </ul>
+      <div class="resources">
+        <a href="https://www.baeldung.com/cs/cap-theorem" target="_blank">Baeldung: CAP Theorem</a>
+        <a href="https://www.mongodb.com/docs/manual/core/read-isolation-consistency-recency/" target="_blank">MongoDB Docs: Read Isolation &amp; Consistency</a>
+      </div>
+    </div>
+
+    <div class="topic-card" id="topic-123">
+      <h4>Eventual Consistency Patterns</h4>
+      <p class="desc">In eventually consistent systems, replicas converge over time. Understanding the practical patterns (read repair, anti-entropy, hinted handoff) helps you design systems that behave well under eventual consistency.</p>
+      <ul>
+        <li>Read repair: fix stale replica when a read detects divergence</li>
+        <li>Anti-entropy: background Merkle-tree comparison to sync replicas</li>
+        <li>Hinted handoff: temporarily store writes for an unavailable node, replay later</li>
+        <li>Last-write-wins (LWW) is simple but can lose concurrent updates</li>
+      </ul>
+      <div class="resources">
+        <a href="https://www.baeldung.com/cs/eventual-consistency" target="_blank">Baeldung: Eventual Consistency</a>
+        <a href="https://www.mongodb.com/docs/manual/replication/" target="_blank">MongoDB Docs: Replication</a>
+      </div>
+    </div>
+
+    <div class="topic-card" id="topic-124">
+      <h4>Read-Your-Writes</h4>
+      <p class="desc">Read-your-writes consistency guarantees that after a client writes, subsequent reads by the same client reflect that write. This is critical for user experience even in eventually consistent systems.</p>
+      <ul>
+        <li>Achieved by routing reads to the same node that handled the write</li>
+        <li>Alternative: use a version token / timestamp; reject reads behind that token</li>
+        <li>MongoDB: use readConcern "majority" + readPreference "primary" for the same session</li>
+        <li>Without this, a user may save data and then see the old version on page refresh</li>
+      </ul>
+      <div class="resources">
+        <a href="https://www.mongodb.com/docs/manual/core/causal-consistency-read-write-concerns/" target="_blank">MongoDB Docs: Causal Consistency</a>
+        <a href="https://www.baeldung.com/cs/eventual-consistency" target="_blank">Baeldung: Consistency Models</a>
+      </div>
+    </div>
+
+    <div class="topic-card" id="topic-125">
+      <h4>Monotonic Reads</h4>
+      <p class="desc">Monotonic read consistency guarantees a client never sees an older version of data after having seen a newer one. Without it, successive reads from different replicas can appear to "go back in time."</p>
+      <ul>
+        <li>Problem: load balancer routes read 1 to an up-to-date replica, read 2 to a stale one</li>
+        <li>Solution: sticky sessions &mdash; pin a client to one replica for reads</li>
+        <li>Alternative: track read timestamp; only read from replicas at or past that point</li>
+        <li>MongoDB causal sessions provide monotonic reads automatically</li>
+      </ul>
+      <div class="resources">
+        <a href="https://www.mongodb.com/docs/manual/core/causal-consistency-read-write-concerns/" target="_blank">MongoDB Docs: Causal Consistency</a>
+        <a href="https://www.baeldung.com/cs/eventual-consistency" target="_blank">Baeldung: Consistency Guarantees</a>
+      </div>
+    </div>
+
+    <div class="topic-card" id="topic-126">
+      <h4>CRDT Basics</h4>
+      <p class="desc">Conflict-free Replicated Data Types are data structures that can be updated independently on different replicas and merged without conflicts. They are the theoretical foundation for many AP system designs.</p>
+      <ul>
+        <li>State-based (CvRDT): replicas periodically send full state, merge via join</li>
+        <li>Operation-based (CmRDT): replicas broadcast operations, must be commutative</li>
+        <li>Examples: G-Counter, PN-Counter, LWW-Register, OR-Set</li>
+        <li>Used in Redis Enterprise (CRDB), Riak, and collaborative editing</li>
+      </ul>
+      <div class="resources">
+        <a href="https://redis.io/docs/latest/operate/rs/databases/active-active/" target="_blank">Redis Docs: Active-Active (CRDT)</a>
+        <a href="https://www.baeldung.com/java-crdt" target="_blank">Baeldung: CRDTs in Java</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Category: DB Tradeoffs -->
+  <div class="category">
+    <h3 class="category-heading">DB Tradeoffs</h3>
+
+    <div class="topic-card" id="topic-127">
+      <h4>RDBMS vs Document vs Column vs Graph</h4>
+      <p class="desc">Each database paradigm optimizes for different access patterns. Knowing when to use which is a staple system design interview question.</p>
+      <ul>
+        <li>RDBMS (MySQL, PostgreSQL): structured data, complex joins, ACID &mdash; default choice for transactional workloads</li>
+        <li>Document (MongoDB): flexible schema, nested data, horizontal scale &mdash; good for content, catalogs</li>
+        <li>Column (ClickHouse, Cassandra): analytic aggregations or wide-row time-series</li>
+        <li>Graph (Neo4j): relationship-heavy queries (social networks, fraud detection, recommendations)</li>
+        <li>Pick based on primary access pattern, not hype</li>
+      </ul>
+      <div class="resources">
+        <a href="https://www.mongodb.com/docs/manual/core/data-model-design/" target="_blank">MongoDB Docs: Data Modeling</a>
+        <a href="https://www.baeldung.com/cs/types-of-databases" target="_blank">Baeldung: Types of Databases</a>
+      </div>
+    </div>
+
+    <div class="topic-card" id="topic-128">
+      <h4>NewSQL Tradeoffs</h4>
+      <p class="desc">NewSQL systems (CockroachDB, TiDB, Spanner) promise SQL semantics with horizontal scalability. They solve the sharding pain of MySQL but introduce new operational complexity and latency characteristics.</p>
+      <ul>
+        <li>Distributed SQL: automatic sharding, distributed transactions, strong consistency</li>
+        <li>Spanner uses TrueTime (atomic clocks) for global serializable isolation</li>
+        <li>CockroachDB and TiDB use Raft consensus for replication</li>
+        <li>Higher write latency than single-node MySQL due to consensus overhead</li>
+        <li>Good fit when you outgrow single-node RDBMS but need ACID guarantees</li>
+      </ul>
+      <div class="resources">
+        <a href="https://www.baeldung.com/cs/newsql-databases" target="_blank">Baeldung: NewSQL Databases</a>
+        <a href="https://dev.mysql.com/doc/refman/8.0/en/group-replication.html" target="_blank">MySQL Docs: Group Replication</a>
+      </div>
+    </div>
+
+    <div class="topic-card" id="topic-129">
+      <h4>Polyglot Persistence Rationale</h4>
+      <p class="desc">Polyglot persistence means using different databases for different parts of the same application, each chosen for its strengths. It is the practical application of "no single database does everything well."</p>
+      <ul>
+        <li>Example: MySQL for orders (ACID), Redis for sessions (speed), ClickHouse for analytics (OLAP), MongoDB for product catalog (flexible schema)</li>
+        <li>Benefits: each store is used where it excels, better performance and scalability</li>
+        <li>Costs: operational overhead, data synchronization complexity, more failure modes</li>
+        <li>Need a clear data flow strategy (CDC, event sourcing, or dual writes)</li>
+      </ul>
+      <div class="resources">
+        <a href="https://www.baeldung.com/cs/polyglot-persistence" target="_blank">Baeldung: Polyglot Persistence</a>
+        <a href="https://www.mongodb.com/docs/manual/core/data-model-design/" target="_blank">MongoDB Docs: Data Modeling</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ===== RECOMMENDED RESOURCES ===== -->
+<div class="recommended">
+  <h2>Recommended Resources</h2>
+  <ul>
+    <li>
+      <a href="https://dev.mysql.com/doc/refman/8.0/en/" target="_blank">MySQL 8.0 Reference Manual</a>
+      <span class="res-desc"> &mdash; Official docs covering InnoDB internals, optimization, and administration</span>
+    </li>
+    <li>
+      <a href="https://www.mongodb.com/docs/manual/" target="_blank">MongoDB Manual</a>
+      <span class="res-desc"> &mdash; Complete reference for data modeling, aggregation, replication, and transactions</span>
+    </li>
+    <li>
+      <a href="https://clickhouse.com/docs/en/" target="_blank">ClickHouse Documentation</a>
+      <span class="res-desc"> &mdash; Engine types, query optimization, and operational guides</span>
+    </li>
+    <li>
+      <a href="https://redis.io/docs/" target="_blank">Redis Documentation</a>
+      <span class="res-desc"> &mdash; Data types, commands, clustering, persistence, and patterns</span>
+    </li>
+    <li>
+      <a href="https://www.baeldung.com/cs/databases" target="_blank">Baeldung: Database Concepts</a>
+      <span class="res-desc"> &mdash; Tutorials on indexing, transactions, caching, and distributed DB theory</span>
+    </li>
+    <li>
+      <a href="https://dev.mysql.com/doc/refman/8.0/en/optimization.html" target="_blank">MySQL Optimization Guide</a>
+      <span class="res-desc"> &mdash; EXPLAIN, query tuning, index best practices, and server configuration</span>
+    </li>
+  </ul>
+</div>
+
+</main>
+</body>
+</html>

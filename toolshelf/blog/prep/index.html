@@ -1,0 +1,1408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SDE 2 Prep Tracker</title>
+<style>
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg-primary: #1a1b2e;
+  --bg-secondary: #232540;
+  --bg-tertiary: #2a2d4a;
+  --bg-hover: #32355a;
+  --text-primary: #e2e4f0;
+  --text-secondary: #a0a3bd;
+  --text-muted: #6b6f8a;
+  --border: #3a3d5c;
+  --accent: #6c63ff;
+  --accent-hover: #5a52d5;
+  --green: #4ade80;
+  --green-bg: rgba(74,222,128,0.12);
+  --orange: #fb923c;
+  --orange-bg: rgba(251,146,60,0.12);
+  --red: #f87171;
+  --red-bg: rgba(248,113,113,0.12);
+  --amber: #fbbf24;
+  --amber-bg: rgba(251,191,36,0.12);
+  --cyan: #22d3ee;
+  --cyan-bg: rgba(34,211,238,0.12);
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.5;
+  min-height: 100vh;
+}
+
+header {
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border);
+  padding: 12px 24px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.header-top { display: flex; align-items: center; justify-content: space-between; }
+h1 { font-size: 1.25rem; font-weight: 600; color: var(--accent); }
+.header-sub { font-size: 0.8rem; color: var(--text-muted); }
+
+.stats-bar { display: flex; gap: 16px; margin-top: 8px; flex-wrap: wrap; }
+.stat {
+  font-size: 0.85rem;
+  padding: 4px 12px;
+  border-radius: 6px;
+  background: var(--bg-tertiary);
+  color: var(--text-secondary);
+}
+.stat-done { color: var(--green); background: var(--green-bg); }
+.stat-revisit { color: var(--amber); background: var(--amber-bg); }
+
+.main-layout {
+  display: flex;
+  height: calc(100vh - 90px);
+}
+
+.sidebar {
+  width: 260px;
+  min-width: 260px;
+  background: var(--bg-secondary);
+  border-right: 1px solid var(--border);
+  padding: 16px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.filter-label {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+}
+
+.filter-section input[type="text"] {
+  width: 100%;
+  padding: 8px 10px;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text-primary);
+  font-size: 0.85rem;
+  outline: none;
+}
+.filter-section input[type="text"]:focus { border-color: var(--accent); }
+
+.multi-select { position: relative; }
+.multi-select-btn {
+  width: 100%;
+  padding: 8px 10px;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  text-align: left;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.multi-select-btn:hover { border-color: var(--accent); }
+.multi-select-dropdown {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  max-height: 250px;
+  overflow-y: auto;
+  z-index: 50;
+  margin-top: 4px;
+}
+.multi-select-dropdown.open { display: block; }
+.multi-select-dropdown label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  color: var(--text-secondary);
+}
+.multi-select-dropdown label:hover { background: var(--bg-hover); }
+.multi-select-search {
+  width: 100%;
+  padding: 6px 10px;
+  border: none;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+  font-size: 0.8rem;
+  outline: none;
+}
+
+.checkbox-group { display: flex; flex-direction: column; gap: 4px; }
+.checkbox-group label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  cursor: pointer;
+}
+.checkbox-group label:hover { color: var(--text-primary); }
+
+.btn {
+  padding: 8px 14px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: var(--bg-tertiary);
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.btn:hover { background: var(--bg-hover); color: var(--text-primary); }
+.btn-clear { width: 100%; }
+.import-export { display: flex; flex-direction: column; gap: 8px; margin-top: auto; }
+.btn-export { width: 100%; }
+.btn-import { width: 100%; }
+
+.content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px 24px;
+}
+
+.active-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 12px;
+  min-height: 0;
+}
+.filter-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 10px;
+  background: var(--accent);
+  color: white;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  cursor: pointer;
+}
+.filter-chip:hover { opacity: 0.8; }
+.filter-chip .chip-x { font-weight: bold; }
+
+.problem-table { width: 100%; border-collapse: collapse; }
+.problem-table th {
+  text-align: left;
+  padding: 10px 12px;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  background: var(--bg-primary);
+  cursor: pointer;
+  user-select: none;
+}
+.problem-table th:hover { color: var(--text-primary); }
+.sort-arrow { font-size: 0.7rem; }
+.problem-table td {
+  padding: 8px 12px;
+  font-size: 0.85rem;
+  border-bottom: 1px solid var(--border);
+  color: var(--text-secondary);
+}
+.problem-table tr.data-row { cursor: pointer; }
+.problem-table tr.data-row:hover { background: var(--bg-hover); }
+
+.pill {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 10px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+.pill-light { background: var(--green-bg); color: var(--green); }
+.pill-full-focus { background: var(--red-bg); color: var(--red); }
+.pill-both { background: var(--orange-bg); color: var(--orange); }
+
+.pillar-tag {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  font-weight: 500;
+  background: var(--cyan-bg);
+  color: var(--cyan);
+  white-space: nowrap;
+}
+
+.status-icon { font-size: 1rem; }
+.status-done { color: var(--green); }
+.status-revisit { color: var(--amber); }
+.status-none { color: var(--text-muted); }
+
+.detail-panel { background: var(--bg-secondary); border-bottom: 2px solid var(--accent); }
+.detail-panel td { padding: 16px 20px; }
+.detail-content { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.detail-meta { display: flex; flex-direction: column; gap: 8px; }
+.detail-meta-item { font-size: 0.8rem; color: var(--text-secondary); }
+.detail-meta-item strong { color: var(--text-primary); }
+.detail-tip {
+  margin-top: 8px;
+  padding: 8px 12px;
+  background: var(--bg-tertiary);
+  border-left: 3px solid var(--accent);
+  border-radius: 4px;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  font-style: italic;
+}
+.detail-actions { display: flex; gap: 8px; margin-top: 12px; align-items: center; flex-wrap: wrap; }
+.detail-actions .btn { padding: 6px 16px; }
+.btn-done { border-color: var(--green); color: var(--green); }
+.btn-done:hover, .btn-done.active { background: var(--green-bg); }
+.btn-revisit { border-color: var(--amber); color: var(--amber); }
+.btn-revisit:hover, .btn-revisit.active { background: var(--amber-bg); }
+.btn-visit { border-color: var(--cyan); color: var(--cyan); text-decoration: none; display: inline-flex; align-items: center; gap: 4px; }
+.btn-visit:hover { background: var(--cyan-bg); }
+.detail-note { margin-top: 12px; }
+.detail-note textarea {
+  width: 100%;
+  min-height: 60px;
+  padding: 8px 10px;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text-primary);
+  font-size: 0.85rem;
+  font-family: inherit;
+  resize: vertical;
+  outline: none;
+}
+.detail-note textarea:focus { border-color: var(--accent); }
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  margin-top: 16px;
+  padding: 12px 0;
+}
+.page-btn {
+  padding: 6px 12px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--bg-tertiary);
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-size: 0.8rem;
+}
+.page-btn:hover { background: var(--bg-hover); color: var(--text-primary); }
+.page-btn.active { background: var(--accent); color: white; border-color: var(--accent); }
+.page-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+@media (max-width: 768px) {
+  .main-layout { flex-direction: column; height: auto; }
+  .sidebar {
+    width: 100%; min-width: 100%;
+    border-right: none; border-bottom: 1px solid var(--border);
+    max-height: none; flex-direction: row; flex-wrap: wrap;
+    padding: 12px; gap: 8px;
+  }
+  .filter-section { flex: 1; min-width: 140px; }
+  .import-export { flex-direction: row; margin-top: 0; }
+  .content { padding: 12px; }
+  .problem-table th:nth-child(4), .problem-table td:nth-child(4) { display: none; }
+  .detail-content { grid-template-columns: 1fr; }
+}
+
+</style>
+</head>
+<body>
+
+<header id="header">
+  <div class="header-top">
+    <h1>SDE 2 Prep Tracker</h1>
+    <span class="header-sub">Java-focused &middot; Backend &amp; Distributed Systems</span>
+  </div>
+  <div class="stats-bar" id="stats-bar">
+    <span class="stat" id="stat-total">Total: 0</span>
+    <span class="stat stat-done" id="stat-done">Done: 0</span>
+    <span class="stat stat-revisit" id="stat-revisit">Revisit: 0</span>
+    <span class="stat" id="stat-remaining">Remaining: 0</span>
+  </div>
+</header>
+
+<div class="main-layout">
+  <aside class="sidebar" id="sidebar">
+    <div class="filter-section">
+      <label class="filter-label">Search</label>
+      <input type="text" id="search-input" placeholder="Topic name..." autocomplete="off">
+    </div>
+
+    <div class="filter-section">
+      <label class="filter-label">Pillar</label>
+      <div class="multi-select" id="pillar-filter" data-filter="pillar"></div>
+    </div>
+
+    <div class="filter-section">
+      <label class="filter-label">Section</label>
+      <div class="multi-select" id="section-filter" data-filter="section"></div>
+    </div>
+
+    <div class="filter-section">
+      <label class="filter-label">Context</label>
+      <div class="checkbox-group" id="context-filter">
+        <label><input type="checkbox" value="Light"> Light</label>
+        <label><input type="checkbox" value="Full-Focus"> Full-Focus</label>
+        <label><input type="checkbox" value="Both"> Both</label>
+      </div>
+    </div>
+
+    <div class="filter-section">
+      <label class="filter-label">Status</label>
+      <div class="checkbox-group" id="status-filter">
+        <label><input type="checkbox" value="none"> None</label>
+        <label><input type="checkbox" value="done"> Done</label>
+        <label><input type="checkbox" value="revisit"> Revisit</label>
+      </div>
+    </div>
+
+    <button class="btn btn-clear" id="clear-filters">Clear All Filters</button>
+
+    <div class="filter-section import-export">
+      <button class="btn btn-export" id="export-btn">Export Progress</button>
+      <button class="btn btn-import" id="import-btn">Import Progress</button>
+      <input type="file" id="import-file" accept=".json" hidden>
+    </div>
+  </aside>
+
+  <main class="content">
+    <div class="active-filters" id="active-filters"></div>
+    <table class="problem-table" id="problem-table">
+      <thead>
+        <tr>
+          <th class="sortable" data-sort="id"># <span class="sort-arrow"></span></th>
+          <th class="sortable" data-sort="name">Topic <span class="sort-arrow"></span></th>
+          <th class="sortable" data-sort="pillar">Pillar <span class="sort-arrow"></span></th>
+          <th class="sortable" data-sort="category">Category <span class="sort-arrow"></span></th>
+          <th class="sortable" data-sort="context">Context <span class="sort-arrow"></span></th>
+          <th class="sortable" data-sort="status">Status <span class="sort-arrow"></span></th>
+        </tr>
+      </thead>
+      <tbody id="table-body"></tbody>
+    </table>
+    <div class="pagination" id="pagination"></div>
+  </main>
+</div>
+
+<script>
+const TOPICS = [
+  // ===== PILLAR 1 — Java & JVM Internals =====
+  // Core Java depth — CONCURRENCY (HOME → Full-Focus)
+  {id:1,name:"Thread lifecycle",pillar:"Java & JVM",section:"Core Java depth",category:"Concurrency",context:"Full-Focus",tip:"Interviewers at top-tier will probe thread safety and GC pressure. Know how to explain them on a whiteboard."},
+  {id:2,name:"volatile & happens-before",pillar:"Java & JVM",section:"Core Java depth",category:"Concurrency",context:"Full-Focus",tip:""},
+  {id:3,name:"synchronized blocks",pillar:"Java & JVM",section:"Core Java depth",category:"Concurrency",context:"Full-Focus",tip:""},
+  {id:4,name:"ReentrantLock / ReadWriteLock",pillar:"Java & JVM",section:"Core Java depth",category:"Concurrency",context:"Full-Focus",tip:""},
+  {id:5,name:"ThreadLocal",pillar:"Java & JVM",section:"Core Java depth",category:"Concurrency",context:"Full-Focus",tip:""},
+  {id:6,name:"Executor framework",pillar:"Java & JVM",section:"Core Java depth",category:"Concurrency",context:"Full-Focus",tip:""},
+  {id:7,name:"Fork/Join pool",pillar:"Java & JVM",section:"Core Java depth",category:"Concurrency",context:"Full-Focus",tip:""},
+  {id:8,name:"CompletableFuture chains",pillar:"Java & JVM",section:"Core Java depth",category:"Concurrency",context:"Full-Focus",tip:""},
+  {id:9,name:"Deadlock detection",pillar:"Java & JVM",section:"Core Java depth",category:"Concurrency",context:"Full-Focus",tip:""},
+  // Core Java depth — COLLECTIONS INTERNALS
+  {id:10,name:"HashMap rehashing & collision",pillar:"Java & JVM",section:"Core Java depth",category:"Collections Internals",context:"Full-Focus",tip:""},
+  {id:11,name:"LinkedHashMap order",pillar:"Java & JVM",section:"Core Java depth",category:"Collections Internals",context:"Full-Focus",tip:""},
+  {id:12,name:"ConcurrentHashMap segments",pillar:"Java & JVM",section:"Core Java depth",category:"Collections Internals",context:"Full-Focus",tip:""},
+  {id:13,name:"TreeMap / comparators",pillar:"Java & JVM",section:"Core Java depth",category:"Collections Internals",context:"Full-Focus",tip:""},
+  {id:14,name:"PriorityQueue heap",pillar:"Java & JVM",section:"Core Java depth",category:"Collections Internals",context:"Full-Focus",tip:""},
+  {id:15,name:"ArrayDeque vs LinkedList",pillar:"Java & JVM",section:"Core Java depth",category:"Collections Internals",context:"Full-Focus",tip:""},
+  // Core Java depth — MEMORY & GC
+  {id:16,name:"Heap regions (Eden/S0/S1/Old/Metaspace)",pillar:"Java & JVM",section:"Core Java depth",category:"Memory & GC",context:"Full-Focus",tip:""},
+  {id:17,name:"GC algorithms (G1, ZGC, CMS)",pillar:"Java & JVM",section:"Core Java depth",category:"Memory & GC",context:"Full-Focus",tip:""},
+  {id:18,name:"GC tuning flags",pillar:"Java & JVM",section:"Core Java depth",category:"Memory & GC",context:"Full-Focus",tip:""},
+  {id:19,name:"Memory leaks & weak refs",pillar:"Java & JVM",section:"Core Java depth",category:"Memory & GC",context:"Full-Focus",tip:""},
+  {id:20,name:"Object finalization",pillar:"Java & JVM",section:"Core Java depth",category:"Memory & GC",context:"Full-Focus",tip:""},
+  // Java 8–17 features — MODERN JAVA (OFFICE → Light)
+  {id:21,name:"Streams & lazy evaluation",pillar:"Java & JVM",section:"Java 8\u201317 features",category:"Modern Java",context:"Light",tip:"Skim at office. You likely use most of these already \u2014 this is revision, not learning."},
+  {id:22,name:"Optional best practices",pillar:"Java & JVM",section:"Java 8\u201317 features",category:"Modern Java",context:"Light",tip:""},
+  {id:23,name:"Method references",pillar:"Java & JVM",section:"Java 8\u201317 features",category:"Modern Java",context:"Light",tip:""},
+  {id:24,name:"Default/static interface methods",pillar:"Java & JVM",section:"Java 8\u201317 features",category:"Modern Java",context:"Light",tip:""},
+  {id:25,name:"Records & sealed classes",pillar:"Java & JVM",section:"Java 8\u201317 features",category:"Modern Java",context:"Light",tip:""},
+  {id:26,name:"Pattern matching instanceof",pillar:"Java & JVM",section:"Java 8\u201317 features",category:"Modern Java",context:"Light",tip:""},
+  {id:27,name:"Text blocks",pillar:"Java & JVM",section:"Java 8\u201317 features",category:"Modern Java",context:"Light",tip:""},
+  {id:28,name:"var inference",pillar:"Java & JVM",section:"Java 8\u201317 features",category:"Modern Java",context:"Light",tip:""},
+  // JVM tuning & tooling — PROFILING TOOLS (HOME → Full-Focus)
+  {id:29,name:"jstack / jmap / jstat",pillar:"Java & JVM",section:"JVM tuning & tooling",category:"Profiling Tools",context:"Full-Focus",tip:""},
+  {id:30,name:"VisualVM / JProfiler",pillar:"Java & JVM",section:"JVM tuning & tooling",category:"Profiling Tools",context:"Full-Focus",tip:""},
+  {id:31,name:"Heap dump analysis",pillar:"Java & JVM",section:"JVM tuning & tooling",category:"Profiling Tools",context:"Full-Focus",tip:""},
+  {id:32,name:"Thread dump analysis",pillar:"Java & JVM",section:"JVM tuning & tooling",category:"Profiling Tools",context:"Full-Focus",tip:""},
+  {id:33,name:"GC log parsing",pillar:"Java & JVM",section:"JVM tuning & tooling",category:"Profiling Tools",context:"Full-Focus",tip:""},
+  // JVM tuning & tooling — JVM FLAGS
+  {id:34,name:"-Xms/-Xmx",pillar:"Java & JVM",section:"JVM tuning & tooling",category:"JVM Flags",context:"Full-Focus",tip:""},
+  {id:35,name:"-XX:+UseG1GC",pillar:"Java & JVM",section:"JVM tuning & tooling",category:"JVM Flags",context:"Full-Focus",tip:""},
+  {id:36,name:"PrintGCDetails",pillar:"Java & JVM",section:"JVM tuning & tooling",category:"JVM Flags",context:"Full-Focus",tip:""},
+  {id:37,name:"HeapDumpOnOOM",pillar:"Java & JVM",section:"JVM tuning & tooling",category:"JVM Flags",context:"Full-Focus",tip:""},
+
+  // ===== PILLAR 2 — Spring Boot & Framework Depth =====
+  // Spring Core internals — IOC & DI (HOME → Full-Focus)
+  {id:38,name:"BeanFactory vs ApplicationContext",pillar:"Spring Boot",section:"Spring Core internals",category:"IoC & DI",context:"Full-Focus",tip:"These come up as \u2018what happens when you use @Transactional on a private method\u2019 questions \u2014 a classic SDE 2 trap."},
+  {id:39,name:"Bean lifecycle (init/destroy)",pillar:"Spring Boot",section:"Spring Core internals",category:"IoC & DI",context:"Full-Focus",tip:""},
+  {id:40,name:"@Scope: singleton vs prototype vs request",pillar:"Spring Boot",section:"Spring Core internals",category:"IoC & DI",context:"Full-Focus",tip:""},
+  {id:41,name:"Circular dependency handling",pillar:"Spring Boot",section:"Spring Core internals",category:"IoC & DI",context:"Full-Focus",tip:""},
+  {id:42,name:"@Lazy & @DependsOn",pillar:"Spring Boot",section:"Spring Core internals",category:"IoC & DI",context:"Full-Focus",tip:""},
+  {id:43,name:"BeanPostProcessor / BeanFactoryPostProcessor",pillar:"Spring Boot",section:"Spring Core internals",category:"IoC & DI",context:"Full-Focus",tip:""},
+  // Spring Core internals — AOP
+  {id:44,name:"JDK dynamic proxy vs CGLIB proxy",pillar:"Spring Boot",section:"Spring Core internals",category:"AOP",context:"Full-Focus",tip:""},
+  {id:45,name:"Pointcut expressions",pillar:"Spring Boot",section:"Spring Core internals",category:"AOP",context:"Full-Focus",tip:""},
+  {id:46,name:"@Around / @Before / @After",pillar:"Spring Boot",section:"Spring Core internals",category:"AOP",context:"Full-Focus",tip:""},
+  {id:47,name:"AspectJ weaving modes",pillar:"Spring Boot",section:"Spring Core internals",category:"AOP",context:"Full-Focus",tip:""},
+  {id:48,name:"Transaction proxy chain",pillar:"Spring Boot",section:"Spring Core internals",category:"AOP",context:"Full-Focus",tip:""},
+  // Spring Boot autoconfiguration — MECHANISM (BOTH)
+  {id:49,name:"@SpringBootApplication breakdown",pillar:"Spring Boot",section:"Spring Boot autoconfiguration",category:"Mechanism",context:"Both",tip:""},
+  {id:50,name:"@EnableAutoConfiguration",pillar:"Spring Boot",section:"Spring Boot autoconfiguration",category:"Mechanism",context:"Both",tip:""},
+  {id:51,name:"spring.factories / META-INF",pillar:"Spring Boot",section:"Spring Boot autoconfiguration",category:"Mechanism",context:"Both",tip:""},
+  {id:52,name:"@Conditional annotations",pillar:"Spring Boot",section:"Spring Boot autoconfiguration",category:"Mechanism",context:"Both",tip:""},
+  {id:53,name:"@ConfigurationProperties",pillar:"Spring Boot",section:"Spring Boot autoconfiguration",category:"Mechanism",context:"Both",tip:""},
+  {id:54,name:"@Profile usage",pillar:"Spring Boot",section:"Spring Boot autoconfiguration",category:"Mechanism",context:"Both",tip:""},
+  // Spring Boot autoconfiguration — ACTUATOR
+  {id:55,name:"Health endpoints",pillar:"Spring Boot",section:"Spring Boot autoconfiguration",category:"Actuator",context:"Both",tip:""},
+  {id:56,name:"Custom health indicators",pillar:"Spring Boot",section:"Spring Boot autoconfiguration",category:"Actuator",context:"Both",tip:""},
+  {id:57,name:"Metrics exposure",pillar:"Spring Boot",section:"Spring Boot autoconfiguration",category:"Actuator",context:"Both",tip:""},
+  {id:58,name:"Shutdown endpoint security",pillar:"Spring Boot",section:"Spring Boot autoconfiguration",category:"Actuator",context:"Both",tip:""},
+  // Spring Security — FILTER CHAIN (HOME → Full-Focus)
+  {id:59,name:"SecurityFilterChain",pillar:"Spring Boot",section:"Spring Security",category:"Filter Chain",context:"Full-Focus",tip:""},
+  {id:60,name:"OncePerRequestFilter",pillar:"Spring Boot",section:"Spring Security",category:"Filter Chain",context:"Full-Focus",tip:""},
+  {id:61,name:"ExceptionTranslationFilter",pillar:"Spring Boot",section:"Spring Security",category:"Filter Chain",context:"Full-Focus",tip:""},
+  {id:62,name:"AuthorizationFilter",pillar:"Spring Boot",section:"Spring Security",category:"Filter Chain",context:"Full-Focus",tip:""},
+  // Spring Security — AUTH PATTERNS
+  {id:63,name:"JWT stateless auth",pillar:"Spring Boot",section:"Spring Security",category:"Auth Patterns",context:"Full-Focus",tip:""},
+  {id:64,name:"OAuth2 resource server",pillar:"Spring Boot",section:"Spring Security",category:"Auth Patterns",context:"Full-Focus",tip:""},
+  {id:65,name:"Method-level security (@PreAuthorize)",pillar:"Spring Boot",section:"Spring Security",category:"Auth Patterns",context:"Full-Focus",tip:""},
+  {id:66,name:"CORS configuration",pillar:"Spring Boot",section:"Spring Security",category:"Auth Patterns",context:"Full-Focus",tip:""},
+  {id:67,name:"CSRF tokens \u2014 when to disable",pillar:"Spring Boot",section:"Spring Security",category:"Auth Patterns",context:"Full-Focus",tip:""},
+  // Spring Data & transactions — TRANSACTIONS (BOTH)
+  {id:68,name:"@Transactional propagation types (REQUIRED, REQUIRES_NEW, NESTED)",pillar:"Spring Boot",section:"Spring Data & transactions",category:"Transactions",context:"Both",tip:""},
+  {id:69,name:"Isolation levels in Spring",pillar:"Spring Boot",section:"Spring Data & transactions",category:"Transactions",context:"Both",tip:""},
+  {id:70,name:"LazyInitializationException \u2014 why it happens",pillar:"Spring Boot",section:"Spring Data & transactions",category:"Transactions",context:"Both",tip:""},
+  {id:71,name:"N+1 problem & @EntityGraph",pillar:"Spring Boot",section:"Spring Data & transactions",category:"Transactions",context:"Both",tip:""},
+  {id:72,name:"JPQL vs native queries",pillar:"Spring Boot",section:"Spring Data & transactions",category:"Transactions",context:"Both",tip:""},
+  // Spring Data & transactions — REPOSITORIES
+  {id:73,name:"Custom query derivation",pillar:"Spring Boot",section:"Spring Data & transactions",category:"Repositories",context:"Both",tip:""},
+  {id:74,name:"@Query with JPQL",pillar:"Spring Boot",section:"Spring Data & transactions",category:"Repositories",context:"Both",tip:""},
+  {id:75,name:"Projections",pillar:"Spring Boot",section:"Spring Data & transactions",category:"Repositories",context:"Both",tip:""},
+  {id:76,name:"Pagination & sorting",pillar:"Spring Boot",section:"Spring Data & transactions",category:"Repositories",context:"Both",tip:""},
+
+  // ===== PILLAR 3 — Databases =====
+  // MySQL internals — INDEXING (HOME → Full-Focus)
+  {id:77,name:"B-Tree structure",pillar:"Databases",section:"MySQL internals",category:"Indexing",context:"Full-Focus",tip:"Know how to read EXPLAIN output cold. Very common at product companies. Practice on real queries."},
+  {id:78,name:"Clustered vs secondary index",pillar:"Databases",section:"MySQL internals",category:"Indexing",context:"Full-Focus",tip:""},
+  {id:79,name:"Composite index \u2014 column order matters",pillar:"Databases",section:"MySQL internals",category:"Indexing",context:"Full-Focus",tip:""},
+  {id:80,name:"Covering index",pillar:"Databases",section:"MySQL internals",category:"Indexing",context:"Full-Focus",tip:""},
+  {id:81,name:"Index selectivity",pillar:"Databases",section:"MySQL internals",category:"Indexing",context:"Full-Focus",tip:""},
+  {id:82,name:"EXPLAIN output reading",pillar:"Databases",section:"MySQL internals",category:"Indexing",context:"Full-Focus",tip:""},
+  // MySQL internals — TRANSACTIONS
+  {id:83,name:"ACID guarantees",pillar:"Databases",section:"MySQL internals",category:"DB Transactions",context:"Full-Focus",tip:""},
+  {id:84,name:"MVCC in InnoDB",pillar:"Databases",section:"MySQL internals",category:"DB Transactions",context:"Full-Focus",tip:""},
+  {id:85,name:"Isolation levels \u2014 read phenomena",pillar:"Databases",section:"MySQL internals",category:"DB Transactions",context:"Full-Focus",tip:""},
+  {id:86,name:"Gap locks vs record locks vs next-key locks",pillar:"Databases",section:"MySQL internals",category:"DB Transactions",context:"Full-Focus",tip:""},
+  {id:87,name:"Deadlock in DB layer",pillar:"Databases",section:"MySQL internals",category:"DB Transactions",context:"Full-Focus",tip:""},
+  // MySQL internals — QUERY OPTIMIZATION
+  {id:88,name:"Query execution plan",pillar:"Databases",section:"MySQL internals",category:"Query Optimization",context:"Full-Focus",tip:""},
+  {id:89,name:"Index hints",pillar:"Databases",section:"MySQL internals",category:"Query Optimization",context:"Full-Focus",tip:""},
+  {id:90,name:"Slow query log",pillar:"Databases",section:"MySQL internals",category:"Query Optimization",context:"Full-Focus",tip:""},
+  {id:91,name:"Partitioning strategies",pillar:"Databases",section:"MySQL internals",category:"Query Optimization",context:"Full-Focus",tip:""},
+  {id:92,name:"Sharding vs partitioning",pillar:"Databases",section:"MySQL internals",category:"Query Optimization",context:"Full-Focus",tip:""},
+  // MongoDB — CORE (BOTH)
+  {id:93,name:"Document model \u2014 embedding vs referencing",pillar:"Databases",section:"MongoDB",category:"MongoDB Core",context:"Both",tip:""},
+  {id:94,name:"Index types (compound, text, geo, TTL)",pillar:"Databases",section:"MongoDB",category:"MongoDB Core",context:"Both",tip:""},
+  {id:95,name:"Aggregation pipeline stages",pillar:"Databases",section:"MongoDB",category:"MongoDB Core",context:"Both",tip:""},
+  {id:96,name:"Write concern & read preference",pillar:"Databases",section:"MongoDB",category:"MongoDB Core",context:"Both",tip:""},
+  {id:97,name:"Replica sets",pillar:"Databases",section:"MongoDB",category:"MongoDB Core",context:"Both",tip:""},
+  {id:98,name:"Transactions in MongoDB 4+",pillar:"Databases",section:"MongoDB",category:"MongoDB Core",context:"Both",tip:""},
+  // MongoDB — SCHEMA DESIGN
+  {id:99,name:"Design for access patterns",pillar:"Databases",section:"MongoDB",category:"Schema Design",context:"Both",tip:""},
+  {id:100,name:"Avoid unbounded arrays",pillar:"Databases",section:"MongoDB",category:"Schema Design",context:"Both",tip:""},
+  {id:101,name:"When to normalize vs denormalize",pillar:"Databases",section:"MongoDB",category:"Schema Design",context:"Both",tip:""},
+  // ClickHouse & OLAP — OLAP CONCEPTS (OFFICE → Light)
+  {id:102,name:"Column-store advantages",pillar:"Databases",section:"ClickHouse & OLAP",category:"OLAP Concepts",context:"Light",tip:"You have real production experience here \u2014 mostly conceptual revision to nail the vocabulary."},
+  {id:103,name:"MergeTree engine",pillar:"Databases",section:"ClickHouse & OLAP",category:"OLAP Concepts",context:"Light",tip:""},
+  {id:104,name:"Materialized views",pillar:"Databases",section:"ClickHouse & OLAP",category:"OLAP Concepts",context:"Light",tip:""},
+  {id:105,name:"ReplicatedMergeTree",pillar:"Databases",section:"ClickHouse & OLAP",category:"OLAP Concepts",context:"Light",tip:""},
+  {id:106,name:"ClickHouse vs Druid vs BigQuery",pillar:"Databases",section:"ClickHouse & OLAP",category:"OLAP Concepts",context:"Light",tip:""},
+  // ClickHouse & OLAP — QUERY PATTERNS
+  {id:107,name:"Aggregation at scale",pillar:"Databases",section:"ClickHouse & OLAP",category:"OLAP Query Patterns",context:"Light",tip:""},
+  {id:108,name:"Pre-aggregation strategies",pillar:"Databases",section:"ClickHouse & OLAP",category:"OLAP Query Patterns",context:"Light",tip:""},
+  {id:109,name:"TTL for data lifecycle",pillar:"Databases",section:"ClickHouse & OLAP",category:"OLAP Query Patterns",context:"Light",tip:""},
+  // Redis deep dive — DATA STRUCTURES (BOTH)
+  {id:110,name:"String/Hash/List/Set/ZSet internals",pillar:"Databases",section:"Redis deep dive",category:"Redis Data Structures",context:"Both",tip:""},
+  {id:111,name:"HyperLogLog",pillar:"Databases",section:"Redis deep dive",category:"Redis Data Structures",context:"Both",tip:""},
+  {id:112,name:"Bloom filter (RedisBloom)",pillar:"Databases",section:"Redis deep dive",category:"Redis Data Structures",context:"Both",tip:""},
+  {id:113,name:"Streams",pillar:"Databases",section:"Redis deep dive",category:"Redis Data Structures",context:"Both",tip:""},
+  // Redis deep dive — CACHING PATTERNS
+  {id:114,name:"Cache-aside vs write-through vs write-behind",pillar:"Databases",section:"Redis deep dive",category:"Caching Patterns",context:"Both",tip:""},
+  {id:115,name:"TTL expiry strategies",pillar:"Databases",section:"Redis deep dive",category:"Caching Patterns",context:"Both",tip:""},
+  {id:116,name:"Cache stampede \u2014 mutex lock solution",pillar:"Databases",section:"Redis deep dive",category:"Caching Patterns",context:"Both",tip:""},
+  {id:117,name:"Distributed lock (Redlock)",pillar:"Databases",section:"Redis deep dive",category:"Caching Patterns",context:"Both",tip:""},
+  // Redis deep dive — CLUSTERING
+  {id:118,name:"Sentinel vs Cluster mode",pillar:"Databases",section:"Redis deep dive",category:"Redis Clustering",context:"Both",tip:""},
+  {id:119,name:"Hash slots",pillar:"Databases",section:"Redis deep dive",category:"Redis Clustering",context:"Both",tip:""},
+  {id:120,name:"Hot key problem",pillar:"Databases",section:"Redis deep dive",category:"Redis Clustering",context:"Both",tip:""},
+  {id:121,name:"Memory eviction policies",pillar:"Databases",section:"Redis deep dive",category:"Redis Clustering",context:"Both",tip:""},
+  // Database selection & CAP theory — THEORY (OFFICE → Light)
+  {id:122,name:"CAP theorem applied to real systems",pillar:"Databases",section:"Database selection & CAP theory",category:"CAP Theory",context:"Light",tip:""},
+  {id:123,name:"Eventual consistency patterns",pillar:"Databases",section:"Database selection & CAP theory",category:"CAP Theory",context:"Light",tip:""},
+  {id:124,name:"Read-your-writes",pillar:"Databases",section:"Database selection & CAP theory",category:"CAP Theory",context:"Light",tip:""},
+  {id:125,name:"Monotonic reads",pillar:"Databases",section:"Database selection & CAP theory",category:"CAP Theory",context:"Light",tip:""},
+  {id:126,name:"CRDT basics",pillar:"Databases",section:"Database selection & CAP theory",category:"CAP Theory",context:"Light",tip:""},
+  // Database selection — TRADEOFFS
+  {id:127,name:"RDBMS vs Document vs Column vs Graph",pillar:"Databases",section:"Database selection & CAP theory",category:"DB Tradeoffs",context:"Light",tip:""},
+  {id:128,name:"NewSQL tradeoffs",pillar:"Databases",section:"Database selection & CAP theory",category:"DB Tradeoffs",context:"Light",tip:""},
+  {id:129,name:"Polyglot persistence rationale",pillar:"Databases",section:"Database selection & CAP theory",category:"DB Tradeoffs",context:"Light",tip:""},
+
+  // ===== PILLAR 4 — Distributed Systems =====
+  // Core theory — CONSENSUS & REPLICATION (HOME → Full-Focus)
+  {id:130,name:"Leader election",pillar:"Distributed Systems",section:"Core theory",category:"Consensus & Replication",context:"Full-Focus",tip:"You don\u2019t need to implement Raft, but explaining it confidently in HLD is a differentiator at top-tier companies."},
+  {id:131,name:"Raft consensus (conceptual)",pillar:"Distributed Systems",section:"Core theory",category:"Consensus & Replication",context:"Full-Focus",tip:""},
+  {id:132,name:"Quorum reads/writes",pillar:"Distributed Systems",section:"Core theory",category:"Consensus & Replication",context:"Full-Focus",tip:""},
+  {id:133,name:"Gossip protocol",pillar:"Distributed Systems",section:"Core theory",category:"Consensus & Replication",context:"Full-Focus",tip:""},
+  {id:134,name:"Vector clocks",pillar:"Distributed Systems",section:"Core theory",category:"Consensus & Replication",context:"Full-Focus",tip:""},
+  {id:135,name:"Lamport timestamps",pillar:"Distributed Systems",section:"Core theory",category:"Consensus & Replication",context:"Full-Focus",tip:""},
+  // Core theory — FAILURE MODES
+  {id:136,name:"Network partitions",pillar:"Distributed Systems",section:"Core theory",category:"Failure Modes",context:"Full-Focus",tip:""},
+  {id:137,name:"Byzantine faults (awareness)",pillar:"Distributed Systems",section:"Core theory",category:"Failure Modes",context:"Full-Focus",tip:""},
+  {id:138,name:"Cascading failures",pillar:"Distributed Systems",section:"Core theory",category:"Failure Modes",context:"Full-Focus",tip:""},
+  {id:139,name:"Split-brain scenarios",pillar:"Distributed Systems",section:"Core theory",category:"Failure Modes",context:"Full-Focus",tip:""},
+  // Kafka depth — INTERNALS (HOME → Full-Focus)
+  {id:140,name:"Partition & offset model",pillar:"Distributed Systems",section:"Kafka depth",category:"Kafka Internals",context:"Full-Focus",tip:"This is your strongest card \u2014 real production experience. Nail the guarantees section to make this a genuine differentiator."},
+  {id:141,name:"Log segment & compaction",pillar:"Distributed Systems",section:"Kafka depth",category:"Kafka Internals",context:"Full-Focus",tip:""},
+  {id:142,name:"ISR \u2014 in-sync replicas",pillar:"Distributed Systems",section:"Kafka depth",category:"Kafka Internals",context:"Full-Focus",tip:""},
+  {id:143,name:"Leader epoch",pillar:"Distributed Systems",section:"Kafka depth",category:"Kafka Internals",context:"Full-Focus",tip:""},
+  {id:144,name:"Consumer group rebalancing",pillar:"Distributed Systems",section:"Kafka depth",category:"Kafka Internals",context:"Full-Focus",tip:""},
+  {id:145,name:"Sticky partition assignor",pillar:"Distributed Systems",section:"Kafka depth",category:"Kafka Internals",context:"Full-Focus",tip:""},
+  // Kafka depth — DELIVERY GUARANTEES
+  {id:146,name:"at-most-once / at-least-once / exactly-once",pillar:"Distributed Systems",section:"Kafka depth",category:"Delivery Guarantees",context:"Full-Focus",tip:""},
+  {id:147,name:"Idempotent producer",pillar:"Distributed Systems",section:"Kafka depth",category:"Delivery Guarantees",context:"Full-Focus",tip:""},
+  {id:148,name:"Transactional producer (2PC)",pillar:"Distributed Systems",section:"Kafka depth",category:"Delivery Guarantees",context:"Full-Focus",tip:""},
+  {id:149,name:"Consumer offset commit strategies",pillar:"Distributed Systems",section:"Kafka depth",category:"Delivery Guarantees",context:"Full-Focus",tip:""},
+  // Kafka depth — TUNING
+  {id:150,name:"batch.size & linger.ms",pillar:"Distributed Systems",section:"Kafka depth",category:"Kafka Tuning",context:"Full-Focus",tip:""},
+  {id:151,name:"acks=all vs acks=1",pillar:"Distributed Systems",section:"Kafka depth",category:"Kafka Tuning",context:"Full-Focus",tip:""},
+  {id:152,name:"max.poll.records",pillar:"Distributed Systems",section:"Kafka depth",category:"Kafka Tuning",context:"Full-Focus",tip:""},
+  {id:153,name:"Lag monitoring",pillar:"Distributed Systems",section:"Kafka depth",category:"Kafka Tuning",context:"Full-Focus",tip:""},
+  {id:154,name:"Schema registry basics",pillar:"Distributed Systems",section:"Kafka depth",category:"Kafka Tuning",context:"Full-Focus",tip:""},
+  // SQS & async patterns — SQS (OFFICE → Light)
+  {id:155,name:"Standard vs FIFO",pillar:"Distributed Systems",section:"SQS & async patterns",category:"SQS",context:"Light",tip:""},
+  {id:156,name:"Visibility timeout",pillar:"Distributed Systems",section:"SQS & async patterns",category:"SQS",context:"Light",tip:""},
+  {id:157,name:"Dead-letter queue (DLQ)",pillar:"Distributed Systems",section:"SQS & async patterns",category:"SQS",context:"Light",tip:""},
+  {id:158,name:"Long polling",pillar:"Distributed Systems",section:"SQS & async patterns",category:"SQS",context:"Light",tip:""},
+  {id:159,name:"Message deduplication",pillar:"Distributed Systems",section:"SQS & async patterns",category:"SQS",context:"Light",tip:""},
+  // SQS & async patterns — PATTERNS
+  {id:160,name:"Outbox pattern",pillar:"Distributed Systems",section:"SQS & async patterns",category:"Async Patterns",context:"Light",tip:""},
+  {id:161,name:"Saga pattern \u2014 choreography vs orchestration",pillar:"Distributed Systems",section:"SQS & async patterns",category:"Async Patterns",context:"Light",tip:""},
+  {id:162,name:"Event sourcing basics",pillar:"Distributed Systems",section:"SQS & async patterns",category:"Async Patterns",context:"Light",tip:""},
+  {id:163,name:"CQRS overview",pillar:"Distributed Systems",section:"SQS & async patterns",category:"Async Patterns",context:"Light",tip:""},
+  // Resilience patterns — PATTERNS (BOTH)
+  {id:164,name:"Circuit breaker (Resilience4j)",pillar:"Distributed Systems",section:"Resilience patterns",category:"Resilience",context:"Both",tip:""},
+  {id:165,name:"Retry with exponential backoff & jitter",pillar:"Distributed Systems",section:"Resilience patterns",category:"Resilience",context:"Both",tip:""},
+  {id:166,name:"Bulkhead isolation",pillar:"Distributed Systems",section:"Resilience patterns",category:"Resilience",context:"Both",tip:""},
+  {id:167,name:"Rate limiting algorithms (token bucket, leaky bucket, sliding window)",pillar:"Distributed Systems",section:"Resilience patterns",category:"Resilience",context:"Both",tip:""},
+  {id:168,name:"Timeout & deadline propagation",pillar:"Distributed Systems",section:"Resilience patterns",category:"Resilience",context:"Both",tip:""},
+  {id:169,name:"Fallback strategies",pillar:"Distributed Systems",section:"Resilience patterns",category:"Resilience",context:"Both",tip:""},
+  // Resilience patterns — LIBRARIES
+  {id:170,name:"Resilience4j annotations",pillar:"Distributed Systems",section:"Resilience patterns",category:"Resilience Libraries",context:"Both",tip:""},
+  {id:171,name:"Spring Retry",pillar:"Distributed Systems",section:"Resilience patterns",category:"Resilience Libraries",context:"Both",tip:""},
+  {id:172,name:"Feign client with fallback",pillar:"Distributed Systems",section:"Resilience patterns",category:"Resilience Libraries",context:"Both",tip:""},
+  // Consistent hashing & load balancing — HASHING (OFFICE → Light)
+  {id:173,name:"Virtual nodes",pillar:"Distributed Systems",section:"Consistent hashing & load balancing",category:"Hashing",context:"Light",tip:""},
+  {id:174,name:"Consistent hash ring",pillar:"Distributed Systems",section:"Consistent hashing & load balancing",category:"Hashing",context:"Light",tip:""},
+  {id:175,name:"Rendezvous hashing",pillar:"Distributed Systems",section:"Consistent hashing & load balancing",category:"Hashing",context:"Light",tip:""},
+  {id:176,name:"Jump consistent hash",pillar:"Distributed Systems",section:"Consistent hashing & load balancing",category:"Hashing",context:"Light",tip:""},
+  // Consistent hashing & load balancing — LOAD BALANCING
+  {id:177,name:"Round-robin / weighted / least-connections",pillar:"Distributed Systems",section:"Consistent hashing & load balancing",category:"Load Balancing",context:"Light",tip:""},
+  {id:178,name:"L4 vs L7 LB",pillar:"Distributed Systems",section:"Consistent hashing & load balancing",category:"Load Balancing",context:"Light",tip:""},
+  {id:179,name:"Sticky sessions",pillar:"Distributed Systems",section:"Consistent hashing & load balancing",category:"Load Balancing",context:"Light",tip:""},
+  {id:180,name:"Health check strategies",pillar:"Distributed Systems",section:"Consistent hashing & load balancing",category:"Load Balancing",context:"Light",tip:""},
+
+  // ===== PILLAR 5 — High-Level Design (HLD) =====
+  // HLD methodology & framework — INTERVIEW FRAMEWORK (HOME → Full-Focus)
+  {id:181,name:"Requirement clarification (functional vs non-functional)",pillar:"HLD",section:"HLD methodology & framework",category:"Interview Framework",context:"Full-Focus",tip:"Practice this framework on every system. The structured process matters as much as the answer itself."},
+  {id:182,name:"Capacity estimation (QPS, storage, bandwidth)",pillar:"HLD",section:"HLD methodology & framework",category:"Interview Framework",context:"Full-Focus",tip:""},
+  {id:183,name:"API design first",pillar:"HLD",section:"HLD methodology & framework",category:"Interview Framework",context:"Full-Focus",tip:""},
+  {id:184,name:"Data model design",pillar:"HLD",section:"HLD methodology & framework",category:"Interview Framework",context:"Full-Focus",tip:""},
+  {id:185,name:"High-level component diagram",pillar:"HLD",section:"HLD methodology & framework",category:"Interview Framework",context:"Full-Focus",tip:""},
+  {id:186,name:"Deep-dive on the bottleneck component",pillar:"HLD",section:"HLD methodology & framework",category:"Interview Framework",context:"Full-Focus",tip:""},
+  {id:187,name:"SLI / SLO / SLA definitions",pillar:"HLD",section:"HLD methodology & framework",category:"Interview Framework",context:"Full-Focus",tip:""},
+  // Core systems to practice — TIER 1 (HOME → Full-Focus)
+  {id:188,name:"URL shortener",pillar:"HLD",section:"Core systems to practice",category:"Tier 1 \u2014 Must Do",context:"Full-Focus",tip:""},
+  {id:189,name:"Rate limiter",pillar:"HLD",section:"Core systems to practice",category:"Tier 1 \u2014 Must Do",context:"Full-Focus",tip:""},
+  {id:190,name:"Notification system",pillar:"HLD",section:"Core systems to practice",category:"Tier 1 \u2014 Must Do",context:"Full-Focus",tip:""},
+  {id:191,name:"Chat system (WhatsApp-like)",pillar:"HLD",section:"Core systems to practice",category:"Tier 1 \u2014 Must Do",context:"Full-Focus",tip:""},
+  {id:192,name:"News feed / timeline",pillar:"HLD",section:"Core systems to practice",category:"Tier 1 \u2014 Must Do",context:"Full-Focus",tip:""},
+  {id:193,name:"Search autocomplete",pillar:"HLD",section:"Core systems to practice",category:"Tier 1 \u2014 Must Do",context:"Full-Focus",tip:""},
+  {id:194,name:"Distributed cache",pillar:"HLD",section:"Core systems to practice",category:"Tier 1 \u2014 Must Do",context:"Full-Focus",tip:""},
+  {id:195,name:"Job scheduler",pillar:"HLD",section:"Core systems to practice",category:"Tier 1 \u2014 Must Do",context:"Full-Focus",tip:""},
+  // Core systems to practice — TIER 2
+  {id:196,name:"Payment system",pillar:"HLD",section:"Core systems to practice",category:"Tier 2 \u2014 Important",context:"Full-Focus",tip:""},
+  {id:197,name:"Ride-sharing location service",pillar:"HLD",section:"Core systems to practice",category:"Tier 2 \u2014 Important",context:"Full-Focus",tip:""},
+  {id:198,name:"Video upload & streaming",pillar:"HLD",section:"Core systems to practice",category:"Tier 2 \u2014 Important",context:"Full-Focus",tip:""},
+  {id:199,name:"E-commerce order system",pillar:"HLD",section:"Core systems to practice",category:"Tier 2 \u2014 Important",context:"Full-Focus",tip:""},
+  {id:200,name:"Distributed ID generator",pillar:"HLD",section:"Core systems to practice",category:"Tier 2 \u2014 Important",context:"Full-Focus",tip:""},
+  {id:201,name:"Logging & metrics pipeline",pillar:"HLD",section:"Core systems to practice",category:"Tier 2 \u2014 Important",context:"Full-Focus",tip:""},
+  // Core systems to practice — TIER 3
+  {id:202,name:"Google Docs collaborative editing",pillar:"HLD",section:"Core systems to practice",category:"Tier 3 \u2014 Good to Have",context:"Full-Focus",tip:""},
+  {id:203,name:"Hotel/flight booking",pillar:"HLD",section:"Core systems to practice",category:"Tier 3 \u2014 Good to Have",context:"Full-Focus",tip:""},
+  {id:204,name:"Ad click aggregation",pillar:"HLD",section:"Core systems to practice",category:"Tier 3 \u2014 Good to Have",context:"Full-Focus",tip:""},
+  {id:205,name:"Distributed file storage (S3-like)",pillar:"HLD",section:"Core systems to practice",category:"Tier 3 \u2014 Good to Have",context:"Full-Focus",tip:""},
+  // Architecture patterns — PATTERNS (OFFICE → Light)
+  {id:206,name:"Microservices vs monolith tradeoffs",pillar:"HLD",section:"Architecture patterns",category:"Arch Patterns",context:"Light",tip:""},
+  {id:207,name:"Event-driven architecture",pillar:"HLD",section:"Architecture patterns",category:"Arch Patterns",context:"Light",tip:""},
+  {id:208,name:"CQRS & event sourcing",pillar:"HLD",section:"Architecture patterns",category:"Arch Patterns",context:"Light",tip:""},
+  {id:209,name:"Sidecar & service mesh",pillar:"HLD",section:"Architecture patterns",category:"Arch Patterns",context:"Light",tip:""},
+  {id:210,name:"API gateway patterns",pillar:"HLD",section:"Architecture patterns",category:"Arch Patterns",context:"Light",tip:""},
+  {id:211,name:"BFF (Backend for Frontend)",pillar:"HLD",section:"Architecture patterns",category:"Arch Patterns",context:"Light",tip:""},
+  {id:212,name:"Strangler fig migration",pillar:"HLD",section:"Architecture patterns",category:"Arch Patterns",context:"Light",tip:""},
+  // Architecture patterns — DATA PATTERNS
+  {id:213,name:"Fan-out on write vs read",pillar:"HLD",section:"Architecture patterns",category:"Data Patterns",context:"Light",tip:""},
+  {id:214,name:"Hot partition problem",pillar:"HLD",section:"Architecture patterns",category:"Data Patterns",context:"Light",tip:""},
+  {id:215,name:"Write amplification",pillar:"HLD",section:"Architecture patterns",category:"Data Patterns",context:"Light",tip:""},
+  {id:216,name:"Read-your-writes consistency",pillar:"HLD",section:"Architecture patterns",category:"Data Patterns",context:"Light",tip:""},
+  // Infrastructure & cloud (AWS) — AWS SERVICES (OFFICE → Light)
+  {id:217,name:"Lambda cold start problem",pillar:"HLD",section:"Infrastructure & cloud (AWS)",category:"AWS Services",context:"Light",tip:""},
+  {id:218,name:"SQS vs SNS vs EventBridge",pillar:"HLD",section:"Infrastructure & cloud (AWS)",category:"AWS Services",context:"Light",tip:""},
+  {id:219,name:"S3 consistency model",pillar:"HLD",section:"Infrastructure & cloud (AWS)",category:"AWS Services",context:"Light",tip:""},
+  {id:220,name:"RDS vs Aurora",pillar:"HLD",section:"Infrastructure & cloud (AWS)",category:"AWS Services",context:"Light",tip:""},
+  {id:221,name:"ElastiCache setup",pillar:"HLD",section:"Infrastructure & cloud (AWS)",category:"AWS Services",context:"Light",tip:""},
+  {id:222,name:"API Gateway throttling",pillar:"HLD",section:"Infrastructure & cloud (AWS)",category:"AWS Services",context:"Light",tip:""},
+  {id:223,name:"CloudFront CDN patterns",pillar:"HLD",section:"Infrastructure & cloud (AWS)",category:"AWS Services",context:"Light",tip:""},
+  // Infrastructure — CONTAINERS & K8S
+  {id:224,name:"Docker layer caching",pillar:"HLD",section:"Infrastructure & cloud (AWS)",category:"Containers & K8s",context:"Light",tip:""},
+  {id:225,name:"K8s pod scheduling basics",pillar:"HLD",section:"Infrastructure & cloud (AWS)",category:"Containers & K8s",context:"Light",tip:""},
+  {id:226,name:"HPA vs VPA",pillar:"HLD",section:"Infrastructure & cloud (AWS)",category:"Containers & K8s",context:"Light",tip:""},
+  {id:227,name:"Health probes (liveness vs readiness)",pillar:"HLD",section:"Infrastructure & cloud (AWS)",category:"Containers & K8s",context:"Light",tip:""},
+  {id:228,name:"Service mesh (Istio concept)",pillar:"HLD",section:"Infrastructure & cloud (AWS)",category:"Containers & K8s",context:"Light",tip:""},
+
+  // ===== PILLAR 6 — Low-Level Design (LLD) =====
+  // SOLID & OOP principles — SOLID (HOME → Full-Focus)
+  {id:229,name:"SRP \u2014 single class responsibility",pillar:"LLD",section:"SOLID & OOP principles",category:"SOLID",context:"Full-Focus",tip:"Be ready to refactor a class that violates SOLID principles live in the interview."},
+  {id:230,name:"OCP \u2014 open for extension",pillar:"LLD",section:"SOLID & OOP principles",category:"SOLID",context:"Full-Focus",tip:""},
+  {id:231,name:"LSP \u2014 substitutability",pillar:"LLD",section:"SOLID & OOP principles",category:"SOLID",context:"Full-Focus",tip:""},
+  {id:232,name:"ISP \u2014 interface segregation",pillar:"LLD",section:"SOLID & OOP principles",category:"SOLID",context:"Full-Focus",tip:""},
+  {id:233,name:"DIP \u2014 depend on abstractions",pillar:"LLD",section:"SOLID & OOP principles",category:"SOLID",context:"Full-Focus",tip:""},
+  // SOLID & OOP — OOP DEPTH
+  {id:234,name:"Composition over inheritance",pillar:"LLD",section:"SOLID & OOP principles",category:"OOP Depth",context:"Full-Focus",tip:""},
+  {id:235,name:"Encapsulation in Java",pillar:"LLD",section:"SOLID & OOP principles",category:"OOP Depth",context:"Full-Focus",tip:""},
+  {id:236,name:"Polymorphism \u2014 runtime vs compile-time",pillar:"LLD",section:"SOLID & OOP principles",category:"OOP Depth",context:"Full-Focus",tip:""},
+  {id:237,name:"Abstract class vs interface tradeoffs",pillar:"LLD",section:"SOLID & OOP principles",category:"OOP Depth",context:"Full-Focus",tip:""},
+  // Design patterns — CREATIONAL (HOME → Full-Focus)
+  {id:238,name:"Singleton (thread-safe \u2014 double-checked locking)",pillar:"LLD",section:"Design patterns",category:"Creational Patterns",context:"Full-Focus",tip:""},
+  {id:239,name:"Builder (Lombok vs manual)",pillar:"LLD",section:"Design patterns",category:"Creational Patterns",context:"Full-Focus",tip:""},
+  {id:240,name:"Factory method",pillar:"LLD",section:"Design patterns",category:"Creational Patterns",context:"Full-Focus",tip:""},
+  {id:241,name:"Abstract factory",pillar:"LLD",section:"Design patterns",category:"Creational Patterns",context:"Full-Focus",tip:""},
+  {id:242,name:"Prototype",pillar:"LLD",section:"Design patterns",category:"Creational Patterns",context:"Full-Focus",tip:""},
+  // Design patterns — STRUCTURAL
+  {id:243,name:"Decorator",pillar:"LLD",section:"Design patterns",category:"Structural Patterns",context:"Full-Focus",tip:""},
+  {id:244,name:"Adapter",pillar:"LLD",section:"Design patterns",category:"Structural Patterns",context:"Full-Focus",tip:""},
+  {id:245,name:"Proxy (JDK dynamic proxy)",pillar:"LLD",section:"Design patterns",category:"Structural Patterns",context:"Full-Focus",tip:""},
+  {id:246,name:"Facade",pillar:"LLD",section:"Design patterns",category:"Structural Patterns",context:"Full-Focus",tip:""},
+  {id:247,name:"Composite",pillar:"LLD",section:"Design patterns",category:"Structural Patterns",context:"Full-Focus",tip:""},
+  {id:248,name:"Flyweight",pillar:"LLD",section:"Design patterns",category:"Structural Patterns",context:"Full-Focus",tip:""},
+  // Design patterns — BEHAVIORAL
+  {id:249,name:"Strategy",pillar:"LLD",section:"Design patterns",category:"Behavioral Patterns",context:"Full-Focus",tip:""},
+  {id:250,name:"Observer",pillar:"LLD",section:"Design patterns",category:"Behavioral Patterns",context:"Full-Focus",tip:""},
+  {id:251,name:"Command",pillar:"LLD",section:"Design patterns",category:"Behavioral Patterns",context:"Full-Focus",tip:""},
+  {id:252,name:"Chain of responsibility",pillar:"LLD",section:"Design patterns",category:"Behavioral Patterns",context:"Full-Focus",tip:""},
+  {id:253,name:"State machine",pillar:"LLD",section:"Design patterns",category:"Behavioral Patterns",context:"Full-Focus",tip:""},
+  {id:254,name:"Template method",pillar:"LLD",section:"Design patterns",category:"Behavioral Patterns",context:"Full-Focus",tip:""},
+  {id:255,name:"Iterator",pillar:"LLD",section:"Design patterns",category:"Behavioral Patterns",context:"Full-Focus",tip:""},
+  // LLD practice problems — TIER 1 (HOME → Full-Focus)
+  {id:256,name:"Parking lot system",pillar:"LLD",section:"LLD practice problems",category:"LLD Tier 1 \u2014 Must Code",context:"Full-Focus",tip:"Code these fully in Java \u2014 not just class diagrams. Focus on extensibility, not just correctness."},
+  {id:257,name:"Elevator / lift system",pillar:"LLD",section:"LLD practice problems",category:"LLD Tier 1 \u2014 Must Code",context:"Full-Focus",tip:""},
+  {id:258,name:"Library management",pillar:"LLD",section:"LLD practice problems",category:"LLD Tier 1 \u2014 Must Code",context:"Full-Focus",tip:""},
+  {id:259,name:"Chess game",pillar:"LLD",section:"LLD practice problems",category:"LLD Tier 1 \u2014 Must Code",context:"Full-Focus",tip:""},
+  {id:260,name:"Snake and ladder",pillar:"LLD",section:"LLD practice problems",category:"LLD Tier 1 \u2014 Must Code",context:"Full-Focus",tip:""},
+  {id:261,name:"ATM machine",pillar:"LLD",section:"LLD practice problems",category:"LLD Tier 1 \u2014 Must Code",context:"Full-Focus",tip:""},
+  {id:262,name:"Tic-tac-toe / Connect Four",pillar:"LLD",section:"LLD practice problems",category:"LLD Tier 1 \u2014 Must Code",context:"Full-Focus",tip:""},
+  // LLD practice problems — TIER 2
+  {id:263,name:"Hotel management",pillar:"LLD",section:"LLD practice problems",category:"LLD Tier 2 \u2014 Important",context:"Full-Focus",tip:""},
+  {id:264,name:"Ride-sharing LLD (Ola/Uber)",pillar:"LLD",section:"LLD practice problems",category:"LLD Tier 2 \u2014 Important",context:"Full-Focus",tip:""},
+  {id:265,name:"Movie ticket booking (BookMyShow)",pillar:"LLD",section:"LLD practice problems",category:"LLD Tier 2 \u2014 Important",context:"Full-Focus",tip:""},
+  {id:266,name:"Food delivery (Swiggy LLD)",pillar:"LLD",section:"LLD practice problems",category:"LLD Tier 2 \u2014 Important",context:"Full-Focus",tip:""},
+  {id:267,name:"Splitwise",pillar:"LLD",section:"LLD practice problems",category:"LLD Tier 2 \u2014 Important",context:"Full-Focus",tip:""},
+  {id:268,name:"Vending machine",pillar:"LLD",section:"LLD practice problems",category:"LLD Tier 2 \u2014 Important",context:"Full-Focus",tip:""},
+  {id:269,name:"Online auction",pillar:"LLD",section:"LLD practice problems",category:"LLD Tier 2 \u2014 Important",context:"Full-Focus",tip:""},
+  // LLD practice problems — TIER 3
+  {id:270,name:"Stock exchange order matching",pillar:"LLD",section:"LLD practice problems",category:"LLD Tier 3 \u2014 Good to Have",context:"Full-Focus",tip:""},
+  {id:271,name:"Traffic light controller",pillar:"LLD",section:"LLD practice problems",category:"LLD Tier 3 \u2014 Good to Have",context:"Full-Focus",tip:""},
+  {id:272,name:"Log parser system",pillar:"LLD",section:"LLD practice problems",category:"LLD Tier 3 \u2014 Good to Have",context:"Full-Focus",tip:""},
+  // Concurrency in LLD — PATTERNS (HOME → Full-Focus)
+  {id:273,name:"Producer-consumer with BlockingQueue",pillar:"LLD",section:"Concurrency in LLD",category:"Concurrency Patterns",context:"Full-Focus",tip:""},
+  {id:274,name:"Reader-writer lock pattern",pillar:"LLD",section:"Concurrency in LLD",category:"Concurrency Patterns",context:"Full-Focus",tip:""},
+  {id:275,name:"Thread-safe singleton variants",pillar:"LLD",section:"Concurrency in LLD",category:"Concurrency Patterns",context:"Full-Focus",tip:""},
+  {id:276,name:"Semaphore-based rate limiter",pillar:"LLD",section:"Concurrency in LLD",category:"Concurrency Patterns",context:"Full-Focus",tip:""},
+  {id:277,name:"ExecutorService task dispatch",pillar:"LLD",section:"Concurrency in LLD",category:"Concurrency Patterns",context:"Full-Focus",tip:""},
+
+  // ===== PILLAR 7 — Observability & Operations =====
+  // Three pillars of observability — METRICS (OFFICE → Light)
+  {id:278,name:"RED method (Rate, Errors, Duration)",pillar:"Observability",section:"Three pillars of observability",category:"Metrics",context:"Light",tip:""},
+  {id:279,name:"USE method (Utilization, Saturation, Errors)",pillar:"Observability",section:"Three pillars of observability",category:"Metrics",context:"Light",tip:""},
+  {id:280,name:"Prometheus data model",pillar:"Observability",section:"Three pillars of observability",category:"Metrics",context:"Light",tip:""},
+  {id:281,name:"Gauge vs Counter vs Histogram",pillar:"Observability",section:"Three pillars of observability",category:"Metrics",context:"Light",tip:""},
+  {id:282,name:"Alerting thresholds",pillar:"Observability",section:"Three pillars of observability",category:"Metrics",context:"Light",tip:""},
+  // Three pillars — LOGS
+  {id:283,name:"Structured logging (JSON)",pillar:"Observability",section:"Three pillars of observability",category:"Logs",context:"Light",tip:""},
+  {id:284,name:"Correlation IDs / trace IDs",pillar:"Observability",section:"Three pillars of observability",category:"Logs",context:"Light",tip:""},
+  {id:285,name:"Log levels strategy",pillar:"Observability",section:"Three pillars of observability",category:"Logs",context:"Light",tip:""},
+  {id:286,name:"ELK / Loki stack overview",pillar:"Observability",section:"Three pillars of observability",category:"Logs",context:"Light",tip:""},
+  // Three pillars — TRACES
+  {id:287,name:"Distributed tracing concepts",pillar:"Observability",section:"Three pillars of observability",category:"Traces",context:"Light",tip:""},
+  {id:288,name:"OpenTelemetry instrumentation",pillar:"Observability",section:"Three pillars of observability",category:"Traces",context:"Light",tip:""},
+  {id:289,name:"Jaeger / Zipkin",pillar:"Observability",section:"Three pillars of observability",category:"Traces",context:"Light",tip:""},
+  {id:290,name:"Trace sampling strategies",pillar:"Observability",section:"Three pillars of observability",category:"Traces",context:"Light",tip:""},
+  // SLI / SLO / SLA — DEFINITIONS (OFFICE → Light)
+  {id:291,name:"SLI examples for APIs",pillar:"Observability",section:"SLI / SLO / SLA",category:"SLI/SLO/SLA",context:"Light",tip:""},
+  {id:292,name:"Error budget concept",pillar:"Observability",section:"SLI / SLO / SLA",category:"SLI/SLO/SLA",context:"Light",tip:""},
+  {id:293,name:"SLO violation response",pillar:"Observability",section:"SLI / SLO / SLA",category:"SLI/SLO/SLA",context:"Light",tip:""},
+  {id:294,name:"Toil vs engineering work",pillar:"Observability",section:"SLI / SLO / SLA",category:"SLI/SLO/SLA",context:"Light",tip:""},
+  // Performance profiling — APPLICATION (HOME → Full-Focus)
+  {id:295,name:"Async Profiler",pillar:"Observability",section:"Performance profiling",category:"Performance",context:"Full-Focus",tip:""},
+  {id:296,name:"Flame graphs reading",pillar:"Observability",section:"Performance profiling",category:"Performance",context:"Full-Focus",tip:""},
+  {id:297,name:"Thread contention analysis",pillar:"Observability",section:"Performance profiling",category:"Performance",context:"Full-Focus",tip:""},
+  {id:298,name:"DB connection pool sizing",pillar:"Observability",section:"Performance profiling",category:"Performance",context:"Full-Focus",tip:""},
+  {id:299,name:"HTTP connection pool tuning",pillar:"Observability",section:"Performance profiling",category:"Performance",context:"Full-Focus",tip:""},
+
+  // ===== PILLAR 8 — Networking & APIs =====
+  // HTTP & REST depth — HTTP (OFFICE → Light)
+  {id:300,name:"HTTP/1.1 keep-alive",pillar:"Networking & APIs",section:"HTTP & REST depth",category:"HTTP",context:"Light",tip:""},
+  {id:301,name:"HTTP/2 multiplexing",pillar:"Networking & APIs",section:"HTTP & REST depth",category:"HTTP",context:"Light",tip:""},
+  {id:302,name:"HTTP/3 QUIC",pillar:"Networking & APIs",section:"HTTP & REST depth",category:"HTTP",context:"Light",tip:""},
+  {id:303,name:"Status codes \u2014 semantic correctness",pillar:"Networking & APIs",section:"HTTP & REST depth",category:"HTTP",context:"Light",tip:""},
+  {id:304,name:"Idempotency & safe methods",pillar:"Networking & APIs",section:"HTTP & REST depth",category:"HTTP",context:"Light",tip:""},
+  {id:305,name:"Content negotiation",pillar:"Networking & APIs",section:"HTTP & REST depth",category:"HTTP",context:"Light",tip:""},
+  {id:306,name:"ETag & caching headers",pillar:"Networking & APIs",section:"HTTP & REST depth",category:"HTTP",context:"Light",tip:""},
+  // HTTP & REST depth — REST DESIGN
+  {id:307,name:"Resource naming conventions",pillar:"Networking & APIs",section:"HTTP & REST depth",category:"REST Design",context:"Light",tip:""},
+  {id:308,name:"Pagination (cursor vs offset)",pillar:"Networking & APIs",section:"HTTP & REST depth",category:"REST Design",context:"Light",tip:""},
+  {id:309,name:"Versioning strategies",pillar:"Networking & APIs",section:"HTTP & REST depth",category:"REST Design",context:"Light",tip:""},
+  {id:310,name:"HATEOAS concept",pillar:"Networking & APIs",section:"HTTP & REST depth",category:"REST Design",context:"Light",tip:""},
+  {id:311,name:"OpenAPI / Swagger",pillar:"Networking & APIs",section:"HTTP & REST depth",category:"REST Design",context:"Light",tip:""},
+  // gRPC & Protobuf — GRPC (BOTH)
+  {id:312,name:"Protobuf binary encoding",pillar:"Networking & APIs",section:"gRPC & Protobuf",category:"gRPC",context:"Both",tip:""},
+  {id:313,name:"4 communication modes (unary, server/client/bidirectional streaming)",pillar:"Networking & APIs",section:"gRPC & Protobuf",category:"gRPC",context:"Both",tip:""},
+  {id:314,name:"Interceptors",pillar:"Networking & APIs",section:"gRPC & Protobuf",category:"gRPC",context:"Both",tip:""},
+  {id:315,name:"Deadlines & cancellation",pillar:"Networking & APIs",section:"gRPC & Protobuf",category:"gRPC",context:"Both",tip:""},
+  {id:316,name:"gRPC vs REST tradeoffs",pillar:"Networking & APIs",section:"gRPC & Protobuf",category:"gRPC",context:"Both",tip:""},
+  {id:317,name:"Service reflection",pillar:"Networking & APIs",section:"gRPC & Protobuf",category:"gRPC",context:"Both",tip:""},
+  // WebSockets & real-time — REAL-TIME PROTOCOLS (OFFICE → Light)
+  {id:318,name:"WebSocket upgrade handshake",pillar:"Networking & APIs",section:"WebSockets & real-time",category:"Real-Time Protocols",context:"Light",tip:""},
+  {id:319,name:"SSE vs WebSocket tradeoffs",pillar:"Networking & APIs",section:"WebSockets & real-time",category:"Real-Time Protocols",context:"Light",tip:""},
+  {id:320,name:"Long polling vs SSE",pillar:"Networking & APIs",section:"WebSockets & real-time",category:"Real-Time Protocols",context:"Light",tip:""},
+  {id:321,name:"Spring WebSocket + STOMP",pillar:"Networking & APIs",section:"WebSockets & real-time",category:"Real-Time Protocols",context:"Light",tip:""},
+  {id:322,name:"Heartbeat & reconnection patterns",pillar:"Networking & APIs",section:"WebSockets & real-time",category:"Real-Time Protocols",context:"Light",tip:""},
+  // TCP/IP fundamentals — NETWORKING (OFFICE → Light)
+  {id:323,name:"3-way handshake",pillar:"Networking & APIs",section:"TCP/IP fundamentals",category:"TCP/IP",context:"Light",tip:""},
+  {id:324,name:"TIME_WAIT & FIN_WAIT",pillar:"Networking & APIs",section:"TCP/IP fundamentals",category:"TCP/IP",context:"Light",tip:""},
+  {id:325,name:"TCP backlog & accept queue",pillar:"Networking & APIs",section:"TCP/IP fundamentals",category:"TCP/IP",context:"Light",tip:""},
+  {id:326,name:"Nagle\u2019s algorithm",pillar:"Networking & APIs",section:"TCP/IP fundamentals",category:"TCP/IP",context:"Light",tip:""},
+  {id:327,name:"DNS resolution & TTL",pillar:"Networking & APIs",section:"TCP/IP fundamentals",category:"TCP/IP",context:"Light",tip:""},
+  {id:328,name:"CDN routing",pillar:"Networking & APIs",section:"TCP/IP fundamentals",category:"TCP/IP",context:"Light",tip:""},
+
+  // ===== PILLAR 9 — Security =====
+  // Auth patterns — AUTHENTICATION (BOTH)
+  {id:329,name:"JWT structure (header.payload.sig)",pillar:"Security",section:"Auth patterns",category:"Authentication",context:"Both",tip:""},
+  {id:330,name:"JWT vs session cookie tradeoffs",pillar:"Security",section:"Auth patterns",category:"Authentication",context:"Both",tip:""},
+  {id:331,name:"OAuth2 flows (code, implicit, client credentials)",pillar:"Security",section:"Auth patterns",category:"Authentication",context:"Both",tip:""},
+  {id:332,name:"PKCE flow",pillar:"Security",section:"Auth patterns",category:"Authentication",context:"Both",tip:""},
+  {id:333,name:"Refresh token rotation",pillar:"Security",section:"Auth patterns",category:"Authentication",context:"Both",tip:""},
+  {id:334,name:"Token revocation strategies",pillar:"Security",section:"Auth patterns",category:"Authentication",context:"Both",tip:""},
+  // Auth patterns — AUTHORIZATION
+  {id:335,name:"RBAC vs ABAC",pillar:"Security",section:"Auth patterns",category:"Authorization",context:"Both",tip:""},
+  {id:336,name:"@PreAuthorize with SpEL",pillar:"Security",section:"Auth patterns",category:"Authorization",context:"Both",tip:""},
+  {id:337,name:"Row-level security patterns",pillar:"Security",section:"Auth patterns",category:"Authorization",context:"Both",tip:""},
+  {id:338,name:"API key management",pillar:"Security",section:"Auth patterns",category:"Authorization",context:"Both",tip:""},
+  // Common vulnerabilities (OWASP) — VULNERABILITIES (OFFICE → Light)
+  {id:339,name:"SQL injection & parameterized queries",pillar:"Security",section:"Common vulnerabilities (OWASP)",category:"Vulnerabilities",context:"Light",tip:""},
+  {id:340,name:"XSS \u2014 stored vs reflected",pillar:"Security",section:"Common vulnerabilities (OWASP)",category:"Vulnerabilities",context:"Light",tip:""},
+  {id:341,name:"CSRF \u2014 SameSite cookies",pillar:"Security",section:"Common vulnerabilities (OWASP)",category:"Vulnerabilities",context:"Light",tip:""},
+  {id:342,name:"IDOR (Insecure Direct Object Reference)",pillar:"Security",section:"Common vulnerabilities (OWASP)",category:"Vulnerabilities",context:"Light",tip:""},
+  {id:343,name:"Mass assignment",pillar:"Security",section:"Common vulnerabilities (OWASP)",category:"Vulnerabilities",context:"Light",tip:""},
+  {id:344,name:"Rate limiting as security control",pillar:"Security",section:"Common vulnerabilities (OWASP)",category:"Vulnerabilities",context:"Light",tip:""},
+  {id:345,name:"Secret management (Vault, AWS Secrets Manager)",pillar:"Security",section:"Common vulnerabilities (OWASP)",category:"Vulnerabilities",context:"Light",tip:""},
+  // Encryption & crypto basics — CRYPTO (OFFICE → Light)
+  {id:346,name:"Symmetric vs asymmetric encryption",pillar:"Security",section:"Encryption & crypto basics",category:"Crypto",context:"Light",tip:""},
+  {id:347,name:"TLS handshake (conceptual)",pillar:"Security",section:"Encryption & crypto basics",category:"Crypto",context:"Light",tip:""},
+  {id:348,name:"mTLS in microservices",pillar:"Security",section:"Encryption & crypto basics",category:"Crypto",context:"Light",tip:""},
+  {id:349,name:"Hashing vs encryption vs encoding",pillar:"Security",section:"Encryption & crypto basics",category:"Crypto",context:"Light",tip:""},
+  {id:350,name:"bcrypt for password storage",pillar:"Security",section:"Encryption & crypto basics",category:"Crypto",context:"Light",tip:""},
+  {id:351,name:"HMAC for message integrity",pillar:"Security",section:"Encryption & crypto basics",category:"Crypto",context:"Light",tip:""},
+
+  // ===== PILLAR 10 — Behavioural & Engineering Mindset =====
+  // STAR stories preparation — STORIES TO PREPARE (OFFICE → Light)
+  {id:352,name:"Led a complex migration (monolith to microservice)",pillar:"Behavioural",section:"STAR stories preparation",category:"STAR Stories",context:"Light",tip:"Map each story to your actual work at Country Delight. You have strong material \u2014 offer engine, analytics platform, referral microservice migration. Prepare these tightly."},
+  {id:353,name:"Improved performance under pressure",pillar:"Behavioural",section:"STAR stories preparation",category:"STAR Stories",context:"Light",tip:""},
+  {id:354,name:"Handled prod incident & RCA",pillar:"Behavioural",section:"STAR stories preparation",category:"STAR Stories",context:"Light",tip:""},
+  {id:355,name:"Influenced a technical decision",pillar:"Behavioural",section:"STAR stories preparation",category:"STAR Stories",context:"Light",tip:""},
+  {id:356,name:"Navigated ambiguous requirements",pillar:"Behavioural",section:"STAR stories preparation",category:"STAR Stories",context:"Light",tip:""},
+  {id:357,name:"Disagreed with a senior and handled it constructively",pillar:"Behavioural",section:"STAR stories preparation",category:"STAR Stories",context:"Light",tip:""},
+  {id:358,name:"Mentored a junior developer",pillar:"Behavioural",section:"STAR stories preparation",category:"STAR Stories",context:"Light",tip:""},
+  // Technical communication — SKILLS (OFFICE → Light)
+  {id:359,name:"How to explain tradeoffs",pillar:"Behavioural",section:"Technical communication",category:"Communication Skills",context:"Light",tip:""},
+  {id:360,name:"How to structure an HLD response",pillar:"Behavioural",section:"Technical communication",category:"Communication Skills",context:"Light",tip:""},
+  {id:361,name:"How to ask clarifying questions systematically",pillar:"Behavioural",section:"Technical communication",category:"Communication Skills",context:"Light",tip:""},
+  {id:362,name:"How to handle \u2018I don\u2019t know\u2019 gracefully",pillar:"Behavioural",section:"Technical communication",category:"Communication Skills",context:"Light",tip:""},
+  {id:363,name:"Drawing clean diagrams under time pressure",pillar:"Behavioural",section:"Technical communication",category:"Communication Skills",context:"Light",tip:""}
+];
+
+const ALL_PILLARS = [...new Set(TOPICS.map(t => t.pillar))];
+const ALL_SECTIONS = [...new Set(TOPICS.map(t => t.section))];
+
+// ===== State =====
+let state = {
+  topics: TOPICS,
+  progress: {},
+  filtered: [],
+  page: 1,
+  pageSize: 50,
+  sort: { key: "id", dir: "asc" },
+  filters: {
+    search: "",
+    pillars: [],
+    sections: [],
+    context: [],
+    status: [],
+  },
+  expandedId: null,
+};
+
+// ===== localStorage =====
+const STORAGE_KEY = "sde2-prep-progress";
+
+function loadProgress() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) state.progress = JSON.parse(raw);
+  } catch (e) { console.warn("Failed to load progress:", e); }
+}
+
+function saveProgress() {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state.progress)); }
+  catch (e) { console.warn("Failed to save progress:", e); }
+}
+
+function getStatus(id) {
+  const p = state.progress[String(id)];
+  return p ? p.status : "none";
+}
+
+function getNote(id) {
+  const p = state.progress[String(id)];
+  return p ? p.note || "" : "";
+}
+
+function setStatus(id, status) {
+  const key = String(id);
+  if (status === "none") {
+    if (state.progress[key]) {
+      if (state.progress[key].note) {
+        state.progress[key].status = "none";
+        state.progress[key].updatedAt = new Date().toISOString();
+      } else {
+        delete state.progress[key];
+      }
+    }
+  } else {
+    if (!state.progress[key]) state.progress[key] = {};
+    state.progress[key].status = status;
+    state.progress[key].updatedAt = new Date().toISOString();
+  }
+  saveProgress();
+}
+
+function setNote(id, note) {
+  const key = String(id);
+  if (!state.progress[key]) state.progress[key] = { status: "none" };
+  state.progress[key].note = note;
+  state.progress[key].updatedAt = new Date().toISOString();
+  saveProgress();
+}
+
+// ===== Filtering =====
+function applyFilters() {
+  let results = state.topics;
+  const f = state.filters;
+
+  if (f.search) {
+    const q = f.search.toLowerCase();
+    results = results.filter(t => t.name.toLowerCase().includes(q) || t.category.toLowerCase().includes(q) || t.section.toLowerCase().includes(q));
+  }
+  if (f.pillars.length > 0) {
+    results = results.filter(t => f.pillars.includes(t.pillar));
+  }
+  if (f.sections.length > 0) {
+    results = results.filter(t => f.sections.includes(t.section));
+  }
+  if (f.context.length > 0) {
+    results = results.filter(t => f.context.includes(t.context));
+  }
+  if (f.status.length > 0) {
+    results = results.filter(t => f.status.includes(getStatus(t.id)));
+  }
+
+  const { key, dir } = state.sort;
+  results.sort((a, b) => {
+    let va, vb;
+    if (key === "status") {
+      const order = { done: 0, revisit: 1, none: 2 };
+      va = order[getStatus(a.id)] ?? 2;
+      vb = order[getStatus(b.id)] ?? 2;
+    } else if (key === "context") {
+      const order = { "Full-Focus": 0, "Both": 1, "Light": 2 };
+      va = order[a.context] ?? 1;
+      vb = order[b.context] ?? 1;
+    } else {
+      va = a[key]; vb = b[key];
+    }
+    if (typeof va === "string") { va = va.toLowerCase(); vb = vb.toLowerCase(); }
+    if (va < vb) return dir === "asc" ? -1 : 1;
+    if (va > vb) return dir === "asc" ? 1 : -1;
+    return 0;
+  });
+
+  state.filtered = results;
+  state.page = 1;
+  render();
+}
+
+// ===== Rendering =====
+function render() {
+  renderStats();
+  renderTable();
+  renderPagination();
+  renderActiveFilters();
+}
+
+function renderStats() {
+  const list = state.filtered;
+  let done = 0, revisit = 0;
+  list.forEach(t => {
+    const s = getStatus(t.id);
+    if (s === "done") done++;
+    else if (s === "revisit") revisit++;
+  });
+  document.getElementById("stat-total").textContent = "Total: " + list.length;
+  document.getElementById("stat-done").textContent = "Done: " + done;
+  document.getElementById("stat-revisit").textContent = "Revisit: " + revisit;
+  document.getElementById("stat-remaining").textContent = "Remaining: " + (list.length - done - revisit);
+}
+
+function escapeHtml(str) {
+  if (!str) return "";
+  const div = document.createElement("div");
+  div.textContent = str;
+  return div.innerHTML;
+}
+
+function renderTable() {
+  const tbody = document.getElementById("table-body");
+  const start = (state.page - 1) * state.pageSize;
+  const pageItems = state.filtered.slice(start, start + state.pageSize);
+
+  let html = "";
+  for (const t of pageItems) {
+    const status = getStatus(t.id);
+    const ctxClass = t.context.toLowerCase().replace("-", "-");
+    const statusIcon = status === "done"
+      ? '<span class="status-icon status-done">&#10003;</span>'
+      : status === "revisit"
+        ? '<span class="status-icon status-revisit">&#8635;</span>'
+        : '<span class="status-icon status-none">&#9675;</span>';
+
+    html += '<tr class="data-row" data-id="' + t.id + '">';
+    html += "<td>" + t.id + "</td>";
+    html += "<td>" + escapeHtml(t.name) + "</td>";
+    html += '<td><span class="pillar-tag">' + escapeHtml(t.pillar) + "</span></td>";
+    html += "<td>" + escapeHtml(t.category) + "</td>";
+    html += '<td><span class="pill pill-' + (t.context === "Full-Focus" ? "full-focus" : t.context === "Light" ? "light" : "both") + '">' + t.context + "</span></td>";
+    html += "<td>" + statusIcon + "</td>";
+    html += "</tr>";
+
+    if (state.expandedId === t.id) {
+      html += renderDetailRow(t);
+    }
+  }
+  tbody.innerHTML = html;
+}
+
+function getPillarPage(pillar) {
+  const map = {
+    "Java & JVM": "java-jvm.html",
+    "Spring Boot": "spring-boot.html",
+    "Databases": "databases.html",
+    "Distributed Systems": "distributed-systems.html",
+    "HLD": "hld.html",
+    "LLD": "lld.html",
+    "Observability": "observability.html",
+    "Networking & APIs": "networking-apis.html",
+    "Security": "security.html",
+    "Behavioural": "behavioural.html"
+  };
+  return map[pillar] || "#";
+}
+
+function renderDetailRow(t) {
+  const status = getStatus(t.id);
+  const note = escapeHtml(getNote(t.id));
+  const tipHtml = t.tip ? '<div class="detail-tip">' + escapeHtml(t.tip) + '</div>' : '';
+
+  return '<tr class="detail-panel"><td colspan="6"><div class="detail-content">'
+    + '<div class="detail-meta">'
+    + '<div class="detail-meta-item"><strong>Section:</strong> ' + escapeHtml(t.section) + '</div>'
+    + '<div class="detail-meta-item"><strong>Category:</strong> ' + escapeHtml(t.category) + '</div>'
+    + '<div class="detail-meta-item"><strong>Pillar:</strong> ' + escapeHtml(t.pillar) + '</div>'
+    + '<div class="detail-meta-item"><strong>Context:</strong> ' + escapeHtml(t.context) + '</div>'
+    + tipHtml
+    + '</div>'
+    + '<div class="detail-right">'
+    + '<div class="detail-actions">'
+    + '<button class="btn btn-done' + (status === "done" ? " active" : "") + '" onclick="onSetStatus(' + t.id + ',\'done\')">Done</button>'
+    + '<button class="btn btn-revisit' + (status === "revisit" ? " active" : "") + '" onclick="onSetStatus(' + t.id + ',\'revisit\')">Revisit</button>'
+    + '<button class="btn" onclick="onSetStatus(' + t.id + ',\'none\')">Clear</button>'
+    + '<a class="btn btn-visit" href="' + getPillarPage(t.pillar) + '#topic-' + t.id + '">Visit Details &#8599;</a>'
+    + '</div>'
+    + '<div class="detail-note">'
+    + '<textarea placeholder="Add notes..." oninput="onNoteInput(' + t.id + ', this.value)">' + note + '</textarea>'
+    + '</div></div></div></td></tr>';
+}
+
+function renderPagination() {
+  const total = Math.ceil(state.filtered.length / state.pageSize);
+  const container = document.getElementById("pagination");
+  if (total <= 1) { container.innerHTML = ""; return; }
+
+  let html = '<button class="page-btn" onclick="goPage(' + (state.page - 1) + ')" ' + (state.page === 1 ? "disabled" : "") + '>&laquo;</button>';
+  const range = getPageRange(state.page, total);
+  for (const p of range) {
+    if (p === "...") {
+      html += '<span class="page-btn" style="border:none;cursor:default;">...</span>';
+    } else {
+      html += '<button class="page-btn' + (p === state.page ? " active" : "") + '" onclick="goPage(' + p + ')">' + p + '</button>';
+    }
+  }
+  html += '<button class="page-btn" onclick="goPage(' + (state.page + 1) + ')" ' + (state.page === total ? "disabled" : "") + '>&raquo;</button>';
+  container.innerHTML = html;
+}
+
+function getPageRange(current, total) {
+  if (total <= 7) return Array.from({ length: total }, (_, i) => i + 1);
+  const pages = [1];
+  if (current > 3) pages.push("...");
+  for (let i = Math.max(2, current - 1); i <= Math.min(total - 1, current + 1); i++) pages.push(i);
+  if (current < total - 2) pages.push("...");
+  pages.push(total);
+  return pages;
+}
+
+function renderActiveFilters() {
+  const container = document.getElementById("active-filters");
+  let html = "";
+  const f = state.filters;
+  f.pillars.forEach(t => { html += makeChip("pillar", t); });
+  f.sections.forEach(t => { html += makeChip("section", t); });
+  f.context.forEach(t => { html += makeChip("context", t); });
+  f.status.forEach(t => { html += makeChip("status", t); });
+  if (f.search) { html += makeChip("search", f.search); }
+  container.innerHTML = html;
+}
+
+function makeChip(type, value) {
+  const safeValue = escapeHtml(value).replace(/'/g, "&#39;");
+  return '<span class="filter-chip" onclick="removeFilter(\'' + type + '\',\'' + safeValue + '\')">'
+    + escapeHtml(value) + ' <span class="chip-x">&times;</span></span>';
+}
+
+// ===== Event Handlers =====
+function goPage(n) {
+  const total = Math.ceil(state.filtered.length / state.pageSize);
+  if (n < 1 || n > total) return;
+  state.page = n;
+  state.expandedId = null;
+  renderTable();
+  renderPagination();
+  document.querySelector(".content").scrollTop = 0;
+}
+
+function onSetStatus(id, status) {
+  const current = getStatus(id);
+  if (current === status) setStatus(id, "none");
+  else setStatus(id, status);
+  renderTable();
+  renderStats();
+}
+
+let noteDebounce = null;
+function onNoteInput(id, value) {
+  clearTimeout(noteDebounce);
+  noteDebounce = setTimeout(() => setNote(id, value), 500);
+}
+
+function removeFilter(type, value) {
+  const decoded = value.replace(/&#39;/g, "'").replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">");
+  if (type === "search") {
+    state.filters.search = "";
+    document.getElementById("search-input").value = "";
+  } else if (type === "pillar") {
+    state.filters.pillars = state.filters.pillars.filter(t => t !== decoded);
+    refreshMultiSelect("pillar-filter");
+  } else if (type === "section") {
+    state.filters.sections = state.filters.sections.filter(t => t !== decoded);
+    refreshMultiSelect("section-filter");
+  } else if (type === "context") {
+    state.filters.context = state.filters.context.filter(t => t !== decoded);
+    refreshCheckboxGroup("context-filter", state.filters.context);
+  } else if (type === "status") {
+    state.filters.status = state.filters.status.filter(t => t !== decoded);
+    refreshCheckboxGroup("status-filter", state.filters.status);
+  }
+  applyFilters();
+}
+
+function refreshCheckboxGroup(containerId, activeValues) {
+  document.getElementById(containerId).querySelectorAll("input[type=checkbox]").forEach(cb => {
+    cb.checked = activeValues.includes(cb.value);
+  });
+}
+
+// ===== Multi-select dropdowns =====
+function initMultiSelect(containerId, items, filterKey) {
+  const container = document.getElementById(containerId);
+  const counts = {};
+  items.forEach(item => { counts[item] = 0; });
+  state.topics.forEach(t => {
+    if (filterKey === "pillar") {
+      if (counts[t.pillar] !== undefined) counts[t.pillar]++;
+    } else if (filterKey === "section") {
+      if (counts[t.section] !== undefined) counts[t.section]++;
+    }
+  });
+
+  const btn = document.createElement("button");
+  btn.className = "multi-select-btn";
+  btn.innerHTML = 'Select... <span>&#9662;</span>';
+
+  const dropdown = document.createElement("div");
+  dropdown.className = "multi-select-dropdown";
+
+  const searchInput = document.createElement("input");
+  searchInput.className = "multi-select-search";
+  searchInput.placeholder = "Search...";
+  searchInput.type = "text";
+  dropdown.appendChild(searchInput);
+
+  const optionsDiv = document.createElement("div");
+  items.forEach(item => {
+    const label = document.createElement("label");
+    const cb = document.createElement("input");
+    cb.type = "checkbox";
+    cb.value = item;
+    cb.addEventListener("change", () => {
+      const arr = filterKey === "pillar" ? "pillars" : "sections";
+      if (cb.checked) state.filters[arr].push(item);
+      else state.filters[arr] = state.filters[arr].filter(t => t !== item);
+      updateBtnText();
+      applyFilters();
+    });
+    label.appendChild(cb);
+    label.appendChild(document.createTextNode(" " + item + " (" + (counts[item] || 0) + ")"));
+    optionsDiv.appendChild(label);
+  });
+  dropdown.appendChild(optionsDiv);
+
+  searchInput.addEventListener("input", () => {
+    const q = searchInput.value.toLowerCase();
+    optionsDiv.querySelectorAll("label").forEach(label => {
+      label.style.display = label.textContent.toLowerCase().includes(q) ? "" : "none";
+    });
+  });
+  searchInput.addEventListener("click", e => e.stopPropagation());
+
+  function updateBtnText() {
+    const selected = filterKey === "pillar" ? state.filters.pillars : state.filters.sections;
+    btn.innerHTML = selected.length === 0
+      ? 'Select... <span>&#9662;</span>'
+      : selected.length + ' selected <span>&#9662;</span>';
+  }
+
+  btn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    document.querySelectorAll(".multi-select-dropdown.open").forEach(d => {
+      if (d !== dropdown) d.classList.remove("open");
+    });
+    dropdown.classList.toggle("open");
+  });
+
+  container.appendChild(btn);
+  container.appendChild(dropdown);
+
+  container._refresh = function() {
+    const selected = filterKey === "pillar" ? state.filters.pillars : state.filters.sections;
+    optionsDiv.querySelectorAll("input[type=checkbox]").forEach(cb => {
+      cb.checked = selected.includes(cb.value);
+    });
+    updateBtnText();
+  };
+}
+
+function refreshMultiSelect(containerId) {
+  const container = document.getElementById(containerId);
+  if (container._refresh) container._refresh();
+}
+
+// ===== Sorting =====
+function initSorting() {
+  document.querySelectorAll("th.sortable").forEach(th => {
+    th.addEventListener("click", () => {
+      const key = th.dataset.sort;
+      if (state.sort.key === key) state.sort.dir = state.sort.dir === "asc" ? "desc" : "asc";
+      else { state.sort.key = key; state.sort.dir = "asc"; }
+      document.querySelectorAll(".sort-arrow").forEach(s => s.textContent = "");
+      th.querySelector(".sort-arrow").textContent = state.sort.dir === "asc" ? " \u25B2" : " \u25BC";
+      applyFilters();
+    });
+  });
+}
+
+// ===== Row expansion =====
+function initTableClicks() {
+  document.getElementById("table-body").addEventListener("click", (e) => {
+    if (e.target.closest("button") || e.target.closest("a") || e.target.closest("textarea")) return;
+    const row = e.target.closest("tr.data-row");
+    if (!row) return;
+    const id = parseInt(row.dataset.id);
+    state.expandedId = state.expandedId === id ? null : id;
+    renderTable();
+  });
+}
+
+// ===== Checkbox filters =====
+function initCheckboxFilters() {
+  ["context-filter", "status-filter"].forEach(containerId => {
+    document.getElementById(containerId).addEventListener("change", () => {
+      const checked = Array.from(document.getElementById(containerId).querySelectorAll("input:checked")).map(cb => cb.value);
+      if (containerId === "context-filter") state.filters.context = checked;
+      else state.filters.status = checked;
+      applyFilters();
+    });
+  });
+}
+
+// ===== Search =====
+function initSearch() {
+  let debounce = null;
+  document.getElementById("search-input").addEventListener("input", (e) => {
+    clearTimeout(debounce);
+    debounce = setTimeout(() => {
+      state.filters.search = e.target.value.trim();
+      applyFilters();
+    }, 300);
+  });
+}
+
+// ===== Import / Export =====
+function initImportExport() {
+  document.getElementById("export-btn").addEventListener("click", () => {
+    const json = JSON.stringify(state.progress, null, 2);
+    const blob = new Blob([json], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "sde2-prep-progress-" + new Date().toISOString().slice(0, 10) + ".json";
+    a.click();
+    URL.revokeObjectURL(url);
+  });
+
+  const importFile = document.getElementById("import-file");
+  document.getElementById("import-btn").addEventListener("click", () => importFile.click());
+  importFile.addEventListener("change", (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (ev) => {
+      try {
+        const imported = JSON.parse(ev.target.result);
+        const count = Object.keys(imported).length;
+        if (!confirm("This will import " + count + " topic statuses. Conflicts will be overwritten. Continue?")) return;
+        Object.assign(state.progress, imported);
+        saveProgress();
+        applyFilters();
+      } catch (err) {
+        alert("Invalid JSON file: " + err.message);
+      }
+    };
+    reader.readAsText(file);
+    importFile.value = "";
+  });
+}
+
+// ===== Close dropdowns on outside click =====
+function initClickOutside() {
+  document.addEventListener("click", () => {
+    document.querySelectorAll(".multi-select-dropdown.open").forEach(d => d.classList.remove("open"));
+  });
+}
+
+// ===== Clear all filters =====
+function initClearFilters() {
+  document.getElementById("clear-filters").addEventListener("click", () => {
+    state.filters = { search: "", pillars: [], sections: [], context: [], status: [] };
+    document.getElementById("search-input").value = "";
+    refreshMultiSelect("pillar-filter");
+    refreshMultiSelect("section-filter");
+    ["context-filter", "status-filter"].forEach(id => {
+      document.getElementById(id).querySelectorAll("input:checked").forEach(cb => cb.checked = false);
+    });
+    applyFilters();
+  });
+}
+
+// ===== Init =====
+function init() {
+  loadProgress();
+  initMultiSelect("pillar-filter", ALL_PILLARS, "pillar");
+  initMultiSelect("section-filter", ALL_SECTIONS, "section");
+  initCheckboxFilters();
+  initSearch();
+  initSorting();
+  initTableClicks();
+  initImportExport();
+  initClickOutside();
+  initClearFilters();
+  document.querySelector('th[data-sort="id"] .sort-arrow').textContent = " \u25B2";
+  state.filtered = [...state.topics];
+  render();
+}
+
+document.addEventListener("DOMContentLoaded", init);
+
+</script>
+</body>
+</html>

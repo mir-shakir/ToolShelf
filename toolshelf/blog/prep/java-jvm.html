@@ -1,0 +1,1019 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pillar 1 — Java & JVM Internals | SDE 2 Prep Tracker</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg-primary: #1a1b2e;
+  --bg-secondary: #232540;
+  --bg-tertiary: #2a2d4a;
+  --bg-hover: #32355a;
+  --text-primary: #e2e4f0;
+  --text-secondary: #a0a3bd;
+  --text-muted: #6b6f8a;
+  --border: #3a3d5c;
+  --accent: #6c63ff;
+  --green: #4ade80;
+  --green-bg: rgba(74,222,128,0.12);
+  --orange: #fb923c;
+  --orange-bg: rgba(251,146,60,0.12);
+  --red: #f87171;
+  --red-bg: rgba(248,113,113,0.12);
+  --cyan: #22d3ee;
+  --cyan-bg: rgba(34,211,238,0.12);
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+/* ── Sticky Header ── */
+header {
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border);
+  padding: 14px 24px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+header h1 {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--accent);
+}
+header .subtitle {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+.back-link {
+  color: var(--accent);
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 500;
+  padding: 6px 14px;
+  border: 1px solid var(--accent);
+  border-radius: 6px;
+  transition: background 0.15s, color 0.15s;
+}
+.back-link:hover {
+  background: var(--accent);
+  color: #fff;
+}
+
+/* ── Main Content ── */
+.container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 24px 20px 60px;
+}
+
+/* ── Table of Contents ── */
+.toc {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 20px 24px;
+  margin-bottom: 32px;
+}
+.toc h2 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 12px;
+}
+.toc ol {
+  list-style: none;
+  counter-reset: toc-counter;
+  padding: 0;
+}
+.toc ol li {
+  counter-increment: toc-counter;
+  margin-bottom: 6px;
+}
+.toc ol li::before {
+  content: counter(toc-counter) ".";
+  color: var(--accent);
+  font-weight: 600;
+  margin-right: 8px;
+}
+.toc a {
+  color: var(--text-primary);
+  text-decoration: none;
+  font-size: 0.92rem;
+}
+.toc a:hover {
+  color: var(--accent);
+  text-decoration: underline;
+}
+.toc .toc-badge {
+  font-size: 0.7rem;
+  padding: 2px 8px;
+  border-radius: 10px;
+  margin-left: 8px;
+  font-weight: 600;
+  vertical-align: middle;
+}
+
+/* ── Section ── */
+.section {
+  margin-bottom: 40px;
+}
+.section-heading {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+}
+.section-heading h2 {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+.context-badge {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 3px 12px;
+  border-radius: 20px;
+}
+.badge-full-focus {
+  color: var(--red);
+  background: var(--red-bg);
+}
+.badge-light {
+  color: var(--green);
+  background: var(--green-bg);
+}
+.badge-both {
+  color: var(--orange);
+  background: var(--orange-bg);
+}
+
+/* ── Tip Callout ── */
+.tip-callout {
+  background: var(--cyan-bg);
+  border-left: 4px solid var(--cyan);
+  border-radius: 0 8px 8px 0;
+  padding: 12px 16px;
+  margin-bottom: 20px;
+  font-size: 0.88rem;
+  color: var(--text-primary);
+  line-height: 1.5;
+}
+.tip-callout strong {
+  color: var(--cyan);
+}
+
+/* ── Category ── */
+.category {
+  margin-bottom: 28px;
+}
+.category-heading {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--accent);
+  border-left: 4px solid var(--accent);
+  padding-left: 12px;
+  margin-bottom: 14px;
+}
+
+/* ── Topic Card ── */
+.topic-card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 18px 20px;
+  margin-bottom: 14px;
+  transition: border-color 0.15s, background 0.15s;
+  scroll-margin-top: 80px;
+}
+.topic-card:hover {
+  border-color: var(--accent);
+  background: var(--bg-tertiary);
+}
+.topic-card h4 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 6px;
+}
+.topic-card .desc {
+  font-size: 0.87rem;
+  color: var(--text-secondary);
+  margin-bottom: 10px;
+}
+.topic-card ul {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 10px;
+}
+.topic-card ul li {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  padding: 3px 0 3px 18px;
+  position: relative;
+}
+.topic-card ul li::before {
+  content: "\25B8";
+  color: var(--accent);
+  position: absolute;
+  left: 0;
+  font-size: 0.8rem;
+}
+.topic-card .resources {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
+}
+.topic-card .resources a {
+  font-size: 0.78rem;
+  color: var(--cyan);
+  text-decoration: none;
+  padding: 3px 10px;
+  border: 1px solid rgba(34,211,238,0.25);
+  border-radius: 14px;
+  transition: background 0.15s;
+}
+.topic-card .resources a:hover {
+  background: var(--cyan-bg);
+}
+
+/* ── Recommended Resources ── */
+.resources-section {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 24px;
+  margin-top: 40px;
+}
+.resources-section h2 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 16px;
+}
+.resources-section .res-group h3 {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 8px;
+  margin-top: 16px;
+}
+.resources-section .res-group:first-of-type h3 {
+  margin-top: 0;
+}
+.resources-section ul {
+  list-style: none;
+  padding: 0;
+}
+.resources-section ul li {
+  padding: 4px 0 4px 18px;
+  position: relative;
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+}
+.resources-section ul li::before {
+  content: "\25B8";
+  color: var(--accent);
+  position: absolute;
+  left: 0;
+}
+.resources-section a {
+  color: var(--cyan);
+  text-decoration: none;
+}
+.resources-section a:hover {
+  text-decoration: underline;
+}
+
+/* ── Responsive ── */
+@media (max-width: 640px) {
+  header { padding: 12px 14px; }
+  header h1 { font-size: 1.1rem; }
+  .container { padding: 16px 12px 48px; }
+  .section-heading h2 { font-size: 1.15rem; }
+  .topic-card { padding: 14px 14px; }
+  .toc { padding: 14px 16px; }
+  .header-row { flex-direction: column; align-items: flex-start; }
+}
+</style>
+</head>
+<body>
+
+<!-- ════════════════════ HEADER ════════════════════ -->
+<header>
+  <div class="header-row">
+    <div>
+      <h1>Pillar 1 — Java &amp; JVM Internals</h1>
+      <div class="subtitle">Deep Java — not just syntax, but how the runtime actually works</div>
+    </div>
+    <a href="index.html" class="back-link">&larr; Back to Tracker</a>
+  </div>
+</header>
+
+<div class="container">
+
+<!-- ════════════════════ TABLE OF CONTENTS ════════════════════ -->
+<nav class="toc">
+  <h2>Table of Contents</h2>
+  <ol>
+    <li><a href="#section-core-java-depth">Core Java Depth</a><span class="toc-badge badge-full-focus">Full-Focus</span></li>
+    <li><a href="#section-java-8-17-features">Java 8-17 Features</a><span class="toc-badge badge-light">Light</span></li>
+    <li><a href="#section-jvm-tuning-tooling">JVM Tuning &amp; Tooling</a><span class="toc-badge badge-full-focus">Full-Focus</span></li>
+  </ol>
+</nav>
+
+
+<!-- ════════════════════════════════════════════════════════════
+     SECTION 1 — Core Java Depth
+     ════════════════════════════════════════════════════════════ -->
+<div class="section" id="section-core-java-depth">
+  <div class="section-heading">
+    <h2>Core Java Depth</h2>
+    <span class="context-badge badge-full-focus">Full-Focus</span>
+  </div>
+  <div class="tip-callout">
+    <strong>Tip:</strong> Interviewers at top-tier will probe thread safety and GC pressure. Know how to explain them on a whiteboard.
+  </div>
+
+  <!-- ── Concurrency ── -->
+  <div class="category">
+    <h3 class="category-heading">Concurrency</h3>
+
+    <div class="topic-card" id="topic-1">
+      <h4>Thread Lifecycle</h4>
+      <p class="desc">Understand the states a Java thread passes through (NEW, RUNNABLE, BLOCKED, WAITING, TIMED_WAITING, TERMINATED) and the transitions between them. SDE 2 interviews often test this as a lead-in to deeper concurrency questions.</p>
+      <ul>
+        <li>A thread moves from NEW to RUNNABLE when <code>start()</code> is called, not <code>run()</code></li>
+        <li>BLOCKED state occurs when waiting to enter a <code>synchronized</code> block</li>
+        <li>WAITING vs TIMED_WAITING: indefinite vs bounded wait (<code>wait()</code> vs <code>wait(timeout)</code>)</li>
+        <li><code>Thread.sleep()</code> does not release the monitor lock</li>
+        <li>Use <code>jstack</code> to inspect thread states in production</li>
+      </ul>
+      <div class="resources">
+        <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Thread.State.html" target="_blank">Oracle: Thread.State</a>
+        <a href="https://www.baeldung.com/java-thread-lifecycle" target="_blank">Baeldung: Thread Lifecycle</a>
+      </div>
+    </div>
+
+    <div class="topic-card" id="topic-2">
+      <h4>volatile &amp; happens-before</h4>
+      <p class="desc">The <code>volatile</code> keyword guarantees visibility across threads and establishes a happens-before relationship. Critical for understanding the Java Memory Model (JMM) and why some race conditions exist despite seemingly safe code.</p>
+      <ul>
+        <li><code>volatile</code> prevents instruction reordering and ensures reads see the latest write</li>
+        <li>Happens-before: if action A happens-before B, A's results are visible to B</li>
+        <li><code>volatile</code> is NOT atomic for compound operations like <code>i++</code></li>
+        <li>Use <code>AtomicInteger</code> / <code>AtomicReference</code> when you need atomicity</li>
+      </ul>
+      <div class="resources">
+        <a href="https://docs.oracle.com/javase/specs/jls/se17/html/jls-17.html#jls-17.4.5" target="_blank">JLS: happens-before</a>
+        <a href="https://www.baeldung.com/java-volatile" target="_blank">Baeldung: volatile</a>
+        <a href="https://jenkov.com/tutorials/java-concurrency/volatile.html" target="_blank">Jenkov: volatile</a>
+      </div>
+    </div>
+
+    <div class="topic-card" id="topic-3">
+      <h4>synchronized Blocks</h4>
+      <p class="desc">The foundational mutual-exclusion mechanism in Java. Know the difference between method-level and block-level synchronization, and how the JVM implements it via monitor locks.</p>
+      <ul>
+        <li>Every Java object has an intrinsic monitor lock (monitor enter / monitor exit bytecodes)</li>
+        <li>Synchronized on <code>this</code> vs a dedicated lock object — the latter is safer</li>
+        <li>Static synchronized methods lock on the <code>Class</code> object</li>
+        <li>JVM optimizations: biased locking, lightweight locking, lock coarsening</li>
+      </ul>
+      <div class="resources">
+        <a href="https://docs.oracle.com/javase/tutorial/essential/concurrency/locksync.html" target="_blank">Oracle: Intrinsic Locks</a>
+        <a href="https://www.baeldung.com/java-synchronized" target="_blank">Baeldung: synchronized</a>
+      </div>
+    </div>
+
+    <div class="topic-card" id="topic-4">
+      <h4>ReentrantLock / ReadWriteLock</h4>
+      <p class="desc">Explicit lock APIs from <code>java.util.concurrent.locks</code> that offer more control than <code>synchronized</code> — fairness policies, interruptible locking, and try-lock with timeout.</p>
+      <ul>
+        <li><code>ReentrantLock</code> allows the same thread to acquire the lock multiple times (reentrant)</li>
+        <li><code>tryLock(timeout)</code> prevents indefinite blocking — key for deadlock avoidance</li>
+        <li><code>ReadWriteLock</code>: multiple readers OR one writer — major throughput gain for read-heavy workloads</li>
+        <li>Always use <code>lock()</code> / <code>unlock()</code> in a try-finally block</li>
+      </ul>
+      <div class="resources">
+        <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/locks/ReentrantLock.html" target="_blank">Oracle: ReentrantLock</a>
+        <a href="https://www.baeldung.com/java-concurrent-locks" target="_blank">Baeldung: Locks</a>
+        <a href="https://jenkov.com/tutorials/java-concurrency/locks.html" target="_blank">Jenkov: Locks</a>
+      </div>
+    </div>
+
+    <div class="topic-card" id="topic-5">
+      <h4>ThreadLocal</h4>
+      <p class="desc">Provides thread-confined variables — each thread gets its own independent copy. Commonly used for user context, database connections, and date formatters in web applications.</p>
+      <ul>
+        <li>Each thread accesses its own isolated copy via <code>get()</code> / <code>set()</code></li>
+        <li>Memory leak risk: always call <code>remove()</code> in a finally block, especially in thread pools</li>
+        <li><code>InheritableThreadLocal</code> passes values to child threads</li>
+        <li>Spring uses <code>ThreadLocal</code> for <code>RequestContextHolder</code> and transaction contexts</li>
+      </ul>
+      <div class="resources">
+        <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/ThreadLocal.html" target="_blank">Oracle: ThreadLocal</a>
+        <a href="https://www.baeldung.com/java-threadlocal" target="_blank">Baeldung: ThreadLocal</a>
+      </div>
+    </div>
+
+    <div class="topic-card" id="topic-6">
+      <h4>Executor Framework</h4>
+      <p class="desc">The standard way to manage thread pools in Java. Interviewers expect SDE 2 candidates to know pool types, rejection policies, and when to use which pool.</p>
+      <ul>
+        <li><code>FixedThreadPool</code>: bounded pool, tasks queue up if all threads busy</li>
+        <li><code>CachedThreadPool</code>: unbounded, creates threads on demand — risk of OOM under load</li>
+        <li><code>ScheduledThreadPool</code>: for periodic / delayed tasks</li>
+        <li>Rejection policies: AbortPolicy (default), CallerRunsPolicy, DiscardPolicy, DiscardOldestPolicy</li>
+        <li>Always use <code>shutdown()</code> + <code>awaitTermination()</code> for graceful cleanup</li>
+      </ul>
+      <div class="resources">
+        <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ExecutorService.html" target="_blank">Oracle: ExecutorService</a>
+        <a href="https://www.baeldung.com/java-executor-service-tutorial" target="_blank">Baeldung: ExecutorService</a>
+        <a href="https://jenkov.com/tutorials/java-concurrency/executorservice.html" target="_blank">Jenkov: ExecutorService</a>
+      </div>
+    </div>
+
+    <div class="topic-card" id="topic-7">
+      <h4>Fork/Join Pool</h4>
+      <p class="desc">A specialized pool for divide-and-conquer parallelism. Uses work-stealing to keep all threads busy. Powers <code>parallelStream()</code> behind the scenes.</p>
+      <ul>
+        <li>Extends <code>RecursiveTask&lt;V&gt;</code> (returns result) or <code>RecursiveAction</code> (void)</li>
+        <li>Work-stealing: idle threads steal tasks from busy threads' queues</li>
+        <li><code>ForkJoinPool.commonPool()</code> is shared across the JVM — be careful in web servers</li>
+        <li>Best for CPU-bound tasks that can be recursively split</li>
+      </ul>
+      <div class="resources">
+        <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ForkJoinPool.html" target="_blank">Oracle: ForkJoinPool</a>
+        <a href="https://www.baeldung.com/java-fork-join" target="_blank">Baeldung: Fork/Join</a>
+      </div>
+    </div>
+
+    <div class="topic-card" id="topic-8">
+      <h4>CompletableFuture Chains</h4>
+      <p class="desc">The modern way to compose asynchronous operations in Java. Replaces callback hell with fluent, chainable stages. A frequent SDE 2 interview topic.</p>
+      <ul>
+        <li><code>thenApply</code> (sync transform), <code>thenCompose</code> (flatMap), <code>thenCombine</code> (merge two futures)</li>
+        <li><code>supplyAsync</code> runs on ForkJoinPool by default — pass custom executor for IO-bound work</li>
+        <li><code>exceptionally</code> and <code>handle</code> for error recovery</li>
+        <li><code>allOf</code> / <code>anyOf</code> to fan-out and aggregate</li>
+      </ul>
+      <div class="resources">
+        <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/CompletableFuture.html" target="_blank">Oracle: CompletableFuture</a>
+        <a href="https://www.baeldung.com/java-completablefuture" target="_blank">Baeldung: CompletableFuture</a>
+      </div>
+    </div>
+
+    <div class="topic-card" id="topic-9">
+      <h4>Deadlock Detection</h4>
+      <p class="desc">Deadlock happens when two or more threads wait forever for locks held by each other. Interviewers love asking candidates to identify, prevent, or resolve deadlocks from code snippets.</p>
+      <ul>
+        <li>Four conditions: mutual exclusion, hold-and-wait, no preemption, circular wait</li>
+        <li>Prevention: always acquire locks in a consistent global order</li>
+        <li><code>tryLock(timeout)</code> breaks the hold-and-wait condition</li>
+        <li>Detect with <code>jstack</code> — it reports deadlocked threads automatically</li>
+        <li><code>ThreadMXBean.findDeadlockedThreads()</code> for programmatic detection</li>
+      </ul>
+      <div class="resources">
+        <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/management/ThreadMXBean.html" target="_blank">Oracle: ThreadMXBean</a>
+        <a href="https://www.baeldung.com/java-deadlock-livelock" target="_blank">Baeldung: Deadlock</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Collections Internals ── -->
+  <div class="category">
+    <h3 class="category-heading">Collections Internals</h3>
+
+    <div class="topic-card" id="topic-10">
+      <h4>HashMap Rehashing &amp; Collision</h4>
+      <p class="desc">How HashMap works under the hood is arguably the most asked Java interview question. Know the internal array + linked-list/tree structure, load factor, and treeification threshold.</p>
+      <ul>
+        <li>Default capacity 16, load factor 0.75 — rehash doubles the array when 75% full</li>
+        <li>Hash collision: same bucket index. Resolved with linked list, then red-black tree at 8 nodes (Java 8+)</li>
+        <li>Rehashing redistributes all entries — O(n) cost, can cause latency spikes</li>
+        <li>Key must implement <code>hashCode()</code> and <code>equals()</code> consistently</li>
+        <li>NOT thread-safe — use <code>ConcurrentHashMap</code> in concurrent contexts</li>
+      </ul>
+      <div class="resources">
+        <a href="https://docs.oracle.com/javase/8/docs/api/java/util/HashMap.html" target="_blank">Oracle: HashMap</a>
+        <a href="https://www.baeldung.com/java-hashmap-advanced" target="_blank">Baeldung: HashMap Internals</a>
+      </div>
+    </div>
+
+    <div class="topic-card" id="topic-11">
+      <h4>LinkedHashMap Order</h4>
+      <p class="desc">A HashMap that also maintains a doubly-linked list of entries to preserve insertion order (or access order). The basis for LRU cache implementations in interviews.</p>
+      <ul>
+        <li>Insertion-order by default; set <code>accessOrder=true</code> for LRU behavior</li>
+        <li>Override <code>removeEldestEntry()</code> to build a bounded LRU cache</li>
+        <li>Slightly more memory overhead than HashMap (prev/next pointers per entry)</li>
+      </ul>
+      <div class="resources">
+        <a href="https://docs.oracle.com/javase/8/docs/api/java/util/LinkedHashMap.html" target="_blank">Oracle: LinkedHashMap</a>
+        <a href="https://www.baeldung.com/java-linked-hashmap" target="_blank">Baeldung: LinkedHashMap</a>
+      </div>
+    </div>
+
+    <div class="topic-card" id="topic-12">
+      <h4>ConcurrentHashMap Segments</h4>
+      <p class="desc">The go-to thread-safe map. Java 8 replaced the old segment-lock design with per-bucket CAS + synchronized nodes, dramatically improving concurrency.</p>
+      <ul>
+        <li>Java 7: segmented locking (16 segments by default). Java 8+: node-level locking with CAS</li>
+        <li>Read operations are lock-free (volatile reads)</li>
+        <li><code>computeIfAbsent</code> is atomic — a clean alternative to double-check idioms</li>
+        <li>Does NOT allow null keys or null values (unlike HashMap)</li>
+      </ul>
+      <div class="resources">
+        <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ConcurrentHashMap.html" target="_blank">Oracle: ConcurrentHashMap</a>
+        <a href="https://www.baeldung.com/java-concurrent-map" target="_blank">Baeldung: ConcurrentMap</a>
+      </div>
+    </div>
+
+    <div class="topic-card" id="topic-13">
+      <h4>TreeMap / Comparators</h4>
+      <p class="desc">A red-black tree based NavigableMap that keeps keys sorted. Know when to choose TreeMap over HashMap and how comparators affect behavior.</p>
+      <ul>
+        <li>O(log n) for get/put/remove — vs O(1) amortized for HashMap</li>
+        <li>Keys must be Comparable or a Comparator must be provided at construction</li>
+        <li><code>floorKey</code>, <code>ceilingKey</code>, <code>subMap</code> — powerful range queries</li>
+        <li>Comparator consistency with <code>equals()</code> is important — inconsistency breaks Map contract</li>
+      </ul>
+      <div class="resources">
+        <a href="https://docs.oracle.com/javase/8/docs/api/java/util/TreeMap.html" target="_blank">Oracle: TreeMap</a>
+        <a href="https://www.baeldung.com/java-treemap" target="_blank">Baeldung: TreeMap</a>
+      </div>
+    </div>
+
+    <div class="topic-card" id="topic-14">
+      <h4>PriorityQueue Heap</h4>
+      <p class="desc">Backed by a min-heap (binary heap array). Essential for top-K, merge-K-sorted, and scheduling problems in coding interviews.</p>
+      <ul>
+        <li>Default is min-heap. Use <code>Collections.reverseOrder()</code> or custom comparator for max-heap</li>
+        <li><code>offer/poll</code> are O(log n), <code>peek</code> is O(1)</li>
+        <li><code>remove(Object)</code> is O(n) — avoid if performance matters</li>
+        <li>NOT thread-safe — use <code>PriorityBlockingQueue</code> for concurrent access</li>
+      </ul>
+      <div class="resources">
+        <a href="https://docs.oracle.com/javase/8/docs/api/java/util/PriorityQueue.html" target="_blank">Oracle: PriorityQueue</a>
+        <a href="https://www.baeldung.com/java-priority-queue" target="_blank">Baeldung: PriorityQueue</a>
+      </div>
+    </div>
+
+    <div class="topic-card" id="topic-15">
+      <h4>ArrayDeque vs LinkedList</h4>
+      <p class="desc">ArrayDeque is faster than LinkedList for both stack and queue use cases. Know why, and when LinkedList still makes sense.</p>
+      <ul>
+        <li>ArrayDeque: resizable circular array, no node allocation — better cache locality</li>
+        <li>LinkedList: doubly-linked nodes, each allocation = GC pressure</li>
+        <li>ArrayDeque does NOT allow null elements</li>
+        <li>Use ArrayDeque as stack (push/pop) and queue (offer/poll) — avoid Stack class (legacy, synchronized)</li>
+      </ul>
+      <div class="resources">
+        <a href="https://docs.oracle.com/javase/8/docs/api/java/util/ArrayDeque.html" target="_blank">Oracle: ArrayDeque</a>
+        <a href="https://www.baeldung.com/java-array-deque" target="_blank">Baeldung: ArrayDeque</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Memory & GC ── -->
+  <div class="category">
+    <h3 class="category-heading">Memory &amp; GC</h3>
+
+    <div class="topic-card" id="topic-16">
+      <h4>Heap Regions (Eden / S0 / S1 / Old / Metaspace)</h4>
+      <p class="desc">The JVM heap is divided into generational regions. Understanding this layout is fundamental to tuning GC and diagnosing memory issues in production.</p>
+      <ul>
+        <li>Young Gen: Eden (new objects) + Survivor spaces S0/S1 (objects that survived minor GC)</li>
+        <li>Old Gen (Tenured): long-lived objects promoted after surviving multiple minor GCs</li>
+        <li>Metaspace (Java 8+): stores class metadata, replaces PermGen, grows natively</li>
+        <li>Minor GC collects Young Gen; Major/Full GC collects Old Gen — much more expensive</li>
+        <li>Most objects die young (generational hypothesis) — this is why generational GC works</li>
+      </ul>
+      <div class="resources">
+        <a href="https://docs.oracle.com/javase/8/docs/technotes/guides/vm/gctuning/" target="_blank">Oracle: GC Tuning Guide</a>
+        <a href="https://www.baeldung.com/java-memory-management-interview-questions" target="_blank">Baeldung: Memory Management</a>
+      </div>
+    </div>
+
+    <div class="topic-card" id="topic-17">
+      <h4>GC Algorithms (G1, ZGC, CMS)</h4>
+      <p class="desc">Different collectors optimize for different goals — throughput, latency, or footprint. SDE 2 interviews test whether you can pick the right one for a given scenario.</p>
+      <ul>
+        <li>G1 (default since Java 9): region-based, targets pause-time goals, good general-purpose choice</li>
+        <li>ZGC (Java 15+): sub-millisecond pauses even on multi-TB heaps, concurrent</li>
+        <li>CMS (deprecated Java 9, removed Java 14): low-pause but fragmentation problems</li>
+        <li>Serial / Parallel: throughput-oriented, acceptable for batch jobs</li>
+      </ul>
+      <div class="resources">
+        <a href="https://docs.oracle.com/en/java/javase/17/gctuning/available-collectors.html" target="_blank">Oracle: Available Collectors</a>
+        <a href="https://www.baeldung.com/jvm-garbage-collectors" target="_blank">Baeldung: GC Collectors</a>
+      </div>
+    </div>
+
+    <div class="topic-card" id="topic-18">
+      <h4>GC Tuning Flags</h4>
+      <p class="desc">Knowing the key JVM flags lets you tune garbage collection behavior for your application's workload. Expect "how would you tune GC for X" questions.</p>
+      <ul>
+        <li><code>-XX:MaxGCPauseMillis=200</code> — G1 pause target</li>
+        <li><code>-XX:NewRatio=2</code> — Old/Young ratio (default: Old is 2x Young)</li>
+        <li><code>-XX:SurvivorRatio=8</code> — Eden/Survivor ratio</li>
+        <li><code>-XX:+UseStringDeduplication</code> — reduces heap for string-heavy apps (G1 only)</li>
+        <li><code>-XX:MetaspaceSize</code> / <code>-XX:MaxMetaspaceSize</code> — control class metadata growth</li>
+      </ul>
+      <div class="resources">
+        <a href="https://docs.oracle.com/en/java/javase/17/gctuning/" target="_blank">Oracle: GC Tuning</a>
+        <a href="https://www.baeldung.com/jvm-parameters" target="_blank">Baeldung: JVM Parameters</a>
+      </div>
+    </div>
+
+    <div class="topic-card" id="topic-19">
+      <h4>Memory Leaks &amp; Weak Refs</h4>
+      <p class="desc">Java has GC, but memory leaks still happen — typically through unintentional strong references. Know the reference types and common leak patterns.</p>
+      <ul>
+        <li>Common leaks: static collections, unclosed resources, listeners not deregistered, ThreadLocal not removed</li>
+        <li><code>WeakReference</code>: collected when no strong refs remain — used in <code>WeakHashMap</code></li>
+        <li><code>SoftReference</code>: collected only under memory pressure — good for caches</li>
+        <li><code>PhantomReference</code>: for cleanup actions after object is collected (replaces finalize)</li>
+      </ul>
+      <div class="resources">
+        <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/ref/package-summary.html" target="_blank">Oracle: java.lang.ref</a>
+        <a href="https://www.baeldung.com/java-weak-reference" target="_blank">Baeldung: Weak References</a>
+      </div>
+    </div>
+
+    <div class="topic-card" id="topic-20">
+      <h4>Object Finalization</h4>
+      <p class="desc"><code>finalize()</code> is deprecated (Java 9+) and should never be relied on. Know why it is problematic and what modern alternatives exist.</p>
+      <ul>
+        <li><code>finalize()</code> runs non-deterministically, may never run at all</li>
+        <li>Finalizable objects require two GC cycles to collect — performance hit</li>
+        <li>Replacement: <code>Cleaner</code> API (Java 9+) or try-with-resources for <code>AutoCloseable</code></li>
+        <li>In interviews, mentioning finalize pitfalls shows depth of JVM understanding</li>
+      </ul>
+      <div class="resources">
+        <a href="https://docs.oracle.com/javase/9/docs/api/java/lang/ref/Cleaner.html" target="_blank">Oracle: Cleaner</a>
+        <a href="https://www.baeldung.com/java-finalize" target="_blank">Baeldung: finalize()</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════════════════════════════════
+     SECTION 2 — Java 8-17 Features
+     ════════════════════════════════════════════════════════════ -->
+<div class="section" id="section-java-8-17-features">
+  <div class="section-heading">
+    <h2>Java 8-17 Features</h2>
+    <span class="context-badge badge-light">Light</span>
+  </div>
+  <div class="tip-callout">
+    <strong>Tip:</strong> Skim at office. You likely use most of these already — this is revision, not learning.
+  </div>
+
+  <!-- ── Modern Java ── -->
+  <div class="category">
+    <h3 class="category-heading">Modern Java</h3>
+
+    <div class="topic-card" id="topic-21">
+      <h4>Streams &amp; Lazy Evaluation</h4>
+      <p class="desc">Streams provide a declarative pipeline for data processing. Understand lazy evaluation — intermediate operations build the pipeline; terminal operations trigger execution.</p>
+      <ul>
+        <li>Intermediate: <code>filter</code>, <code>map</code>, <code>flatMap</code>, <code>sorted</code>, <code>distinct</code> — all lazy</li>
+        <li>Terminal: <code>collect</code>, <code>forEach</code>, <code>reduce</code>, <code>count</code> — triggers execution</li>
+        <li>Short-circuiting: <code>findFirst</code>, <code>anyMatch</code>, <code>limit</code> — stop early</li>
+        <li>Parallel streams use ForkJoinPool — avoid for IO-bound or small datasets</li>
+      </ul>
+      <div class="resources">
+        <a href="https://docs.oracle.com/javase/8/docs/api/java/util/stream/package-summary.html" target="_blank">Oracle: Stream API</a>
+        <a href="https://www.baeldung.com/java-8-streams" target="_blank">Baeldung: Streams</a>
+      </div>
+    </div>
+
+    <div class="topic-card" id="topic-22">
+      <h4>Optional Best Practices</h4>
+      <p class="desc">Optional is a container for nullable values that makes intent explicit. Know the anti-patterns — <code>Optional.get()</code> without check, using Optional as method parameter.</p>
+      <ul>
+        <li>Use <code>orElse</code>, <code>orElseGet</code>, <code>orElseThrow</code> — never raw <code>get()</code></li>
+        <li><code>orElse</code> always evaluates the default; <code>orElseGet</code> is lazy — matters for expensive defaults</li>
+        <li>Don't use Optional for fields, constructors, or method parameters — only return types</li>
+        <li><code>map</code> / <code>flatMap</code> for chaining transformations on the wrapped value</li>
+      </ul>
+      <div class="resources">
+        <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html" target="_blank">Oracle: Optional</a>
+        <a href="https://www.baeldung.com/java-optional" target="_blank">Baeldung: Optional</a>
+      </div>
+    </div>
+
+    <div class="topic-card" id="topic-23">
+      <h4>Method References</h4>
+      <p class="desc">Shorthand for lambdas that simply call an existing method. Clean, readable, and commonly used with streams and functional interfaces.</p>
+      <ul>
+        <li>Four kinds: static (<code>Class::staticMethod</code>), instance (<code>obj::method</code>), arbitrary object (<code>Class::instanceMethod</code>), constructor (<code>Class::new</code>)</li>
+        <li>Equivalent to a lambda but more concise: <code>x -&gt; x.toString()</code> becomes <code>Object::toString</code></li>
+        <li>Cannot use method references for methods with additional logic or multiple statements</li>
+      </ul>
+      <div class="resources">
+        <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html" target="_blank">Oracle: Method References</a>
+        <a href="https://www.baeldung.com/java-method-references" target="_blank">Baeldung: Method References</a>
+      </div>
+    </div>
+
+    <div class="topic-card" id="topic-24">
+      <h4>Default / Static Interface Methods</h4>
+      <p class="desc">Java 8 added <code>default</code> and <code>static</code> methods in interfaces, enabling API evolution without breaking implementations. Know the diamond problem implications.</p>
+      <ul>
+        <li><code>default</code> provides a body that implementing classes inherit (or override)</li>
+        <li>Diamond problem: if two interfaces provide the same default method, the class must override it</li>
+        <li><code>static</code> methods in interfaces are utility methods — not inherited by implementing classes</li>
+        <li>Java 9 added <code>private</code> interface methods to share code between defaults</li>
+      </ul>
+      <div class="resources">
+        <a href="https://docs.oracle.com/javase/tutorial/java/IandI/defaultmethods.html" target="_blank">Oracle: Default Methods</a>
+        <a href="https://www.baeldung.com/java-static-default-methods" target="_blank">Baeldung: Default Methods</a>
+      </div>
+    </div>
+
+    <div class="topic-card" id="topic-25">
+      <h4>Records &amp; Sealed Classes</h4>
+      <p class="desc">Records (Java 16) are immutable data carriers that auto-generate <code>equals</code>, <code>hashCode</code>, <code>toString</code>. Sealed classes (Java 17) restrict which classes can extend them — powerful for domain modeling.</p>
+      <ul>
+        <li>Records: <code>record Point(int x, int y) {}</code> — concise, immutable, transparent</li>
+        <li>Records can have custom constructors and instance methods, but fields are final</li>
+        <li>Sealed classes: <code>sealed class Shape permits Circle, Square {}</code></li>
+        <li>Subclasses must be <code>final</code>, <code>sealed</code>, or <code>non-sealed</code></li>
+      </ul>
+      <div class="resources">
+        <a href="https://docs.oracle.com/en/java/javase/17/language/records.html" target="_blank">Oracle: Records</a>
+        <a href="https://www.baeldung.com/java-record-keyword" target="_blank">Baeldung: Records</a>
+        <a href="https://www.baeldung.com/java-sealed-classes-interfaces" target="_blank">Baeldung: Sealed Classes</a>
+      </div>
+    </div>
+
+    <div class="topic-card" id="topic-26">
+      <h4>Pattern Matching instanceof</h4>
+      <p class="desc">Java 16 eliminates the redundant cast after <code>instanceof</code>. A small but impactful readability improvement that interviewers may mention as a modern Java signal.</p>
+      <ul>
+        <li>Before: <code>if (obj instanceof String) { String s = (String) obj; ... }</code></li>
+        <li>After: <code>if (obj instanceof String s) { ... }</code> — binding variable <code>s</code> is in scope</li>
+        <li>Works with negation and compound conditions</li>
+      </ul>
+      <div class="resources">
+        <a href="https://docs.oracle.com/en/java/javase/17/language/pattern-matching-instanceof-operator.html" target="_blank">Oracle: Pattern Matching</a>
+        <a href="https://www.baeldung.com/java-pattern-matching-instanceof" target="_blank">Baeldung: Pattern Matching</a>
+      </div>
+    </div>
+
+    <div class="topic-card" id="topic-27">
+      <h4>Text Blocks</h4>
+      <p class="desc">Java 15 text blocks use triple-quote <code>"""</code> syntax for multi-line strings. Eliminates escape-character noise for JSON, SQL, and HTML literals.</p>
+      <ul>
+        <li>Indentation is stripped based on the position of the closing <code>"""</code></li>
+        <li>Supports <code>\s</code> (explicit space) and <code>\</code> (line continuation) escape sequences</li>
+        <li>Works with <code>String.formatted()</code> for template-like usage</li>
+      </ul>
+      <div class="resources">
+        <a href="https://docs.oracle.com/en/java/javase/17/text-blocks/index.html" target="_blank">Oracle: Text Blocks</a>
+        <a href="https://www.baeldung.com/java-text-blocks" target="_blank">Baeldung: Text Blocks</a>
+      </div>
+    </div>
+
+    <div class="topic-card" id="topic-28">
+      <h4>var Inference</h4>
+      <p class="desc">Java 10 introduced local variable type inference with <code>var</code>. Reduces boilerplate but has guardrails — cannot be used for fields, parameters, or return types.</p>
+      <ul>
+        <li>Only for local variables with initializers: <code>var list = new ArrayList&lt;String&gt;();</code></li>
+        <li>The compiler infers the type at compile time — it is NOT dynamic typing</li>
+        <li>Use when the type is obvious from the right-hand side; avoid when it hurts readability</li>
+      </ul>
+      <div class="resources">
+        <a href="https://docs.oracle.com/en/java/javase/17/language/local-variable-type-inference.html" target="_blank">Oracle: var</a>
+        <a href="https://www.baeldung.com/java-10-local-variable-type-inference" target="_blank">Baeldung: var</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════════════════════════════════
+     SECTION 3 — JVM Tuning & Tooling
+     ════════════════════════════════════════════════════════════ -->
+<div class="section" id="section-jvm-tuning-tooling">
+  <div class="section-heading">
+    <h2>JVM Tuning &amp; Tooling</h2>
+    <span class="context-badge badge-full-focus">Full-Focus</span>
+  </div>
+
+  <!-- ── Profiling Tools ── -->
+  <div class="category">
+    <h3 class="category-heading">Profiling Tools</h3>
+
+    <div class="topic-card" id="topic-29">
+      <h4>jstack / jmap / jstat</h4>
+      <p class="desc">The essential JDK command-line tools for diagnosing live JVM processes. Interviewers test whether you can actually troubleshoot production issues, not just write code.</p>
+      <ul>
+        <li><code>jstack &lt;pid&gt;</code>: prints thread dump — find deadlocks, blocked threads, CPU hotspots</li>
+        <li><code>jmap -heap &lt;pid&gt;</code>: heap summary. <code>jmap -dump:format=b,file=heap.hprof &lt;pid&gt;</code>: full heap dump</li>
+        <li><code>jstat -gcutil &lt;pid&gt; 1000</code>: GC stats every 1s — monitor GC frequency and pause times</li>
+        <li>Use <code>-l</code> flag with jstack for extended info including lock ownership</li>
+      </ul>
+      <div class="resources">
+        <a href="https://docs.oracle.com/javase/8/docs/technotes/tools/unix/jstack.html" target="_blank">Oracle: jstack</a>
+        <a href="https://docs.oracle.com/javase/8/docs/technotes/tools/unix/jmap.html" target="_blank">Oracle: jmap</a>
+        <a href="https://www.baeldung.com/java-heap-dump-capture" target="_blank">Baeldung: Heap Dumps</a>
+      </div>
+    </div>
+
+    <div class="topic-card" id="topic-30">
+      <h4>VisualVM / JProfiler</h4>
+      <p class="desc">GUI-based profiling tools for CPU profiling, memory analysis, and thread monitoring. Be familiar with their capabilities even if you primarily use command-line tools.</p>
+      <ul>
+        <li>VisualVM: free, bundled with JDK (until Java 8), now separate download</li>
+        <li>CPU profiling: identify hot methods consuming the most CPU</li>
+        <li>Memory profiling: track allocation rates, find leaks via retained size analysis</li>
+        <li>JProfiler: commercial, richer call-tree analysis and JDBC/JPA query profiling</li>
+      </ul>
+      <div class="resources">
+        <a href="https://docs.oracle.com/javase/8/docs/technotes/guides/visualvm/" target="_blank">Oracle: VisualVM</a>
+        <a href="https://www.baeldung.com/java-profilers" target="_blank">Baeldung: Java Profilers</a>
+      </div>
+    </div>
+
+    <div class="topic-card" id="topic-31">
+      <h4>Heap Dump Analysis</h4>
+      <p class="desc">A heap dump captures every live object on the heap at a point in time. Analyzing it lets you find memory leaks, oversized caches, and unexpected object retention.</p>
+      <ul>
+        <li>Generate via <code>jmap</code>, JMX, or <code>-XX:+HeapDumpOnOutOfMemoryError</code></li>
+        <li>Open in Eclipse MAT (Memory Analyzer Tool) for dominator tree and leak suspect reports</li>
+        <li>Look at retained size (transitive closure) vs shallow size</li>
+        <li>Common findings: unbounded caches, duplicate strings, classloader leaks</li>
+      </ul>
+      <div class="resources">
+        <a href="https://www.baeldung.com/java-heap-dump-capture" target="_blank">Baeldung: Heap Dumps</a>
+        <a href="https://docs.oracle.com/javase/8/docs/technotes/guides/troubleshoot/memleaks002.html" target="_blank">Oracle: Diagnosing Leaks</a>
+      </div>
+    </div>
+
+    <div class="topic-card" id="topic-32">
+      <h4>Thread Dump Analysis</h4>
+      <p class="desc">A thread dump shows what every thread is doing at a given instant. The primary tool for diagnosing deadlocks, thread starvation, and high-latency requests.</p>
+      <ul>
+        <li>Capture via <code>jstack</code>, <code>kill -3 &lt;pid&gt;</code>, or JMX <code>ThreadMXBean</code></li>
+        <li>Look for: BLOCKED threads (contention), WAITING threads (possible deadlock), runnable threads in loops</li>
+        <li>Take 3-5 dumps a few seconds apart to spot stuck threads vs transient states</li>
+        <li>Modern tools: async-profiler, fastThread.io for automated analysis</li>
+      </ul>
+      <div class="resources">
+        <a href="https://docs.oracle.com/javase/8/docs/technotes/guides/troubleshoot/tooldescr019.html" target="_blank">Oracle: Thread Dumps</a>
+        <a href="https://www.baeldung.com/java-thread-dump" target="_blank">Baeldung: Thread Dump</a>
+      </div>
+    </div>
+
+    <div class="topic-card" id="topic-33">
+      <h4>GC Log Parsing</h4>
+      <p class="desc">GC logs record every collection event with timing and memory details. Parsing them is how you validate tuning changes and diagnose pause-time issues.</p>
+      <ul>
+        <li>Enable with <code>-Xlog:gc*:file=gc.log:time,uptime,level,tags</code> (Java 9+ unified logging)</li>
+        <li>Legacy: <code>-XX:+PrintGCDetails -XX:+PrintGCDateStamps -Xloggc:gc.log</code></li>
+        <li>Key metrics: pause duration, allocation rate, promotion rate, heap occupancy after GC</li>
+        <li>Tools: GCViewer, GCEasy.io for visual analysis</li>
+      </ul>
+      <div class="resources">
+        <a href="https://docs.oracle.com/en/java/javase/17/docs/specs/man/java.html" target="_blank">Oracle: java Command</a>
+        <a href="https://www.baeldung.com/java-verbose-gc" target="_blank">Baeldung: Verbose GC</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── JVM Flags ── -->
+  <div class="category">
+    <h3 class="category-heading">JVM Flags</h3>
+
+    <div class="topic-card" id="topic-34">
+      <h4>-Xms / -Xmx</h4>
+      <p class="desc">The most fundamental JVM flags. <code>-Xms</code> sets initial heap size, <code>-Xmx</code> sets maximum heap size. Setting them equal avoids costly heap resizing at runtime.</p>
+      <ul>
+        <li><code>-Xms512m -Xmx2g</code>: start at 512 MB, grow up to 2 GB</li>
+        <li>Set <code>-Xms == -Xmx</code> in production to avoid resize pauses</li>
+        <li>Too small: frequent GC, OOM. Too large: longer GC pauses, wasted memory</li>
+        <li>Container-aware since Java 10: <code>-XX:MaxRAMPercentage=75.0</code> for Docker</li>
+      </ul>
+      <div class="resources">
+        <a href="https://docs.oracle.com/en/java/javase/17/docs/specs/man/java.html" target="_blank">Oracle: java Options</a>
+        <a href="https://www.baeldung.com/jvm-parameters" target="_blank">Baeldung: JVM Parameters</a>
+      </div>
+    </div>
+
+    <div class="topic-card" id="topic-35">
+      <h4>-XX:+UseG1GC</h4>
+      <p class="desc">Enables the G1 (Garbage First) collector. Default since Java 9. Know when G1 is the right choice and how its region-based model differs from older collectors.</p>
+      <ul>
+        <li>Divides heap into equal-sized regions (~1-32 MB), collects regions with most garbage first</li>
+        <li>Targets pause-time goal: <code>-XX:MaxGCPauseMillis=200</code> (default)</li>
+        <li>Mixed GC: collects young + some old regions in the same pause</li>
+        <li>Good for heaps &gt; 4 GB. For sub-ms pauses, consider ZGC instead</li>
+      </ul>
+      <div class="resources">
+        <a href="https://docs.oracle.com/en/java/javase/17/gctuning/garbage-first-g1-garbage-collector1.html" target="_blank">Oracle: G1 GC</a>
+        <a href="https://www.baeldung.com/jvm-garbage-collectors" target="_blank">Baeldung: GC Collectors</a>
+      </div>
+    </div>
+
+    <div class="topic-card" id="topic-36">
+      <h4>PrintGCDetails</h4>
+      <p class="desc">Enables detailed GC logging — essential for understanding what the collector is doing and how to tune it. The first flag you add when diagnosing GC issues.</p>
+      <ul>
+        <li>Legacy: <code>-XX:+PrintGCDetails -XX:+PrintGCDateStamps</code></li>
+        <li>Java 9+ unified logging: <code>-Xlog:gc*=info:file=gc.log:time</code></li>
+        <li>Shows: which generation collected, before/after sizes, pause duration</li>
+        <li>Combine with <code>-XX:+PrintGCApplicationStoppedTime</code> for full picture</li>
+      </ul>
+      <div class="resources">
+        <a href="https://docs.oracle.com/en/java/javase/17/docs/specs/man/java.html" target="_blank">Oracle: JVM Options</a>
+        <a href="https://www.baeldung.com/java-verbose-gc" target="_blank">Baeldung: Verbose GC</a>
+      </div>
+    </div>
+
+    <div class="topic-card" id="topic-37">
+      <h4>HeapDumpOnOOM</h4>
+      <p class="desc"><code>-XX:+HeapDumpOnOutOfMemoryError</code> automatically captures a heap dump when the JVM runs out of memory. A must-have flag for every production JVM.</p>
+      <ul>
+        <li><code>-XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/var/logs/heap.hprof</code></li>
+        <li>Without this, OOM crashes leave no forensic evidence</li>
+        <li>Pair with <code>-XX:OnOutOfMemoryError="kill -9 %p"</code> to force restart after dump</li>
+        <li>Analyze the dump in Eclipse MAT to find the leak source</li>
+      </ul>
+      <div class="resources">
+        <a href="https://docs.oracle.com/javase/8/docs/technotes/guides/troubleshoot/clopts001.html" target="_blank">Oracle: Troubleshooting Options</a>
+        <a href="https://www.baeldung.com/java-heap-dump-capture" target="_blank">Baeldung: Heap Dumps</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════════════════════════════════
+     RECOMMENDED RESOURCES
+     ════════════════════════════════════════════════════════════ -->
+<div class="resources-section">
+  <h2>Recommended Resources</h2>
+
+  <div class="res-group">
+    <h3>Books</h3>
+    <ul>
+      <li><strong>Java Concurrency in Practice</strong> — Brian Goetz. The definitive resource on Java threading and memory model.</li>
+      <li><strong>Effective Java (3rd Ed.)</strong> — Joshua Bloch. Covers modern Java best practices including streams, optionals, and generics.</li>
+      <li><strong>Java Performance (2nd Ed.)</strong> — Scott Oaks. GC tuning, JIT compilation, benchmarking with JMH.</li>
+    </ul>
+  </div>
+
+  <div class="res-group">
+    <h3>Online References</h3>
+    <ul>
+      <li><a href="https://docs.oracle.com/javase/specs/jls/se17/html/index.html" target="_blank">Java Language Specification (JLS) — Java 17</a></li>
+      <li><a href="https://docs.oracle.com/en/java/javase/17/gctuning/" target="_blank">Oracle HotSpot GC Tuning Guide</a></li>
+      <li><a href="https://www.baeldung.com/java-tutorial" target="_blank">Baeldung Java Tutorials</a></li>
+      <li><a href="https://jenkov.com/tutorials/java-concurrency/index.html" target="_blank">Jenkov Java Concurrency Tutorial</a></li>
+    </ul>
+  </div>
+
+  <div class="res-group">
+    <h3>Tools &amp; Practice</h3>
+    <ul>
+      <li><a href="https://docs.oracle.com/javase/8/docs/technotes/guides/visualvm/" target="_blank">VisualVM</a> — free JVM profiling</li>
+      <li><strong>Eclipse MAT</strong> — heap dump analysis</li>
+      <li><strong>async-profiler</strong> — low-overhead CPU and allocation profiler for Linux/macOS</li>
+      <li><strong>JMH (Java Microbenchmark Harness)</strong> — for accurate micro-benchmarks</li>
+    </ul>
+  </div>
+</div>
+
+</div><!-- /.container -->
+</body>
+</html>

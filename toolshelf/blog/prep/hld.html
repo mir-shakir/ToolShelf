@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pillar 5 — High-Level Design (HLD) | SDE 2 Prep Tracker</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg-primary:#1a1b2e; --bg-secondary:#232540; --bg-tertiary:#2a2d4a; --bg-hover:#32355a;
+  --text-primary:#e2e4f0; --text-secondary:#a0a3bd; --text-muted:#6b6f8a; --border:#3a3d5c;
+  --accent:#6c63ff; --green:#4ade80; --green-bg:rgba(74,222,128,0.12);
+  --orange:#fb923c; --orange-bg:rgba(251,146,60,0.12); --red:#f87171; --red-bg:rgba(248,113,113,0.12);
+  --cyan:#22d3ee; --cyan-bg:rgba(34,211,238,0.12);
+}
+
+body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background: var(--bg-primary); color: var(--text-primary); line-height: 1.6; }
+
+/* ── Sticky Header ── */
+.header {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(26,27,46,0.95); backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border); padding: 16px 24px;
+}
+.header-inner { max-width: 960px; margin: 0 auto; }
+.header h1 { font-size: 1.5rem; color: var(--text-primary); margin-bottom: 2px; }
+.header .subtitle { font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 6px; }
+.back-link { color: var(--accent); text-decoration: none; font-size: 0.85rem; }
+.back-link:hover { text-decoration: underline; }
+
+/* ── Layout ── */
+.container { max-width: 960px; margin: 0 auto; padding: 24px; }
+
+/* ── Table of Contents ── */
+.toc { background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 10px; padding: 20px 24px; margin-bottom: 32px; }
+.toc h2 { font-size: 1.1rem; margin-bottom: 12px; color: var(--accent); }
+.toc ul { list-style: none; display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 6px 20px; }
+.toc a { color: var(--text-secondary); text-decoration: none; font-size: 0.88rem; transition: color .15s; }
+.toc a:hover { color: var(--accent); }
+
+/* ── Section ── */
+.section { margin-bottom: 40px; }
+.section-heading {
+  font-size: 1.25rem; padding: 10px 0; margin-bottom: 4px;
+  border-bottom: 2px solid var(--accent); display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+}
+.context-badge {
+  font-size: 0.7rem; font-weight: 600; padding: 2px 10px; border-radius: 20px; text-transform: uppercase; letter-spacing: .5px;
+}
+.context-full-focus { background: var(--red-bg); color: var(--red); }
+.context-light { background: var(--green-bg); color: var(--green); }
+.context-both { background: var(--orange-bg); color: var(--orange); }
+
+/* ── Tip Callout ── */
+.tip-callout {
+  background: var(--cyan-bg); border-left: 3px solid var(--cyan); border-radius: 6px;
+  padding: 10px 14px; margin: 10px 0 18px 0; font-size: 0.85rem; color: var(--text-secondary);
+}
+.tip-callout strong { color: var(--cyan); }
+
+/* ── Category ── */
+.category-heading {
+  font-size: 1.05rem; font-weight: 600; margin: 24px 0 12px 0;
+  padding-left: 12px; border-left: 4px solid var(--accent); color: var(--text-primary);
+}
+
+/* ── Topic Card ── */
+.topic-card {
+  scroll-margin-top: 80px;
+  background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 8px;
+  padding: 16px 20px; margin-bottom: 14px; transition: border-color .15s, background .15s;
+}
+.topic-card:hover { border-color: var(--accent); background: var(--bg-hover); }
+.topic-card h3 { font-size: 1rem; margin-bottom: 6px; color: var(--text-primary); }
+.topic-card .desc { font-size: 0.88rem; color: var(--text-secondary); margin-bottom: 10px; }
+.topic-card ul { margin: 0 0 10px 18px; }
+.topic-card li { font-size: 0.84rem; color: var(--text-secondary); margin-bottom: 3px; }
+.topic-card .resources { display: flex; flex-wrap: wrap; gap: 8px; }
+.topic-card .resources a {
+  font-size: 0.78rem; color: var(--accent); background: rgba(108,99,255,0.08);
+  padding: 3px 10px; border-radius: 4px; text-decoration: none; border: 1px solid rgba(108,99,255,0.2);
+}
+.topic-card .resources a:hover { background: rgba(108,99,255,0.18); }
+
+/* ── Resources Footer ── */
+.resources-footer { background: var(--bg-tertiary); border: 1px solid var(--border); border-radius: 10px; padding: 20px 24px; margin-top: 40px; }
+.resources-footer h2 { font-size: 1.1rem; color: var(--accent); margin-bottom: 12px; }
+.resources-footer ul { list-style: none; }
+.resources-footer li { margin-bottom: 8px; }
+.resources-footer a { color: var(--cyan); text-decoration: none; font-size: 0.9rem; }
+.resources-footer a:hover { text-decoration: underline; }
+.resources-footer .note { font-size: 0.8rem; color: var(--text-muted); margin-left: 6px; }
+
+/* ── Responsive ── */
+@media (max-width: 640px) {
+  .header { padding: 12px 16px; }
+  .header h1 { font-size: 1.2rem; }
+  .container { padding: 16px; }
+  .toc ul { grid-template-columns: 1fr; }
+  .topic-card { padding: 14px 16px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ════════════ HEADER ════════════ -->
+<header class="header">
+  <div class="header-inner">
+    <a href="index.html" class="back-link">&larr; Back to Tracker</a>
+    <h1>Pillar 5 &mdash; High-Level Design (HLD)</h1>
+    <p class="subtitle">System design end-to-end &mdash; from blank page to production-ready</p>
+  </div>
+</header>
+
+<div class="container">
+
+<!-- ════════════ TABLE OF CONTENTS ════════════ -->
+<nav class="toc">
+  <h2>Table of Contents</h2>
+  <ul>
+    <li><a href="#sec-methodology">HLD Methodology &amp; Framework</a></li>
+    <li><a href="#sec-core-systems">Core Systems to Practice</a></li>
+    <li><a href="#sec-arch-patterns">Architecture Patterns</a></li>
+    <li><a href="#sec-infra">Infrastructure &amp; Cloud (AWS)</a></li>
+    <li><a href="#sec-resources">Recommended Resources</a></li>
+  </ul>
+</nav>
+
+<!-- ══════════════════════════════════════════════════════════════════
+     SECTION 1 — HLD Methodology & Framework
+     ══════════════════════════════════════════════════════════════════ -->
+<section class="section" id="sec-methodology">
+  <h2 class="section-heading">
+    HLD Methodology &amp; Framework
+    <span class="context-badge context-full-focus">Full-Focus</span>
+  </h2>
+
+  <div class="tip-callout">
+    <strong>Tip:</strong> Practice this framework on every system. The structured process matters as much as the answer itself.
+  </div>
+
+  <h3 class="category-heading">Interview Framework</h3>
+
+  <!-- 181 -->
+  <div class="topic-card" id="topic-181">
+    <h3>Requirement Clarification (Functional vs Non-Functional)</h3>
+    <p class="desc">The first two minutes of every design interview. Separate what the system does (functional) from how well it does it (non-functional: latency, throughput, durability).</p>
+    <ul>
+      <li>Ask clarifying questions before drawing anything &mdash; interviewers expect this</li>
+      <li>Functional: core use-cases, user personas, read vs write heavy</li>
+      <li>Non-functional: availability target, consistency model, expected scale</li>
+      <li>Write requirements on the whiteboard so both you and the interviewer can reference them</li>
+    </ul>
+    <div class="resources">
+      <a href="https://github.com/donnemartin/system-design-primer#step-1-outline-use-cases-constraints-and-assumptions" target="_blank">System Design Primer</a>
+      <a href="https://www.baeldung.com/cs/functional-vs-non-functional-requirements" target="_blank">Baeldung &mdash; Functional vs Non-Functional</a>
+    </div>
+  </div>
+
+  <!-- 182 -->
+  <div class="topic-card" id="topic-182">
+    <h3>Capacity Estimation (QPS, Storage, Bandwidth)</h3>
+    <p class="desc">Back-of-the-envelope math that proves your design can handle the expected load. Interviewers use this to gauge your system intuition.</p>
+    <ul>
+      <li>Start from DAU, derive QPS (peak = 2-3x average)</li>
+      <li>Estimate storage per record, project for 3-5 years</li>
+      <li>Bandwidth = QPS x average response size</li>
+      <li>Know common numbers: 86 400 sec/day, 1 M req/day ~ 12 QPS</li>
+    </ul>
+    <div class="resources">
+      <a href="https://github.com/donnemartin/system-design-primer#back-of-the-envelope-calculations" target="_blank">System Design Primer &mdash; BOE</a>
+      <a href="https://highscalability.com/google-pro-tip-use-back-of-the-envelope-calculations-to-choo/" target="_blank">High Scalability &mdash; BOE</a>
+    </div>
+  </div>
+
+  <!-- 183 -->
+  <div class="topic-card" id="topic-183">
+    <h3>API Design First</h3>
+    <p class="desc">Define the contract before drawing boxes. A clear REST/gRPC API grounds the design and prevents scope creep during the interview.</p>
+    <ul>
+      <li>List 3-5 core endpoints with HTTP methods, params, and response shapes</li>
+      <li>Decide REST vs gRPC vs GraphQL based on use-case</li>
+      <li>Consider pagination, idempotency keys, and auth headers up front</li>
+      <li>API versioning strategy (path-based vs header-based)</li>
+    </ul>
+    <div class="resources">
+      <a href="https://github.com/donnemartin/system-design-primer#representational-state-transfer-rest" target="_blank">System Design Primer &mdash; REST</a>
+      <a href="https://www.baeldung.com/rest-api-design" target="_blank">Baeldung &mdash; REST API Design</a>
+    </div>
+  </div>
+
+  <!-- 184 -->
+  <div class="topic-card" id="topic-184">
+    <h3>Data Model Design</h3>
+    <p class="desc">Choose the right schema and storage engine before scaling discussions. The data model drives every downstream decision.</p>
+    <ul>
+      <li>Identify core entities and relationships (1:1, 1:N, M:N)</li>
+      <li>SQL vs NoSQL decision based on query patterns, not hype</li>
+      <li>Denormalization tradeoffs for read-heavy workloads</li>
+      <li>Index strategy: what queries will hit this table?</li>
+    </ul>
+    <div class="resources">
+      <a href="https://github.com/donnemartin/system-design-primer#database" target="_blank">System Design Primer &mdash; Database</a>
+      <a href="https://www.baeldung.com/cs/data-model-design" target="_blank">Baeldung &mdash; Data Modeling</a>
+    </div>
+  </div>
+
+  <!-- 185 -->
+  <div class="topic-card" id="topic-185">
+    <h3>High-Level Component Diagram</h3>
+    <p class="desc">The core deliverable of the interview: a box-and-arrow diagram showing clients, load balancers, services, databases, caches, and queues.</p>
+    <ul>
+      <li>Draw the happy path first, then add failure handling</li>
+      <li>Label every arrow with protocol (HTTP, gRPC, TCP) and data flow direction</li>
+      <li>Keep it to 5-8 major components &mdash; too many boxes signals unclear thinking</li>
+      <li>Narrate while drawing: explain why each component exists</li>
+    </ul>
+    <div class="resources">
+      <a href="https://github.com/donnemartin/system-design-primer#system-design-topics-start-here" target="_blank">System Design Primer &mdash; Overview</a>
+      <a href="https://highscalability.com/" target="_blank">High Scalability</a>
+    </div>
+  </div>
+
+  <!-- 186 -->
+  <div class="topic-card" id="topic-186">
+    <h3>Deep-Dive on the Bottleneck Component</h3>
+    <p class="desc">After the high-level sketch, the interviewer will zoom in. Identify the bottleneck yourself before they ask &mdash; it shows senior-level thinking.</p>
+    <ul>
+      <li>Common bottlenecks: database writes, fan-out, hotspot keys, network hops</li>
+      <li>Discuss scaling strategies: sharding, caching, async processing</li>
+      <li>Mention monitoring: how would you detect this bottleneck in production?</li>
+      <li>Propose a fallback or degradation strategy</li>
+    </ul>
+    <div class="resources">
+      <a href="https://github.com/donnemartin/system-design-primer#performance-vs-scalability" target="_blank">System Design Primer &mdash; Performance</a>
+      <a href="https://highscalability.com/" target="_blank">High Scalability</a>
+    </div>
+  </div>
+
+  <!-- 187 -->
+  <div class="topic-card" id="topic-187">
+    <h3>SLI / SLO / SLA Definitions</h3>
+    <p class="desc">Quantify reliability. SLIs are metrics (latency p99), SLOs are targets (99.9%), SLAs are contractual promises. Mentioning these elevates your answer.</p>
+    <ul>
+      <li>SLI: the metric you measure (error rate, latency percentile, throughput)</li>
+      <li>SLO: internal target for an SLI (p99 latency &lt; 200ms)</li>
+      <li>SLA: external contract with penalties if SLO is breached</li>
+      <li>Error budgets: how much downtime is acceptable before halting deployments</li>
+    </ul>
+    <div class="resources">
+      <a href="https://docs.aws.amazon.com/wellarchitected/latest/reliability-pillar/availability.html" target="_blank">AWS Well-Architected &mdash; Reliability</a>
+      <a href="https://github.com/donnemartin/system-design-primer#availability-vs-consistency" target="_blank">System Design Primer &mdash; Availability</a>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════════
+     SECTION 2 — Core Systems to Practice
+     ══════════════════════════════════════════════════════════════════ -->
+<section class="section" id="sec-core-systems">
+  <h2 class="section-heading">
+    Core Systems to Practice
+    <span class="context-badge context-full-focus">Full-Focus</span>
+  </h2>
+
+  <!-- ── Tier 1 — Must Do ── -->
+  <h3 class="category-heading">Tier 1 &mdash; Must Do</h3>
+
+  <!-- 188 -->
+  <div class="topic-card" id="topic-188">
+    <h3>URL Shortener</h3>
+    <p class="desc">The classic warm-up design problem. Interesting because it covers hashing, collision handling, read-heavy workloads, and analytics at scale.</p>
+    <ul>
+      <li>Key components: hashing service, key-value store, redirect service, analytics pipeline</li>
+      <li>Base62 encoding vs MD5-truncation tradeoffs</li>
+      <li>Handle collisions with retry or counter-based approach</li>
+      <li>Read:write ratio is extremely high &mdash; perfect cache candidate</li>
+      <li>Custom alias support and TTL expiration</li>
+    </ul>
+    <div class="resources">
+      <a href="https://github.com/donnemartin/system-design-primer#design-a-url-shortener" target="_blank">System Design Primer &mdash; URL Shortener</a>
+      <a href="https://highscalability.com/" target="_blank">High Scalability</a>
+    </div>
+  </div>
+
+  <!-- 189 -->
+  <div class="topic-card" id="topic-189">
+    <h3>Rate Limiter</h3>
+    <p class="desc">Tests understanding of distributed state, sliding windows, and protecting upstream services. Appears frequently in SDE 2 interviews.</p>
+    <ul>
+      <li>Key components: rule engine, counter store (Redis), middleware/gateway integration</li>
+      <li>Algorithms: fixed window, sliding window log, sliding window counter, token bucket, leaky bucket</li>
+      <li>Distributed rate limiting with Redis INCR + TTL atomicity</li>
+      <li>Race conditions in multi-node deployments</li>
+      <li>Return 429 with Retry-After header; degrade gracefully</li>
+    </ul>
+    <div class="resources">
+      <a href="https://github.com/donnemartin/system-design-primer" target="_blank">System Design Primer</a>
+      <a href="https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-request-throttling.html" target="_blank">AWS &mdash; API Gateway Throttling</a>
+    </div>
+  </div>
+
+  <!-- 190 -->
+  <div class="topic-card" id="topic-190">
+    <h3>Notification System</h3>
+    <p class="desc">Interesting because it combines multiple delivery channels (push, SMS, email), priority queues, and exactly-once delivery challenges.</p>
+    <ul>
+      <li>Key components: notification service, priority queue, channel adapters, template engine, preference store</li>
+      <li>Fan-out to millions of devices with rate limiting per channel</li>
+      <li>Idempotency to prevent duplicate notifications</li>
+      <li>User preference and opt-out management</li>
+      <li>Retry with exponential backoff per delivery channel</li>
+    </ul>
+    <div class="resources">
+      <a href="https://docs.aws.amazon.com/sns/latest/dg/welcome.html" target="_blank">AWS SNS Documentation</a>
+      <a href="https://github.com/donnemartin/system-design-primer" target="_blank">System Design Primer</a>
+    </div>
+  </div>
+
+  <!-- 191 -->
+  <div class="topic-card" id="topic-191">
+    <h3>Chat System (WhatsApp-like)</h3>
+    <p class="desc">Tests real-time communication, presence detection, and message ordering. Interesting for its WebSocket management and offline message sync challenges.</p>
+    <ul>
+      <li>Key components: WebSocket gateway, chat service, presence service, message store, push notification fallback</li>
+      <li>Connection management: WebSocket with heartbeat, reconnection logic</li>
+      <li>Message ordering with sequence IDs per conversation</li>
+      <li>Offline message queue and read receipts</li>
+      <li>Group chat fan-out strategy and media storage</li>
+    </ul>
+    <div class="resources">
+      <a href="https://github.com/donnemartin/system-design-primer" target="_blank">System Design Primer</a>
+      <a href="https://highscalability.com/" target="_blank">High Scalability</a>
+    </div>
+  </div>
+
+  <!-- 192 -->
+  <div class="topic-card" id="topic-192">
+    <h3>News Feed / Timeline</h3>
+    <p class="desc">The classic fan-out problem. Interesting because it forces a decision between push (fan-out on write) and pull (fan-out on read) models with hybrid approaches.</p>
+    <ul>
+      <li>Key components: feed service, fan-out service, post store, social graph, feed cache</li>
+      <li>Push model for normal users, pull model for celebrity accounts (hybrid)</li>
+      <li>Feed ranking: chronological vs ML-based relevance scoring</li>
+      <li>Cache invalidation when posts are deleted or edited</li>
+      <li>Pagination with cursor-based approach for infinite scroll</li>
+    </ul>
+    <div class="resources">
+      <a href="https://github.com/donnemartin/system-design-primer#design-a-news-feed" target="_blank">System Design Primer &mdash; News Feed</a>
+      <a href="https://highscalability.com/" target="_blank">High Scalability</a>
+    </div>
+  </div>
+
+  <!-- 193 -->
+  <div class="topic-card" id="topic-193">
+    <h3>Search Autocomplete</h3>
+    <p class="desc">Fascinating for its latency requirements (&lt;100ms), trie data structures, and the interplay between real-time popularity updates and pre-computed suggestions.</p>
+    <ul>
+      <li>Key components: trie service, query aggregation pipeline, ranking service, suggestion cache</li>
+      <li>Trie with frequency counters at each node, top-K heap</li>
+      <li>Offline pipeline updates trie periodically from query logs</li>
+      <li>Prefix matching with character-by-character API calls (debounce on client)</li>
+      <li>Sharding trie by prefix range for horizontal scaling</li>
+    </ul>
+    <div class="resources">
+      <a href="https://github.com/donnemartin/system-design-primer" target="_blank">System Design Primer</a>
+      <a href="https://www.baeldung.com/cs/trie-data-structure" target="_blank">Baeldung &mdash; Trie</a>
+    </div>
+  </div>
+
+  <!-- 194 -->
+  <div class="topic-card" id="topic-194">
+    <h3>Distributed Cache</h3>
+    <p class="desc">A foundational building block that appears in almost every design. Interesting for consistent hashing, eviction policies, and cache coherence in multi-node setups.</p>
+    <ul>
+      <li>Key components: cache nodes, consistent hash ring, client library, eviction engine</li>
+      <li>Eviction policies: LRU, LFU, TTL-based &mdash; when to use each</li>
+      <li>Consistent hashing with virtual nodes for balanced distribution</li>
+      <li>Cache-aside, write-through, write-behind patterns</li>
+      <li>Thundering herd / cache stampede mitigation (locking, probabilistic early refresh)</li>
+    </ul>
+    <div class="resources">
+      <a href="https://github.com/donnemartin/system-design-primer#cache" target="_blank">System Design Primer &mdash; Cache</a>
+      <a href="https://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/WhatIs.html" target="_blank">AWS ElastiCache Docs</a>
+    </div>
+  </div>
+
+  <!-- 195 -->
+  <div class="topic-card" id="topic-195">
+    <h3>Job Scheduler</h3>
+    <p class="desc">Tests distributed coordination, exactly-once execution, and fault tolerance. Interesting because of priority handling, retries, and DAG-based dependency management.</p>
+    <ul>
+      <li>Key components: scheduler service, job queue, worker pool, state store, dead-letter queue</li>
+      <li>Cron-based vs event-driven vs DAG-based scheduling</li>
+      <li>Exactly-once execution with distributed locking (Redlock or DB-based)</li>
+      <li>Worker heartbeat and task reassignment on failure</li>
+      <li>Priority queues and resource-based scheduling</li>
+    </ul>
+    <div class="resources">
+      <a href="https://github.com/donnemartin/system-design-primer" target="_blank">System Design Primer</a>
+      <a href="https://www.baeldung.com/java-quartz" target="_blank">Baeldung &mdash; Job Scheduling</a>
+    </div>
+  </div>
+
+  <!-- ── Tier 2 — Important ── -->
+  <h3 class="category-heading">Tier 2 &mdash; Important</h3>
+
+  <!-- 196 -->
+  <div class="topic-card" id="topic-196">
+    <h3>Payment System</h3>
+    <p class="desc">Interesting for its strict consistency requirements, idempotency, and the double-entry bookkeeping model. Mistakes here cost real money.</p>
+    <ul>
+      <li>Key components: payment gateway, ledger service, reconciliation engine, fraud detector, PSP integration</li>
+      <li>Idempotency keys to prevent duplicate charges</li>
+      <li>Double-entry ledger for every transaction (debit + credit)</li>
+      <li>Saga pattern for distributed transactions across services</li>
+      <li>PCI-DSS compliance: tokenize card data, never store raw PAN</li>
+    </ul>
+    <div class="resources">
+      <a href="https://github.com/donnemartin/system-design-primer" target="_blank">System Design Primer</a>
+      <a href="https://www.baeldung.com/cs/saga-pattern-microservices" target="_blank">Baeldung &mdash; Saga Pattern</a>
+    </div>
+  </div>
+
+  <!-- 197 -->
+  <div class="topic-card" id="topic-197">
+    <h3>Ride-Sharing Location Service</h3>
+    <p class="desc">Interesting for geospatial indexing, real-time location streaming, and the matching algorithm between riders and drivers within a radius.</p>
+    <ul>
+      <li>Key components: location ingestion service, geospatial index, matching engine, trip service, ETA calculator</li>
+      <li>Geohash or QuadTree for spatial queries ("drivers within 3km")</li>
+      <li>High-frequency location updates (every 3-5 seconds) via UDP or WebSocket</li>
+      <li>Supply-demand matching with surge pricing signals</li>
+      <li>Eventual consistency acceptable for location; strong consistency for trip state</li>
+    </ul>
+    <div class="resources">
+      <a href="https://github.com/donnemartin/system-design-primer" target="_blank">System Design Primer</a>
+      <a href="https://highscalability.com/" target="_blank">High Scalability</a>
+    </div>
+  </div>
+
+  <!-- 198 -->
+  <div class="topic-card" id="topic-198">
+    <h3>Video Upload &amp; Streaming</h3>
+    <p class="desc">Interesting for its large-blob handling, async transcoding pipeline, adaptive bitrate streaming, and CDN edge-caching strategy.</p>
+    <ul>
+      <li>Key components: upload service, transcoding pipeline, video store (S3), CDN, metadata service</li>
+      <li>Chunked/resumable uploads for large files (tus protocol)</li>
+      <li>Transcoding to multiple resolutions and codecs in parallel (DAG pipeline)</li>
+      <li>Adaptive bitrate streaming (HLS/DASH) based on client bandwidth</li>
+      <li>Pre-signed URLs for upload; CDN origin-pull for playback</li>
+    </ul>
+    <div class="resources">
+      <a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/mpuoverview.html" target="_blank">AWS S3 &mdash; Multipart Upload</a>
+      <a href="https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/Introduction.html" target="_blank">AWS CloudFront Docs</a>
+    </div>
+  </div>
+
+  <!-- 199 -->
+  <div class="topic-card" id="topic-199">
+    <h3>E-Commerce Order System</h3>
+    <p class="desc">Interesting for its inventory consistency challenges, distributed transaction coordination, and the complex state machine of order lifecycle.</p>
+    <ul>
+      <li>Key components: order service, inventory service, payment service, fulfillment service, event bus</li>
+      <li>Order state machine: created &rarr; payment pending &rarr; confirmed &rarr; shipped &rarr; delivered</li>
+      <li>Inventory reservation with TTL to prevent overselling</li>
+      <li>Saga or 2PC for cross-service consistency (order + payment + inventory)</li>
+      <li>Event sourcing for full audit trail of order changes</li>
+    </ul>
+    <div class="resources">
+      <a href="https://github.com/donnemartin/system-design-primer" target="_blank">System Design Primer</a>
+      <a href="https://www.baeldung.com/cs/saga-pattern-microservices" target="_blank">Baeldung &mdash; Saga Pattern</a>
+    </div>
+  </div>
+
+  <!-- 200 -->
+  <div class="topic-card" id="topic-200">
+    <h3>Distributed ID Generator</h3>
+    <p class="desc">Interesting for its strict uniqueness guarantee, ordering requirements, and the tradeoffs between coordination-based and coordination-free approaches.</p>
+    <ul>
+      <li>Key components: ID service nodes, clock sync mechanism, Zookeeper/etcd for node assignment</li>
+      <li>Snowflake approach: timestamp + node ID + sequence number (64-bit)</li>
+      <li>UUID v4 (random) vs UUID v7 (time-ordered) tradeoffs</li>
+      <li>Database auto-increment with stride (node1: 1,3,5; node2: 2,4,6)</li>
+      <li>Clock skew handling and monotonicity guarantees</li>
+    </ul>
+    <div class="resources">
+      <a href="https://github.com/donnemartin/system-design-primer" target="_blank">System Design Primer</a>
+      <a href="https://www.baeldung.com/java-generating-unique-ids" target="_blank">Baeldung &mdash; Unique ID Generation</a>
+    </div>
+  </div>
+
+  <!-- 201 -->
+  <div class="topic-card" id="topic-201">
+    <h3>Logging &amp; Metrics Pipeline</h3>
+    <p class="desc">Interesting for its extreme write throughput, the tension between real-time alerting and batch analysis, and storage tiering strategies.</p>
+    <ul>
+      <li>Key components: agents (Fluentd), message bus (Kafka), stream processor, time-series DB, alerting engine</li>
+      <li>Push vs pull collection model (Prometheus pull vs StatsD push)</li>
+      <li>Log levels, structured logging (JSON), and correlation IDs</li>
+      <li>Hot/warm/cold storage tiering for cost optimization</li>
+      <li>Sampling strategies at high volume to control cost</li>
+    </ul>
+    <div class="resources">
+      <a href="https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/WhatIsCloudWatchLogs.html" target="_blank">AWS CloudWatch Logs</a>
+      <a href="https://github.com/donnemartin/system-design-primer" target="_blank">System Design Primer</a>
+    </div>
+  </div>
+
+  <!-- ── Tier 3 — Good to Have ── -->
+  <h3 class="category-heading">Tier 3 &mdash; Good to Have</h3>
+
+  <!-- 202 -->
+  <div class="topic-card" id="topic-202">
+    <h3>Google Docs Collaborative Editing</h3>
+    <p class="desc">Interesting for its real-time conflict resolution, OT/CRDT algorithms, and the challenge of maintaining document consistency across concurrent editors.</p>
+    <ul>
+      <li>Key components: WebSocket gateway, operation transform engine, document store, presence service, version history</li>
+      <li>OT (Operational Transformation) vs CRDT tradeoffs</li>
+      <li>Cursor position synchronization across clients</li>
+      <li>Undo/redo in a multi-user context</li>
+      <li>Offline editing with conflict merge on reconnect</li>
+    </ul>
+    <div class="resources">
+      <a href="https://github.com/donnemartin/system-design-primer" target="_blank">System Design Primer</a>
+      <a href="https://highscalability.com/" target="_blank">High Scalability</a>
+    </div>
+  </div>
+
+  <!-- 203 -->
+  <div class="topic-card" id="topic-203">
+    <h3>Hotel/Flight Booking</h3>
+    <p class="desc">Interesting for its double-booking prevention, distributed lock management, and complex pricing that changes in real-time based on availability.</p>
+    <ul>
+      <li>Key components: search service, inventory service, booking service, pricing engine, payment integration</li>
+      <li>Optimistic locking for seat/room reservation (version-based)</li>
+      <li>Temporary hold with TTL before payment confirmation</li>
+      <li>Search with heavy caching and async price refresh</li>
+      <li>Overbooking strategy and waitlist management</li>
+    </ul>
+    <div class="resources">
+      <a href="https://github.com/donnemartin/system-design-primer" target="_blank">System Design Primer</a>
+      <a href="https://www.baeldung.com/java-optimistic-locking" target="_blank">Baeldung &mdash; Optimistic Locking</a>
+    </div>
+  </div>
+
+  <!-- 204 -->
+  <div class="topic-card" id="topic-204">
+    <h3>Ad Click Aggregation</h3>
+    <p class="desc">Interesting for its extreme write throughput, exactly-once counting guarantees, and the need for both real-time dashboards and batch reconciliation.</p>
+    <ul>
+      <li>Key components: click ingestion, stream processor (Flink/Kafka Streams), aggregation store, reconciliation pipeline</li>
+      <li>Exactly-once semantics with Kafka transactions or deduplication</li>
+      <li>Windowed aggregation: tumbling, sliding, session windows</li>
+      <li>Lambda architecture: real-time stream + batch correction layer</li>
+      <li>Click fraud detection and filtering at ingestion</li>
+    </ul>
+    <div class="resources">
+      <a href="https://github.com/donnemartin/system-design-primer" target="_blank">System Design Primer</a>
+      <a href="https://highscalability.com/" target="_blank">High Scalability</a>
+    </div>
+  </div>
+
+  <!-- 205 -->
+  <div class="topic-card" id="topic-205">
+    <h3>Distributed File Storage (S3-like)</h3>
+    <p class="desc">Interesting for its erasure coding for durability, metadata management at scale, and the separation between data plane and control plane.</p>
+    <ul>
+      <li>Key components: API gateway, metadata service, data nodes, placement service, garbage collector</li>
+      <li>Data plane (actual bytes) vs control plane (metadata, routing) separation</li>
+      <li>Erasure coding (Reed-Solomon) vs simple replication for durability</li>
+      <li>Consistent hashing for object placement across data nodes</li>
+      <li>Multipart upload for large objects with parallel chunk transfers</li>
+    </ul>
+    <div class="resources">
+      <a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/Welcome.html" target="_blank">AWS S3 Documentation</a>
+      <a href="https://github.com/donnemartin/system-design-primer" target="_blank">System Design Primer</a>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════════
+     SECTION 3 — Architecture Patterns
+     ══════════════════════════════════════════════════════════════════ -->
+<section class="section" id="sec-arch-patterns">
+  <h2 class="section-heading">
+    Architecture Patterns
+    <span class="context-badge context-light">Light</span>
+  </h2>
+
+  <!-- ── Arch Patterns ── -->
+  <h3 class="category-heading">Arch Patterns</h3>
+
+  <!-- 206 -->
+  <div class="topic-card" id="topic-206">
+    <h3>Microservices vs Monolith Tradeoffs</h3>
+    <p class="desc">Know when to split and when to stay monolithic. The answer is almost always "start monolith, split when you have clear domain boundaries."</p>
+    <ul>
+      <li>Monolith: simpler deployment, easier debugging, lower latency (in-process calls)</li>
+      <li>Microservices: independent scaling, team autonomy, technology heterogeneity</li>
+      <li>Hidden costs: network latency, distributed tracing, data consistency</li>
+      <li>Modular monolith as a pragmatic middle ground</li>
+    </ul>
+    <div class="resources">
+      <a href="https://github.com/donnemartin/system-design-primer" target="_blank">System Design Primer</a>
+      <a href="https://www.baeldung.com/cs/microservices-architecture" target="_blank">Baeldung &mdash; Microservices</a>
+    </div>
+  </div>
+
+  <!-- 207 -->
+  <div class="topic-card" id="topic-207">
+    <h3>Event-Driven Architecture</h3>
+    <p class="desc">Decouple producers from consumers using events. Essential for scaling write-heavy systems and enabling asynchronous workflows.</p>
+    <ul>
+      <li>Event notification vs event-carried state transfer vs event sourcing</li>
+      <li>Message brokers: Kafka (log-based) vs RabbitMQ (queue-based)</li>
+      <li>Eventual consistency is the default; plan for it</li>
+      <li>Dead-letter queues for poison messages</li>
+    </ul>
+    <div class="resources">
+      <a href="https://github.com/donnemartin/system-design-primer#asynchronism" target="_blank">System Design Primer &mdash; Async</a>
+      <a href="https://www.baeldung.com/cs/event-driven-architecture" target="_blank">Baeldung &mdash; Event-Driven</a>
+    </div>
+  </div>
+
+  <!-- 208 -->
+  <div class="topic-card" id="topic-208">
+    <h3>CQRS &amp; Event Sourcing</h3>
+    <p class="desc">Separate read and write models for different scaling needs. Event sourcing stores every state change as an immutable event.</p>
+    <ul>
+      <li>CQRS: write to normalized store, read from denormalized projections</li>
+      <li>Event sourcing: append-only event log is the source of truth</li>
+      <li>Replay events to rebuild state or create new projections</li>
+      <li>Increased complexity &mdash; only use when read/write patterns diverge significantly</li>
+    </ul>
+    <div class="resources">
+      <a href="https://www.baeldung.com/cqrs-event-sourcing-java" target="_blank">Baeldung &mdash; CQRS</a>
+      <a href="https://github.com/donnemartin/system-design-primer" target="_blank">System Design Primer</a>
+    </div>
+  </div>
+
+  <!-- 209 -->
+  <div class="topic-card" id="topic-209">
+    <h3>Sidecar &amp; Service Mesh</h3>
+    <p class="desc">Offload cross-cutting concerns (TLS, retries, observability) to a sidecar proxy instead of embedding them in every service.</p>
+    <ul>
+      <li>Sidecar pattern: co-located proxy handles networking (Envoy)</li>
+      <li>Service mesh (Istio, Linkerd): fleet of sidecars with centralized control plane</li>
+      <li>Benefits: mTLS everywhere, traffic shifting, circuit breaking without code changes</li>
+      <li>Cost: increased latency per hop, memory overhead per pod</li>
+    </ul>
+    <div class="resources">
+      <a href="https://www.baeldung.com/java-service-mesh" target="_blank">Baeldung &mdash; Service Mesh</a>
+      <a href="https://docs.aws.amazon.com/app-mesh/latest/userguide/what-is-app-mesh.html" target="_blank">AWS App Mesh</a>
+    </div>
+  </div>
+
+  <!-- 210 -->
+  <div class="topic-card" id="topic-210">
+    <h3>API Gateway Patterns</h3>
+    <p class="desc">Single entry point that handles routing, authentication, rate limiting, and request transformation for all backend services.</p>
+    <ul>
+      <li>Request routing, composition, and protocol translation</li>
+      <li>Cross-cutting: auth, rate limiting, logging, CORS</li>
+      <li>Avoid putting business logic in the gateway &mdash; keep it thin</li>
+      <li>AWS API Gateway, Kong, or custom (Spring Cloud Gateway)</li>
+    </ul>
+    <div class="resources">
+      <a href="https://docs.aws.amazon.com/apigateway/latest/developerguide/welcome.html" target="_blank">AWS API Gateway Docs</a>
+      <a href="https://www.baeldung.com/spring-cloud-gateway" target="_blank">Baeldung &mdash; Spring Cloud Gateway</a>
+    </div>
+  </div>
+
+  <!-- 211 -->
+  <div class="topic-card" id="topic-211">
+    <h3>BFF (Backend for Frontend)</h3>
+    <p class="desc">A dedicated backend per frontend type (mobile, web, internal). Prevents a generic API from becoming a bloated "one-size-fits-none" contract.</p>
+    <ul>
+      <li>Mobile BFF returns minimal payloads; web BFF returns richer data</li>
+      <li>Each BFF calls shared microservices underneath</li>
+      <li>Reduces over-fetching and under-fetching per client type</li>
+      <li>Tradeoff: more services to maintain; mitigate with shared libraries</li>
+    </ul>
+    <div class="resources">
+      <a href="https://www.baeldung.com/cs/bff-pattern" target="_blank">Baeldung &mdash; BFF Pattern</a>
+      <a href="https://github.com/donnemartin/system-design-primer" target="_blank">System Design Primer</a>
+    </div>
+  </div>
+
+  <!-- 212 -->
+  <div class="topic-card" id="topic-212">
+    <h3>Strangler Fig Migration</h3>
+    <p class="desc">Incrementally replace a legacy monolith by routing new traffic to new services while the old system still handles existing routes.</p>
+    <ul>
+      <li>Route by URL path, feature flag, or percentage-based traffic split</li>
+      <li>Facade layer intercepts requests and decides old vs new backend</li>
+      <li>Gradually migrate one module at a time; never big-bang rewrite</li>
+      <li>Roll back easily by rerouting traffic to the old system</li>
+    </ul>
+    <div class="resources">
+      <a href="https://www.baeldung.com/java-strangler-fig-pattern" target="_blank">Baeldung &mdash; Strangler Fig</a>
+      <a href="https://docs.aws.amazon.com/prescriptive-guidance/latest/modernization-decomposing-monoliths/strangler-fig.html" target="_blank">AWS &mdash; Strangler Fig</a>
+    </div>
+  </div>
+
+  <!-- ── Data Patterns ── -->
+  <h3 class="category-heading">Data Patterns</h3>
+
+  <!-- 213 -->
+  <div class="topic-card" id="topic-213">
+    <h3>Fan-Out on Write vs Read</h3>
+    <p class="desc">The fundamental tradeoff in feed systems: precompute feeds at write time (fast reads) or assemble at read time (fast writes).</p>
+    <ul>
+      <li>Fan-out on write: push post to all follower feeds at publish time</li>
+      <li>Fan-out on read: pull from followed users at read time</li>
+      <li>Hybrid: push for normal users, pull for celebrities (high follower count)</li>
+      <li>Trade storage and write amplification for read latency</li>
+    </ul>
+    <div class="resources">
+      <a href="https://github.com/donnemartin/system-design-primer" target="_blank">System Design Primer</a>
+      <a href="https://highscalability.com/" target="_blank">High Scalability</a>
+    </div>
+  </div>
+
+  <!-- 214 -->
+  <div class="topic-card" id="topic-214">
+    <h3>Hot Partition Problem</h3>
+    <p class="desc">When one shard receives disproportionate traffic (celebrity post, viral event). A make-or-break topic for scaling discussions.</p>
+    <ul>
+      <li>Causes: skewed partition key, viral content, time-based keys</li>
+      <li>Solutions: salting keys, splitting hot partitions, dedicated shard</li>
+      <li>Monitoring: track per-partition QPS to detect hotspots early</li>
+      <li>DynamoDB adaptive capacity and Kafka partition reassignment as examples</li>
+    </ul>
+    <div class="resources">
+      <a href="https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/bp-partition-key-design.html" target="_blank">AWS DynamoDB &mdash; Partition Keys</a>
+      <a href="https://github.com/donnemartin/system-design-primer" target="_blank">System Design Primer</a>
+    </div>
+  </div>
+
+  <!-- 215 -->
+  <div class="topic-card" id="topic-215">
+    <h3>Write Amplification</h3>
+    <p class="desc">When a single logical write triggers many physical writes (LSM compaction, fan-out, denormalized copies). Understand the cost of your data model.</p>
+    <ul>
+      <li>LSM-tree compaction in Cassandra/RocksDB is a primary source</li>
+      <li>Denormalized writes: updating one entity across multiple tables/caches</li>
+      <li>Fan-out on write multiplies writes by follower count</li>
+      <li>Measure write amplification factor to predict disk/IO costs</li>
+    </ul>
+    <div class="resources">
+      <a href="https://github.com/donnemartin/system-design-primer" target="_blank">System Design Primer</a>
+      <a href="https://highscalability.com/" target="_blank">High Scalability</a>
+    </div>
+  </div>
+
+  <!-- 216 -->
+  <div class="topic-card" id="topic-216">
+    <h3>Read-Your-Writes Consistency</h3>
+    <p class="desc">After a user writes data, they should always see their own update, even if other users see eventual consistency.</p>
+    <ul>
+      <li>Route reads to the primary/leader for the writing user</li>
+      <li>Use session stickiness or read-after-write tokens</li>
+      <li>Client-side: optimistic UI update before server confirmation</li>
+      <li>Stronger than eventual, weaker than strong consistency &mdash; a practical middle ground</li>
+    </ul>
+    <div class="resources">
+      <a href="https://github.com/donnemartin/system-design-primer#consistency-patterns" target="_blank">System Design Primer &mdash; Consistency</a>
+      <a href="https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/HowItWorks.ReadConsistency.html" target="_blank">AWS DynamoDB &mdash; Read Consistency</a>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════════
+     SECTION 4 — Infrastructure & Cloud (AWS)
+     ══════════════════════════════════════════════════════════════════ -->
+<section class="section" id="sec-infra">
+  <h2 class="section-heading">
+    Infrastructure &amp; Cloud (AWS)
+    <span class="context-badge context-light">Light</span>
+  </h2>
+
+  <!-- ── AWS Services ── -->
+  <h3 class="category-heading">AWS Services</h3>
+
+  <!-- 217 -->
+  <div class="topic-card" id="topic-217">
+    <h3>Lambda Cold Start Problem</h3>
+    <p class="desc">The initialization delay when a Lambda function runs for the first time or after being idle. Critical to mention when proposing serverless in HLD.</p>
+    <ul>
+      <li>Cold start = download code + init runtime + init dependencies</li>
+      <li>Typical: 100ms-2s for Java, 50-200ms for Python/Node</li>
+      <li>Mitigations: provisioned concurrency, keep-warm pings, smaller package size</li>
+      <li>SnapStart (Java) pre-initializes and snapshots the execution environment</li>
+    </ul>
+    <div class="resources">
+      <a href="https://docs.aws.amazon.com/lambda/latest/dg/lambda-concurrency.html" target="_blank">AWS Lambda &mdash; Concurrency</a>
+      <a href="https://www.baeldung.com/java-aws-lambda" target="_blank">Baeldung &mdash; AWS Lambda</a>
+    </div>
+  </div>
+
+  <!-- 218 -->
+  <div class="topic-card" id="topic-218">
+    <h3>SQS vs SNS vs EventBridge</h3>
+    <p class="desc">Know which AWS messaging service to pick. SQS = point-to-point queue, SNS = pub-sub fan-out, EventBridge = event routing with rules.</p>
+    <ul>
+      <li>SQS: buffering, decoupling, exactly-once (FIFO), at-least-once (standard)</li>
+      <li>SNS: fan-out to multiple SQS queues, Lambda, HTTP endpoints</li>
+      <li>EventBridge: content-based routing with rules, schema registry, cross-account</li>
+      <li>Common pattern: SNS &rarr; SQS fan-out for reliable multi-consumer delivery</li>
+    </ul>
+    <div class="resources">
+      <a href="https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/welcome.html" target="_blank">AWS SQS Docs</a>
+      <a href="https://docs.aws.amazon.com/sns/latest/dg/welcome.html" target="_blank">AWS SNS Docs</a>
+      <a href="https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-what-is.html" target="_blank">AWS EventBridge Docs</a>
+    </div>
+  </div>
+
+  <!-- 219 -->
+  <div class="topic-card" id="topic-219">
+    <h3>S3 Consistency Model</h3>
+    <p class="desc">Since December 2020, S3 provides strong read-after-write consistency for all operations. Know this &mdash; interviewers may test outdated knowledge.</p>
+    <ul>
+      <li>Strong consistency for PUTs and DELETEs (no more eventual consistency)</li>
+      <li>List operations are also strongly consistent</li>
+      <li>Storage classes: Standard, IA, Glacier for cost tiering</li>
+      <li>S3 Select for server-side filtering before download</li>
+    </ul>
+    <div class="resources">
+      <a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/Welcome.html" target="_blank">AWS S3 Documentation</a>
+      <a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/storage-class-intro.html" target="_blank">AWS S3 &mdash; Storage Classes</a>
+    </div>
+  </div>
+
+  <!-- 220 -->
+  <div class="topic-card" id="topic-220">
+    <h3>RDS vs Aurora</h3>
+    <p class="desc">Aurora is AWS's cloud-native relational DB. Know the architectural differences and when Aurora's higher cost is justified.</p>
+    <ul>
+      <li>Aurora: shared storage layer (up to 128TB auto-scaling), 6-way replication</li>
+      <li>5x throughput improvement over standard MySQL on RDS</li>
+      <li>Aurora Serverless v2 for variable workloads (scales to zero)</li>
+      <li>RDS: simpler, cheaper for predictable workloads; supports more engines</li>
+    </ul>
+    <div class="resources">
+      <a href="https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/CHAP_AuroraOverview.html" target="_blank">AWS Aurora Overview</a>
+      <a href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Welcome.html" target="_blank">AWS RDS Documentation</a>
+    </div>
+  </div>
+
+  <!-- 221 -->
+  <div class="topic-card" id="topic-221">
+    <h3>ElastiCache Setup</h3>
+    <p class="desc">Managed Redis or Memcached for caching. Know when to use each and how to configure replication and failover.</p>
+    <ul>
+      <li>Redis: rich data structures, persistence, pub/sub, Lua scripting</li>
+      <li>Memcached: simpler, multi-threaded, no persistence &mdash; pure cache</li>
+      <li>Cluster mode: hash slots across shards for horizontal scaling</li>
+      <li>Multi-AZ with automatic failover for high availability</li>
+    </ul>
+    <div class="resources">
+      <a href="https://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/WhatIs.html" target="_blank">AWS ElastiCache &mdash; Redis</a>
+      <a href="https://www.baeldung.com/spring-data-redis-tutorial" target="_blank">Baeldung &mdash; Redis with Spring</a>
+    </div>
+  </div>
+
+  <!-- 222 -->
+  <div class="topic-card" id="topic-222">
+    <h3>API Gateway Throttling</h3>
+    <p class="desc">AWS API Gateway's built-in throttling at account, stage, and method levels. A managed rate limiter for your APIs.</p>
+    <ul>
+      <li>Token bucket algorithm at the account level (10,000 RPS default)</li>
+      <li>Usage plans with API keys for per-client throttling</li>
+      <li>Burst vs sustained rate limits</li>
+      <li>429 TooManyRequests response with Retry-After header</li>
+    </ul>
+    <div class="resources">
+      <a href="https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-request-throttling.html" target="_blank">AWS &mdash; API Gateway Throttling</a>
+      <a href="https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-api-usage-plans.html" target="_blank">AWS &mdash; Usage Plans</a>
+    </div>
+  </div>
+
+  <!-- 223 -->
+  <div class="topic-card" id="topic-223">
+    <h3>CloudFront CDN Patterns</h3>
+    <p class="desc">AWS's CDN for caching static and dynamic content at edge locations. Essential for reducing latency in global-scale systems.</p>
+    <ul>
+      <li>Origin pull: edge fetches from origin on cache miss, caches response</li>
+      <li>Cache behaviors: different TTLs for /api/* vs /static/*</li>
+      <li>Lambda@Edge for request/response manipulation at the edge</li>
+      <li>Origin shield to reduce load on your origin server</li>
+    </ul>
+    <div class="resources">
+      <a href="https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/Introduction.html" target="_blank">AWS CloudFront Docs</a>
+      <a href="https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/lambda-at-the-edge.html" target="_blank">AWS Lambda@Edge</a>
+    </div>
+  </div>
+
+  <!-- ── Containers & K8s ── -->
+  <h3 class="category-heading">Containers &amp; K8s</h3>
+
+  <!-- 224 -->
+  <div class="topic-card" id="topic-224">
+    <h3>Docker Layer Caching</h3>
+    <p class="desc">Each Dockerfile instruction creates a layer. Proper ordering dramatically reduces build times in CI/CD pipelines.</p>
+    <ul>
+      <li>Order instructions from least-changing to most-changing</li>
+      <li>COPY package.json first, then npm install, then COPY source code</li>
+      <li>Multi-stage builds to reduce final image size</li>
+      <li>Use .dockerignore to exclude node_modules, .git, etc.</li>
+    </ul>
+    <div class="resources">
+      <a href="https://docs.aws.amazon.com/AmazonECS/latest/bestpracticesguide/pull-behavior.html" target="_blank">AWS ECS &mdash; Image Best Practices</a>
+      <a href="https://www.baeldung.com/ops/docker-cache" target="_blank">Baeldung &mdash; Docker Caching</a>
+    </div>
+  </div>
+
+  <!-- 225 -->
+  <div class="topic-card" id="topic-225">
+    <h3>K8s Pod Scheduling Basics</h3>
+    <p class="desc">How Kubernetes decides which node to place a pod on. Know the basics for discussing deployment strategies in HLD.</p>
+    <ul>
+      <li>Scheduler evaluates resource requests, node affinity, taints/tolerations</li>
+      <li>Resource requests (guaranteed) vs limits (max allowed)</li>
+      <li>Node affinity: soft (preferred) vs hard (required) placement rules</li>
+      <li>Pod anti-affinity to spread replicas across failure domains</li>
+    </ul>
+    <div class="resources">
+      <a href="https://docs.aws.amazon.com/eks/latest/userguide/what-is-eks.html" target="_blank">AWS EKS Documentation</a>
+      <a href="https://www.baeldung.com/ops/kubernetes-pod-scheduling" target="_blank">Baeldung &mdash; K8s Scheduling</a>
+    </div>
+  </div>
+
+  <!-- 226 -->
+  <div class="topic-card" id="topic-226">
+    <h3>HPA vs VPA</h3>
+    <p class="desc">Horizontal Pod Autoscaler adds more pods; Vertical Pod Autoscaler resizes existing pods. Know when each applies.</p>
+    <ul>
+      <li>HPA: scales pod count based on CPU, memory, or custom metrics</li>
+      <li>VPA: adjusts resource requests/limits per pod (requires restart)</li>
+      <li>HPA preferred for stateless services; VPA for stateful or single-replica workloads</li>
+      <li>Do not use HPA and VPA on the same metric (CPU) simultaneously</li>
+    </ul>
+    <div class="resources">
+      <a href="https://docs.aws.amazon.com/eks/latest/userguide/horizontal-pod-autoscaler.html" target="_blank">AWS EKS &mdash; HPA</a>
+      <a href="https://www.baeldung.com/ops/kubernetes-autoscaling" target="_blank">Baeldung &mdash; K8s Autoscaling</a>
+    </div>
+  </div>
+
+  <!-- 227 -->
+  <div class="topic-card" id="topic-227">
+    <h3>Health Probes (Liveness vs Readiness)</h3>
+    <p class="desc">Kubernetes uses probes to know when to restart a container (liveness) and when to route traffic to it (readiness).</p>
+    <ul>
+      <li>Liveness: is the process alive? Restart if failing (e.g., deadlock detection)</li>
+      <li>Readiness: can this pod handle traffic? Remove from service if failing</li>
+      <li>Startup probe: gives slow-starting apps time before liveness kicks in</li>
+      <li>HTTP, TCP, or exec-based probe types</li>
+    </ul>
+    <div class="resources">
+      <a href="https://docs.aws.amazon.com/eks/latest/userguide/what-is-eks.html" target="_blank">AWS EKS Documentation</a>
+      <a href="https://www.baeldung.com/spring-boot-kubernetes-self-healing" target="_blank">Baeldung &mdash; K8s Health Probes</a>
+    </div>
+  </div>
+
+  <!-- 228 -->
+  <div class="topic-card" id="topic-228">
+    <h3>Service Mesh (Istio Concept)</h3>
+    <p class="desc">A dedicated infrastructure layer for managing service-to-service communication with observability, security, and traffic management.</p>
+    <ul>
+      <li>Data plane: Envoy sidecar proxies deployed alongside every pod</li>
+      <li>Control plane (istiod): configuration, certificate management, service discovery</li>
+      <li>Features: mTLS, traffic splitting, circuit breaking, distributed tracing</li>
+      <li>Overhead: ~10ms latency per hop, ~50MB memory per sidecar</li>
+    </ul>
+    <div class="resources">
+      <a href="https://docs.aws.amazon.com/app-mesh/latest/userguide/what-is-app-mesh.html" target="_blank">AWS App Mesh</a>
+      <a href="https://www.baeldung.com/java-service-mesh" target="_blank">Baeldung &mdash; Service Mesh</a>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════════
+     RECOMMENDED RESOURCES
+     ══════════════════════════════════════════════════════════════════ -->
+<section class="resources-footer" id="sec-resources">
+  <h2>Recommended Resources</h2>
+  <ul>
+    <li><a href="https://github.com/donnemartin/system-design-primer" target="_blank">System Design Primer (GitHub)</a> <span class="note">&mdash; comprehensive open-source guide, start here</span></li>
+    <li><a href="https://highscalability.com/" target="_blank">High Scalability</a> <span class="note">&mdash; real-world architecture case studies</span></li>
+    <li><a href="https://docs.aws.amazon.com/wellarchitected/latest/framework/welcome.html" target="_blank">AWS Well-Architected Framework</a> <span class="note">&mdash; production best practices from AWS</span></li>
+    <li><a href="https://www.baeldung.com/cs/system-design-interview" target="_blank">Baeldung &mdash; System Design Interview</a> <span class="note">&mdash; Java-focused explanations with code examples</span></li>
+    <li><a href="https://docs.aws.amazon.com/" target="_blank">AWS Documentation</a> <span class="note">&mdash; authoritative reference for all AWS services</span></li>
+    <li><a href="https://github.com/donnemartin/system-design-primer#system-design-interview-questions-with-solutions" target="_blank">System Design Interview Questions</a> <span class="note">&mdash; practice problems with solutions</span></li>
+  </ul>
+</section>
+
+</div><!-- .container -->
+</body>
+</html>

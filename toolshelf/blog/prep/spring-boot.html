@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pillar 2 — Spring Boot & Framework Depth | SDE 2 Interview Prep</title>
+<style>
+:root {
+  --bg-primary:#1a1b2e; --bg-secondary:#232540; --bg-tertiary:#2a2d4a; --bg-hover:#32355a;
+  --text-primary:#e2e4f0; --text-secondary:#a0a3bd; --text-muted:#6b6f8a; --border:#3a3d5c;
+  --accent:#6c63ff; --green:#4ade80; --green-bg:rgba(74,222,128,0.12);
+  --orange:#fb923c; --orange-bg:rgba(251,146,60,0.12); --red:#f87171; --red-bg:rgba(248,113,113,0.12);
+  --cyan:#22d3ee; --cyan-bg:rgba(34,211,238,0.12);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{
+  background:var(--bg-primary);
+  color:var(--text-primary);
+  font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,Cantarell,sans-serif;
+  line-height:1.6;
+  padding-bottom:80px;
+}
+a{color:var(--accent);text-decoration:none;}
+a:hover{text-decoration:underline;}
+
+/* ── Header ── */
+.header{
+  position:sticky;top:0;z-index:100;
+  background:var(--bg-secondary);
+  border-bottom:1px solid var(--border);
+  padding:16px 24px;
+}
+.header-inner{max-width:960px;margin:0 auto;}
+.back-link{font-size:14px;color:var(--text-secondary);display:inline-block;margin-bottom:6px;}
+.back-link:hover{color:var(--accent);}
+.header h1{font-size:24px;font-weight:700;margin:0;color:var(--text-primary);}
+.header .subtitle{font-size:14px;color:var(--text-secondary);margin-top:2px;}
+
+/* ── Container ── */
+.container{max-width:960px;margin:0 auto;padding:24px 24px 0;}
+
+/* ── Table of Contents ── */
+.toc{
+  background:var(--bg-secondary);
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:20px 24px;
+  margin-bottom:32px;
+}
+.toc h2{font-size:16px;font-weight:700;margin-bottom:12px;color:var(--text-secondary);text-transform:uppercase;letter-spacing:0.5px;}
+.toc-list{list-style:none;display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:6px 24px;}
+.toc-list li a{font-size:14px;color:var(--text-primary);padding:4px 0;display:inline-block;}
+.toc-list li a:hover{color:var(--accent);}
+
+/* ── Section ── */
+.section{margin-bottom:40px;}
+.section-heading{
+  display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+  font-size:22px;font-weight:700;margin-bottom:6px;padding-bottom:8px;
+  border-bottom:2px solid var(--border);
+}
+.context-badge{
+  font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;
+  padding:3px 10px;border-radius:20px;white-space:nowrap;
+}
+.badge-full-focus{background:var(--red-bg);color:var(--red);}
+.badge-both{background:var(--orange-bg);color:var(--orange);}
+.badge-light{background:var(--green-bg);color:var(--green);}
+
+/* ── Tip callout ── */
+.tip-callout{
+  background:var(--cyan-bg);
+  border-left:4px solid var(--cyan);
+  border-radius:0 8px 8px 0;
+  padding:12px 16px;
+  margin:10px 0 18px;
+  font-size:14px;
+  color:var(--text-primary);
+}
+.tip-callout strong{color:var(--cyan);}
+
+/* ── Category ── */
+.category-heading{
+  font-size:17px;font-weight:600;margin:22px 0 12px;
+  padding-left:12px;
+  border-left:4px solid var(--accent);
+  color:var(--text-primary);
+}
+
+/* ── Topic card ── */
+.topic-card{
+  background:var(--bg-secondary);
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:20px;
+  margin-bottom:14px;
+  scroll-margin-top:80px;
+  transition:border-color 0.2s;
+}
+.topic-card:hover{border-color:var(--accent);}
+.topic-card:target{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent);}
+.topic-card h4{font-size:16px;font-weight:700;margin-bottom:8px;color:var(--text-primary);}
+.topic-card .desc{font-size:14px;color:var(--text-secondary);margin-bottom:10px;}
+.topic-card ul{list-style:disc;padding-left:20px;margin-bottom:10px;}
+.topic-card li{font-size:13px;color:var(--text-secondary);margin-bottom:4px;}
+.topic-card li strong{color:var(--text-primary);}
+.resources{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px;}
+.resources a{
+  font-size:12px;
+  background:var(--bg-tertiary);
+  color:var(--accent);
+  padding:4px 10px;
+  border-radius:6px;
+  border:1px solid var(--border);
+  transition:background 0.2s;
+}
+.resources a:hover{background:var(--bg-hover);text-decoration:none;}
+
+/* ── Bottom resources ── */
+.bottom-resources{
+  background:var(--bg-secondary);
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:24px;
+  margin-top:40px;
+}
+.bottom-resources h2{font-size:20px;font-weight:700;margin-bottom:14px;}
+.bottom-resources ul{list-style:none;padding:0;}
+.bottom-resources li{padding:6px 0;font-size:14px;color:var(--text-secondary);}
+.bottom-resources li a{color:var(--accent);}
+.bottom-resources li strong{color:var(--text-primary);}
+
+@media(max-width:600px){
+  .header{padding:12px 16px;}
+  .container{padding:16px 16px 0;}
+  .header h1{font-size:20px;}
+  .toc-list{grid-template-columns:1fr;}
+  .section-heading{font-size:18px;}
+  .topic-card{padding:16px;}
+}
+</style>
+</head>
+<body>
+
+<!-- ════════════════ HEADER ════════════════ -->
+<div class="header">
+  <div class="header-inner">
+    <a href="index.html" class="back-link">&larr; Back to Tracker</a>
+    <h1>Pillar 2 &mdash; Spring Boot &amp; Framework Depth</h1>
+    <p class="subtitle">Go beyond using Spring &mdash; understand how it works under the hood</p>
+  </div>
+</div>
+
+<div class="container">
+
+<!-- ════════════════ TABLE OF CONTENTS ════════════════ -->
+<nav class="toc">
+  <h2>Table of Contents</h2>
+  <ul class="toc-list">
+    <li><a href="#section-core">Spring Core Internals</a></li>
+    <li><a href="#section-autoconfig">Spring Boot Autoconfiguration</a></li>
+    <li><a href="#section-security">Spring Security</a></li>
+    <li><a href="#section-data">Spring Data &amp; Transactions</a></li>
+  </ul>
+</nav>
+
+<!-- ══════════════════════════════════════════════════════════
+     SECTION 1 — Spring Core Internals  (Full-Focus)
+     ══════════════════════════════════════════════════════════ -->
+<div class="section" id="section-core">
+  <h2 class="section-heading">
+    Spring Core Internals
+    <span class="context-badge badge-full-focus">Full-Focus</span>
+  </h2>
+
+  <div class="tip-callout">
+    <strong>Interview Tip:</strong> These come up as "what happens when you use @Transactional on a private method" questions &mdash; a classic SDE 2 trap.
+  </div>
+
+  <!-- ── IoC & DI ── -->
+  <h3 class="category-heading">IoC &amp; DI</h3>
+
+  <!-- 38 -->
+  <div class="topic-card" id="topic-38">
+    <h4>BeanFactory vs ApplicationContext</h4>
+    <p class="desc">BeanFactory is the low-level IoC container; ApplicationContext extends it with enterprise features like event publishing, i18n, and annotation processing. Interviewers test whether you know ApplicationContext eagerly instantiates singletons while BeanFactory is lazy.</p>
+    <ul>
+      <li><strong>BeanFactory</strong> provides basic DI and lazy bean initialization</li>
+      <li><strong>ApplicationContext</strong> adds AOP integration, event propagation, MessageSource for i18n</li>
+      <li>ApplicationContext pre-instantiates singletons at startup &mdash; fail-fast for misconfiguration</li>
+      <li>In modern Spring Boot apps you almost never interact with BeanFactory directly</li>
+    </ul>
+    <div class="resources">
+      <a href="https://docs.spring.io/spring-framework/reference/core/beans/beanfactory.html" target="_blank">Spring Docs: BeanFactory</a>
+      <a href="https://www.baeldung.com/spring-beanfactory-vs-applicationcontext" target="_blank">Baeldung: BeanFactory vs ApplicationContext</a>
+    </div>
+  </div>
+
+  <!-- 39 -->
+  <div class="topic-card" id="topic-39">
+    <h4>Bean Lifecycle (init/destroy)</h4>
+    <p class="desc">Understanding the full bean lifecycle &mdash; instantiation, populate properties, BeanNameAware, BeanFactoryAware, pre-init (BeanPostProcessor), InitializingBean/init-method, post-init, and destruction &mdash; is critical for diagnosing startup issues.</p>
+    <ul>
+      <li>Constructor &rarr; dependency injection &rarr; Aware interfaces &rarr; <strong>@PostConstruct</strong> &rarr; InitializingBean.afterPropertiesSet &rarr; custom init-method</li>
+      <li>Destroy order: <strong>@PreDestroy</strong> &rarr; DisposableBean.destroy &rarr; custom destroy-method</li>
+      <li>BeanPostProcessor hooks run for <em>every</em> bean &mdash; this is how AOP proxies get created</li>
+      <li>Prototype beans do NOT get destroy callbacks from the container</li>
+    </ul>
+    <div class="resources">
+      <a href="https://docs.spring.io/spring-framework/reference/core/beans/factory-nature.html" target="_blank">Spring Docs: Bean Lifecycle</a>
+      <a href="https://www.baeldung.com/spring-bean-lifecycle" target="_blank">Baeldung: Bean Lifecycle</a>
+    </div>
+  </div>
+
+  <!-- 40 -->
+  <div class="topic-card" id="topic-40">
+    <h4>@Scope: singleton vs prototype vs request</h4>
+    <p class="desc">Bean scope controls how many instances Spring creates. Singleton (default) means one per ApplicationContext; prototype means a new instance on every lookup. Web scopes (request, session) are scoped to HTTP lifecycle.</p>
+    <ul>
+      <li><strong>Singleton:</strong> shared across the entire context &mdash; thread-safety is your responsibility</li>
+      <li><strong>Prototype:</strong> new instance per injection point or getBean() call &mdash; Spring does NOT manage its full lifecycle</li>
+      <li><strong>Request/Session:</strong> require a web-aware ApplicationContext; use scoped proxies to inject into singletons</li>
+      <li>Injecting a prototype into a singleton gives you effectively a singleton prototype &mdash; use ObjectProvider or @Lookup</li>
+    </ul>
+    <div class="resources">
+      <a href="https://docs.spring.io/spring-framework/reference/core/beans/factory-scopes.html" target="_blank">Spring Docs: Bean Scopes</a>
+      <a href="https://www.baeldung.com/spring-bean-scopes" target="_blank">Baeldung: Bean Scopes</a>
+    </div>
+  </div>
+
+  <!-- 41 -->
+  <div class="topic-card" id="topic-41">
+    <h4>Circular Dependency Handling</h4>
+    <p class="desc">Spring resolves circular dependencies for singleton setter/field injection via a three-level cache (singletonObjects, earlySingletonObjects, singletonFactories). Constructor injection circulars cannot be resolved and throw BeanCurrentlyInCreationException.</p>
+    <ul>
+      <li>Three-level cache exposes early (partially initialized) references to break the cycle</li>
+      <li><strong>Constructor injection</strong> circular dependency &rarr; always fails; redesign required</li>
+      <li>Spring Boot 2.6+ disallows circular dependencies by default &mdash; use <code>spring.main.allow-circular-references=true</code> to re-enable</li>
+      <li>Best practice: refactor to remove the cycle (extract a third bean or use events)</li>
+    </ul>
+    <div class="resources">
+      <a href="https://docs.spring.io/spring-framework/reference/core/beans/dependencies/factory-collaborators.html" target="_blank">Spring Docs: Dependencies</a>
+      <a href="https://www.baeldung.com/circular-dependencies-in-spring" target="_blank">Baeldung: Circular Dependencies</a>
+    </div>
+  </div>
+
+  <!-- 42 -->
+  <div class="topic-card" id="topic-42">
+    <h4>@Lazy &amp; @DependsOn</h4>
+    <p class="desc">@Lazy defers bean creation until first access, reducing startup time. @DependsOn forces bean initialization order without creating a direct dependency. Both are tools for controlling the lifecycle when auto-wiring order matters.</p>
+    <ul>
+      <li><strong>@Lazy</strong> on a class or @Bean method &mdash; Spring creates a proxy; actual instance is created on first method call</li>
+      <li>@Lazy on an injection point can break circular dependencies by deferring one side</li>
+      <li><strong>@DependsOn</strong> guarantees bean A is initialized before bean B &mdash; useful for side-effect ordering (e.g., DB migrations)</li>
+      <li>Overusing @Lazy hides startup errors &mdash; failures move to runtime</li>
+    </ul>
+    <div class="resources">
+      <a href="https://docs.spring.io/spring-framework/reference/core/beans/dependencies/factory-lazy-init.html" target="_blank">Spring Docs: Lazy Init</a>
+      <a href="https://www.baeldung.com/spring-lazy-annotation" target="_blank">Baeldung: @Lazy</a>
+    </div>
+  </div>
+
+  <!-- 43 -->
+  <div class="topic-card" id="topic-43">
+    <h4>BeanPostProcessor / BeanFactoryPostProcessor</h4>
+    <p class="desc">BeanPostProcessor intercepts every bean after instantiation (before and after init). BeanFactoryPostProcessor modifies bean definitions before any beans are created. These are how Spring implements AOP, @Value resolution, and @Autowired.</p>
+    <ul>
+      <li><strong>BeanPostProcessor:</strong> postProcessBeforeInitialization / postProcessAfterInitialization &mdash; wraps beans with proxies</li>
+      <li><strong>BeanFactoryPostProcessor:</strong> runs once, can modify BeanDefinition metadata (e.g., PropertySourcesPlaceholderConfigurer)</li>
+      <li>AutowiredAnnotationBeanPostProcessor handles @Autowired injection</li>
+      <li>If your BPP itself has @Autowired dependencies, those beans skip all other BPPs &mdash; order matters</li>
+      <li>CommonAnnotationBeanPostProcessor handles @PostConstruct and @Resource</li>
+    </ul>
+    <div class="resources">
+      <a href="https://docs.spring.io/spring-framework/reference/core/beans/factory-extension.html" target="_blank">Spring Docs: Container Extension Points</a>
+      <a href="https://www.baeldung.com/spring-beanpostprocessor" target="_blank">Baeldung: BeanPostProcessor</a>
+    </div>
+  </div>
+
+  <!-- ── AOP ── -->
+  <h3 class="category-heading">AOP</h3>
+
+  <!-- 44 -->
+  <div class="topic-card" id="topic-44">
+    <h4>JDK Dynamic Proxy vs CGLIB Proxy</h4>
+    <p class="desc">Spring AOP creates proxies to apply cross-cutting concerns. JDK proxies work on interfaces; CGLIB generates subclasses. Spring Boot defaults to CGLIB since 2.0. Knowing this explains why final classes/methods break AOP and self-invocation bypasses advice.</p>
+    <ul>
+      <li><strong>JDK proxy:</strong> requires an interface; uses java.lang.reflect.Proxy &mdash; faster creation, slightly slower invocation</li>
+      <li><strong>CGLIB proxy:</strong> subclasses the target &mdash; works without interfaces but cannot proxy final methods/classes</li>
+      <li>Spring Boot sets <code>proxyTargetClass=true</code> by default (CGLIB)</li>
+      <li><strong>Self-invocation problem:</strong> calling this.method() bypasses the proxy &mdash; advice does not apply</li>
+    </ul>
+    <div class="resources">
+      <a href="https://docs.spring.io/spring-framework/reference/core/aop/proxying.html" target="_blank">Spring Docs: Proxying Mechanisms</a>
+      <a href="https://www.baeldung.com/spring-aop-vs-aspectj" target="_blank">Baeldung: Spring AOP vs AspectJ</a>
+    </div>
+  </div>
+
+  <!-- 45 -->
+  <div class="topic-card" id="topic-45">
+    <h4>Pointcut Expressions</h4>
+    <p class="desc">Pointcut expressions define where advice applies. Mastering execution(), within(), @annotation(), and boolean combinators is essential for writing targeted cross-cutting logic in production.</p>
+    <ul>
+      <li><strong>execution()</strong>: matches method signatures &mdash; <code>execution(* com.example.service.*.*(..))</code></li>
+      <li><strong>within()</strong>: matches all methods in a type or package</li>
+      <li><strong>@annotation()</strong>: matches methods annotated with a specific annotation</li>
+      <li>Combine with <code>&&</code>, <code>||</code>, <code>!</code> for complex pointcuts</li>
+      <li>Named pointcuts via <code>@Pointcut</code> methods improve readability and reuse</li>
+    </ul>
+    <div class="resources">
+      <a href="https://docs.spring.io/spring-framework/reference/core/aop/ataspectj/pointcuts.html" target="_blank">Spring Docs: Pointcuts</a>
+      <a href="https://www.baeldung.com/spring-aop-pointcut-tutorial" target="_blank">Baeldung: Pointcut Expressions</a>
+    </div>
+  </div>
+
+  <!-- 46 -->
+  <div class="topic-card" id="topic-46">
+    <h4>@Around / @Before / @After</h4>
+    <p class="desc">Advice types determine when your cross-cutting code runs relative to the join point. @Around is the most powerful &mdash; it can control whether the target method executes at all, modify arguments, or change the return value.</p>
+    <ul>
+      <li><strong>@Before:</strong> runs before the method &mdash; cannot prevent execution (unless it throws)</li>
+      <li><strong>@After:</strong> runs after the method regardless of outcome (like finally)</li>
+      <li><strong>@AfterReturning:</strong> runs only on successful return &mdash; can access the return value</li>
+      <li><strong>@AfterThrowing:</strong> runs only when an exception is thrown</li>
+      <li><strong>@Around:</strong> wraps the method; must call <code>joinPoint.proceed()</code> to execute it</li>
+    </ul>
+    <div class="resources">
+      <a href="https://docs.spring.io/spring-framework/reference/core/aop/ataspectj/advice.html" target="_blank">Spring Docs: Advice</a>
+      <a href="https://www.baeldung.com/spring-aop-advice-tutorial" target="_blank">Baeldung: AOP Advice</a>
+    </div>
+  </div>
+
+  <!-- 47 -->
+  <div class="topic-card" id="topic-47">
+    <h4>AspectJ Weaving Modes</h4>
+    <p class="desc">Spring AOP uses runtime proxy-based weaving by default. AspectJ supports compile-time (CTW) and load-time weaving (LTW), which can advise private methods, field access, and constructors &mdash; things Spring AOP cannot do.</p>
+    <ul>
+      <li><strong>Spring AOP:</strong> runtime proxy weaving &mdash; limited to public method execution join points</li>
+      <li><strong>Compile-time weaving (CTW):</strong> AspectJ compiler modifies bytecode at build time &mdash; full pointcut support</li>
+      <li><strong>Load-time weaving (LTW):</strong> agent-based bytecode modification at classload &mdash; enabled via <code>@EnableLoadTimeWeaving</code></li>
+      <li>CTW/LTW can intercept self-invocations, private methods, and field access</li>
+    </ul>
+    <div class="resources">
+      <a href="https://docs.spring.io/spring-framework/reference/core/aop/using-aspectj.html" target="_blank">Spring Docs: Using AspectJ</a>
+      <a href="https://www.baeldung.com/aspectj" target="_blank">Baeldung: AspectJ</a>
+    </div>
+  </div>
+
+  <!-- 48 -->
+  <div class="topic-card" id="topic-48">
+    <h4>Transaction Proxy Chain</h4>
+    <p class="desc">@Transactional works through AOP proxies. Understanding the proxy chain explains why self-invocation skips transactions, why private @Transactional methods do nothing, and how propagation nests work in practice.</p>
+    <ul>
+      <li>TransactionInterceptor is an @Around advice that opens/commits/rolls back transactions</li>
+      <li>The proxy intercepts the call <em>before</em> it reaches your bean &mdash; self-calls bypass it</li>
+      <li><strong>Private methods</strong> annotated with @Transactional are silently ignored (CGLIB cannot override them)</li>
+      <li>Multiple @Transactional beans calling each other &mdash; each call goes through its own proxy, enabling REQUIRES_NEW semantics</li>
+      <li>Exception handling: by default only unchecked exceptions trigger rollback</li>
+    </ul>
+    <div class="resources">
+      <a href="https://docs.spring.io/spring-framework/reference/data-access/transaction/declarative.html" target="_blank">Spring Docs: Declarative Transactions</a>
+      <a href="https://www.baeldung.com/spring-transactional-propagation-isolation" target="_blank">Baeldung: @Transactional</a>
+    </div>
+  </div>
+</div><!-- /section-core -->
+
+
+<!-- ══════════════════════════════════════════════════════════
+     SECTION 2 — Spring Boot Autoconfiguration  (Both)
+     ══════════════════════════════════════════════════════════ -->
+<div class="section" id="section-autoconfig">
+  <h2 class="section-heading">
+    Spring Boot Autoconfiguration
+    <span class="context-badge badge-both">Both</span>
+  </h2>
+
+  <!-- ── Mechanism ── -->
+  <h3 class="category-heading">Mechanism</h3>
+
+  <!-- 49 -->
+  <div class="topic-card" id="topic-49">
+    <h4>@SpringBootApplication Breakdown</h4>
+    <p class="desc">@SpringBootApplication is a convenience meta-annotation combining @Configuration, @EnableAutoConfiguration, and @ComponentScan. Interviewers expect you to explain what each does and why the main class location matters for scanning.</p>
+    <ul>
+      <li><strong>@Configuration:</strong> marks the class as a source of bean definitions</li>
+      <li><strong>@EnableAutoConfiguration:</strong> triggers Spring Boot's auto-configuration mechanism</li>
+      <li><strong>@ComponentScan:</strong> scans the package and sub-packages of the annotated class</li>
+      <li>Placing the main class in the root package ensures all components are discovered</li>
+      <li>You can exclude specific auto-configs: <code>@SpringBootApplication(exclude = DataSourceAutoConfiguration.class)</code></li>
+    </ul>
+    <div class="resources">
+      <a href="https://docs.spring.io/spring-boot/reference/using/using-the-springbootapplication-annotation.html" target="_blank">Spring Boot Docs: @SpringBootApplication</a>
+      <a href="https://www.baeldung.com/spring-boot-annotations" target="_blank">Baeldung: Spring Boot Annotations</a>
+    </div>
+  </div>
+
+  <!-- 50 -->
+  <div class="topic-card" id="topic-50">
+    <h4>@EnableAutoConfiguration</h4>
+    <p class="desc">This annotation triggers the loading of auto-configuration classes from META-INF/spring.factories (or the new AutoConfiguration.imports file). It is the engine behind Spring Boot's "opinionated defaults" philosophy.</p>
+    <ul>
+      <li>Uses <strong>AutoConfigurationImportSelector</strong> to load candidate configuration classes</li>
+      <li>Candidates are filtered by @Conditional annotations before being applied</li>
+      <li>Spring Boot 3.x migrated to <code>META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports</code></li>
+      <li>You can see which auto-configs were applied via the <code>--debug</code> flag or Actuator's conditions endpoint</li>
+    </ul>
+    <div class="resources">
+      <a href="https://docs.spring.io/spring-boot/reference/using/auto-configuration.html" target="_blank">Spring Boot Docs: Auto-configuration</a>
+      <a href="https://www.baeldung.com/spring-boot-custom-auto-configuration" target="_blank">Baeldung: Custom Auto-configuration</a>
+    </div>
+  </div>
+
+  <!-- 51 -->
+  <div class="topic-card" id="topic-51">
+    <h4>spring.factories / META-INF</h4>
+    <p class="desc">spring.factories is the SPI mechanism Spring Boot uses to discover auto-configuration classes, listeners, and initializers. Understanding this file explains how starters work and how to write your own.</p>
+    <ul>
+      <li>Located at <code>META-INF/spring.factories</code> in each jar on the classpath</li>
+      <li>Key: fully-qualified interface name; Value: comma-separated list of implementations</li>
+      <li>SpringFactoriesLoader.loadFactoryNames() reads and caches all entries at startup</li>
+      <li>Spring Boot 3.x moved auto-configuration to a dedicated imports file for better performance</li>
+      <li>Starters bundle a spring.factories with their auto-config class &mdash; that's why adding a dependency "just works"</li>
+    </ul>
+    <div class="resources">
+      <a href="https://docs.spring.io/spring-boot/reference/features/developing-auto-configuration.html" target="_blank">Spring Boot Docs: Creating Auto-configuration</a>
+      <a href="https://www.baeldung.com/spring-factories" target="_blank">Baeldung: spring.factories</a>
+    </div>
+  </div>
+
+  <!-- 52 -->
+  <div class="topic-card" id="topic-52">
+    <h4>@Conditional Annotations</h4>
+    <p class="desc">@Conditional and its variants (@ConditionalOnClass, @ConditionalOnProperty, @ConditionalOnMissingBean, etc.) control whether a configuration class or bean is registered. This is how Spring Boot provides smart defaults that back off when you define your own beans.</p>
+    <ul>
+      <li><strong>@ConditionalOnClass:</strong> activates only if a class is on the classpath (e.g., DataSource auto-config needs a JDBC driver)</li>
+      <li><strong>@ConditionalOnMissingBean:</strong> backs off if you already defined a bean of that type</li>
+      <li><strong>@ConditionalOnProperty:</strong> activates based on application.properties values</li>
+      <li>Custom conditions: implement the <code>Condition</code> interface with a <code>matches()</code> method</li>
+      <li>Use <code>/actuator/conditions</code> to see which conditions matched and which did not</li>
+    </ul>
+    <div class="resources">
+      <a href="https://docs.spring.io/spring-boot/reference/features/developing-auto-configuration.html" target="_blank">Spring Boot Docs: Condition Annotations</a>
+      <a href="https://www.baeldung.com/spring-conditional-annotations" target="_blank">Baeldung: @Conditional</a>
+    </div>
+  </div>
+
+  <!-- 53 -->
+  <div class="topic-card" id="topic-53">
+    <h4>@ConfigurationProperties</h4>
+    <p class="desc">Type-safe configuration binding that maps application.properties/yml prefixes to POJOs. Much cleaner than scattered @Value annotations and supports validation, nested objects, and immutable binding.</p>
+    <ul>
+      <li>Annotate a class with <code>@ConfigurationProperties(prefix = "app.mail")</code> and register it with <code>@EnableConfigurationProperties</code></li>
+      <li>Supports <strong>relaxed binding:</strong> app.mail-host, APP_MAIL_HOST, app.mailHost all bind to mailHost</li>
+      <li>Add <code>@Validated</code> with JSR-303 annotations for startup-time validation</li>
+      <li>Immutable binding via <code>@ConstructorBinding</code> (default in records since Boot 3.x)</li>
+    </ul>
+    <div class="resources">
+      <a href="https://docs.spring.io/spring-boot/reference/features/external-config.html" target="_blank">Spring Boot Docs: External Config</a>
+      <a href="https://www.baeldung.com/configuration-properties-in-spring-boot" target="_blank">Baeldung: @ConfigurationProperties</a>
+    </div>
+  </div>
+
+  <!-- 54 -->
+  <div class="topic-card" id="topic-54">
+    <h4>@Profile Usage</h4>
+    <p class="desc">@Profile lets you conditionally register beans for specific environments (dev, staging, prod). Essential for configuring different data sources, feature flags, or mock services per environment.</p>
+    <ul>
+      <li>Activate via <code>spring.profiles.active=dev</code> in properties, env vars, or command line</li>
+      <li>Profile-specific files: <code>application-dev.yml</code> overrides <code>application.yml</code></li>
+      <li>Negate profiles: <code>@Profile("!prod")</code> &mdash; active in all environments except prod</li>
+      <li>Spring Boot 2.4+ introduced profile groups for activating multiple profiles together</li>
+    </ul>
+    <div class="resources">
+      <a href="https://docs.spring.io/spring-boot/reference/features/profiles.html" target="_blank">Spring Boot Docs: Profiles</a>
+      <a href="https://www.baeldung.com/spring-profiles" target="_blank">Baeldung: Spring Profiles</a>
+    </div>
+  </div>
+
+  <!-- ── Actuator ── -->
+  <h3 class="category-heading">Actuator</h3>
+
+  <!-- 55 -->
+  <div class="topic-card" id="topic-55">
+    <h4>Health Endpoints</h4>
+    <p class="desc">The /actuator/health endpoint aggregates health checks for DB, disk, Redis, and other dependencies. Kubernetes readiness/liveness probes depend on this. Know how to configure groups and when to expose details.</p>
+    <ul>
+      <li>Returns UP, DOWN, OUT_OF_SERVICE, or UNKNOWN based on aggregated indicator results</li>
+      <li>Auto-configured indicators for DataSource, Redis, Elasticsearch, RabbitMQ, etc.</li>
+      <li><strong>Health groups:</strong> <code>management.endpoint.health.group.readiness.include=db,redis</code></li>
+      <li>Show details: <code>management.endpoint.health.show-details=when-authorized</code></li>
+    </ul>
+    <div class="resources">
+      <a href="https://docs.spring.io/spring-boot/reference/actuator/endpoints.html" target="_blank">Spring Boot Docs: Actuator Endpoints</a>
+      <a href="https://www.baeldung.com/spring-boot-health-indicators" target="_blank">Baeldung: Health Indicators</a>
+    </div>
+  </div>
+
+  <!-- 56 -->
+  <div class="topic-card" id="topic-56">
+    <h4>Custom Health Indicators</h4>
+    <p class="desc">Implement HealthIndicator to add custom checks (e.g., external API availability, queue depth, license validity). This is commonly asked in SDE 2 interviews to test your understanding of production-readiness patterns.</p>
+    <ul>
+      <li>Implement <code>HealthIndicator</code> interface and override <code>health()</code> method</li>
+      <li>Return <code>Health.up().withDetail("key", value).build()</code> or <code>Health.down()</code></li>
+      <li>The bean name minus "HealthIndicator" suffix becomes the component name in the response</li>
+      <li>For reactive apps, implement <code>ReactiveHealthIndicator</code> instead</li>
+    </ul>
+    <div class="resources">
+      <a href="https://docs.spring.io/spring-boot/reference/actuator/endpoints.html#actuator.endpoints.health.writing-custom-health-indicators" target="_blank">Spring Boot Docs: Custom Health Indicators</a>
+      <a href="https://www.baeldung.com/spring-boot-health-indicators" target="_blank">Baeldung: Custom Health Indicators</a>
+    </div>
+  </div>
+
+  <!-- 57 -->
+  <div class="topic-card" id="topic-57">
+    <h4>Metrics Exposure</h4>
+    <p class="desc">Spring Boot Actuator integrates with Micrometer to expose JVM, HTTP, and custom metrics in formats compatible with Prometheus, Datadog, and others. Understanding this is key for production monitoring discussions.</p>
+    <ul>
+      <li>Micrometer provides a vendor-neutral metrics facade (like SLF4J for metrics)</li>
+      <li>Built-in metrics: JVM memory, GC, HTTP request latency, connection pool stats</li>
+      <li>Expose to Prometheus: add <code>micrometer-registry-prometheus</code> dependency and hit <code>/actuator/prometheus</code></li>
+      <li>Custom metrics: inject <code>MeterRegistry</code> and create counters, gauges, timers, or distribution summaries</li>
+    </ul>
+    <div class="resources">
+      <a href="https://docs.spring.io/spring-boot/reference/actuator/metrics.html" target="_blank">Spring Boot Docs: Metrics</a>
+      <a href="https://www.baeldung.com/micrometer" target="_blank">Baeldung: Micrometer</a>
+    </div>
+  </div>
+
+  <!-- 58 -->
+  <div class="topic-card" id="topic-58">
+    <h4>Shutdown Endpoint Security</h4>
+    <p class="desc">The /actuator/shutdown endpoint triggers a graceful application shutdown. It is disabled by default for safety. In interviews, this tests your awareness of operational security and safe exposure practices.</p>
+    <ul>
+      <li>Enable with <code>management.endpoint.shutdown.enabled=true</code> &mdash; disabled by default</li>
+      <li>Only accessible via POST &mdash; prevents accidental browser triggers</li>
+      <li><strong>Never expose over the web without authentication</strong> &mdash; bind actuator to a separate port or restrict via Spring Security</li>
+      <li>Use <code>management.endpoints.web.exposure.include</code> to whitelist only needed endpoints</li>
+      <li>Consider running actuator on a different port: <code>management.server.port=8081</code></li>
+    </ul>
+    <div class="resources">
+      <a href="https://docs.spring.io/spring-boot/reference/actuator/endpoints.html" target="_blank">Spring Boot Docs: Endpoints</a>
+      <a href="https://www.baeldung.com/spring-boot-shutdown" target="_blank">Baeldung: Shutdown Endpoint</a>
+    </div>
+  </div>
+</div><!-- /section-autoconfig -->
+
+
+<!-- ══════════════════════════════════════════════════════════
+     SECTION 3 — Spring Security  (Full-Focus)
+     ══════════════════════════════════════════════════════════ -->
+<div class="section" id="section-security">
+  <h2 class="section-heading">
+    Spring Security
+    <span class="context-badge badge-full-focus">Full-Focus</span>
+  </h2>
+
+  <!-- ── Filter Chain ── -->
+  <h3 class="category-heading">Filter Chain</h3>
+
+  <!-- 59 -->
+  <div class="topic-card" id="topic-59">
+    <h4>SecurityFilterChain</h4>
+    <p class="desc">SecurityFilterChain is the modern way (Spring Security 5.4+) to configure HTTP security, replacing WebSecurityConfigurerAdapter. It is a bean that maps a request matcher to a list of security filters.</p>
+    <ul>
+      <li>Define as a <code>@Bean</code> returning <code>SecurityFilterChain</code> from <code>HttpSecurity</code></li>
+      <li>Multiple SecurityFilterChain beans can coexist &mdash; matched by request path order</li>
+      <li>Replaced the deprecated <code>WebSecurityConfigurerAdapter</code> pattern</li>
+      <li>Each chain is an ordered list of Servlet Filters: CORS, CSRF, authentication, authorization, exception handling</li>
+    </ul>
+    <div class="resources">
+      <a href="https://docs.spring.io/spring-security/reference/servlet/configuration/java.html" target="_blank">Spring Security Docs: Java Config</a>
+      <a href="https://www.baeldung.com/spring-security-lambda-dsl" target="_blank">Baeldung: SecurityFilterChain</a>
+    </div>
+  </div>
+
+  <!-- 60 -->
+  <div class="topic-card" id="topic-60">
+    <h4>OncePerRequestFilter</h4>
+    <p class="desc">A base class guaranteeing a filter executes exactly once per request, even with request dispatches (forwards, includes). Use it for custom JWT validation filters, logging, or request enrichment.</p>
+    <ul>
+      <li>Extends GenericFilterBean and adds a flag to prevent re-execution on forwards/includes</li>
+      <li>Override <code>doFilterInternal(request, response, filterChain)</code></li>
+      <li>Override <code>shouldNotFilter(request)</code> to skip certain paths (e.g., public endpoints)</li>
+      <li>Common use: JWT token parsing filter inserted before UsernamePasswordAuthenticationFilter</li>
+    </ul>
+    <div class="resources">
+      <a href="https://docs.spring.io/spring-framework/javadoc-api/org/springframework/web/filter/OncePerRequestFilter.html" target="_blank">Spring Docs: OncePerRequestFilter API</a>
+      <a href="https://www.baeldung.com/spring-onceperrequestfilter" target="_blank">Baeldung: OncePerRequestFilter</a>
+    </div>
+  </div>
+
+  <!-- 61 -->
+  <div class="topic-card" id="topic-61">
+    <h4>ExceptionTranslationFilter</h4>
+    <p class="desc">Catches AccessDeniedException and AuthenticationException thrown by downstream filters and converts them into HTTP responses (401/403). It is the bridge between Spring Security exceptions and HTTP error handling.</p>
+    <ul>
+      <li>Catches <strong>AuthenticationException</strong> &rarr; delegates to <code>AuthenticationEntryPoint</code> (typically 401)</li>
+      <li>Catches <strong>AccessDeniedException</strong> &rarr; delegates to <code>AccessDeniedHandler</code> (typically 403)</li>
+      <li>Saves the original request so the user can be redirected back after login</li>
+      <li>Sits after the authentication filters and before the authorization filter in the chain</li>
+    </ul>
+    <div class="resources">
+      <a href="https://docs.spring.io/spring-security/reference/servlet/architecture.html" target="_blank">Spring Security Docs: Architecture</a>
+      <a href="https://www.baeldung.com/spring-security-custom-access-denied-page" target="_blank">Baeldung: Access Denied Handling</a>
+    </div>
+  </div>
+
+  <!-- 62 -->
+  <div class="topic-card" id="topic-62">
+    <h4>AuthorizationFilter</h4>
+    <p class="desc">The AuthorizationFilter (replacing FilterSecurityInterceptor in Spring Security 6) makes the final authorization decision for each request based on the configured access rules (permitAll, hasRole, etc.).</p>
+    <ul>
+      <li>Replaced <code>FilterSecurityInterceptor</code> in Spring Security 6 for a simpler model</li>
+      <li>Uses <code>AuthorizationManager</code> instead of the older AccessDecisionManager/Voter pattern</li>
+      <li>Evaluates rules defined in <code>http.authorizeHttpRequests()</code></li>
+      <li>Runs late in the filter chain &mdash; authentication must already be established</li>
+    </ul>
+    <div class="resources">
+      <a href="https://docs.spring.io/spring-security/reference/servlet/authorization/authorize-http-requests.html" target="_blank">Spring Security Docs: Authorization</a>
+      <a href="https://www.baeldung.com/spring-security-authorizationmanager" target="_blank">Baeldung: AuthorizationManager</a>
+    </div>
+  </div>
+
+  <!-- ── Auth Patterns ── -->
+  <h3 class="category-heading">Auth Patterns</h3>
+
+  <!-- 63 -->
+  <div class="topic-card" id="topic-63">
+    <h4>JWT Stateless Auth</h4>
+    <p class="desc">Stateless JWT authentication eliminates server-side session storage. The token carries claims (user identity, roles) and is validated on every request. This is the most common auth pattern in microservices and a frequent SDE 2 interview topic.</p>
+    <ul>
+      <li>Token structure: Header.Payload.Signature &mdash; Base64URL encoded, signed with HMAC or RSA</li>
+      <li>Disable sessions: <code>http.sessionManagement(s -> s.sessionCreationPolicy(STATELESS))</code></li>
+      <li>Add a custom <code>OncePerRequestFilter</code> that extracts, validates, and sets the SecurityContext</li>
+      <li>Token expiry and refresh token rotation are critical for security</li>
+      <li><strong>Trade-off:</strong> cannot revoke tokens without a blocklist or short expiry + refresh tokens</li>
+    </ul>
+    <div class="resources">
+      <a href="https://docs.spring.io/spring-security/reference/servlet/oauth2/resource-server/jwt.html" target="_blank">Spring Security Docs: JWT</a>
+      <a href="https://www.baeldung.com/spring-security-oauth-jwt" target="_blank">Baeldung: JWT Auth</a>
+    </div>
+  </div>
+
+  <!-- 64 -->
+  <div class="topic-card" id="topic-64">
+    <h4>OAuth2 Resource Server</h4>
+    <p class="desc">Spring Security's OAuth2 Resource Server support validates bearer tokens (JWT or opaque) against an authorization server. It handles token parsing, signature verification, and authority mapping out of the box.</p>
+    <ul>
+      <li>Add <code>spring-boot-starter-oauth2-resource-server</code> and configure <code>spring.security.oauth2.resourceserver.jwt.issuer-uri</code></li>
+      <li>Automatically fetches JWK Set from the authorization server for signature validation</li>
+      <li>Customize claim-to-authority mapping with a <code>JwtAuthenticationConverter</code></li>
+      <li>Supports opaque token introspection as an alternative to JWT</li>
+    </ul>
+    <div class="resources">
+      <a href="https://docs.spring.io/spring-security/reference/servlet/oauth2/resource-server/index.html" target="_blank">Spring Security Docs: Resource Server</a>
+      <a href="https://www.baeldung.com/spring-security-oauth-resource-server" target="_blank">Baeldung: OAuth2 Resource Server</a>
+    </div>
+  </div>
+
+  <!-- 65 -->
+  <div class="topic-card" id="topic-65">
+    <h4>Method-level Security (@PreAuthorize)</h4>
+    <p class="desc">@PreAuthorize enables SpEL-based authorization on individual methods, complementing URL-based security. This allows fine-grained access control at the service layer, not just at the controller level.</p>
+    <ul>
+      <li>Enable with <code>@EnableMethodSecurity</code> (replaces @EnableGlobalMethodSecurity in Security 6)</li>
+      <li>SpEL expressions: <code>@PreAuthorize("hasRole('ADMIN') and #userId == authentication.principal.id")</code></li>
+      <li><strong>@PostAuthorize:</strong> evaluates after method execution &mdash; can check the return value</li>
+      <li><strong>@Secured:</strong> simpler role-based alternative without SpEL support</li>
+      <li>Works via AOP proxies &mdash; self-invocation bypasses the check (same proxy caveat as @Transactional)</li>
+    </ul>
+    <div class="resources">
+      <a href="https://docs.spring.io/spring-security/reference/servlet/authorization/method-security.html" target="_blank">Spring Security Docs: Method Security</a>
+      <a href="https://www.baeldung.com/spring-security-method-security" target="_blank">Baeldung: Method Security</a>
+    </div>
+  </div>
+
+  <!-- 66 -->
+  <div class="topic-card" id="topic-66">
+    <h4>CORS Configuration</h4>
+    <p class="desc">Cross-Origin Resource Sharing controls which origins can call your API from browsers. Misconfigured CORS is a common source of bugs in frontend-backend setups and a practical SDE 2 interview question.</p>
+    <ul>
+      <li>Configure globally via <code>http.cors(c -> c.configurationSource(...))</code> in SecurityFilterChain</li>
+      <li>Or per-controller with <code>@CrossOrigin(origins = "https://example.com")</code></li>
+      <li>Preflight (OPTIONS) requests must be allowed &mdash; Spring handles this if CORS is properly configured</li>
+      <li><strong>Never use</strong> <code>allowedOrigins("*")</code> with <code>allowCredentials(true)</code> &mdash; browsers block it</li>
+    </ul>
+    <div class="resources">
+      <a href="https://docs.spring.io/spring-security/reference/servlet/integrations/cors.html" target="_blank">Spring Security Docs: CORS</a>
+      <a href="https://www.baeldung.com/spring-cors" target="_blank">Baeldung: CORS</a>
+    </div>
+  </div>
+
+  <!-- 67 -->
+  <div class="topic-card" id="topic-67">
+    <h4>CSRF Tokens &mdash; When to Disable</h4>
+    <p class="desc">CSRF protection prevents attackers from forging requests using a victim's authenticated session. Spring Security enables it by default. Knowing when it is safe to disable (stateless APIs) is a key security design question.</p>
+    <ul>
+      <li>CSRF matters for <strong>session-based auth</strong> where the browser auto-sends cookies</li>
+      <li><strong>Safe to disable</strong> for stateless JWT APIs &mdash; no cookies, no CSRF risk</li>
+      <li>Spring Security uses the Synchronizer Token pattern (hidden form field) or the Cookie-to-Header pattern</li>
+      <li>SPA + cookie auth: use <code>CookieCsrfTokenRepository.withHttpOnlyFalse()</code> so JavaScript can read the token</li>
+      <li>Disable: <code>http.csrf(csrf -> csrf.disable())</code> &mdash; only for truly stateless APIs</li>
+    </ul>
+    <div class="resources">
+      <a href="https://docs.spring.io/spring-security/reference/servlet/exploits/csrf.html" target="_blank">Spring Security Docs: CSRF</a>
+      <a href="https://www.baeldung.com/spring-security-csrf" target="_blank">Baeldung: CSRF Protection</a>
+    </div>
+  </div>
+</div><!-- /section-security -->
+
+
+<!-- ══════════════════════════════════════════════════════════
+     SECTION 4 — Spring Data & Transactions  (Both)
+     ══════════════════════════════════════════════════════════ -->
+<div class="section" id="section-data">
+  <h2 class="section-heading">
+    Spring Data &amp; Transactions
+    <span class="context-badge badge-both">Both</span>
+  </h2>
+
+  <!-- ── Transactions ── -->
+  <h3 class="category-heading">Transactions</h3>
+
+  <!-- 68 -->
+  <div class="topic-card" id="topic-68">
+    <h4>@Transactional Propagation Types (REQUIRED, REQUIRES_NEW, NESTED)</h4>
+    <p class="desc">Propagation defines how transactions relate when methods call each other. REQUIRED joins an existing transaction; REQUIRES_NEW suspends it and starts a new one; NESTED creates a savepoint. This is one of the most frequently asked Spring topics.</p>
+    <ul>
+      <li><strong>REQUIRED (default):</strong> joins existing txn or creates a new one &mdash; most common</li>
+      <li><strong>REQUIRES_NEW:</strong> always creates a new txn, suspending the outer one &mdash; inner commits/rolls back independently</li>
+      <li><strong>NESTED:</strong> creates a savepoint within the existing txn &mdash; inner rollback reverts to savepoint, not the whole txn</li>
+      <li><strong>SUPPORTS:</strong> runs in a txn if one exists, otherwise non-transactional</li>
+      <li><strong>NOT_SUPPORTED:</strong> suspends any existing txn and runs non-transactionally</li>
+    </ul>
+    <div class="resources">
+      <a href="https://docs.spring.io/spring-framework/reference/data-access/transaction/declarative/tx-propagation.html" target="_blank">Spring Docs: Transaction Propagation</a>
+      <a href="https://www.baeldung.com/spring-transactional-propagation-isolation" target="_blank">Baeldung: Propagation & Isolation</a>
+    </div>
+  </div>
+
+  <!-- 69 -->
+  <div class="topic-card" id="topic-69">
+    <h4>Isolation Levels in Spring</h4>
+    <p class="desc">Isolation levels control the visibility of concurrent transactions' uncommitted changes. Spring maps to the underlying database isolation via @Transactional(isolation = ...). Knowing the trade-offs between consistency and concurrency is critical.</p>
+    <ul>
+      <li><strong>READ_UNCOMMITTED:</strong> allows dirty reads &mdash; rarely used</li>
+      <li><strong>READ_COMMITTED:</strong> prevents dirty reads &mdash; default for PostgreSQL, Oracle</li>
+      <li><strong>REPEATABLE_READ:</strong> prevents dirty and non-repeatable reads &mdash; default for MySQL InnoDB</li>
+      <li><strong>SERIALIZABLE:</strong> full isolation, highest consistency, lowest concurrency</li>
+      <li><strong>DEFAULT:</strong> uses the database's default &mdash; what Spring uses if you don't specify</li>
+    </ul>
+    <div class="resources">
+      <a href="https://docs.spring.io/spring-framework/reference/data-access/transaction/declarative/tx-propagation.html" target="_blank">Spring Docs: Transactions</a>
+      <a href="https://www.baeldung.com/spring-transactional-propagation-isolation" target="_blank">Baeldung: Isolation Levels</a>
+    </div>
+  </div>
+
+  <!-- 70 -->
+  <div class="topic-card" id="topic-70">
+    <h4>LazyInitializationException &mdash; Why It Happens</h4>
+    <p class="desc">This exception occurs when you access a lazily-loaded JPA association outside an active Hibernate session/transaction. It is one of the most common JPA bugs and a frequent interview topic.</p>
+    <ul>
+      <li>JPA lazy associations return a proxy; accessing it after the session closes throws the exception</li>
+      <li><strong>Root cause:</strong> fetching data in a controller/view layer after the @Transactional service method has returned</li>
+      <li><strong>Fixes:</strong> use EAGER fetch (bad for performance), JOIN FETCH in query, @EntityGraph, or DTO projections</li>
+      <li>Open Session in View (spring.jpa.open-in-view=true) keeps the session open during request processing &mdash; enabled by default but considered an anti-pattern</li>
+      <li>Best practice: fetch exactly what you need in the service layer with explicit queries</li>
+    </ul>
+    <div class="resources">
+      <a href="https://docs.spring.io/spring-boot/reference/data/sql.html" target="_blank">Spring Boot Docs: SQL</a>
+      <a href="https://www.baeldung.com/hibernate-lazy-loading-workaround" target="_blank">Baeldung: LazyInitializationException</a>
+    </div>
+  </div>
+
+  <!-- 71 -->
+  <div class="topic-card" id="topic-71">
+    <h4>N+1 Problem &amp; @EntityGraph</h4>
+    <p class="desc">The N+1 problem occurs when fetching a list of entities triggers N additional queries for their lazy associations. @EntityGraph and JOIN FETCH are the primary solutions. This is arguably the most common JPA performance question.</p>
+    <ul>
+      <li><strong>N+1:</strong> 1 query for the parent list + N queries for each parent's children = N+1 total queries</li>
+      <li><strong>JOIN FETCH:</strong> <code>SELECT o FROM Order o JOIN FETCH o.items</code> &mdash; loads everything in one query</li>
+      <li><strong>@EntityGraph:</strong> declarative alternative &mdash; <code>@EntityGraph(attributePaths = {"items"})</code> on repository method</li>
+      <li><strong>@BatchSize:</strong> Hibernate fetches lazy collections in batches instead of one-by-one</li>
+      <li>Always verify with SQL logging: <code>spring.jpa.show-sql=true</code> or p6spy</li>
+    </ul>
+    <div class="resources">
+      <a href="https://docs.spring.io/spring-data/jpa/reference/jpa/entity-graph.html" target="_blank">Spring Data Docs: @EntityGraph</a>
+      <a href="https://www.baeldung.com/spring-data-jpa-named-entity-graphs" target="_blank">Baeldung: Entity Graphs</a>
+    </div>
+  </div>
+
+  <!-- 72 -->
+  <div class="topic-card" id="topic-72">
+    <h4>JPQL vs Native Queries</h4>
+    <p class="desc">JPQL operates on entity objects and is database-agnostic; native queries use raw SQL for database-specific features or performance optimization. Understanding when to use each is a practical SDE 2 concern.</p>
+    <ul>
+      <li><strong>JPQL:</strong> entity-centric, portable, supports JPA features (managed entities, lazy loading)</li>
+      <li><strong>Native SQL:</strong> full SQL power (window functions, CTEs, hints) but results need manual mapping</li>
+      <li>Use <code>@Query(nativeQuery = true)</code> for native SQL in Spring Data repositories</li>
+      <li>Named parameters work in both: <code>:paramName</code> syntax</li>
+      <li><strong>Trade-off:</strong> JPQL for most CRUD; native for complex analytics, bulk operations, or DB-specific features</li>
+    </ul>
+    <div class="resources">
+      <a href="https://docs.oracle.com/javaee/7/tutorial/persistence-querylanguage.htm" target="_blank">Oracle Docs: JPQL</a>
+      <a href="https://www.baeldung.com/spring-data-jpa-query" target="_blank">Baeldung: @Query in Spring Data</a>
+    </div>
+  </div>
+
+  <!-- ── Repositories ── -->
+  <h3 class="category-heading">Repositories</h3>
+
+  <!-- 73 -->
+  <div class="topic-card" id="topic-73">
+    <h4>Custom Query Derivation</h4>
+    <p class="desc">Spring Data JPA generates queries from method names: findByStatusAndCreatedAfter becomes a WHERE clause automatically. Understanding the parsing rules and limitations lets you avoid writing boilerplate queries.</p>
+    <ul>
+      <li>Method name parsing: <code>findBy</code> + property path + operator keyword</li>
+      <li>Operators: <code>And</code>, <code>Or</code>, <code>Between</code>, <code>LessThan</code>, <code>Like</code>, <code>In</code>, <code>OrderBy</code>, etc.</li>
+      <li>Supports nested properties: <code>findByAddress_City(String city)</code></li>
+      <li><strong>Limitations:</strong> complex joins, subqueries, or grouping require @Query or Specifications</li>
+      <li>Spring Data verifies method names at startup &mdash; typos cause BeanCreationException</li>
+    </ul>
+    <div class="resources">
+      <a href="https://docs.spring.io/spring-data/jpa/reference/jpa/query-methods.html" target="_blank">Spring Data Docs: Query Methods</a>
+      <a href="https://www.baeldung.com/spring-data-derived-queries" target="_blank">Baeldung: Derived Queries</a>
+    </div>
+  </div>
+
+  <!-- 74 -->
+  <div class="topic-card" id="topic-74">
+    <h4>@Query with JPQL</h4>
+    <p class="desc">The @Query annotation lets you write explicit JPQL or native SQL on repository methods. Use it when derived query method names become too long or when you need JOIN FETCH, aggregates, or complex predicates.</p>
+    <ul>
+      <li>JPQL: <code>@Query("SELECT u FROM User u WHERE u.email = :email")</code></li>
+      <li>Modifying queries: add <code>@Modifying</code> and <code>@Transactional</code> for UPDATE/DELETE</li>
+      <li>Supports SpEL: <code>#{#entityName}</code> resolves to the entity class name</li>
+      <li>Pagination works with @Query &mdash; add a <code>Pageable</code> parameter and a countQuery</li>
+    </ul>
+    <div class="resources">
+      <a href="https://docs.spring.io/spring-data/jpa/reference/jpa/query-methods.html" target="_blank">Spring Data Docs: @Query</a>
+      <a href="https://www.baeldung.com/spring-data-jpa-query" target="_blank">Baeldung: @Query</a>
+    </div>
+  </div>
+
+  <!-- 75 -->
+  <div class="topic-card" id="topic-75">
+    <h4>Projections</h4>
+    <p class="desc">Projections let you fetch only the columns you need instead of full entities. This reduces memory usage, network transfer, and avoids lazy loading issues. A key optimization pattern for production APIs.</p>
+    <ul>
+      <li><strong>Interface projections:</strong> define an interface with getter methods matching entity properties &mdash; Spring generates the implementation</li>
+      <li><strong>Class-based (DTO) projections:</strong> constructor expression in JPQL &mdash; <code>SELECT new com.example.UserDTO(u.name, u.email) FROM User u</code></li>
+      <li><strong>Dynamic projections:</strong> <code>&lt;T&gt; List&lt;T&gt; findByStatus(String status, Class&lt;T&gt; type)</code></li>
+      <li>Open projections with <code>@Value("#{target.firstName + ' ' + target.lastName}")</code> &mdash; flexible but lose query optimization</li>
+    </ul>
+    <div class="resources">
+      <a href="https://docs.spring.io/spring-data/jpa/reference/repositories/projections.html" target="_blank">Spring Data Docs: Projections</a>
+      <a href="https://www.baeldung.com/spring-data-jpa-projections" target="_blank">Baeldung: Projections</a>
+    </div>
+  </div>
+
+  <!-- 76 -->
+  <div class="topic-card" id="topic-76">
+    <h4>Pagination &amp; Sorting</h4>
+    <p class="desc">Spring Data provides Pageable and Sort abstractions that translate to LIMIT/OFFSET and ORDER BY clauses. Proper pagination is essential for any production API and a common practical interview question.</p>
+    <ul>
+      <li>Pass <code>Pageable</code> (via <code>PageRequest.of(page, size, sort)</code>) to any repository method</li>
+      <li>Return <code>Page&lt;T&gt;</code> (includes total count) or <code>Slice&lt;T&gt;</code> (no count query &mdash; more efficient)</li>
+      <li><strong>Sort:</strong> <code>Sort.by(Sort.Direction.DESC, "createdAt")</code> or via query derivation: <code>findByStatusOrderByCreatedAtDesc</code></li>
+      <li>Web support: <code>@PageableDefault(size=20, sort="id")</code> in controller method parameters</li>
+      <li><strong>Keyset pagination</strong> (WHERE id > :lastId) is more efficient than OFFSET for large datasets but needs manual implementation</li>
+    </ul>
+    <div class="resources">
+      <a href="https://docs.spring.io/spring-data/jpa/reference/repositories/query-methods-details.html" target="_blank">Spring Data Docs: Paging & Sorting</a>
+      <a href="https://www.baeldung.com/spring-data-jpa-pagination-sorting" target="_blank">Baeldung: Pagination & Sorting</a>
+    </div>
+  </div>
+</div><!-- /section-data -->
+
+
+<!-- ══════════════════════════════════════════════════════════
+     RECOMMENDED RESOURCES
+     ══════════════════════════════════════════════════════════ -->
+<div class="bottom-resources">
+  <h2>Recommended Resources</h2>
+  <ul>
+    <li><strong>Official Spring Framework Reference</strong> &mdash; <a href="https://docs.spring.io/spring-framework/reference/" target="_blank">docs.spring.io/spring-framework/reference</a></li>
+    <li><strong>Official Spring Boot Reference</strong> &mdash; <a href="https://docs.spring.io/spring-boot/reference/" target="_blank">docs.spring.io/spring-boot/reference</a></li>
+    <li><strong>Official Spring Security Reference</strong> &mdash; <a href="https://docs.spring.io/spring-security/reference/" target="_blank">docs.spring.io/spring-security/reference</a></li>
+    <li><strong>Official Spring Data JPA Reference</strong> &mdash; <a href="https://docs.spring.io/spring-data/jpa/reference/" target="_blank">docs.spring.io/spring-data/jpa/reference</a></li>
+    <li><strong>Baeldung Spring Tutorials</strong> &mdash; <a href="https://www.baeldung.com/spring-tutorial" target="_blank">baeldung.com/spring-tutorial</a> &mdash; Practical guides with code examples</li>
+    <li><strong>Spring in Action (6th Edition)</strong> by Craig Walls &mdash; Covers Spring Boot 3, Security, Data, and reactive programming</li>
+    <li><strong>Pro Spring 6</strong> by Iuliana Cosmina et al. &mdash; Deep dive into Spring internals, AOP, and advanced configuration</li>
+    <li><strong>Spring Boot GitHub Repository</strong> &mdash; <a href="https://github.com/spring-projects/spring-boot" target="_blank">github.com/spring-projects/spring-boot</a> &mdash; Reading auto-configuration source code is the best way to understand how it works</li>
+  </ul>
+</div>
+
+</div><!-- /container -->
+</body>
+</html>

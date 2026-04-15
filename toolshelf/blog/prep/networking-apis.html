@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pillar 8 — Networking &amp; APIs | SDE 2 Interview Prep</title>
+<style>
+  :root {
+    --bg-primary:#1a1b2e; --bg-secondary:#232540; --bg-tertiary:#2a2d4a; --bg-hover:#32355a;
+    --text-primary:#e2e4f0; --text-secondary:#a0a3bd; --text-muted:#6b6f8a; --border:#3a3d5c;
+    --accent:#6c63ff; --green:#4ade80; --green-bg:rgba(74,222,128,0.12);
+    --orange:#fb923c; --orange-bg:rgba(251,146,60,0.12); --red:#f87171; --red-bg:rgba(248,113,113,0.12);
+    --cyan:#22d3ee; --cyan-bg:rgba(34,211,238,0.12);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background: var(--bg-primary); color: var(--text-primary); line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  /* Sticky Header */
+  .header {
+    position: sticky; top: 0; z-index: 100;
+    background: var(--bg-secondary); border-bottom: 1px solid var(--border);
+    padding: 16px 24px;
+    backdrop-filter: blur(12px);
+  }
+  .header-inner { max-width: 960px; margin: 0 auto; }
+  .header .back-link { font-size: 0.85rem; color: var(--accent); margin-bottom: 4px; display: inline-block; }
+  .header h1 { font-size: 1.5rem; font-weight: 700; color: var(--text-primary); margin-bottom: 2px; }
+  .header .subtitle { font-size: 0.9rem; color: var(--text-secondary); font-style: italic; }
+
+  /* Main container */
+  .container { max-width: 960px; margin: 0 auto; padding: 32px 24px 64px; }
+
+  /* Table of Contents */
+  .toc {
+    background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 10px;
+    padding: 24px 28px; margin-bottom: 40px;
+  }
+  .toc h2 { font-size: 1.1rem; color: var(--text-primary); margin-bottom: 14px; letter-spacing: 0.03em; }
+  .toc ul { list-style: none; }
+  .toc li { margin-bottom: 8px; }
+  .toc a { font-size: 0.92rem; color: var(--accent); }
+  .toc a:hover { color: var(--cyan); }
+  .toc .toc-badge {
+    font-size: 0.7rem; padding: 2px 8px; border-radius: 10px; margin-left: 8px;
+    font-weight: 600; vertical-align: middle;
+  }
+
+  /* Section */
+  .section { margin-bottom: 48px; }
+  .section-heading {
+    font-size: 1.35rem; font-weight: 700; color: var(--text-primary);
+    margin-bottom: 6px; padding-bottom: 10px;
+    border-bottom: 2px solid var(--accent);
+    display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+  }
+  .context-badge {
+    font-size: 0.7rem; padding: 3px 10px; border-radius: 12px;
+    font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em;
+  }
+  .context-light { background: var(--green-bg); color: var(--green); }
+  .context-both { background: var(--orange-bg); color: var(--orange); }
+  .context-full-focus { background: var(--red-bg); color: var(--red); }
+
+  /* Tip callout */
+  .tip-callout {
+    background: var(--cyan-bg); border-left: 3px solid var(--cyan);
+    border-radius: 6px; padding: 12px 16px; margin: 12px 0 20px;
+    font-size: 0.88rem; color: var(--cyan);
+  }
+  .tip-callout strong { color: var(--cyan); }
+
+  /* Category */
+  .category { margin-bottom: 32px; }
+  .category-heading {
+    font-size: 1.05rem; font-weight: 600; color: var(--text-primary);
+    margin-bottom: 16px; padding-left: 14px;
+    border-left: 4px solid var(--accent);
+  }
+
+  /* Topic Card */
+  .topic-card {
+    background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 10px;
+    padding: 20px 24px; margin-bottom: 16px;
+    transition: border-color 0.2s, background 0.2s;
+    scroll-margin-top: 80px;
+  }
+  .topic-card:hover { border-color: var(--accent); background: var(--bg-hover); }
+  .topic-card h4 {
+    font-size: 1rem; font-weight: 600; color: var(--text-primary); margin-bottom: 8px;
+  }
+  .topic-card .topic-id {
+    font-size: 0.7rem; color: var(--text-muted); background: var(--bg-tertiary);
+    padding: 2px 7px; border-radius: 6px; margin-left: 8px; vertical-align: middle;
+  }
+  .topic-card .description {
+    font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 12px;
+  }
+  .topic-card ul {
+    list-style: none; margin-bottom: 12px; padding: 0;
+  }
+  .topic-card li {
+    font-size: 0.88rem; color: var(--text-secondary); padding: 3px 0 3px 18px;
+    position: relative;
+  }
+  .topic-card li::before {
+    content: "\25b8"; position: absolute; left: 0; color: var(--accent);
+  }
+  .topic-card .resources { border-top: 1px solid var(--border); padding-top: 10px; margin-top: 4px; }
+  .topic-card .resources a {
+    font-size: 0.82rem; color: var(--accent); margin-right: 16px;
+    display: inline-block; margin-bottom: 4px;
+  }
+  .topic-card .resources a:hover { color: var(--cyan); }
+
+  /* Recommended Resources */
+  .resources-section {
+    background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 10px;
+    padding: 24px 28px; margin-top: 48px;
+  }
+  .resources-section h2 { font-size: 1.15rem; margin-bottom: 16px; color: var(--text-primary); }
+  .resources-section ul { list-style: none; }
+  .resources-section li { padding: 6px 0; font-size: 0.9rem; }
+  .resources-section li::before { content: "\1f517 "; }
+  .resources-section a { color: var(--accent); }
+
+  /* Responsive */
+  @media (max-width: 640px) {
+    .header { padding: 12px 16px; }
+    .header h1 { font-size: 1.2rem; }
+    .container { padding: 20px 16px 48px; }
+    .toc { padding: 16px 18px; }
+    .topic-card { padding: 16px 18px; }
+    .section-heading { font-size: 1.15rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<header class="header">
+  <div class="header-inner">
+    <a href="index.html" class="back-link">&larr; Back to Tracker</a>
+    <h1>Pillar 8 &mdash; Networking &amp; APIs</h1>
+    <p class="subtitle">What happens between services &mdash; often assumed, rarely known deeply</p>
+  </div>
+</header>
+
+<div class="container">
+
+  <!-- ===== TABLE OF CONTENTS ===== -->
+  <nav class="toc">
+    <h2>Table of Contents</h2>
+    <ul>
+      <li><a href="#section-http-rest">HTTP &amp; REST Depth</a> <span class="toc-badge context-light">Light</span></li>
+      <li><a href="#section-grpc-protobuf">gRPC &amp; Protobuf</a> <span class="toc-badge context-both">Both</span></li>
+      <li><a href="#section-websockets-realtime">WebSockets &amp; Real-Time</a> <span class="toc-badge context-light">Light</span></li>
+      <li><a href="#section-tcpip-fundamentals">TCP/IP Fundamentals</a> <span class="toc-badge context-light">Light</span></li>
+      <li><a href="#recommended-resources">Recommended Resources</a></li>
+    </ul>
+  </nav>
+
+  <!-- ============================================================ -->
+  <!-- SECTION 1: HTTP & REST depth                                  -->
+  <!-- ============================================================ -->
+  <section class="section" id="section-http-rest">
+    <h2 class="section-heading">
+      HTTP &amp; REST Depth
+      <span class="context-badge context-light">Light</span>
+    </h2>
+
+    <!-- Category: HTTP -->
+    <div class="category">
+      <h3 class="category-heading">HTTP</h3>
+
+      <!-- 300 -->
+      <div class="topic-card" id="topic-300">
+        <h4>HTTP/1.1 Keep-Alive <span class="topic-id">#300</span></h4>
+        <p class="description">Persistent connections that reuse TCP sockets across multiple request-response cycles, avoiding the overhead of repeated handshakes.</p>
+        <ul>
+          <li>Connection: keep-alive header enables TCP reuse across sequential requests</li>
+          <li>Reduces latency by eliminating repeated 3-way handshakes per request</li>
+          <li>Head-of-line blocking: one slow response blocks all queued requests on the same connection</li>
+          <li>Timeout and max-requests settings control when the connection is dropped</li>
+          <li>Pipelining was attempted in HTTP/1.1 but largely abandoned due to ordering constraints</li>
+        </ul>
+        <div class="resources">
+          <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Connection" target="_blank">MDN: Connection Header</a>
+          <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Connection_management_in_HTTP_1.x" target="_blank">MDN: HTTP/1.x Connection Management</a>
+        </div>
+      </div>
+
+      <!-- 301 -->
+      <div class="topic-card" id="topic-301">
+        <h4>HTTP/2 Multiplexing <span class="topic-id">#301</span></h4>
+        <p class="description">Binary framing layer that allows multiple concurrent streams over a single TCP connection, solving HTTP/1.1's head-of-line blocking at the application layer.</p>
+        <ul>
+          <li>Single TCP connection carries many interleaved streams — no blocking between requests</li>
+          <li>Binary framing replaces text parsing, enabling header compression (HPACK)</li>
+          <li>Server push allows preemptive resource delivery before the client requests it</li>
+          <li>Stream prioritization lets clients hint which resources matter most</li>
+          <li>Still suffers from TCP-level head-of-line blocking if a packet is lost</li>
+        </ul>
+        <div class="resources">
+          <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/Evolution_of_HTTP" target="_blank">MDN: Evolution of HTTP</a>
+          <a href="https://datatracker.ietf.org/doc/html/rfc7540" target="_blank">RFC 7540: HTTP/2</a>
+        </div>
+      </div>
+
+      <!-- 302 -->
+      <div class="topic-card" id="topic-302">
+        <h4>HTTP/3 QUIC <span class="topic-id">#302</span></h4>
+        <p class="description">HTTP over QUIC replaces TCP with a UDP-based transport that eliminates TCP head-of-line blocking and integrates TLS 1.3 into the handshake.</p>
+        <ul>
+          <li>Built on QUIC (UDP) — independent streams mean one lost packet does not block others</li>
+          <li>0-RTT connection establishment for known servers drastically cuts initial latency</li>
+          <li>TLS 1.3 is mandatory and integrated into the transport handshake</li>
+          <li>Connection migration survives IP changes (e.g., Wi-Fi to mobile) via connection IDs</li>
+        </ul>
+        <div class="resources">
+          <a href="https://datatracker.ietf.org/doc/html/rfc9000" target="_blank">RFC 9000: QUIC Transport</a>
+          <a href="https://datatracker.ietf.org/doc/html/rfc9114" target="_blank">RFC 9114: HTTP/3</a>
+        </div>
+      </div>
+
+      <!-- 303 -->
+      <div class="topic-card" id="topic-303">
+        <h4>Status Codes &mdash; Semantic Correctness <span class="topic-id">#303</span></h4>
+        <p class="description">Choosing the right HTTP status code communicates intent precisely. Misused codes confuse clients and break caching, retry logic, and monitoring.</p>
+        <ul>
+          <li>2xx success: 200 OK, 201 Created, 204 No Content &mdash; match the action performed</li>
+          <li>3xx redirection: 301 (permanent) vs 302/307 (temporary) &mdash; affects caching and SEO</li>
+          <li>4xx client errors: 400 (bad input), 401 (unauthenticated), 403 (forbidden), 404 (not found), 409 (conflict), 422 (unprocessable)</li>
+          <li>5xx server errors: 500 (generic), 502 (bad gateway), 503 (unavailable), 504 (gateway timeout)</li>
+          <li>Never return 200 with an error body &mdash; clients and proxies rely on status codes for retry/caching logic</li>
+        </ul>
+        <div class="resources">
+          <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Status" target="_blank">MDN: HTTP Status Codes</a>
+          <a href="https://datatracker.ietf.org/doc/html/rfc7231#section-6" target="_blank">RFC 7231: Response Status Codes</a>
+        </div>
+      </div>
+
+      <!-- 304 -->
+      <div class="topic-card" id="topic-304">
+        <h4>Idempotency &amp; Safe Methods <span class="topic-id">#304</span></h4>
+        <p class="description">Understanding which HTTP methods are safe (no side effects) and idempotent (repeatable with same result) is critical for retry logic and API design.</p>
+        <ul>
+          <li>Safe methods (GET, HEAD, OPTIONS) must not modify server state</li>
+          <li>Idempotent methods (GET, PUT, DELETE) produce the same result if called repeatedly</li>
+          <li>POST is neither safe nor idempotent &mdash; use idempotency keys for payment/order APIs</li>
+          <li>PATCH is not inherently idempotent &mdash; depends on the operation (e.g., "set" vs "increment")</li>
+          <li>Proxies and CDNs rely on these semantics for caching and automatic retries</li>
+        </ul>
+        <div class="resources">
+          <a href="https://developer.mozilla.org/en-US/docs/Glossary/Idempotent" target="_blank">MDN: Idempotent</a>
+          <a href="https://datatracker.ietf.org/doc/html/rfc7231#section-4.2" target="_blank">RFC 7231: Method Properties</a>
+        </div>
+      </div>
+
+      <!-- 305 -->
+      <div class="topic-card" id="topic-305">
+        <h4>Content Negotiation <span class="topic-id">#305</span></h4>
+        <p class="description">Mechanism by which client and server agree on the format, language, and encoding of a response using request headers.</p>
+        <ul>
+          <li>Accept header specifies desired media types (e.g., application/json, application/xml)</li>
+          <li>Accept-Language, Accept-Encoding enable locale and compression negotiation</li>
+          <li>Server returns Content-Type and may reply 406 Not Acceptable if it cannot satisfy</li>
+          <li>Quality values (q=) let clients express preference ordering</li>
+        </ul>
+        <div class="resources">
+          <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Content_negotiation" target="_blank">MDN: Content Negotiation</a>
+          <a href="https://datatracker.ietf.org/doc/html/rfc7231#section-5.3" target="_blank">RFC 7231: Content Negotiation</a>
+        </div>
+      </div>
+
+      <!-- 306 -->
+      <div class="topic-card" id="topic-306">
+        <h4>ETag &amp; Caching Headers <span class="topic-id">#306</span></h4>
+        <p class="description">HTTP caching headers control when and how responses are stored and revalidated, reducing bandwidth and server load.</p>
+        <ul>
+          <li>ETag is a fingerprint of the response &mdash; used with If-None-Match for conditional GETs</li>
+          <li>Cache-Control directives: max-age, no-cache, no-store, public, private, must-revalidate</li>
+          <li>Last-Modified / If-Modified-Since provides time-based conditional requests</li>
+          <li>304 Not Modified saves bandwidth when the cached version is still valid</li>
+          <li>Stale-while-revalidate allows serving cached content while refreshing in the background</li>
+        </ul>
+        <div class="resources">
+          <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/ETag" target="_blank">MDN: ETag</a>
+          <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Caching" target="_blank">MDN: HTTP Caching</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Category: REST Design -->
+    <div class="category">
+      <h3 class="category-heading">REST Design</h3>
+
+      <!-- 307 -->
+      <div class="topic-card" id="topic-307">
+        <h4>Resource Naming Conventions <span class="topic-id">#307</span></h4>
+        <p class="description">RESTful URLs should represent resources as nouns, use plural forms, and maintain a consistent hierarchy that clients can predict.</p>
+        <ul>
+          <li>Use plural nouns: /users, /orders &mdash; not /getUser or /createOrder</li>
+          <li>Nest sub-resources: /users/{id}/orders for clear ownership relationships</li>
+          <li>Avoid verbs in paths &mdash; let HTTP methods express the action</li>
+          <li>Use kebab-case for multi-word segments: /order-items, not /orderItems</li>
+          <li>Keep URLs shallow &mdash; deeply nested paths signal a design smell</li>
+        </ul>
+        <div class="resources">
+          <a href="https://www.baeldung.com/rest-api-best-practices" target="_blank">Baeldung: REST API Best Practices</a>
+          <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/Identifying_resources_on_the_Web" target="_blank">MDN: Identifying Resources</a>
+        </div>
+      </div>
+
+      <!-- 308 -->
+      <div class="topic-card" id="topic-308">
+        <h4>Pagination (Cursor vs Offset) <span class="topic-id">#308</span></h4>
+        <p class="description">Large result sets need pagination. Offset-based is simple but fragile; cursor-based is stable under concurrent writes.</p>
+        <ul>
+          <li>Offset pagination (?page=3&size=20): simple but skips/duplicates rows if data changes</li>
+          <li>Cursor pagination (?after=abc123): stable ordering, no skipped items on inserts</li>
+          <li>Keyset pagination uses an indexed column as the cursor for efficient DB queries</li>
+          <li>Include total count, next/prev links, and has_more flag in the response envelope</li>
+        </ul>
+        <div class="resources">
+          <a href="https://www.baeldung.com/rest-api-pagination-in-spring" target="_blank">Baeldung: REST Pagination in Spring</a>
+          <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Link" target="_blank">MDN: Link Header</a>
+        </div>
+      </div>
+
+      <!-- 309 -->
+      <div class="topic-card" id="topic-309">
+        <h4>Versioning Strategies <span class="topic-id">#309</span></h4>
+        <p class="description">APIs evolve, and versioning determines how breaking changes are introduced without disrupting existing consumers.</p>
+        <ul>
+          <li>URI path versioning (/v1/users): most common, explicit, easy to route</li>
+          <li>Header versioning (Accept: application/vnd.api.v2+json): cleaner URLs but harder to discover</li>
+          <li>Query param versioning (?version=2): simple but clutters query strings</li>
+          <li>Additive changes (new fields) usually do not require a version bump</li>
+          <li>Sunset header communicates deprecation timelines to consumers</li>
+        </ul>
+        <div class="resources">
+          <a href="https://www.baeldung.com/rest-versioning" target="_blank">Baeldung: REST API Versioning</a>
+          <a href="https://datatracker.ietf.org/doc/html/rfc8594" target="_blank">RFC 8594: Sunset Header</a>
+        </div>
+      </div>
+
+      <!-- 310 -->
+      <div class="topic-card" id="topic-310">
+        <h4>HATEOAS Concept <span class="topic-id">#310</span></h4>
+        <p class="description">Hypermedia as the Engine of Application State means responses include links that tell clients what actions are available next, making the API self-discoverable.</p>
+        <ul>
+          <li>Each response contains _links or _actions pointing to related resources and transitions</li>
+          <li>Clients do not hard-code URLs &mdash; they follow links from responses</li>
+          <li>Rarely implemented in full, but the concept is asked about in interviews</li>
+          <li>HAL, JSON:API, and Siren are popular hypermedia formats</li>
+        </ul>
+        <div class="resources">
+          <a href="https://www.baeldung.com/spring-hateoas-tutorial" target="_blank">Baeldung: Spring HATEOAS Tutorial</a>
+          <a href="https://datatracker.ietf.org/doc/html/rfc5988" target="_blank">RFC 5988: Web Linking</a>
+        </div>
+      </div>
+
+      <!-- 311 -->
+      <div class="topic-card" id="topic-311">
+        <h4>OpenAPI / Swagger <span class="topic-id">#311</span></h4>
+        <p class="description">OpenAPI Specification (formerly Swagger) provides a machine-readable contract for REST APIs, enabling documentation, code generation, and testing.</p>
+        <ul>
+          <li>YAML/JSON schema describes endpoints, request/response models, auth, and errors</li>
+          <li>Swagger UI renders interactive docs directly from the spec</li>
+          <li>Code generators (openapi-generator) produce client SDKs and server stubs</li>
+          <li>Contract-first design: write the spec, then implement &mdash; keeps teams aligned</li>
+          <li>springdoc-openapi auto-generates specs from Spring Boot annotations</li>
+        </ul>
+        <div class="resources">
+          <a href="https://www.baeldung.com/spring-rest-openapi-documentation" target="_blank">Baeldung: OpenAPI with Spring</a>
+          <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP" target="_blank">MDN: HTTP Reference</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- SECTION 2: gRPC & Protobuf                                   -->
+  <!-- ============================================================ -->
+  <section class="section" id="section-grpc-protobuf">
+    <h2 class="section-heading">
+      gRPC &amp; Protobuf
+      <span class="context-badge context-both">Both</span>
+    </h2>
+
+    <div class="tip-callout">
+      <strong>Interview tip:</strong> gRPC appears in both system-design and coding contexts. Be ready to compare it with REST, explain streaming modes, and discuss when binary serialization matters.
+    </div>
+
+    <!-- Category: gRPC -->
+    <div class="category">
+      <h3 class="category-heading">gRPC</h3>
+
+      <!-- 312 -->
+      <div class="topic-card" id="topic-312">
+        <h4>Protobuf Binary Encoding <span class="topic-id">#312</span></h4>
+        <p class="description">Protocol Buffers encode structured data into a compact binary format using field numbers and wire types, drastically reducing payload size compared to JSON.</p>
+        <ul>
+          <li>Schema defined in .proto files with typed fields and unique field numbers</li>
+          <li>Binary encoding: field tag (number + wire type) followed by value &mdash; no field names on the wire</li>
+          <li>Backward/forward compatible: unknown fields are preserved, missing fields get defaults</li>
+          <li>Varints encode small integers in fewer bytes than fixed-width formats</li>
+          <li>10-50x smaller and 20-100x faster to parse than JSON for typical payloads</li>
+        </ul>
+        <div class="resources">
+          <a href="https://grpc.io/docs/what-is-grpc/introduction/" target="_blank">gRPC: Introduction</a>
+          <a href="https://www.baeldung.com/google-protocol-buffer" target="_blank">Baeldung: Protocol Buffers</a>
+        </div>
+      </div>
+
+      <!-- 313 -->
+      <div class="topic-card" id="topic-313">
+        <h4>4 Communication Modes <span class="topic-id">#313</span></h4>
+        <p class="description">gRPC supports four interaction patterns: unary, server streaming, client streaming, and bidirectional streaming, each suited to different real-time data needs.</p>
+        <ul>
+          <li>Unary: single request, single response &mdash; like a standard REST call</li>
+          <li>Server streaming: client sends one request, server sends a stream of responses (e.g., live feed)</li>
+          <li>Client streaming: client sends a stream of messages, server replies once (e.g., file upload)</li>
+          <li>Bidirectional streaming: both sides send independent streams concurrently (e.g., chat)</li>
+          <li>All modes are multiplexed over a single HTTP/2 connection</li>
+        </ul>
+        <div class="resources">
+          <a href="https://grpc.io/docs/what-is-grpc/core-concepts/" target="_blank">gRPC: Core Concepts</a>
+          <a href="https://www.baeldung.com/java-grpc-streaming" target="_blank">Baeldung: gRPC Streaming in Java</a>
+        </div>
+      </div>
+
+      <!-- 314 -->
+      <div class="topic-card" id="topic-314">
+        <h4>Interceptors <span class="topic-id">#314</span></h4>
+        <p class="description">gRPC interceptors are middleware that wrap calls on the client or server side, enabling cross-cutting concerns like logging, auth, and metrics.</p>
+        <ul>
+          <li>Server interceptors process incoming calls before the handler &mdash; similar to servlet filters</li>
+          <li>Client interceptors modify outgoing calls &mdash; inject auth tokens, trace headers</li>
+          <li>Can be chained: logging &rarr; auth &rarr; rate-limiting &rarr; handler</li>
+          <li>Access to metadata (headers), deadlines, and call context</li>
+        </ul>
+        <div class="resources">
+          <a href="https://grpc.io/docs/guides/interceptors/" target="_blank">gRPC: Interceptors Guide</a>
+          <a href="https://www.baeldung.com/grpc-interceptors" target="_blank">Baeldung: gRPC Interceptors</a>
+        </div>
+      </div>
+
+      <!-- 315 -->
+      <div class="topic-card" id="topic-315">
+        <h4>Deadlines &amp; Cancellation <span class="topic-id">#315</span></h4>
+        <p class="description">gRPC deadlines propagate across service hops, ensuring that downstream calls are cancelled when the overall time budget expires.</p>
+        <ul>
+          <li>Deadline is an absolute timestamp propagated via metadata across the call chain</li>
+          <li>If a deadline expires, both client and server receive DEADLINE_EXCEEDED status</li>
+          <li>Cancellation propagates: if the client cancels, all downstream RPCs are cancelled too</li>
+          <li>Always set deadlines &mdash; default is infinite, which risks resource leaks in production</li>
+          <li>Context.current().withDeadlineAfter() in Java sets deadlines programmatically</li>
+        </ul>
+        <div class="resources">
+          <a href="https://grpc.io/docs/guides/deadlines/" target="_blank">gRPC: Deadlines Guide</a>
+          <a href="https://grpc.io/docs/what-is-grpc/core-concepts/#deadlines" target="_blank">gRPC: Core Concepts &mdash; Deadlines</a>
+        </div>
+      </div>
+
+      <!-- 316 -->
+      <div class="topic-card" id="topic-316">
+        <h4>gRPC vs REST Tradeoffs <span class="topic-id">#316</span></h4>
+        <p class="description">A frequent interview question: knowing when to choose gRPC over REST and vice versa demonstrates architectural maturity.</p>
+        <ul>
+          <li>gRPC: binary, fast, streaming, strongly-typed schema &mdash; ideal for internal microservice calls</li>
+          <li>REST: human-readable, browser-friendly, tooling-rich &mdash; ideal for public-facing APIs</li>
+          <li>gRPC requires HTTP/2; REST works over HTTP/1.1 and is universally supported</li>
+          <li>Debugging gRPC is harder &mdash; binary payloads require grpcurl or similar tools</li>
+          <li>Use gRPC for latency-critical inter-service communication; REST for external consumers</li>
+        </ul>
+        <div class="resources">
+          <a href="https://grpc.io/docs/what-is-grpc/faq/" target="_blank">gRPC: FAQ</a>
+          <a href="https://www.baeldung.com/grpc-vs-rest" target="_blank">Baeldung: gRPC vs REST</a>
+        </div>
+      </div>
+
+      <!-- 317 -->
+      <div class="topic-card" id="topic-317">
+        <h4>Service Reflection <span class="topic-id">#317</span></h4>
+        <p class="description">gRPC server reflection exposes the service schema at runtime, enabling dynamic clients and debugging tools to discover methods without the .proto file.</p>
+        <ul>
+          <li>Reflection service streams the full FileDescriptorProto to callers</li>
+          <li>grpcurl and Postman use reflection to list services and invoke methods dynamically</li>
+          <li>Should be enabled in dev/staging and disabled in production for security</li>
+          <li>Useful for contract testing and service catalogs in microservice architectures</li>
+        </ul>
+        <div class="resources">
+          <a href="https://grpc.io/docs/guides/reflection/" target="_blank">gRPC: Reflection Guide</a>
+          <a href="https://www.baeldung.com/grpc-server-reflection" target="_blank">Baeldung: gRPC Server Reflection</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- SECTION 3: WebSockets & real-time                             -->
+  <!-- ============================================================ -->
+  <section class="section" id="section-websockets-realtime">
+    <h2 class="section-heading">
+      WebSockets &amp; Real-Time
+      <span class="context-badge context-light">Light</span>
+    </h2>
+
+    <div class="tip-callout">
+      <strong>Interview tip:</strong> Be able to compare WebSocket, SSE, and long polling side by side. Know when you would pick each and what infrastructure requirements each imposes.
+    </div>
+
+    <!-- Category: Real-Time Protocols -->
+    <div class="category">
+      <h3 class="category-heading">Real-Time Protocols</h3>
+
+      <!-- 318 -->
+      <div class="topic-card" id="topic-318">
+        <h4>WebSocket Upgrade Handshake <span class="topic-id">#318</span></h4>
+        <p class="description">WebSocket connections start as an HTTP/1.1 request with an Upgrade header, switching the protocol to a persistent, full-duplex channel.</p>
+        <ul>
+          <li>Client sends GET with Upgrade: websocket and Connection: Upgrade headers</li>
+          <li>Server responds with 101 Switching Protocols if it supports the upgrade</li>
+          <li>Sec-WebSocket-Key / Sec-WebSocket-Accept prevent cross-protocol attacks</li>
+          <li>After the handshake, both sides communicate via frames (text, binary, ping/pong, close)</li>
+          <li>Load balancers must be configured for sticky sessions or WebSocket-aware routing</li>
+        </ul>
+        <div class="resources">
+          <a href="https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API" target="_blank">MDN: WebSockets API</a>
+          <a href="https://datatracker.ietf.org/doc/html/rfc6455" target="_blank">RFC 6455: The WebSocket Protocol</a>
+        </div>
+      </div>
+
+      <!-- 319 -->
+      <div class="topic-card" id="topic-319">
+        <h4>SSE vs WebSocket Tradeoffs <span class="topic-id">#319</span></h4>
+        <p class="description">Server-Sent Events (SSE) and WebSockets both enable server push, but differ in directionality, complexity, and browser support.</p>
+        <ul>
+          <li>SSE: server-to-client only, simple text/event-stream over HTTP, auto-reconnect built in</li>
+          <li>WebSocket: full-duplex, binary + text, requires explicit reconnection logic</li>
+          <li>SSE works through HTTP proxies and CDNs without special config; WebSocket often needs special support</li>
+          <li>Use SSE for dashboards, notifications, live feeds; WebSocket for chat, gaming, collaborative editing</li>
+        </ul>
+        <div class="resources">
+          <a href="https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events" target="_blank">MDN: Server-Sent Events</a>
+          <a href="https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API" target="_blank">MDN: WebSockets API</a>
+        </div>
+      </div>
+
+      <!-- 320 -->
+      <div class="topic-card" id="topic-320">
+        <h4>Long Polling vs SSE <span class="topic-id">#320</span></h4>
+        <p class="description">Long polling holds an HTTP request open until data arrives, then immediately re-establishes. SSE is a more efficient, standardized alternative.</p>
+        <ul>
+          <li>Long polling: client opens request, server holds it until data is ready, then responds; client immediately reconnects</li>
+          <li>Creates overhead from repeated TCP handshakes, headers, and connection teardown</li>
+          <li>SSE keeps one connection open and pushes events as they arrive &mdash; far less overhead</li>
+          <li>Long polling is a fallback for environments that do not support SSE or WebSocket</li>
+        </ul>
+        <div class="resources">
+          <a href="https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events/Using_server-sent_events" target="_blank">MDN: Using SSE</a>
+          <a href="https://www.baeldung.com/spring-mvc-long-polling" target="_blank">Baeldung: Long Polling in Spring</a>
+        </div>
+      </div>
+
+      <!-- 321 -->
+      <div class="topic-card" id="topic-321">
+        <h4>Spring WebSocket + STOMP <span class="topic-id">#321</span></h4>
+        <p class="description">Spring provides WebSocket support with an optional STOMP sub-protocol for pub/sub messaging patterns with destination-based routing.</p>
+        <ul>
+          <li>@EnableWebSocketMessageBroker configures STOMP over WebSocket in Spring Boot</li>
+          <li>STOMP frames (CONNECT, SUBSCRIBE, SEND, MESSAGE) add structured messaging on top of raw WebSocket</li>
+          <li>SimpleBroker for in-memory pub/sub; StompBrokerRelay for external brokers (RabbitMQ, ActiveMQ)</li>
+          <li>SockJS fallback handles browsers/environments without native WebSocket support</li>
+          <li>Destination prefixes (/topic, /queue, /app) route messages to subscribers or handlers</li>
+        </ul>
+        <div class="resources">
+          <a href="https://www.baeldung.com/websockets-spring" target="_blank">Baeldung: WebSockets with Spring</a>
+          <a href="https://www.baeldung.com/spring-websockets-stomp" target="_blank">Baeldung: STOMP over WebSocket</a>
+        </div>
+      </div>
+
+      <!-- 322 -->
+      <div class="topic-card" id="topic-322">
+        <h4>Heartbeat &amp; Reconnection Patterns <span class="topic-id">#322</span></h4>
+        <p class="description">Persistent connections silently die due to network issues. Heartbeats detect dead connections; reconnection strategies restore them gracefully.</p>
+        <ul>
+          <li>Ping/pong frames at regular intervals detect broken connections before data loss</li>
+          <li>STOMP heartbeat negotiation: client and server agree on send/receive intervals</li>
+          <li>Exponential backoff with jitter prevents thundering herd on mass reconnects</li>
+          <li>Client-side state reconciliation after reconnect &mdash; request missed events via sequence IDs</li>
+        </ul>
+        <div class="resources">
+          <a href="https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocket_servers" target="_blank">MDN: Writing WebSocket Servers</a>
+          <a href="https://www.baeldung.com/websockets-spring" target="_blank">Baeldung: WebSockets with Spring</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- SECTION 4: TCP/IP fundamentals                                -->
+  <!-- ============================================================ -->
+  <section class="section" id="section-tcpip-fundamentals">
+    <h2 class="section-heading">
+      TCP/IP Fundamentals
+      <span class="context-badge context-light">Light</span>
+    </h2>
+
+    <div class="tip-callout">
+      <strong>Interview tip:</strong> TCP questions often surface in system design when discussing connection pooling, latency, and why microservices see occasional slowdowns. Know the handshake, common socket states, and DNS caching.
+    </div>
+
+    <!-- Category: TCP/IP -->
+    <div class="category">
+      <h3 class="category-heading">TCP/IP</h3>
+
+      <!-- 323 -->
+      <div class="topic-card" id="topic-323">
+        <h4>3-Way Handshake <span class="topic-id">#323</span></h4>
+        <p class="description">TCP establishes a reliable connection via a SYN, SYN-ACK, ACK exchange before any data is transferred.</p>
+        <ul>
+          <li>Client sends SYN with an initial sequence number (ISN)</li>
+          <li>Server responds with SYN-ACK, acknowledging client's ISN and providing its own</li>
+          <li>Client sends ACK, completing the handshake &mdash; data transfer begins</li>
+          <li>Adds one round-trip of latency before any payload &mdash; motivates connection pooling</li>
+          <li>SYN flood attacks exploit this by sending SYNs without completing the handshake (mitigated by SYN cookies)</li>
+        </ul>
+        <div class="resources">
+          <a href="https://developer.mozilla.org/en-US/docs/Glossary/TCP_handshake" target="_blank">MDN: TCP Handshake</a>
+          <a href="https://datatracker.ietf.org/doc/html/rfc793" target="_blank">RFC 793: TCP</a>
+        </div>
+      </div>
+
+      <!-- 324 -->
+      <div class="topic-card" id="topic-324">
+        <h4>TIME_WAIT &amp; FIN_WAIT <span class="topic-id">#324</span></h4>
+        <p class="description">TCP socket states during connection teardown. Understanding them explains port exhaustion and connection recycling issues in high-throughput services.</p>
+        <ul>
+          <li>FIN_WAIT_1/2: the initiator of close waits for the peer's FIN and ACK</li>
+          <li>TIME_WAIT: persists for 2x MSL (typically 60s) after close to handle late packets</li>
+          <li>Too many TIME_WAIT sockets exhaust ephemeral ports &mdash; common in microservices calling many backends</li>
+          <li>SO_REUSEADDR / SO_REUSEPORT and connection pooling mitigate port exhaustion</li>
+          <li>CLOSE_WAIT indicates the application has not called close() &mdash; often a resource leak</li>
+        </ul>
+        <div class="resources">
+          <a href="https://datatracker.ietf.org/doc/html/rfc793#section-3.5" target="_blank">RFC 793: TCP Closing</a>
+          <a href="https://www.baeldung.com/cs/tcp-connection-close" target="_blank">Baeldung: TCP Connection Close</a>
+        </div>
+      </div>
+
+      <!-- 325 -->
+      <div class="topic-card" id="topic-325">
+        <h4>TCP Backlog &amp; Accept Queue <span class="topic-id">#325</span></h4>
+        <p class="description">The kernel maintains queues for incoming connections. Understanding these explains why services drop connections under load.</p>
+        <ul>
+          <li>SYN queue (half-open): holds connections that received SYN but handshake is incomplete</li>
+          <li>Accept queue (fully established): holds completed connections waiting for accept()</li>
+          <li>Backlog parameter in listen() sets the accept queue size</li>
+          <li>When the accept queue overflows, the kernel drops or RSTs new connections (configurable via sysctl)</li>
+          <li>Tuning: increase somaxconn and application backlog for high-concurrency servers</li>
+        </ul>
+        <div class="resources">
+          <a href="https://www.baeldung.com/cs/tcp-connection-backlog" target="_blank">Baeldung: TCP Connection Backlog</a>
+          <a href="https://datatracker.ietf.org/doc/html/rfc793" target="_blank">RFC 793: TCP</a>
+        </div>
+      </div>
+
+      <!-- 326 -->
+      <div class="topic-card" id="topic-326">
+        <h4>Nagle's Algorithm <span class="topic-id">#326</span></h4>
+        <p class="description">Nagle's algorithm reduces small-packet overhead by buffering tiny writes until an ACK arrives or the buffer fills, trading latency for bandwidth efficiency.</p>
+        <ul>
+          <li>Buffers small segments and coalesces them into larger TCP segments before sending</li>
+          <li>Interacts poorly with delayed ACKs, causing up to 200ms latency spikes</li>
+          <li>Disabled via TCP_NODELAY socket option for latency-sensitive applications (e.g., gaming, trading)</li>
+          <li>Most HTTP and gRPC libraries set TCP_NODELAY by default</li>
+        </ul>
+        <div class="resources">
+          <a href="https://datatracker.ietf.org/doc/html/rfc896" target="_blank">RFC 896: Nagle's Algorithm</a>
+          <a href="https://www.baeldung.com/cs/tcp-nagle-algorithm" target="_blank">Baeldung: Nagle's Algorithm</a>
+        </div>
+      </div>
+
+      <!-- 327 -->
+      <div class="topic-card" id="topic-327">
+        <h4>DNS Resolution &amp; TTL <span class="topic-id">#327</span></h4>
+        <p class="description">DNS translates hostnames to IP addresses. TTL controls caching duration, and misconfigurations can cause stale routing or deployment failures.</p>
+        <ul>
+          <li>Resolution chain: local cache &rarr; recursive resolver &rarr; root &rarr; TLD &rarr; authoritative nameserver</li>
+          <li>TTL (Time to Live) tells resolvers how long to cache the record before re-querying</li>
+          <li>Low TTL enables fast failover but increases DNS query load; high TTL reduces load but delays updates</li>
+          <li>JVM caches DNS indefinitely by default &mdash; set networkaddress.cache.ttl for dynamic environments</li>
+          <li>DNS round-robin provides basic load distribution but no health checking</li>
+        </ul>
+        <div class="resources">
+          <a href="https://developer.mozilla.org/en-US/docs/Glossary/DNS" target="_blank">MDN: DNS</a>
+          <a href="https://datatracker.ietf.org/doc/html/rfc1035" target="_blank">RFC 1035: Domain Names</a>
+        </div>
+      </div>
+
+      <!-- 328 -->
+      <div class="topic-card" id="topic-328">
+        <h4>CDN Routing <span class="topic-id">#328</span></h4>
+        <p class="description">Content Delivery Networks cache content at edge nodes close to users, using DNS-based or Anycast routing to minimize latency.</p>
+        <ul>
+          <li>DNS-based routing: CDN's authoritative DNS returns the nearest edge server IP based on resolver location</li>
+          <li>Anycast routing: multiple edge servers share the same IP; BGP routes to the closest one</li>
+          <li>Cache-Control and Vary headers determine what the CDN caches and for how long</li>
+          <li>Cache invalidation (purge) propagates to all edge nodes &mdash; eventual consistency</li>
+          <li>Origin shield reduces origin load by adding a mid-tier cache between edge and origin</li>
+        </ul>
+        <div class="resources">
+          <a href="https://developer.mozilla.org/en-US/docs/Glossary/CDN" target="_blank">MDN: CDN</a>
+          <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Caching" target="_blank">MDN: HTTP Caching</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- RECOMMENDED RESOURCES                                         -->
+  <!-- ============================================================ -->
+  <section class="resources-section" id="recommended-resources">
+    <h2>Recommended Resources</h2>
+    <ul>
+      <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP" target="_blank">MDN Web Docs &mdash; HTTP</a> &mdash; Comprehensive reference for HTTP protocols, headers, methods, and status codes</li>
+      <li><a href="https://grpc.io/docs/" target="_blank">gRPC Official Documentation</a> &mdash; Core concepts, guides, and language-specific tutorials for gRPC and Protobuf</li>
+      <li><a href="https://www.baeldung.com/cs/category/networking" target="_blank">Baeldung &mdash; Networking</a> &mdash; Java and Spring-oriented articles on TCP/IP, HTTP, and API design</li>
+      <li><a href="https://datatracker.ietf.org/" target="_blank">IETF Datatracker</a> &mdash; Official RFCs for HTTP/2, HTTP/3, QUIC, WebSocket, TCP, and DNS</li>
+      <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API" target="_blank">MDN Web Docs &mdash; WebSockets API</a> &mdash; Client-side WebSocket reference and writing WebSocket servers</li>
+      <li><a href="https://www.baeldung.com/rest-api-best-practices" target="_blank">Baeldung &mdash; REST API Best Practices</a> &mdash; Naming, versioning, pagination, and error handling</li>
+    </ul>
+  </section>
+
+</div>
+
+</body>
+</html>

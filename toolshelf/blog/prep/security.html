@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pillar 9 — Security | SDE 2 Interview Prep</title>
+<style>
+  :root {
+    --bg-primary:#1a1b2e; --bg-secondary:#232540; --bg-tertiary:#2a2d4a; --bg-hover:#32355a;
+    --text-primary:#e2e4f0; --text-secondary:#a0a3bd; --text-muted:#6b6f8a; --border:#3a3d5c;
+    --accent:#6c63ff; --green:#4ade80; --green-bg:rgba(74,222,128,0.12);
+    --orange:#fb923c; --orange-bg:rgba(251,146,60,0.12); --red:#f87171; --red-bg:rgba(248,113,113,0.12);
+    --cyan:#22d3ee; --cyan-bg:rgba(34,211,238,0.12);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* ── Sticky Header ── */
+  .page-header {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(26, 27, 46, 0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 16px 24px;
+  }
+  .header-inner {
+    max-width: 960px; margin: 0 auto;
+    display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px;
+  }
+  .header-inner h1 {
+    font-size: 1.4rem; font-weight: 700; color: var(--text-primary);
+  }
+  .header-inner h1 span { color: var(--accent); }
+  .header-subtitle {
+    font-size: 0.82rem; color: var(--text-muted); width: 100%; margin-top: 2px;
+  }
+  .back-link {
+    color: var(--accent); text-decoration: none; font-size: 0.85rem; font-weight: 500;
+    white-space: nowrap;
+  }
+  .back-link:hover { text-decoration: underline; }
+
+  /* ── Main Container ── */
+  .container { max-width: 960px; margin: 0 auto; padding: 32px 20px 80px; }
+
+  /* ── Table of Contents ── */
+  .toc {
+    background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 12px;
+    padding: 24px 28px; margin-bottom: 40px;
+  }
+  .toc h2 {
+    font-size: 1rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em;
+    margin-bottom: 14px;
+  }
+  .toc-list { list-style: none; }
+  .toc-list li { margin-bottom: 8px; }
+  .toc-list a {
+    color: var(--cyan); text-decoration: none; font-size: 0.92rem;
+    transition: color 0.2s;
+  }
+  .toc-list a:hover { color: var(--accent); text-decoration: underline; }
+  .toc-list .toc-sub { margin-left: 20px; margin-top: 4px; }
+  .toc-list .toc-sub a { color: var(--text-secondary); font-size: 0.85rem; }
+
+  /* ── Section ── */
+  .section { margin-bottom: 48px; }
+  .section-heading {
+    display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+    margin-bottom: 8px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--accent);
+  }
+  .section-heading h2 { font-size: 1.35rem; font-weight: 700; }
+
+  /* ── Context Badge ── */
+  .badge {
+    display: inline-block; padding: 3px 12px; border-radius: 999px;
+    font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em;
+  }
+  .badge-green  { background: var(--green-bg);  color: var(--green); }
+  .badge-red    { background: var(--red-bg);    color: var(--red); }
+  .badge-orange { background: var(--orange-bg); color: var(--orange); }
+
+  /* ── Tip Callout ── */
+  .tip-callout {
+    background: var(--cyan-bg); border-left: 4px solid var(--cyan);
+    border-radius: 0 8px 8px 0; padding: 12px 16px; margin: 12px 0 24px;
+    font-size: 0.88rem; color: var(--text-secondary);
+  }
+  .tip-callout strong { color: var(--cyan); }
+
+  /* ── Category ── */
+  .category { margin-bottom: 32px; }
+  .category-heading {
+    border-left: 4px solid var(--accent); padding-left: 14px;
+    font-size: 1.08rem; font-weight: 600; color: var(--text-primary);
+    margin: 24px 0 16px;
+  }
+
+  /* ── Topic Card ── */
+  .topic-card {
+    scroll-margin-top: 80px;
+    background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 10px;
+    padding: 20px 24px; margin-bottom: 16px;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .topic-card:hover { border-color: var(--accent); background: var(--bg-hover); }
+  .topic-card h4 {
+    font-size: 1.02rem; font-weight: 700; color: var(--text-primary); margin-bottom: 6px;
+  }
+  .topic-card .desc {
+    font-size: 0.88rem; color: var(--text-secondary); margin-bottom: 10px;
+  }
+  .topic-card ul {
+    list-style: disc; padding-left: 20px; margin-bottom: 12px;
+  }
+  .topic-card ul li {
+    font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 4px;
+  }
+  .topic-card .resources { display: flex; flex-wrap: wrap; gap: 8px; }
+  .topic-card .resources a {
+    font-size: 0.78rem; color: var(--accent); background: rgba(108,99,255,0.1);
+    padding: 3px 10px; border-radius: 6px; text-decoration: none;
+    transition: background 0.2s;
+  }
+  .topic-card .resources a:hover { background: rgba(108,99,255,0.25); }
+
+  /* ── Recommended Resources ── */
+  .resources-section {
+    background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 12px;
+    padding: 28px; margin-top: 48px;
+  }
+  .resources-section h2 {
+    font-size: 1.15rem; font-weight: 700; margin-bottom: 16px; color: var(--text-primary);
+  }
+  .resources-section ul { list-style: none; }
+  .resources-section ul li {
+    margin-bottom: 10px; padding-left: 16px; position: relative; font-size: 0.9rem;
+  }
+  .resources-section ul li::before {
+    content: '\25B8'; position: absolute; left: 0; color: var(--accent);
+  }
+  .resources-section a {
+    color: var(--cyan); text-decoration: none;
+  }
+  .resources-section a:hover { text-decoration: underline; }
+  .resources-section .res-desc { color: var(--text-muted); font-size: 0.82rem; }
+
+  /* ── Responsive ── */
+  @media (max-width: 640px) {
+    .page-header { padding: 12px 14px; }
+    .header-inner h1 { font-size: 1.15rem; }
+    .container { padding: 20px 14px 60px; }
+    .toc { padding: 18px 16px; }
+    .topic-card { padding: 16px 14px; }
+    .section-heading h2 { font-size: 1.15rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ════════════════ HEADER ════════════════ -->
+<header class="page-header">
+  <div class="header-inner">
+    <h1><span>Pillar 9</span> — Security</h1>
+    <a class="back-link" href="index.html">&larr; Back to Tracker</a>
+    <p class="header-subtitle">Security awareness is expected at SDE 2 — not just AuthN/AuthZ</p>
+  </div>
+</header>
+
+<main class="container">
+
+  <!-- ════════════════ TABLE OF CONTENTS ════════════════ -->
+  <nav class="toc">
+    <h2>Table of Contents</h2>
+    <ol class="toc-list">
+      <li>
+        <a href="#section-auth-patterns">Auth Patterns</a>
+        <ul class="toc-sub">
+          <li><a href="#cat-authentication">Authentication</a></li>
+          <li><a href="#cat-authorization">Authorization</a></li>
+        </ul>
+      </li>
+      <li>
+        <a href="#section-owasp">Common Vulnerabilities (OWASP)</a>
+        <ul class="toc-sub">
+          <li><a href="#cat-vulnerabilities">Vulnerabilities</a></li>
+        </ul>
+      </li>
+      <li>
+        <a href="#section-crypto">Encryption &amp; Crypto Basics</a>
+        <ul class="toc-sub">
+          <li><a href="#cat-crypto">Crypto</a></li>
+        </ul>
+      </li>
+      <li><a href="#section-resources">Recommended Resources</a></li>
+    </ol>
+  </nav>
+
+  <!-- ══════════════════════════════════════════════════════
+       SECTION 1 — Auth Patterns  (Context: Both)
+       ══════════════════════════════════════════════════════ -->
+  <section class="section" id="section-auth-patterns">
+    <div class="section-heading">
+      <h2>Auth Patterns</h2>
+      <span class="badge badge-orange">Both</span>
+    </div>
+    <div class="tip-callout">
+      <strong>Interview tip:</strong> Be ready to whiteboard a complete auth flow end-to-end — from login to token issuance to API authorization. Interviewers probe whether you understand the full chain, not just individual pieces.
+    </div>
+
+    <!-- ── Authentication ── -->
+    <div class="category" id="cat-authentication">
+      <h3 class="category-heading">Authentication</h3>
+
+      <!-- 329 -->
+      <div class="topic-card" id="topic-329">
+        <h4>JWT Structure (header.payload.sig)</h4>
+        <p class="desc">A JSON Web Token has three Base64url-encoded parts separated by dots: the header (algorithm + type), the payload (claims), and the signature that prevents tampering.</p>
+        <ul>
+          <li>Header declares <code>alg</code> (e.g. HS256, RS256) and <code>typ: "JWT"</code></li>
+          <li>Payload carries registered claims (<code>iss</code>, <code>exp</code>, <code>sub</code>) plus custom claims</li>
+          <li>Signature = HMAC or RSA over <code>base64(header).base64(payload)</code></li>
+          <li>JWTs are <strong>not encrypted</strong> by default — anyone can decode the payload</li>
+          <li>Keep tokens short-lived; avoid storing sensitive data in claims</li>
+        </ul>
+        <div class="resources">
+          <a href="https://jwt.io/introduction" target="_blank">jwt.io — Introduction</a>
+          <a href="https://www.baeldung.com/java-json-web-tokens-jjwt" target="_blank">Baeldung — JJWT</a>
+          <a href="https://cheatsheetseries.owasp.org/cheatsheets/JSON_Web_Token_for_Java_Cheat_Sheet.html" target="_blank">OWASP JWT Cheat Sheet</a>
+        </div>
+      </div>
+
+      <!-- 330 -->
+      <div class="topic-card" id="topic-330">
+        <h4>JWT vs Session Cookie Tradeoffs</h4>
+        <p class="desc">Sessions store state on the server and send an opaque ID via cookie; JWTs are self-contained and stateless but harder to revoke.</p>
+        <ul>
+          <li>Sessions: easy revocation (delete server-side), require sticky sessions or shared store</li>
+          <li>JWTs: horizontally scalable (no server state), but revocation requires a blocklist</li>
+          <li>Cookies get automatic CSRF protection via <code>SameSite</code>; JWTs in localStorage are XSS-vulnerable</li>
+          <li>Hybrid approach: short-lived JWT access token + server-side refresh token</li>
+        </ul>
+        <div class="resources">
+          <a href="https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html" target="_blank">OWASP Session Mgmt</a>
+          <a href="https://www.baeldung.com/cs/tokens-vs-sessions" target="_blank">Baeldung — Tokens vs Sessions</a>
+        </div>
+      </div>
+
+      <!-- 331 -->
+      <div class="topic-card" id="topic-331">
+        <h4>OAuth2 Flows (code, implicit, client credentials)</h4>
+        <p class="desc">OAuth2 defines multiple grant types for different use cases. The authorization code flow is the most secure for user-facing apps; client credentials suits service-to-service.</p>
+        <ul>
+          <li><strong>Authorization Code:</strong> redirects user to auth server, returns code exchanged for token server-side</li>
+          <li><strong>Implicit:</strong> token returned directly in URL fragment — deprecated due to token exposure</li>
+          <li><strong>Client Credentials:</strong> machine-to-machine, no user involvement</li>
+          <li><strong>Resource Owner Password:</strong> user gives credentials directly — avoid unless legacy</li>
+          <li>Always use HTTPS; validate <code>state</code> parameter to prevent CSRF</li>
+        </ul>
+        <div class="resources">
+          <a href="https://www.baeldung.com/spring-security-oauth2" target="_blank">Baeldung — Spring OAuth2</a>
+          <a href="https://docs.spring.io/spring-security/reference/servlet/oauth2/index.html" target="_blank">Spring Security OAuth2 Docs</a>
+          <a href="https://cheatsheetseries.owasp.org/cheatsheets/OAuth_Cheat_Sheet.html" target="_blank">OWASP OAuth Cheat Sheet</a>
+        </div>
+      </div>
+
+      <!-- 332 -->
+      <div class="topic-card" id="topic-332">
+        <h4>PKCE Flow</h4>
+        <p class="desc">Proof Key for Code Exchange adds a code challenge/verifier to the authorization code flow, preventing interception attacks on public clients (SPAs, mobile apps).</p>
+        <ul>
+          <li>Client generates random <code>code_verifier</code>, sends SHA-256 hash as <code>code_challenge</code></li>
+          <li>Auth server verifies the original verifier when exchanging the code for a token</li>
+          <li>Eliminates need for a client secret in public clients</li>
+          <li>Now recommended for <strong>all</strong> OAuth2 authorization code flows, not just public clients</li>
+        </ul>
+        <div class="resources">
+          <a href="https://www.baeldung.com/spring-security-pkce" target="_blank">Baeldung — PKCE with Spring</a>
+          <a href="https://cheatsheetseries.owasp.org/cheatsheets/OAuth_Cheat_Sheet.html" target="_blank">OWASP OAuth Cheat Sheet</a>
+        </div>
+      </div>
+
+      <!-- 333 -->
+      <div class="topic-card" id="topic-333">
+        <h4>Refresh Token Rotation</h4>
+        <p class="desc">Each time a refresh token is used, the server issues a new refresh token and invalidates the old one. This limits the window of abuse if a token is stolen.</p>
+        <ul>
+          <li>Detects reuse: if an old refresh token is presented, revoke the entire token family</li>
+          <li>Store refresh tokens server-side (DB or Redis) with a family/lineage ID</li>
+          <li>Set absolute expiry on refresh tokens (e.g. 7-30 days) independent of rotation</li>
+          <li>Combine with short-lived access tokens (5-15 min) for defense in depth</li>
+        </ul>
+        <div class="resources">
+          <a href="https://www.baeldung.com/spring-security-oauth2-refresh-token" target="_blank">Baeldung — Refresh Tokens</a>
+          <a href="https://cheatsheetseries.owasp.org/cheatsheets/JSON_Web_Token_for_Java_Cheat_Sheet.html" target="_blank">OWASP JWT Cheat Sheet</a>
+        </div>
+      </div>
+
+      <!-- 334 -->
+      <div class="topic-card" id="topic-334">
+        <h4>Token Revocation Strategies</h4>
+        <p class="desc">JWTs cannot be invalidated natively since they are self-contained. Revocation requires additional server-side mechanisms.</p>
+        <ul>
+          <li><strong>Blocklist/Denylist:</strong> store revoked JTI in Redis with TTL matching token expiry</li>
+          <li><strong>Token versioning:</strong> store a per-user version; reject tokens with older version</li>
+          <li><strong>Short expiry + refresh:</strong> rely on natural expiration; revoke only the refresh token</li>
+          <li>For critical systems, consider opaque tokens validated via introspection endpoint</li>
+        </ul>
+        <div class="resources">
+          <a href="https://www.baeldung.com/spring-security-oauth-revoke-tokens" target="_blank">Baeldung — Revoke Tokens</a>
+          <a href="https://jwt.io/introduction" target="_blank">jwt.io — Introduction</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Authorization ── -->
+    <div class="category" id="cat-authorization">
+      <h3 class="category-heading">Authorization</h3>
+
+      <!-- 335 -->
+      <div class="topic-card" id="topic-335">
+        <h4>RBAC vs ABAC</h4>
+        <p class="desc">Role-Based Access Control assigns permissions to roles; Attribute-Based Access Control evaluates policies against user/resource/environment attributes at runtime.</p>
+        <ul>
+          <li>RBAC: simple, fits most apps — <code>ROLE_ADMIN</code>, <code>ROLE_USER</code></li>
+          <li>ABAC: flexible for complex rules — "allow if user.department == resource.department AND time is business hours"</li>
+          <li>RBAC is easier to audit; ABAC scales better for fine-grained requirements</li>
+          <li>Spring Security supports both via <code>@PreAuthorize</code> with SpEL expressions</li>
+        </ul>
+        <div class="resources">
+          <a href="https://www.baeldung.com/spring-security-method-security" target="_blank">Baeldung — Method Security</a>
+          <a href="https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html" target="_blank">OWASP Authorization Cheat Sheet</a>
+          <a href="https://docs.spring.io/spring-security/reference/servlet/authorization/index.html" target="_blank">Spring Authorization Docs</a>
+        </div>
+      </div>
+
+      <!-- 336 -->
+      <div class="topic-card" id="topic-336">
+        <h4>@PreAuthorize with SpEL</h4>
+        <p class="desc">Spring Security's <code>@PreAuthorize</code> annotation evaluates a SpEL expression before method execution, enabling declarative method-level authorization.</p>
+        <ul>
+          <li><code>@PreAuthorize("hasRole('ADMIN')")</code> — basic role check</li>
+          <li><code>@PreAuthorize("#userId == authentication.principal.id")</code> — parameter-level ownership check</li>
+          <li>Combine with <code>@PostAuthorize</code> to filter return values</li>
+          <li>Enable with <code>@EnableMethodSecurity</code> (replaces deprecated <code>@EnableGlobalMethodSecurity</code>)</li>
+          <li>Keep expressions simple; extract complex logic into a custom <code>PermissionEvaluator</code></li>
+        </ul>
+        <div class="resources">
+          <a href="https://docs.spring.io/spring-security/reference/servlet/authorization/method-security.html" target="_blank">Spring Method Security</a>
+          <a href="https://www.baeldung.com/spring-security-method-security" target="_blank">Baeldung — Method Security</a>
+        </div>
+      </div>
+
+      <!-- 337 -->
+      <div class="topic-card" id="topic-337">
+        <h4>Row-Level Security Patterns</h4>
+        <p class="desc">Restrict data access so users can only see rows they own or have been granted access to — critical for multi-tenant applications.</p>
+        <ul>
+          <li><strong>Application-level:</strong> add <code>WHERE tenant_id = :currentTenant</code> to every query via Hibernate filters</li>
+          <li><strong>Database-level:</strong> PostgreSQL RLS policies enforce rules transparently</li>
+          <li>Spring Data JPA: use <code>@Filter</code> / <code>@FilterDef</code> or custom repository base class</li>
+          <li>Always enforce at the DB layer as a safety net even if the app layer also filters</li>
+        </ul>
+        <div class="resources">
+          <a href="https://www.baeldung.com/spring-data-jpa-row-level-security" target="_blank">Baeldung — Row-Level Security</a>
+          <a href="https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html" target="_blank">OWASP Authorization Cheat Sheet</a>
+        </div>
+      </div>
+
+      <!-- 338 -->
+      <div class="topic-card" id="topic-338">
+        <h4>API Key Management</h4>
+        <p class="desc">API keys are simple bearer credentials for service-to-service auth. They lack user context and must be treated as secrets.</p>
+        <ul>
+          <li>Hash keys before storage (like passwords) — store only the hash, return key once on creation</li>
+          <li>Scope keys to specific permissions; support key rotation without downtime</li>
+          <li>Transmit via <code>Authorization</code> header or custom header, never in query parameters (logged by proxies)</li>
+          <li>Set expiry dates and monitor usage for anomalies</li>
+        </ul>
+        <div class="resources">
+          <a href="https://cheatsheetseries.owasp.org/cheatsheets/REST_Security_Cheat_Sheet.html" target="_blank">OWASP REST Security</a>
+          <a href="https://www.baeldung.com/spring-security-api-key-secret" target="_blank">Baeldung — API Key Auth</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════
+       SECTION 2 — Common Vulnerabilities (OWASP)  (Context: Light)
+       ══════════════════════════════════════════════════════ -->
+  <section class="section" id="section-owasp">
+    <div class="section-heading">
+      <h2>Common Vulnerabilities (OWASP)</h2>
+      <span class="badge badge-green">Light</span>
+    </div>
+    <div class="tip-callout">
+      <strong>Interview tip:</strong> You will rarely be asked to exploit vulnerabilities, but you must articulate the threat model and the mitigation. "We use parameterized queries" is the bare minimum — explain <em>why</em> string concatenation is dangerous.
+    </div>
+
+    <!-- ── Vulnerabilities ── -->
+    <div class="category" id="cat-vulnerabilities">
+      <h3 class="category-heading">Vulnerabilities</h3>
+
+      <!-- 339 -->
+      <div class="topic-card" id="topic-339">
+        <h4>SQL Injection &amp; Parameterized Queries</h4>
+        <p class="desc">SQL injection occurs when untrusted input is concatenated into SQL statements. Parameterized queries (prepared statements) separate code from data, neutralizing the attack.</p>
+        <ul>
+          <li>Use <code>PreparedStatement</code> or JPA/Hibernate named parameters — never string concatenation</li>
+          <li>ORMs mitigate most injection, but native queries and <code>@Query</code> with SpEL still need care</li>
+          <li>Second-order injection: data stored safely, then used unsafely in a later query</li>
+          <li>Defense in depth: least-privilege DB user, input validation, WAF rules</li>
+        </ul>
+        <div class="resources">
+          <a href="https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html" target="_blank">OWASP SQL Injection Prevention</a>
+          <a href="https://www.baeldung.com/sql-injection" target="_blank">Baeldung — SQL Injection</a>
+          <a href="https://owasp.org/Top10/" target="_blank">OWASP Top 10</a>
+        </div>
+      </div>
+
+      <!-- 340 -->
+      <div class="topic-card" id="topic-340">
+        <h4>XSS — Stored vs Reflected</h4>
+        <p class="desc">Cross-Site Scripting injects malicious scripts into pages viewed by other users. Stored XSS persists in the database; reflected XSS comes from the request itself.</p>
+        <ul>
+          <li><strong>Stored:</strong> attacker saves script in DB (e.g. comment field) — executes for every viewer</li>
+          <li><strong>Reflected:</strong> malicious payload in URL parameter, echoed back in response</li>
+          <li><strong>DOM-based:</strong> client-side JS reads untrusted data and writes to DOM unsafely</li>
+          <li>Mitigations: output encoding, Content Security Policy (CSP) headers, sanitize HTML input</li>
+          <li>Spring: Thymeleaf auto-escapes by default; use <code>th:text</code> not <code>th:utext</code></li>
+        </ul>
+        <div class="resources">
+          <a href="https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html" target="_blank">OWASP XSS Prevention</a>
+          <a href="https://www.baeldung.com/spring-prevent-xss" target="_blank">Baeldung — Prevent XSS in Spring</a>
+        </div>
+      </div>
+
+      <!-- 341 -->
+      <div class="topic-card" id="topic-341">
+        <h4>CSRF — SameSite Cookies</h4>
+        <p class="desc">Cross-Site Request Forgery tricks a logged-in user's browser into sending unwanted requests. SameSite cookie attribute is the modern primary defense.</p>
+        <ul>
+          <li><code>SameSite=Lax</code>: cookies sent on top-level navigations only — blocks most CSRF</li>
+          <li><code>SameSite=Strict</code>: cookies never sent on cross-origin requests</li>
+          <li>Spring Security enables CSRF tokens by default for session-based apps</li>
+          <li>Stateless JWT APIs typically disable CSRF (no cookies = no CSRF risk)</li>
+          <li>Double-submit cookie pattern as fallback for older browsers</li>
+        </ul>
+        <div class="resources">
+          <a href="https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html" target="_blank">OWASP CSRF Prevention</a>
+          <a href="https://docs.spring.io/spring-security/reference/servlet/exploits/csrf.html" target="_blank">Spring Security CSRF Docs</a>
+          <a href="https://www.baeldung.com/spring-security-csrf" target="_blank">Baeldung — Spring CSRF</a>
+        </div>
+      </div>
+
+      <!-- 342 -->
+      <div class="topic-card" id="topic-342">
+        <h4>IDOR (Insecure Direct Object Reference)</h4>
+        <p class="desc">IDOR lets an attacker access another user's data by manipulating an identifier (e.g. changing <code>/orders/123</code> to <code>/orders/124</code>) when authorization checks are missing.</p>
+        <ul>
+          <li>Always verify the authenticated user owns or has access to the requested resource</li>
+          <li>Use UUIDs instead of sequential IDs to make guessing harder (but still enforce authz)</li>
+          <li>Implement authorization at the service/repository layer, not just the controller</li>
+          <li>Automated testing: parameterize IDs in integration tests with different user contexts</li>
+        </ul>
+        <div class="resources">
+          <a href="https://cheatsheetseries.owasp.org/cheatsheets/Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html" target="_blank">OWASP IDOR Prevention</a>
+          <a href="https://owasp.org/Top10/" target="_blank">OWASP Top 10</a>
+        </div>
+      </div>
+
+      <!-- 343 -->
+      <div class="topic-card" id="topic-343">
+        <h4>Mass Assignment</h4>
+        <p class="desc">Mass assignment occurs when an API blindly binds request body fields to entity properties, allowing attackers to set fields like <code>isAdmin</code> or <code>price</code> that should be server-controlled.</p>
+        <ul>
+          <li>Use dedicated DTOs/request objects — never bind directly to JPA entities</li>
+          <li>Whitelist allowed fields explicitly; reject unknown fields</li>
+          <li>Spring: <code>@JsonIgnoreProperties(ignoreUnknown = true)</code> on DTOs, avoid <code>@RequestBody</code> with entity classes</li>
+          <li>Jackson: <code>@JsonProperty(access = READ_ONLY)</code> for computed/server-set fields</li>
+        </ul>
+        <div class="resources">
+          <a href="https://cheatsheetseries.owasp.org/cheatsheets/Mass_Assignment_Cheat_Sheet.html" target="_blank">OWASP Mass Assignment</a>
+          <a href="https://www.baeldung.com/jackson-field-serializable-deserializable" target="_blank">Baeldung — Jackson Access Control</a>
+        </div>
+      </div>
+
+      <!-- 344 -->
+      <div class="topic-card" id="topic-344">
+        <h4>Rate Limiting as Security Control</h4>
+        <p class="desc">Rate limiting caps how many requests a client can make in a time window, defending against brute-force attacks, credential stuffing, and denial-of-service.</p>
+        <ul>
+          <li>Apply at API gateway (e.g. Spring Cloud Gateway, Nginx) for global protection</li>
+          <li>Algorithms: fixed window, sliding window, token bucket, leaky bucket</li>
+          <li>Return <code>429 Too Many Requests</code> with <code>Retry-After</code> header</li>
+          <li>Tighter limits on auth endpoints (login, password reset) vs general APIs</li>
+          <li>Combine with account lockout policies for brute-force defense</li>
+        </ul>
+        <div class="resources">
+          <a href="https://www.baeldung.com/spring-bucket4j-rate-limit" target="_blank">Baeldung — Bucket4j Rate Limiting</a>
+          <a href="https://cheatsheetseries.owasp.org/cheatsheets/Denial_of_Service_Cheat_Sheet.html" target="_blank">OWASP DoS Cheat Sheet</a>
+        </div>
+      </div>
+
+      <!-- 345 -->
+      <div class="topic-card" id="topic-345">
+        <h4>Secret Management (Vault, AWS Secrets Manager)</h4>
+        <p class="desc">Secrets (DB passwords, API keys, encryption keys) should never be hardcoded or stored in source control. Use a dedicated secret manager with access policies and audit logging.</p>
+        <ul>
+          <li>HashiCorp Vault: dynamic secrets, lease-based rotation, fine-grained ACL</li>
+          <li>AWS Secrets Manager: auto-rotation for RDS, Lambda integration, versioning</li>
+          <li>Spring Cloud Vault or Spring Cloud AWS for transparent secret injection</li>
+          <li>Rotate secrets regularly; detect leaked secrets via git hooks (e.g. truffleHog, git-secrets)</li>
+          <li>12-factor app: inject via environment variables, not config files in the image</li>
+        </ul>
+        <div class="resources">
+          <a href="https://cheatsheetseries.owasp.org/cheatsheets/Secrets_Management_Cheat_Sheet.html" target="_blank">OWASP Secrets Management</a>
+          <a href="https://www.baeldung.com/spring-cloud-vault" target="_blank">Baeldung — Spring Cloud Vault</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════
+       SECTION 3 — Encryption & Crypto Basics  (Context: Light)
+       ══════════════════════════════════════════════════════ -->
+  <section class="section" id="section-crypto">
+    <div class="section-heading">
+      <h2>Encryption &amp; Crypto Basics</h2>
+      <span class="badge badge-green">Light</span>
+    </div>
+    <div class="tip-callout">
+      <strong>Interview tip:</strong> You are not expected to implement crypto algorithms, but you must know <em>when</em> to use hashing vs encryption vs encoding and <em>why</em>. The TLS handshake is a popular system design warm-up question.
+    </div>
+
+    <!-- ── Crypto ── -->
+    <div class="category" id="cat-crypto">
+      <h3 class="category-heading">Crypto</h3>
+
+      <!-- 346 -->
+      <div class="topic-card" id="topic-346">
+        <h4>Symmetric vs Asymmetric Encryption</h4>
+        <p class="desc">Symmetric encryption uses one shared key for encrypt/decrypt (fast, used for bulk data). Asymmetric uses a key pair — public to encrypt, private to decrypt (used for key exchange and signatures).</p>
+        <ul>
+          <li>Symmetric: AES-256 is the standard; key distribution is the hard problem</li>
+          <li>Asymmetric: RSA, ECDSA; slower but solves key exchange</li>
+          <li>TLS uses asymmetric to exchange a symmetric session key, then switches to symmetric</li>
+          <li>JWTs: HS256 = symmetric HMAC, RS256 = asymmetric RSA signature</li>
+        </ul>
+        <div class="resources">
+          <a href="https://www.baeldung.com/java-aes-encryption-decryption" target="_blank">Baeldung — AES in Java</a>
+          <a href="https://cheatsheetseries.owasp.org/cheatsheets/Cryptographic_Storage_Cheat_Sheet.html" target="_blank">OWASP Crypto Storage</a>
+        </div>
+      </div>
+
+      <!-- 347 -->
+      <div class="topic-card" id="topic-347">
+        <h4>TLS Handshake (Conceptual)</h4>
+        <p class="desc">TLS establishes an encrypted channel between client and server. The handshake negotiates cipher suites, authenticates the server via certificate, and derives session keys.</p>
+        <ul>
+          <li><strong>ClientHello:</strong> supported TLS versions, cipher suites, random nonce</li>
+          <li><strong>ServerHello:</strong> chosen cipher suite, server certificate, random nonce</li>
+          <li>Client verifies certificate chain against trusted CAs</li>
+          <li>Key exchange (e.g. ECDHE) produces a shared pre-master secret</li>
+          <li>Both sides derive symmetric session keys; all further traffic is encrypted</li>
+        </ul>
+        <div class="resources">
+          <a href="https://www.baeldung.com/java-ssl-handshake" target="_blank">Baeldung — SSL Handshake</a>
+          <a href="https://cheatsheetseries.owasp.org/cheatsheets/Transport_Layer_Security_Cheat_Sheet.html" target="_blank">OWASP TLS Cheat Sheet</a>
+        </div>
+      </div>
+
+      <!-- 348 -->
+      <div class="topic-card" id="topic-348">
+        <h4>mTLS in Microservices</h4>
+        <p class="desc">Mutual TLS requires both client and server to present certificates, providing two-way authentication. Essential for zero-trust service mesh architectures.</p>
+        <ul>
+          <li>Each service has its own certificate issued by an internal CA</li>
+          <li>Service meshes (Istio, Linkerd) automate mTLS with sidecar proxies</li>
+          <li>Eliminates need for service-to-service API keys or tokens within the mesh</li>
+          <li>Certificate rotation and short-lived certs (e.g. SPIFFE/SPIRE) reduce blast radius</li>
+        </ul>
+        <div class="resources">
+          <a href="https://www.baeldung.com/spring-tls-setup" target="_blank">Baeldung — Spring TLS Setup</a>
+          <a href="https://cheatsheetseries.owasp.org/cheatsheets/Transport_Layer_Security_Cheat_Sheet.html" target="_blank">OWASP TLS Cheat Sheet</a>
+        </div>
+      </div>
+
+      <!-- 349 -->
+      <div class="topic-card" id="topic-349">
+        <h4>Hashing vs Encryption vs Encoding</h4>
+        <p class="desc">These three are commonly confused. Hashing is one-way (passwords), encryption is two-way with a key (secrets), encoding is reversible without a key (data format conversion).</p>
+        <ul>
+          <li><strong>Hashing:</strong> SHA-256, bcrypt — irreversible, used for integrity checks and password storage</li>
+          <li><strong>Encryption:</strong> AES, RSA — reversible with correct key, used for confidentiality</li>
+          <li><strong>Encoding:</strong> Base64, URL encoding — not security, just format transformation</li>
+          <li>Common mistake: Base64-encoding a password and calling it "encrypted"</li>
+          <li>Interview cue: "How would you store passwords?" — answer is always hashing, never encryption</li>
+        </ul>
+        <div class="resources">
+          <a href="https://www.baeldung.com/cs/encoding-vs-encryption-vs-hashing" target="_blank">Baeldung — Encoding vs Encryption vs Hashing</a>
+          <a href="https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html" target="_blank">OWASP Password Storage</a>
+        </div>
+      </div>
+
+      <!-- 350 -->
+      <div class="topic-card" id="topic-350">
+        <h4>bcrypt for Password Storage</h4>
+        <p class="desc">bcrypt is an adaptive password hashing function with a built-in salt and configurable cost factor, making brute-force attacks computationally expensive.</p>
+        <ul>
+          <li>Spring Security's <code>BCryptPasswordEncoder</code> is the default password encoder</li>
+          <li>Cost factor (work factor) of 10-12 is typical; increase as hardware gets faster</li>
+          <li>Salt is embedded in the hash output — no separate salt column needed</li>
+          <li>Alternatives: Argon2 (memory-hard, newer), scrypt (memory-hard)</li>
+          <li>Never use MD5 or SHA-256 alone for passwords — too fast, no salt by default</li>
+        </ul>
+        <div class="resources">
+          <a href="https://www.baeldung.com/spring-security-registration-password-encoding-bcrypt" target="_blank">Baeldung — bcrypt in Spring</a>
+          <a href="https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html" target="_blank">OWASP Password Storage</a>
+          <a href="https://docs.spring.io/spring-security/reference/features/authentication/password-storage.html" target="_blank">Spring Password Storage</a>
+        </div>
+      </div>
+
+      <!-- 351 -->
+      <div class="topic-card" id="topic-351">
+        <h4>HMAC for Message Integrity</h4>
+        <p class="desc">Hash-based Message Authentication Code combines a secret key with a hash function to verify both integrity and authenticity of a message.</p>
+        <ul>
+          <li>HMAC-SHA256: used in JWT signatures (HS256), webhook verification, API signing</li>
+          <li>Unlike plain hashing, requires the secret key — prevents tampering by third parties</li>
+          <li>Constant-time comparison is critical to prevent timing attacks</li>
+          <li>Use <code>javax.crypto.Mac</code> in Java or Spring's <code>HmacUtils</code></li>
+          <li>Common use: verifying Stripe/GitHub webhook payloads by computing HMAC of request body</li>
+        </ul>
+        <div class="resources">
+          <a href="https://www.baeldung.com/java-hmac" target="_blank">Baeldung — HMAC in Java</a>
+          <a href="https://cheatsheetseries.owasp.org/cheatsheets/Cryptographic_Storage_Cheat_Sheet.html" target="_blank">OWASP Crypto Storage</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════
+       RECOMMENDED RESOURCES
+       ══════════════════════════════════════════════════════ -->
+  <section class="resources-section" id="section-resources">
+    <h2>Recommended Resources</h2>
+    <ul>
+      <li>
+        <a href="https://owasp.org/Top10/" target="_blank">OWASP Top 10 (2021)</a>
+        <span class="res-desc"> — The definitive list of critical web application security risks. Read at least the summaries.</span>
+      </li>
+      <li>
+        <a href="https://cheatsheetseries.owasp.org/" target="_blank">OWASP Cheat Sheet Series</a>
+        <span class="res-desc"> — Concise, actionable guidance for every major security topic. Excellent interview prep.</span>
+      </li>
+      <li>
+        <a href="https://docs.spring.io/spring-security/reference/" target="_blank">Spring Security Reference Documentation</a>
+        <span class="res-desc"> — Official docs covering authentication, authorization, OAuth2, CSRF, CORS, and filter chains.</span>
+      </li>
+      <li>
+        <a href="https://www.baeldung.com/security/spring-security" target="_blank">Baeldung — Spring Security Tutorials</a>
+        <span class="res-desc"> — Practical tutorials with code examples for JWT, OAuth2, method security, and more.</span>
+      </li>
+      <li>
+        <a href="https://jwt.io/" target="_blank">jwt.io</a>
+        <span class="res-desc"> — Interactive JWT debugger and library directory. Paste a token to inspect claims instantly.</span>
+      </li>
+      <li>
+        <a href="https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html" target="_blank">OWASP Authentication Cheat Sheet</a>
+        <span class="res-desc"> — Best practices for login flows, password policies, MFA, and session management.</span>
+      </li>
+    </ul>
+  </section>
+
+</main>
+</body>
+</html>

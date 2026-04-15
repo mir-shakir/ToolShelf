@@ -954,4 +954,80 @@
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
+
+    <!-- DSA Tracker -->
+    <url>
+        <loc>https://toolshelf.tech/blog/dsa/</loc>
+        <lastmod>2026-04-15</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <!-- SDE 2 Prep Tracker -->
+    <url>
+        <loc>https://toolshelf.tech/blog/prep/</loc>
+        <lastmod>2026-04-15</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://toolshelf.tech/blog/prep/java-jvm.html</loc>
+        <lastmod>2026-04-15</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>https://toolshelf.tech/blog/prep/spring-boot.html</loc>
+        <lastmod>2026-04-15</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>https://toolshelf.tech/blog/prep/databases.html</loc>
+        <lastmod>2026-04-15</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>https://toolshelf.tech/blog/prep/distributed-systems.html</loc>
+        <lastmod>2026-04-15</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>https://toolshelf.tech/blog/prep/hld.html</loc>
+        <lastmod>2026-04-15</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>https://toolshelf.tech/blog/prep/lld.html</loc>
+        <lastmod>2026-04-15</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>https://toolshelf.tech/blog/prep/observability.html</loc>
+        <lastmod>2026-04-15</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>https://toolshelf.tech/blog/prep/networking-apis.html</loc>
+        <lastmod>2026-04-15</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>https://toolshelf.tech/blog/prep/security.html</loc>
+        <lastmod>2026-04-15</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>https://toolshelf.tech/blog/prep/behavioural.html</loc>
+        <lastmod>2026-04-15</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
 </urlset>

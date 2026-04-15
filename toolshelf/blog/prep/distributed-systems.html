@@ -1,0 +1,1031 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pillar 4 — Distributed Systems | SDE 2 Interview Prep</title>
+<style>
+  :root {
+    --bg-primary:#1a1b2e; --bg-secondary:#232540; --bg-tertiary:#2a2d4a; --bg-hover:#32355a;
+    --text-primary:#e2e4f0; --text-secondary:#a0a3bd; --text-muted:#6b6f8a; --border:#3a3d5c;
+    --accent:#6c63ff; --green:#4ade80; --green-bg:rgba(74,222,128,0.12);
+    --orange:#fb923c; --orange-bg:rgba(251,146,60,0.12); --red:#f87171; --red-bg:rgba(248,113,113,0.12);
+    --cyan:#22d3ee; --cyan-bg:rgba(34,211,238,0.12);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background: var(--bg-primary); color: var(--text-primary); line-height: 1.6;
+  }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  /* Header */
+  .header {
+    position: sticky; top: 0; z-index: 100;
+    background: var(--bg-secondary); border-bottom: 1px solid var(--border);
+    padding: 16px 24px; backdrop-filter: blur(12px);
+  }
+  .header-inner { max-width: 960px; margin: 0 auto; }
+  .header .back-link { font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 4px; display: inline-block; }
+  .header .back-link:hover { color: var(--accent); }
+  .header h1 { font-size: 1.6rem; font-weight: 700; color: var(--text-primary); margin-bottom: 2px; }
+  .header .subtitle { font-size: 0.95rem; color: var(--text-muted); font-style: italic; }
+
+  /* Main container */
+  .container { max-width: 960px; margin: 0 auto; padding: 32px 24px 64px; }
+
+  /* TOC */
+  .toc {
+    background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 10px;
+    padding: 24px 28px; margin-bottom: 40px;
+  }
+  .toc h2 { font-size: 1.1rem; color: var(--text-secondary); margin-bottom: 14px; text-transform: uppercase; letter-spacing: 0.05em; }
+  .toc-list { list-style: none; }
+  .toc-list li { margin-bottom: 8px; }
+  .toc-list a { font-size: 0.95rem; color: var(--accent); }
+  .toc-list a:hover { color: var(--cyan); }
+  .toc-badge {
+    display: inline-block; font-size: 0.7rem; font-weight: 600; padding: 2px 8px;
+    border-radius: 99px; margin-left: 8px; vertical-align: middle;
+  }
+  .toc-badge.light { background: var(--green-bg); color: var(--green); }
+  .toc-badge.full-focus { background: var(--red-bg); color: var(--red); }
+  .toc-badge.both { background: var(--orange-bg); color: var(--orange); }
+
+  /* Section */
+  .section { margin-bottom: 48px; }
+  .section-heading {
+    font-size: 1.4rem; font-weight: 700; color: var(--text-primary);
+    padding-bottom: 10px; border-bottom: 2px solid var(--accent);
+    margin-bottom: 8px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+  }
+  .context-pill {
+    display: inline-block; font-size: 0.72rem; font-weight: 600; padding: 3px 10px;
+    border-radius: 99px; text-transform: uppercase; letter-spacing: 0.03em;
+  }
+  .context-pill.light { background: var(--green-bg); color: var(--green); }
+  .context-pill.full-focus { background: var(--red-bg); color: var(--red); }
+  .context-pill.both { background: var(--orange-bg); color: var(--orange); }
+
+  /* Tip callout */
+  .tip-callout {
+    background: var(--cyan-bg); border-left: 3px solid var(--cyan);
+    border-radius: 0 8px 8px 0; padding: 12px 16px; margin: 12px 0 20px;
+    font-size: 0.88rem; color: var(--cyan);
+  }
+  .tip-callout strong { color: var(--cyan); }
+
+  /* Category */
+  .category { margin-bottom: 32px; }
+  .category-heading {
+    font-size: 1.1rem; font-weight: 600; color: var(--text-secondary);
+    border-left: 4px solid var(--accent); padding-left: 12px;
+    margin: 24px 0 16px;
+  }
+
+  /* Topic card */
+  .topic-card {
+    scroll-margin-top: 80px;
+    background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 10px;
+    padding: 20px 24px; margin-bottom: 14px; transition: border-color 0.2s, background 0.2s;
+  }
+  .topic-card:hover { border-color: var(--accent); background: var(--bg-hover); }
+  .topic-card:target { border-color: var(--cyan); box-shadow: 0 0 0 1px var(--cyan); }
+  .topic-card h4 { font-size: 1.05rem; font-weight: 600; color: var(--text-primary); margin-bottom: 8px; }
+  .topic-card .desc { font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 10px; }
+  .topic-card ul { list-style: disc; padding-left: 20px; margin-bottom: 10px; }
+  .topic-card ul li { font-size: 0.88rem; color: var(--text-secondary); margin-bottom: 4px; }
+  .topic-card .resources { font-size: 0.82rem; color: var(--text-muted); }
+  .topic-card .resources a { color: var(--accent); font-size: 0.82rem; }
+
+  /* Resources section */
+  .resources-section {
+    background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 10px;
+    padding: 24px 28px; margin-top: 48px;
+  }
+  .resources-section h2 { font-size: 1.2rem; margin-bottom: 16px; color: var(--text-primary); }
+  .resources-section ul { list-style: disc; padding-left: 20px; }
+  .resources-section li { margin-bottom: 8px; font-size: 0.92rem; color: var(--text-secondary); }
+  .resources-section li a { color: var(--accent); }
+
+  /* Responsive */
+  @media (max-width: 640px) {
+    .header h1 { font-size: 1.25rem; }
+    .container { padding: 20px 14px 48px; }
+    .topic-card { padding: 16px; }
+    .toc { padding: 18px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ========== HEADER ========== -->
+<header class="header">
+  <div class="header-inner">
+    <a href="index.html" class="back-link">&larr; Back to Tracker</a>
+    <h1>Pillar 4 &mdash; Distributed Systems</h1>
+    <p class="subtitle">The theory behind what you build every day</p>
+  </div>
+</header>
+
+<div class="container">
+
+<!-- ========== TABLE OF CONTENTS ========== -->
+<nav class="toc">
+  <h2>Table of Contents</h2>
+  <ol class="toc-list">
+    <li><a href="#section-core-theory">1. Core Theory</a> <span class="toc-badge full-focus">Full-Focus</span></li>
+    <li><a href="#section-kafka-depth">2. Kafka Depth</a> <span class="toc-badge full-focus">Full-Focus</span></li>
+    <li><a href="#section-sqs-async">3. SQS &amp; Async Patterns</a> <span class="toc-badge light">Light</span></li>
+    <li><a href="#section-resilience">4. Resilience Patterns</a> <span class="toc-badge both">Both</span></li>
+    <li><a href="#section-hashing-lb">5. Consistent Hashing &amp; Load Balancing</a> <span class="toc-badge light">Light</span></li>
+  </ol>
+</nav>
+
+<!-- ================================================================== -->
+<!-- SECTION 1 : Core Theory                                            -->
+<!-- ================================================================== -->
+<section class="section" id="section-core-theory">
+  <h2 class="section-heading">Core Theory <span class="context-pill full-focus">Full-Focus</span></h2>
+  <div class="tip-callout">
+    <strong>Tip:</strong> You don't need to implement Raft, but explaining it confidently in HLD is a differentiator at top-tier companies.
+  </div>
+
+  <!-- Category: Consensus & Replication -->
+  <div class="category">
+    <h3 class="category-heading">Consensus &amp; Replication</h3>
+
+    <div class="topic-card" id="topic-130">
+      <h4>Leader Election</h4>
+      <p class="desc">The process by which distributed nodes agree on a single coordinator to avoid split-brain and order operations consistently.</p>
+      <ul>
+        <li>Prevents conflicting writes by funnelling mutations through one node</li>
+        <li>Common in ZooKeeper (ZAB), etcd (Raft), and Kafka controller</li>
+        <li>Election triggers: leader crash, network partition, or manual failover</li>
+        <li>Trade-off between election speed and false-positive detection</li>
+      </ul>
+      <p class="resources">Resources:
+        <a href="https://github.com/donnemartin/system-design-primer#leader-election" target="_blank">System Design Primer</a> &middot;
+        <a href="https://martin.kleppmann.com/2016/02/08/how-to-do-distributed-locking.html" target="_blank">Kleppmann on Distributed Locking</a>
+      </p>
+    </div>
+
+    <div class="topic-card" id="topic-131">
+      <h4>Raft Consensus (Conceptual)</h4>
+      <p class="desc">An understandable consensus algorithm that decomposes the problem into leader election, log replication, and safety.</p>
+      <ul>
+        <li>Three roles: Leader, Follower, Candidate</li>
+        <li>Leader appends entries to its log and replicates to followers</li>
+        <li>Committed once a majority (quorum) acknowledges</li>
+        <li>Term numbers prevent stale leaders from accepting writes</li>
+      </ul>
+      <p class="resources">Resources:
+        <a href="https://github.com/donnemartin/system-design-primer" target="_blank">System Design Primer</a> &middot;
+        <a href="https://martin.kleppmann.com" target="_blank">Martin Kleppmann</a>
+      </p>
+    </div>
+
+    <div class="topic-card" id="topic-132">
+      <h4>Quorum Reads/Writes</h4>
+      <p class="desc">A strategy requiring W + R > N to guarantee overlap between write and read replica sets, ensuring consistency without full replication.</p>
+      <ul>
+        <li>N = total replicas, W = write quorum, R = read quorum</li>
+        <li>W + R > N ensures at least one node has the latest write</li>
+        <li>Tunable: favour availability (low W) or consistency (high W)</li>
+        <li>Used in Cassandra, DynamoDB, and Riak</li>
+      </ul>
+      <p class="resources">Resources:
+        <a href="https://github.com/donnemartin/system-design-primer" target="_blank">System Design Primer</a> &middot;
+        <a href="https://martin.kleppmann.com" target="_blank">Martin Kleppmann</a>
+      </p>
+    </div>
+
+    <div class="topic-card" id="topic-133">
+      <h4>Gossip Protocol</h4>
+      <p class="desc">A peer-to-peer communication protocol where nodes periodically exchange state information with random peers, eventually propagating data to all nodes.</p>
+      <ul>
+        <li>Probabilistic: O(log N) rounds to reach all nodes</li>
+        <li>Resilient to node failures &mdash; no single point of failure</li>
+        <li>Used for failure detection, membership, and metadata propagation</li>
+        <li>Examples: Cassandra gossip, Consul serf, SWIM protocol</li>
+      </ul>
+      <p class="resources">Resources:
+        <a href="https://github.com/donnemartin/system-design-primer" target="_blank">System Design Primer</a> &middot;
+        <a href="https://martin.kleppmann.com" target="_blank">Martin Kleppmann</a>
+      </p>
+    </div>
+
+    <div class="topic-card" id="topic-134">
+      <h4>Vector Clocks</h4>
+      <p class="desc">A mechanism to capture causal ordering of events across distributed nodes, enabling conflict detection without a global clock.</p>
+      <ul>
+        <li>Each node maintains a vector of logical counters, one per node</li>
+        <li>If V(a) &lt; V(b) in all positions, a causally precedes b</li>
+        <li>Concurrent events have incomparable vectors &mdash; require conflict resolution</li>
+        <li>Used in Amazon Dynamo's original design for versioning</li>
+      </ul>
+      <p class="resources">Resources:
+        <a href="https://github.com/donnemartin/system-design-primer" target="_blank">System Design Primer</a> &middot;
+        <a href="https://martin.kleppmann.com" target="_blank">Martin Kleppmann</a>
+      </p>
+    </div>
+
+    <div class="topic-card" id="topic-135">
+      <h4>Lamport Timestamps</h4>
+      <p class="desc">A simple logical clock that provides a total ordering of events, though it cannot determine causality on its own.</p>
+      <ul>
+        <li>Each event increments the local counter; messages carry timestamps</li>
+        <li>Receiver sets its clock to max(local, received) + 1</li>
+        <li>If a &rarr; b then L(a) &lt; L(b), but the converse is not necessarily true</li>
+        <li>Foundation for more sophisticated clocks like vector clocks</li>
+      </ul>
+      <p class="resources">Resources:
+        <a href="https://github.com/donnemartin/system-design-primer" target="_blank">System Design Primer</a> &middot;
+        <a href="https://martin.kleppmann.com" target="_blank">Martin Kleppmann</a>
+      </p>
+    </div>
+  </div><!-- /Consensus & Replication -->
+
+  <!-- Category: Failure Modes -->
+  <div class="category">
+    <h3 class="category-heading">Failure Modes</h3>
+
+    <div class="topic-card" id="topic-136">
+      <h4>Network Partitions</h4>
+      <p class="desc">When a network fault divides a cluster into isolated subgroups that cannot communicate, forcing a choice between consistency and availability (CAP theorem).</p>
+      <ul>
+        <li>CAP theorem: during a partition, choose CP (reject writes) or AP (allow divergence)</li>
+        <li>Real-world partitions are partial and transient, not binary</li>
+        <li>Detecting partitions: heartbeat timeouts, phi-accrual failure detector</li>
+        <li>Recovery involves conflict resolution (last-write-wins, CRDTs, manual merge)</li>
+      </ul>
+      <p class="resources">Resources:
+        <a href="https://github.com/donnemartin/system-design-primer#cap-theorem" target="_blank">System Design Primer &mdash; CAP</a> &middot;
+        <a href="https://martin.kleppmann.com" target="_blank">Martin Kleppmann</a>
+      </p>
+    </div>
+
+    <div class="topic-card" id="topic-137">
+      <h4>Byzantine Faults (Awareness)</h4>
+      <p class="desc">Failures where a node behaves arbitrarily (sends conflicting messages, lies, or acts maliciously) rather than simply crashing.</p>
+      <ul>
+        <li>Requires 3f+1 nodes to tolerate f Byzantine faults</li>
+        <li>Most internal systems assume crash-fail, not Byzantine</li>
+        <li>Relevant for blockchain, multi-tenant, or untrusted environments</li>
+        <li>Interview angle: know the distinction, not the full BFT algorithm</li>
+      </ul>
+      <p class="resources">Resources:
+        <a href="https://github.com/donnemartin/system-design-primer" target="_blank">System Design Primer</a> &middot;
+        <a href="https://martin.kleppmann.com" target="_blank">Martin Kleppmann</a>
+      </p>
+    </div>
+
+    <div class="topic-card" id="topic-138">
+      <h4>Cascading Failures</h4>
+      <p class="desc">When the failure of one component overloads its dependents, triggering a domino effect across the system.</p>
+      <ul>
+        <li>Common trigger: retry storms after a single service goes down</li>
+        <li>Mitigations: circuit breakers, bulkheads, load shedding, backpressure</li>
+        <li>Timeouts without backoff amplify the problem</li>
+        <li>Design for graceful degradation, not just happy-path throughput</li>
+      </ul>
+      <p class="resources">Resources:
+        <a href="https://github.com/donnemartin/system-design-primer" target="_blank">System Design Primer</a> &middot;
+        <a href="https://www.baeldung.com/resilience4j" target="_blank">Baeldung &mdash; Resilience4j</a>
+      </p>
+    </div>
+
+    <div class="topic-card" id="topic-139">
+      <h4>Split-Brain Scenarios</h4>
+      <p class="desc">When a partition causes two sub-clusters to each elect their own leader, leading to divergent state and data corruption.</p>
+      <ul>
+        <li>Classic in master-slave setups without proper fencing</li>
+        <li>Prevention: quorum-based elections, fencing tokens, STONITH</li>
+        <li>ZooKeeper ephemeral nodes and leader epoch help detect stale leaders</li>
+        <li>Interview tip: tie this to leader election and network partition topics</li>
+      </ul>
+      <p class="resources">Resources:
+        <a href="https://github.com/donnemartin/system-design-primer" target="_blank">System Design Primer</a> &middot;
+        <a href="https://martin.kleppmann.com/2016/02/08/how-to-do-distributed-locking.html" target="_blank">Kleppmann on Distributed Locking</a>
+      </p>
+    </div>
+  </div><!-- /Failure Modes -->
+</section>
+
+<!-- ================================================================== -->
+<!-- SECTION 2 : Kafka Depth                                            -->
+<!-- ================================================================== -->
+<section class="section" id="section-kafka-depth">
+  <h2 class="section-heading">Kafka Depth <span class="context-pill full-focus">Full-Focus</span></h2>
+  <div class="tip-callout">
+    <strong>Tip:</strong> This is your strongest card &mdash; real production experience. Nail the guarantees section to make this a genuine differentiator.
+  </div>
+
+  <!-- Category: Kafka Internals -->
+  <div class="category">
+    <h3 class="category-heading">Kafka Internals</h3>
+
+    <div class="topic-card" id="topic-140">
+      <h4>Partition &amp; Offset Model</h4>
+      <p class="desc">Kafka's fundamental data model: topics are split into ordered, immutable partitions, and each record within a partition has a unique sequential offset.</p>
+      <ul>
+        <li>Partitions enable parallelism &mdash; each consumed by one consumer in a group</li>
+        <li>Offsets are per-partition, monotonically increasing, and never reused</li>
+        <li>Ordering is guaranteed only within a partition, not across partitions</li>
+        <li>Partition count is a one-way door &mdash; increasing changes key routing</li>
+        <li>Key-based partitioning ensures related events land in the same partition</li>
+      </ul>
+      <p class="resources">Resources:
+        <a href="https://kafka.apache.org/documentation/#intro_topics" target="_blank">Kafka Docs &mdash; Topics</a> &middot;
+        <a href="https://github.com/donnemartin/system-design-primer" target="_blank">System Design Primer</a>
+      </p>
+    </div>
+
+    <div class="topic-card" id="topic-141">
+      <h4>Log Segment &amp; Compaction</h4>
+      <p class="desc">Kafka stores data as append-only log segments on disk. Compaction retains only the latest value per key, enabling infinite retention for changelog topics.</p>
+      <ul>
+        <li>Segments are time- or size-bounded files; old segments are deleted or compacted</li>
+        <li>Delete policy: remove segments older than retention.ms</li>
+        <li>Compact policy: keep latest record per key, discard older duplicates</li>
+        <li>Compacted topics power KTable state stores and CDC use cases</li>
+      </ul>
+      <p class="resources">Resources:
+        <a href="https://kafka.apache.org/documentation/#compaction" target="_blank">Kafka Docs &mdash; Compaction</a> &middot;
+        <a href="https://www.baeldung.com/kafka-topic-log-compaction" target="_blank">Baeldung &mdash; Log Compaction</a>
+      </p>
+    </div>
+
+    <div class="topic-card" id="topic-142">
+      <h4>ISR &mdash; In-Sync Replicas</h4>
+      <p class="desc">The set of replicas that are fully caught up with the leader. Only ISR members are eligible to become leader on failover.</p>
+      <ul>
+        <li>A replica falls out of ISR if it lags beyond replica.lag.time.max.ms</li>
+        <li>min.insync.replicas defines minimum ISR size for acks=all writes</li>
+        <li>If ISR shrinks below min.insync.replicas, producers receive NotEnoughReplicasException</li>
+        <li>Monitoring ISR shrink events is critical for operational health</li>
+      </ul>
+      <p class="resources">Resources:
+        <a href="https://kafka.apache.org/documentation/#replication" target="_blank">Kafka Docs &mdash; Replication</a> &middot;
+        <a href="https://www.baeldung.com/kafka-min-insync-replicas" target="_blank">Baeldung &mdash; ISR</a>
+      </p>
+    </div>
+
+    <div class="topic-card" id="topic-143">
+      <h4>Leader Epoch</h4>
+      <p class="desc">A monotonically increasing counter that identifies a leader's term, preventing stale replicas from truncating valid committed data during recovery.</p>
+      <ul>
+        <li>Replaces the older high-watermark-based truncation that could lose data</li>
+        <li>On becoming leader, the new leader increments the epoch</li>
+        <li>Followers use the leader epoch to determine the correct truncation point</li>
+        <li>Critical for exactly-once and transactional producer correctness</li>
+      </ul>
+      <p class="resources">Resources:
+        <a href="https://kafka.apache.org/documentation/" target="_blank">Kafka Documentation</a> &middot;
+        <a href="https://github.com/donnemartin/system-design-primer" target="_blank">System Design Primer</a>
+      </p>
+    </div>
+
+    <div class="topic-card" id="topic-144">
+      <h4>Consumer Group Rebalancing</h4>
+      <p class="desc">When consumers join, leave, or crash, Kafka redistributes partition ownership across the group to maintain even load.</p>
+      <ul>
+        <li>Eager rebalance: revoke all partitions, then reassign (causes pause)</li>
+        <li>Cooperative (incremental) rebalance: only migrate affected partitions</li>
+        <li>Triggers: consumer crash, new consumer, topic metadata change</li>
+        <li>session.timeout.ms and heartbeat.interval.ms control detection speed</li>
+        <li>Rebalance storms can kill throughput &mdash; tune max.poll.interval.ms</li>
+      </ul>
+      <p class="resources">Resources:
+        <a href="https://kafka.apache.org/documentation/#consumerconfigs" target="_blank">Kafka Docs &mdash; Consumer Configs</a> &middot;
+        <a href="https://www.baeldung.com/kafka-consumer-group-rebalancing" target="_blank">Baeldung &mdash; Rebalancing</a>
+      </p>
+    </div>
+
+    <div class="topic-card" id="topic-145">
+      <h4>Sticky Partition Assignor</h4>
+      <p class="desc">An assignment strategy that minimises partition movement during rebalances, keeping existing assignments intact when possible.</p>
+      <ul>
+        <li>Reduces rebalance overhead compared to range or round-robin assignors</li>
+        <li>Preserves consumer-to-partition affinity across rebalances</li>
+        <li>Works well with cooperative rebalance protocol</li>
+        <li>Configure via partition.assignment.strategy on consumer</li>
+      </ul>
+      <p class="resources">Resources:
+        <a href="https://kafka.apache.org/documentation/#consumerconfigs" target="_blank">Kafka Docs &mdash; Consumer Configs</a> &middot;
+        <a href="https://www.baeldung.com/kafka-consumer-group-rebalancing" target="_blank">Baeldung &mdash; Rebalancing</a>
+      </p>
+    </div>
+  </div><!-- /Kafka Internals -->
+
+  <!-- Category: Delivery Guarantees -->
+  <div class="category">
+    <h3 class="category-heading">Delivery Guarantees</h3>
+
+    <div class="topic-card" id="topic-146">
+      <h4>At-Most-Once / At-Least-Once / Exactly-Once</h4>
+      <p class="desc">The three delivery semantics that define how many times a consumer processes a message, each with distinct trade-offs.</p>
+      <ul>
+        <li>At-most-once: commit offset before processing &mdash; may lose messages</li>
+        <li>At-least-once: commit after processing &mdash; may duplicate on crash</li>
+        <li>Exactly-once: idempotent producer + transactional consumer &mdash; highest overhead</li>
+        <li>Most production systems use at-least-once with idempotent consumers</li>
+        <li>Interview angle: explain when exactly-once is worth the cost</li>
+      </ul>
+      <p class="resources">Resources:
+        <a href="https://kafka.apache.org/documentation/#semantics" target="_blank">Kafka Docs &mdash; Semantics</a> &middot;
+        <a href="https://www.baeldung.com/kafka-exactly-once" target="_blank">Baeldung &mdash; Exactly Once</a>
+      </p>
+    </div>
+
+    <div class="topic-card" id="topic-147">
+      <h4>Idempotent Producer</h4>
+      <p class="desc">A Kafka producer mode that assigns a producer ID and sequence number to each record, allowing the broker to de-duplicate retries.</p>
+      <ul>
+        <li>Enable with enable.idempotence=true (default since Kafka 3.0)</li>
+        <li>Guarantees exactly-once per partition for a single producer session</li>
+        <li>Requires acks=all and max.in.flight.requests.per.connection &le; 5</li>
+        <li>Does not span multiple partitions &mdash; use transactions for that</li>
+      </ul>
+      <p class="resources">Resources:
+        <a href="https://kafka.apache.org/documentation/#producerconfigs" target="_blank">Kafka Docs &mdash; Producer Configs</a> &middot;
+        <a href="https://www.baeldung.com/kafka-idempotent-producer" target="_blank">Baeldung &mdash; Idempotent Producer</a>
+      </p>
+    </div>
+
+    <div class="topic-card" id="topic-148">
+      <h4>Transactional Producer (2PC)</h4>
+      <p class="desc">Enables atomic writes across multiple partitions and topics, ensuring all-or-nothing semantics via a two-phase commit protocol internal to Kafka.</p>
+      <ul>
+        <li>Set transactional.id on the producer to enable transactions</li>
+        <li>beginTransaction() &rarr; send() &rarr; sendOffsetsToTransaction() &rarr; commitTransaction()</li>
+        <li>Consumers with isolation.level=read_committed see only committed records</li>
+        <li>Adds latency &mdash; use only when atomicity across partitions is required</li>
+      </ul>
+      <p class="resources">Resources:
+        <a href="https://kafka.apache.org/documentation/#transactions" target="_blank">Kafka Docs &mdash; Transactions</a> &middot;
+        <a href="https://www.baeldung.com/kafka-exactly-once" target="_blank">Baeldung &mdash; Exactly Once</a>
+      </p>
+    </div>
+
+    <div class="topic-card" id="topic-149">
+      <h4>Consumer Offset Commit Strategies</h4>
+      <p class="desc">How and when a consumer marks records as processed, directly impacting delivery guarantees and rebalance behaviour.</p>
+      <ul>
+        <li>Auto-commit (enable.auto.commit=true): periodic, risks at-most-once on crash</li>
+        <li>Sync commit (commitSync): blocks until broker confirms, safer but slower</li>
+        <li>Async commit (commitAsync): non-blocking, risk of out-of-order commits</li>
+        <li>Best practice: async in loop, sync in shutdown/rebalance listener</li>
+      </ul>
+      <p class="resources">Resources:
+        <a href="https://kafka.apache.org/documentation/#consumerconfigs" target="_blank">Kafka Docs &mdash; Consumer Configs</a> &middot;
+        <a href="https://www.baeldung.com/kafka-commit-offsets" target="_blank">Baeldung &mdash; Offset Commit</a>
+      </p>
+    </div>
+  </div><!-- /Delivery Guarantees -->
+
+  <!-- Category: Kafka Tuning -->
+  <div class="category">
+    <h3 class="category-heading">Kafka Tuning</h3>
+
+    <div class="topic-card" id="topic-150">
+      <h4>batch.size &amp; linger.ms</h4>
+      <p class="desc">Producer batching controls that trade latency for throughput by accumulating records before sending.</p>
+      <ul>
+        <li>batch.size (default 16KB): max bytes per batch per partition</li>
+        <li>linger.ms (default 0): how long to wait for more records before sending</li>
+        <li>Increasing both improves throughput but adds latency</li>
+        <li>For high-throughput: batch.size=64KB+, linger.ms=5-20</li>
+      </ul>
+      <p class="resources">Resources:
+        <a href="https://kafka.apache.org/documentation/#producerconfigs" target="_blank">Kafka Docs &mdash; Producer Configs</a> &middot;
+        <a href="https://www.baeldung.com/kafka-producer-config" target="_blank">Baeldung &mdash; Kafka Producer</a>
+      </p>
+    </div>
+
+    <div class="topic-card" id="topic-151">
+      <h4>acks=all vs acks=1</h4>
+      <p class="desc">The producer acknowledgement setting that controls durability guarantees at the cost of latency.</p>
+      <ul>
+        <li>acks=0: fire-and-forget, fastest, may lose data</li>
+        <li>acks=1: leader acknowledges, fast but risks data loss if leader dies before replication</li>
+        <li>acks=all (-1): all ISR replicas acknowledge, strongest durability</li>
+        <li>Pair acks=all with min.insync.replicas=2 for production safety</li>
+      </ul>
+      <p class="resources">Resources:
+        <a href="https://kafka.apache.org/documentation/#producerconfigs" target="_blank">Kafka Docs &mdash; Producer Configs</a> &middot;
+        <a href="https://www.baeldung.com/kafka-message-delivery-reliability" target="_blank">Baeldung &mdash; Reliability</a>
+      </p>
+    </div>
+
+    <div class="topic-card" id="topic-152">
+      <h4>max.poll.records</h4>
+      <p class="desc">Controls the maximum number of records returned in a single consumer poll(), affecting processing latency and rebalance stability.</p>
+      <ul>
+        <li>Default is 500; lower it for slow processing to avoid rebalance timeouts</li>
+        <li>Must finish processing within max.poll.interval.ms or get kicked from group</li>
+        <li>Higher values improve throughput for fast, lightweight consumers</li>
+        <li>Tune alongside max.poll.interval.ms and session.timeout.ms</li>
+      </ul>
+      <p class="resources">Resources:
+        <a href="https://kafka.apache.org/documentation/#consumerconfigs" target="_blank">Kafka Docs &mdash; Consumer Configs</a> &middot;
+        <a href="https://www.baeldung.com/kafka-consumer-config" target="_blank">Baeldung &mdash; Consumer Config</a>
+      </p>
+    </div>
+
+    <div class="topic-card" id="topic-153">
+      <h4>Lag Monitoring</h4>
+      <p class="desc">Tracking the difference between the latest produced offset and the consumer's committed offset to detect processing bottlenecks.</p>
+      <ul>
+        <li>Consumer lag = log-end-offset minus committed-offset per partition</li>
+        <li>Tools: kafka-consumer-groups.sh, Burrow, Prometheus + JMX exporter</li>
+        <li>Increasing lag signals under-provisioned consumers or slow processing</li>
+        <li>Alert on sustained lag growth, not momentary spikes</li>
+      </ul>
+      <p class="resources">Resources:
+        <a href="https://kafka.apache.org/documentation/#monitoring" target="_blank">Kafka Docs &mdash; Monitoring</a> &middot;
+        <a href="https://github.com/donnemartin/system-design-primer" target="_blank">System Design Primer</a>
+      </p>
+    </div>
+
+    <div class="topic-card" id="topic-154">
+      <h4>Schema Registry Basics</h4>
+      <p class="desc">A centralized service (typically Confluent Schema Registry) that stores and validates Avro/Protobuf/JSON schemas for Kafka topics, enforcing compatibility.</p>
+      <ul>
+        <li>Schemas are versioned and identified by a numeric ID embedded in messages</li>
+        <li>Compatibility modes: BACKWARD, FORWARD, FULL, NONE</li>
+        <li>Prevents breaking changes from reaching consumers</li>
+        <li>BACKWARD (default): new schema can read old data &mdash; safest for consumers</li>
+      </ul>
+      <p class="resources">Resources:
+        <a href="https://kafka.apache.org/documentation/" target="_blank">Kafka Documentation</a> &middot;
+        <a href="https://www.baeldung.com/spring-cloud-kafka-schema-registry" target="_blank">Baeldung &mdash; Schema Registry</a>
+      </p>
+    </div>
+  </div><!-- /Kafka Tuning -->
+</section>
+
+<!-- ================================================================== -->
+<!-- SECTION 3 : SQS & Async Patterns                                   -->
+<!-- ================================================================== -->
+<section class="section" id="section-sqs-async">
+  <h2 class="section-heading">SQS &amp; Async Patterns <span class="context-pill light">Light</span></h2>
+
+  <!-- Category: SQS -->
+  <div class="category">
+    <h3 class="category-heading">SQS</h3>
+
+    <div class="topic-card" id="topic-155">
+      <h4>Standard vs FIFO</h4>
+      <p class="desc">AWS SQS offers two queue types with fundamentally different ordering and deduplication guarantees.</p>
+      <ul>
+        <li>Standard: nearly unlimited throughput, best-effort ordering, at-least-once delivery</li>
+        <li>FIFO: strict ordering within message groups, exactly-once processing, 300 TPS (3000 with batching)</li>
+        <li>FIFO queues require MessageGroupId for ordering scope</li>
+        <li>Choose Standard unless ordering or deduplication is a hard requirement</li>
+      </ul>
+      <p class="resources">Resources:
+        <a href="https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/welcome.html" target="_blank">AWS SQS Docs</a> &middot;
+        <a href="https://github.com/donnemartin/system-design-primer" target="_blank">System Design Primer</a>
+      </p>
+    </div>
+
+    <div class="topic-card" id="topic-156">
+      <h4>Visibility Timeout</h4>
+      <p class="desc">The period during which a message is invisible to other consumers after being received, giving the current consumer time to process and delete it.</p>
+      <ul>
+        <li>Default: 30 seconds; max: 12 hours</li>
+        <li>If processing takes longer, extend with ChangeMessageVisibility</li>
+        <li>On timeout expiry without deletion, message becomes visible again (retry)</li>
+        <li>Set &ge; expected processing time + buffer to avoid duplicate processing</li>
+      </ul>
+      <p class="resources">Resources:
+        <a href="https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-visibility-timeout.html" target="_blank">AWS SQS &mdash; Visibility Timeout</a> &middot;
+        <a href="https://www.baeldung.com/aws-sqs-with-spring-cloud" target="_blank">Baeldung &mdash; SQS</a>
+      </p>
+    </div>
+
+    <div class="topic-card" id="topic-157">
+      <h4>Dead-Letter Queue (DLQ)</h4>
+      <p class="desc">A secondary queue that receives messages that fail processing after a configured number of retries, preventing poison messages from blocking the pipeline.</p>
+      <ul>
+        <li>Configure maxReceiveCount on the source queue's redrive policy</li>
+        <li>DLQ messages retain original attributes for debugging</li>
+        <li>Monitor DLQ depth as a key operational alert</li>
+        <li>Redrive: replay DLQ messages back to source queue after fixing the bug</li>
+      </ul>
+      <p class="resources">Resources:
+        <a href="https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-dead-letter-queues.html" target="_blank">AWS SQS &mdash; DLQ</a> &middot;
+        <a href="https://www.baeldung.com/aws-sqs-with-spring-cloud" target="_blank">Baeldung &mdash; SQS</a>
+      </p>
+    </div>
+
+    <div class="topic-card" id="topic-158">
+      <h4>Long Polling</h4>
+      <p class="desc">A receive technique where the SQS call waits (up to 20 seconds) for messages to arrive before returning, reducing empty responses and cost.</p>
+      <ul>
+        <li>Set WaitTimeSeconds &gt; 0 on ReceiveMessage (or queue-level default)</li>
+        <li>Reduces API calls and cost compared to short polling</li>
+        <li>Queries all servers, reducing false-empty responses</li>
+        <li>20 seconds is the maximum and recommended value</li>
+      </ul>
+      <p class="resources">Resources:
+        <a href="https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-long-polling.html" target="_blank">AWS SQS &mdash; Long Polling</a> &middot;
+        <a href="https://github.com/donnemartin/system-design-primer" target="_blank">System Design Primer</a>
+      </p>
+    </div>
+
+    <div class="topic-card" id="topic-159">
+      <h4>Message Deduplication</h4>
+      <p class="desc">Mechanisms to ensure a message is processed only once, critical for financial and order-processing pipelines.</p>
+      <ul>
+        <li>FIFO queues: 5-minute deduplication window using MessageDeduplicationId</li>
+        <li>Content-based deduplication: SQS generates ID from SHA-256 of body</li>
+        <li>Standard queues: no built-in dedup; implement at consumer side (idempotency key in DB)</li>
+        <li>Combine with idempotent consumers for end-to-end exactly-once</li>
+      </ul>
+      <p class="resources">Resources:
+        <a href="https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/using-messagededuplicationid-property.html" target="_blank">AWS SQS &mdash; Deduplication</a> &middot;
+        <a href="https://www.baeldung.com/aws-sqs-with-spring-cloud" target="_blank">Baeldung &mdash; SQS</a>
+      </p>
+    </div>
+  </div><!-- /SQS -->
+
+  <!-- Category: Async Patterns -->
+  <div class="category">
+    <h3 class="category-heading">Async Patterns</h3>
+
+    <div class="topic-card" id="topic-160">
+      <h4>Outbox Pattern</h4>
+      <p class="desc">Write domain events to an "outbox" table in the same database transaction as the business operation, then relay them to the message broker asynchronously.</p>
+      <ul>
+        <li>Solves the dual-write problem: DB + message broker atomicity</li>
+        <li>A poller or CDC connector (Debezium) reads the outbox and publishes</li>
+        <li>Guarantees at-least-once event delivery without distributed transactions</li>
+        <li>Outbox table columns: id, aggregate_type, payload, created_at, published</li>
+      </ul>
+      <p class="resources">Resources:
+        <a href="https://www.baeldung.com/cs/outbox-pattern-microservices" target="_blank">Baeldung &mdash; Outbox Pattern</a> &middot;
+        <a href="https://github.com/donnemartin/system-design-primer" target="_blank">System Design Primer</a>
+      </p>
+    </div>
+
+    <div class="topic-card" id="topic-161">
+      <h4>Saga Pattern &mdash; Choreography vs Orchestration</h4>
+      <p class="desc">A pattern for managing distributed transactions across microservices using a sequence of local transactions with compensating actions on failure.</p>
+      <ul>
+        <li>Choreography: services emit events and react to each other &mdash; decentralised but hard to trace</li>
+        <li>Orchestration: a central coordinator directs the sequence &mdash; explicit flow but single point of concern</li>
+        <li>Each step has a compensating transaction for rollback</li>
+        <li>Choose orchestration when the flow has many steps or complex branching</li>
+        <li>Interview favourite: "How would you handle a failed payment after order creation?"</li>
+      </ul>
+      <p class="resources">Resources:
+        <a href="https://www.baeldung.com/cs/saga-pattern-microservices" target="_blank">Baeldung &mdash; Saga Pattern</a> &middot;
+        <a href="https://github.com/donnemartin/system-design-primer" target="_blank">System Design Primer</a>
+      </p>
+    </div>
+
+    <div class="topic-card" id="topic-162">
+      <h4>Event Sourcing Basics</h4>
+      <p class="desc">Instead of storing current state, persist every state-changing event as an immutable log. Current state is derived by replaying events.</p>
+      <ul>
+        <li>Full audit trail by design &mdash; every change is a first-class record</li>
+        <li>Enables temporal queries: "What was the state at time T?"</li>
+        <li>Snapshots prevent slow replay for aggregates with many events</li>
+        <li>Pairs naturally with CQRS for separate read and write models</li>
+      </ul>
+      <p class="resources">Resources:
+        <a href="https://martin.kleppmann.com" target="_blank">Martin Kleppmann</a> &middot;
+        <a href="https://github.com/donnemartin/system-design-primer" target="_blank">System Design Primer</a>
+      </p>
+    </div>
+
+    <div class="topic-card" id="topic-163">
+      <h4>CQRS Overview</h4>
+      <p class="desc">Command Query Responsibility Segregation separates the write model (commands) from the read model (queries), allowing independent optimisation of each.</p>
+      <ul>
+        <li>Write side: normalised, optimised for consistency and validation</li>
+        <li>Read side: denormalised, optimised for query patterns and speed</li>
+        <li>Eventual consistency between read and write models is the trade-off</li>
+        <li>Often combined with event sourcing: events update the read projections</li>
+      </ul>
+      <p class="resources">Resources:
+        <a href="https://martin.kleppmann.com" target="_blank">Martin Kleppmann</a> &middot;
+        <a href="https://github.com/donnemartin/system-design-primer" target="_blank">System Design Primer</a>
+      </p>
+    </div>
+  </div><!-- /Async Patterns -->
+</section>
+
+<!-- ================================================================== -->
+<!-- SECTION 4 : Resilience Patterns                                    -->
+<!-- ================================================================== -->
+<section class="section" id="section-resilience">
+  <h2 class="section-heading">Resilience Patterns <span class="context-pill both">Both</span></h2>
+
+  <!-- Category: Resilience -->
+  <div class="category">
+    <h3 class="category-heading">Resilience</h3>
+
+    <div class="topic-card" id="topic-164">
+      <h4>Circuit Breaker (Resilience4j)</h4>
+      <p class="desc">Monitors calls to a downstream service and "trips open" after a failure threshold, failing fast instead of waiting for inevitable timeouts.</p>
+      <ul>
+        <li>Three states: CLOSED (normal) &rarr; OPEN (fail fast) &rarr; HALF_OPEN (probe)</li>
+        <li>Configure: failureRateThreshold, waitDurationInOpenState, permittedNumberOfCallsInHalfOpenState</li>
+        <li>Prevents cascading failures by shedding load on unhealthy dependencies</li>
+        <li>Pair with a fallback to return cached/default responses when open</li>
+      </ul>
+      <p class="resources">Resources:
+        <a href="https://www.baeldung.com/resilience4j" target="_blank">Baeldung &mdash; Resilience4j</a> &middot;
+        <a href="https://github.com/donnemartin/system-design-primer" target="_blank">System Design Primer</a>
+      </p>
+    </div>
+
+    <div class="topic-card" id="topic-165">
+      <h4>Retry with Exponential Backoff &amp; Jitter</h4>
+      <p class="desc">Automatically retry failed calls with increasing delays and random jitter to avoid thundering herd problems.</p>
+      <ul>
+        <li>Delay = base * 2^attempt + random(0, jitter)</li>
+        <li>Jitter decorrelates retries from multiple clients</li>
+        <li>Set a max retry count to avoid infinite loops</li>
+        <li>Only retry on transient errors (5xx, timeout), not 4xx</li>
+        <li>AWS recommends "full jitter" for best spread</li>
+      </ul>
+      <p class="resources">Resources:
+        <a href="https://www.baeldung.com/resilience4j-backoff-jitter" target="_blank">Baeldung &mdash; Backoff &amp; Jitter</a> &middot;
+        <a href="https://docs.aws.amazon.com/general/latest/gr/api-retries.html" target="_blank">AWS &mdash; Retry Best Practices</a>
+      </p>
+    </div>
+
+    <div class="topic-card" id="topic-166">
+      <h4>Bulkhead Isolation</h4>
+      <p class="desc">Limit concurrency to a dependency so that a slow or failing service cannot exhaust the caller's entire thread pool.</p>
+      <ul>
+        <li>Thread-pool bulkhead: dedicated thread pool per dependency</li>
+        <li>Semaphore bulkhead: limits concurrent calls without a separate pool</li>
+        <li>Prevents one slow dependency from consuming all resources</li>
+        <li>Named after ship bulkheads that contain flooding to one compartment</li>
+      </ul>
+      <p class="resources">Resources:
+        <a href="https://www.baeldung.com/resilience4j" target="_blank">Baeldung &mdash; Resilience4j</a> &middot;
+        <a href="https://github.com/donnemartin/system-design-primer" target="_blank">System Design Primer</a>
+      </p>
+    </div>
+
+    <div class="topic-card" id="topic-167">
+      <h4>Rate Limiting Algorithms</h4>
+      <p class="desc">Techniques to cap the number of requests a system accepts in a given window, protecting against abuse and overload.</p>
+      <ul>
+        <li>Token bucket: tokens refill at a steady rate; each request costs a token. Allows bursts up to bucket capacity</li>
+        <li>Leaky bucket: requests drain at a fixed rate; excess is queued or rejected. Smooths output rate</li>
+        <li>Sliding window: counts requests in a rolling time window, more accurate than fixed windows</li>
+        <li>Distributed rate limiting: use Redis (INCR + TTL or Lua script) for cluster-wide limits</li>
+      </ul>
+      <p class="resources">Resources:
+        <a href="https://github.com/donnemartin/system-design-primer#rate-limiting" target="_blank">System Design Primer &mdash; Rate Limiting</a> &middot;
+        <a href="https://www.baeldung.com/spring-bucket4j" target="_blank">Baeldung &mdash; Rate Limiting</a>
+      </p>
+    </div>
+
+    <div class="topic-card" id="topic-168">
+      <h4>Timeout &amp; Deadline Propagation</h4>
+      <p class="desc">Setting time bounds on every outbound call and propagating remaining budget through the call chain to prevent indefinite waits.</p>
+      <ul>
+        <li>Every network call must have a timeout &mdash; no timeout is a bug</li>
+        <li>Deadline propagation: pass remaining time budget in request headers (e.g., gRPC deadlines)</li>
+        <li>Downstream services should check remaining budget before expensive work</li>
+        <li>Prevents resource leaks from hung connections piling up</li>
+      </ul>
+      <p class="resources">Resources:
+        <a href="https://www.baeldung.com/spring-rest-timeout" target="_blank">Baeldung &mdash; Timeouts</a> &middot;
+        <a href="https://github.com/donnemartin/system-design-primer" target="_blank">System Design Primer</a>
+      </p>
+    </div>
+
+    <div class="topic-card" id="topic-169">
+      <h4>Fallback Strategies</h4>
+      <p class="desc">Predefined alternative responses when a primary call fails, ensuring graceful degradation instead of hard errors.</p>
+      <ul>
+        <li>Cache fallback: return stale cached data when upstream is down</li>
+        <li>Default value: return a safe static response</li>
+        <li>Alternate service: route to a secondary provider</li>
+        <li>Combine with circuit breaker: fallback fires when circuit is OPEN</li>
+      </ul>
+      <p class="resources">Resources:
+        <a href="https://www.baeldung.com/resilience4j" target="_blank">Baeldung &mdash; Resilience4j</a> &middot;
+        <a href="https://github.com/donnemartin/system-design-primer" target="_blank">System Design Primer</a>
+      </p>
+    </div>
+  </div><!-- /Resilience -->
+
+  <!-- Category: Resilience Libraries -->
+  <div class="category">
+    <h3 class="category-heading">Resilience Libraries</h3>
+
+    <div class="topic-card" id="topic-170">
+      <h4>Resilience4j Annotations</h4>
+      <p class="desc">Declarative resilience in Spring Boot using annotations like @CircuitBreaker, @Retry, @Bulkhead, and @RateLimiter.</p>
+      <ul>
+        <li>@CircuitBreaker(name="myService", fallbackMethod="fallback")</li>
+        <li>@Retry(name="myService", fallbackMethod="fallback")</li>
+        <li>Order of decorators matters: Retry > CircuitBreaker > RateLimiter > Bulkhead</li>
+        <li>Configure instances in application.yml under resilience4j.circuitbreaker.instances</li>
+        <li>Actuator endpoints expose metrics: /actuator/circuitbreakers</li>
+      </ul>
+      <p class="resources">Resources:
+        <a href="https://www.baeldung.com/resilience4j" target="_blank">Baeldung &mdash; Resilience4j</a> &middot;
+        <a href="https://www.baeldung.com/spring-boot-resilience4j" target="_blank">Baeldung &mdash; Spring + Resilience4j</a>
+      </p>
+    </div>
+
+    <div class="topic-card" id="topic-171">
+      <h4>Spring Retry</h4>
+      <p class="desc">A Spring module providing @Retryable annotation for declarative retry logic with configurable backoff and recovery methods.</p>
+      <ul>
+        <li>@Retryable(value=Exception.class, maxAttempts=3, backoff=@Backoff(delay=1000, multiplier=2))</li>
+        <li>@Recover method handles final failure after all retries exhausted</li>
+        <li>Enable with @EnableRetry on configuration class</li>
+        <li>Simpler than Resilience4j but lacks circuit breaker and bulkhead</li>
+      </ul>
+      <p class="resources">Resources:
+        <a href="https://www.baeldung.com/spring-retry" target="_blank">Baeldung &mdash; Spring Retry</a> &middot;
+        <a href="https://github.com/donnemartin/system-design-primer" target="_blank">System Design Primer</a>
+      </p>
+    </div>
+
+    <div class="topic-card" id="topic-172">
+      <h4>Feign Client with Fallback</h4>
+      <p class="desc">Using Spring Cloud OpenFeign's fallback mechanism to provide default responses when a remote service is unavailable.</p>
+      <ul>
+        <li>Define fallback class implementing the Feign interface with default responses</li>
+        <li>@FeignClient(name="service", fallback=ServiceFallback.class)</li>
+        <li>Integrates with Resilience4j CircuitBreaker via spring-cloud-circuitbreaker-resilience4j</li>
+        <li>FallbackFactory gives access to the cause exception for smarter fallbacks</li>
+      </ul>
+      <p class="resources">Resources:
+        <a href="https://www.baeldung.com/spring-cloud-openfeign" target="_blank">Baeldung &mdash; OpenFeign</a> &middot;
+        <a href="https://www.baeldung.com/resilience4j" target="_blank">Baeldung &mdash; Resilience4j</a>
+      </p>
+    </div>
+  </div><!-- /Resilience Libraries -->
+</section>
+
+<!-- ================================================================== -->
+<!-- SECTION 5 : Consistent Hashing & Load Balancing                    -->
+<!-- ================================================================== -->
+<section class="section" id="section-hashing-lb">
+  <h2 class="section-heading">Consistent Hashing &amp; Load Balancing <span class="context-pill light">Light</span></h2>
+
+  <!-- Category: Hashing -->
+  <div class="category">
+    <h3 class="category-heading">Hashing</h3>
+
+    <div class="topic-card" id="topic-173">
+      <h4>Virtual Nodes</h4>
+      <p class="desc">Mapping each physical node to multiple positions on the hash ring to improve load distribution and reduce hotspots.</p>
+      <ul>
+        <li>Without vnodes, adding/removing a node only affects its immediate neighbour</li>
+        <li>With vnodes, load redistributes more evenly across all nodes</li>
+        <li>Typical: 100-256 vnodes per physical node</li>
+        <li>Trade-off: more vnodes = better balance but larger routing metadata</li>
+      </ul>
+      <p class="resources">Resources:
+        <a href="https://github.com/donnemartin/system-design-primer#consistent-hashing" target="_blank">System Design Primer &mdash; Consistent Hashing</a> &middot;
+        <a href="https://martin.kleppmann.com" target="_blank">Martin Kleppmann</a>
+      </p>
+    </div>
+
+    <div class="topic-card" id="topic-174">
+      <h4>Consistent Hash Ring</h4>
+      <p class="desc">A ring-based hash space where keys and nodes are mapped onto the same circle; a key is assigned to the next node clockwise on the ring.</p>
+      <ul>
+        <li>Adding a node only reassigns keys from its clockwise neighbour &mdash; minimal disruption</li>
+        <li>Removing a node shifts its keys to the next node &mdash; O(K/N) keys move</li>
+        <li>Used in Cassandra, DynamoDB, Memcached, and CDN routing</li>
+        <li>Combines with virtual nodes for even distribution</li>
+      </ul>
+      <p class="resources">Resources:
+        <a href="https://github.com/donnemartin/system-design-primer#consistent-hashing" target="_blank">System Design Primer &mdash; Consistent Hashing</a> &middot;
+        <a href="https://martin.kleppmann.com" target="_blank">Martin Kleppmann</a>
+      </p>
+    </div>
+
+    <div class="topic-card" id="topic-175">
+      <h4>Rendezvous Hashing</h4>
+      <p class="desc">Also called "highest random weight" hashing: for each key, compute a score for every node and pick the node with the highest score.</p>
+      <ul>
+        <li>No ring structure needed &mdash; each key independently selects its node</li>
+        <li>Adding/removing a node only affects keys that had that node as their top choice</li>
+        <li>Simpler to implement than consistent hashing with vnodes</li>
+        <li>O(N) per lookup where N = number of nodes; fine for moderate N</li>
+      </ul>
+      <p class="resources">Resources:
+        <a href="https://github.com/donnemartin/system-design-primer" target="_blank">System Design Primer</a> &middot;
+        <a href="https://martin.kleppmann.com" target="_blank">Martin Kleppmann</a>
+      </p>
+    </div>
+
+    <div class="topic-card" id="topic-176">
+      <h4>Jump Consistent Hash</h4>
+      <p class="desc">A fast, minimal-memory consistent hash function that maps keys to buckets with near-perfect balance and minimal reassignment.</p>
+      <ul>
+        <li>O(ln N) time, O(1) memory &mdash; no ring or vnode table</li>
+        <li>Only supports adding/removing the last bucket &mdash; not arbitrary nodes</li>
+        <li>Ideal for sharding across a known, sequential set of servers</li>
+        <li>Google paper: "A Fast, Minimal Memory, Consistent Hash Algorithm"</li>
+      </ul>
+      <p class="resources">Resources:
+        <a href="https://github.com/donnemartin/system-design-primer" target="_blank">System Design Primer</a> &middot;
+        <a href="https://martin.kleppmann.com" target="_blank">Martin Kleppmann</a>
+      </p>
+    </div>
+  </div><!-- /Hashing -->
+
+  <!-- Category: Load Balancing -->
+  <div class="category">
+    <h3 class="category-heading">Load Balancing</h3>
+
+    <div class="topic-card" id="topic-177">
+      <h4>Round-Robin / Weighted / Least-Connections</h4>
+      <p class="desc">The three fundamental load-balancing algorithms used to distribute traffic across backend servers.</p>
+      <ul>
+        <li>Round-robin: cycles through servers sequentially &mdash; simple, assumes uniform capacity</li>
+        <li>Weighted round-robin: servers with higher weights get proportionally more requests</li>
+        <li>Least-connections: routes to the server with fewest active connections &mdash; better for uneven request durations</li>
+        <li>Many LBs support weighted least-connections as a hybrid</li>
+      </ul>
+      <p class="resources">Resources:
+        <a href="https://github.com/donnemartin/system-design-primer#load-balancer" target="_blank">System Design Primer &mdash; Load Balancer</a> &middot;
+        <a href="https://docs.aws.amazon.com/elasticloadbalancing/latest/userguide/how-elastic-load-balancing-works.html" target="_blank">AWS ELB Docs</a>
+      </p>
+    </div>
+
+    <div class="topic-card" id="topic-178">
+      <h4>L4 vs L7 LB</h4>
+      <p class="desc">Layer-4 load balancers route based on TCP/UDP port and IP, while Layer-7 balancers inspect HTTP headers, paths, and cookies.</p>
+      <ul>
+        <li>L4: faster, lower overhead, no TLS termination needed at LB</li>
+        <li>L7: content-based routing, path/host rules, header inspection, WebSocket support</li>
+        <li>L7 enables A/B testing, canary deployments, and API gateway patterns</li>
+        <li>AWS: NLB (L4) vs ALB (L7); both support TLS termination</li>
+      </ul>
+      <p class="resources">Resources:
+        <a href="https://github.com/donnemartin/system-design-primer#load-balancer" target="_blank">System Design Primer &mdash; Load Balancer</a> &middot;
+        <a href="https://docs.aws.amazon.com/elasticloadbalancing/latest/userguide/how-elastic-load-balancing-works.html" target="_blank">AWS ELB Docs</a>
+      </p>
+    </div>
+
+    <div class="topic-card" id="topic-179">
+      <h4>Sticky Sessions</h4>
+      <p class="desc">Binding a client to a specific backend server for the duration of a session, typically using cookies or source IP hashing.</p>
+      <ul>
+        <li>Useful when server holds in-memory session state</li>
+        <li>ALB sticky sessions use an AWSALB cookie with configurable duration</li>
+        <li>Drawback: uneven load distribution if some sessions are heavier</li>
+        <li>Better alternative: externalize session state (Redis, DB) and use stateless servers</li>
+      </ul>
+      <p class="resources">Resources:
+        <a href="https://docs.aws.amazon.com/elasticloadbalancing/latest/application/sticky-sessions.html" target="_blank">AWS ALB &mdash; Sticky Sessions</a> &middot;
+        <a href="https://github.com/donnemartin/system-design-primer" target="_blank">System Design Primer</a>
+      </p>
+    </div>
+
+    <div class="topic-card" id="topic-180">
+      <h4>Health Check Strategies</h4>
+      <p class="desc">Mechanisms for a load balancer to verify backend server availability, removing unhealthy instances from the rotation.</p>
+      <ul>
+        <li>TCP health check: verifies port is open &mdash; fast but shallow</li>
+        <li>HTTP health check: hits a /health endpoint, checks status code &mdash; verifies app is responsive</li>
+        <li>Deep health check: /health/ready verifies DB, cache, and downstream dependencies</li>
+        <li>Configure: interval, timeout, healthy/unhealthy thresholds</li>
+        <li>Separate liveness (restart me) from readiness (stop sending traffic)</li>
+      </ul>
+      <p class="resources">Resources:
+        <a href="https://docs.aws.amazon.com/elasticloadbalancing/latest/application/target-group-health-checks.html" target="_blank">AWS ALB &mdash; Health Checks</a> &middot;
+        <a href="https://www.baeldung.com/spring-boot-actuators" target="_blank">Baeldung &mdash; Spring Actuator</a>
+      </p>
+    </div>
+  </div><!-- /Load Balancing -->
+</section>
+
+<!-- ================================================================== -->
+<!-- RECOMMENDED RESOURCES                                              -->
+<!-- ================================================================== -->
+<div class="resources-section">
+  <h2>Recommended Resources</h2>
+  <ul>
+    <li><a href="https://github.com/donnemartin/system-design-primer" target="_blank">System Design Primer</a> &mdash; Comprehensive open-source guide covering distributed system concepts with diagrams</li>
+    <li><a href="https://martin.kleppmann.com" target="_blank">Martin Kleppmann &mdash; Designing Data-Intensive Applications</a> &mdash; The definitive book on distributed data systems; chapters 5-9 are directly relevant</li>
+    <li><a href="https://kafka.apache.org/documentation/" target="_blank">Apache Kafka Documentation</a> &mdash; Official docs covering internals, configuration, and operations</li>
+    <li><a href="https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/welcome.html" target="_blank">AWS SQS Developer Guide</a> &mdash; Official reference for SQS features, patterns, and best practices</li>
+    <li><a href="https://www.baeldung.com/resilience4j" target="_blank">Baeldung &mdash; Resilience4j Guide</a> &mdash; Practical tutorials on circuit breakers, retries, bulkheads, and rate limiters in Spring Boot</li>
+    <li><a href="https://docs.aws.amazon.com/elasticloadbalancing/latest/userguide/how-elastic-load-balancing-works.html" target="_blank">AWS Elastic Load Balancing</a> &mdash; ALB, NLB, and CLB documentation with architecture guides</li>
+  </ul>
+</div>
+
+</div><!-- /.container -->
+</body>
+</html>

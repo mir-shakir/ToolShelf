@@ -1,0 +1,1153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pillar 6 — Low-Level Design (LLD) | SDE 2 Prep Tracker</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg-primary:#1a1b2e; --bg-secondary:#232540; --bg-tertiary:#2a2d4a; --bg-hover:#32355a;
+  --text-primary:#e2e4f0; --text-secondary:#a0a3bd; --text-muted:#6b6f8a; --border:#3a3d5c;
+  --accent:#6c63ff; --green:#4ade80; --green-bg:rgba(74,222,128,0.12);
+  --orange:#fb923c; --orange-bg:rgba(251,146,60,0.12); --red:#f87171; --red-bg:rgba(248,113,113,0.12);
+  --cyan:#22d3ee; --cyan-bg:rgba(34,211,238,0.12);
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+/* ---- Sticky Header ---- */
+header {
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border);
+  padding: 16px 24px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.header-row { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+h1 { font-size: 1.4rem; font-weight: 700; color: var(--accent); }
+.subtitle { font-size: 0.85rem; color: var(--text-muted); margin-top: 2px; }
+.back-link {
+  font-size: 0.85rem;
+  color: var(--cyan);
+  text-decoration: none;
+  border: 1px solid var(--border);
+  padding: 6px 14px;
+  border-radius: 6px;
+  transition: all 0.15s;
+}
+.back-link:hover { background: var(--bg-hover); border-color: var(--cyan); }
+
+/* ---- Main Container ---- */
+.container { max-width: 960px; margin: 0 auto; padding: 24px 20px 60px; }
+
+/* ---- Table of Contents ---- */
+.toc {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 20px 24px;
+  margin-bottom: 32px;
+}
+.toc h2 { font-size: 1rem; font-weight: 600; color: var(--accent); margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.05em; }
+.toc-list { list-style: none; display: flex; flex-wrap: wrap; gap: 8px; }
+.toc-list li a {
+  display: inline-block;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  text-decoration: none;
+  padding: 5px 14px;
+  border-radius: 6px;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border);
+  transition: all 0.15s;
+}
+.toc-list li a:hover { color: var(--text-primary); border-color: var(--accent); background: var(--bg-hover); }
+
+/* ---- Section ---- */
+.section { margin-bottom: 40px; }
+.section-heading {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 6px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--accent);
+}
+.section-heading h2 { font-size: 1.3rem; font-weight: 700; }
+.context-badge {
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 20px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+.context-full-focus { color: var(--red); background: var(--red-bg); }
+.context-light { color: var(--green); background: var(--green-bg); }
+.context-both { color: var(--orange); background: var(--orange-bg); }
+
+/* ---- Tip Callout ---- */
+.tip-callout {
+  background: var(--cyan-bg);
+  border-left: 4px solid var(--cyan);
+  border-radius: 0 8px 8px 0;
+  padding: 12px 16px;
+  margin: 12px 0 20px;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+.tip-callout strong { color: var(--cyan); }
+
+/* ---- Category ---- */
+.category { margin-bottom: 28px; }
+.category-heading {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  border-left: 4px solid var(--accent);
+  padding-left: 12px;
+  margin-bottom: 14px;
+}
+
+/* ---- Topic Card ---- */
+.topic-card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 18px 20px;
+  margin-bottom: 14px;
+  scroll-margin-top: 80px;
+  transition: border-color 0.15s;
+}
+.topic-card:hover { border-color: var(--accent); }
+.topic-card h4 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--accent);
+  margin-bottom: 6px;
+}
+.topic-card .topic-id {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  font-weight: 400;
+  margin-left: 6px;
+}
+.topic-card .desc {
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  margin-bottom: 10px;
+}
+.topic-card ul {
+  list-style: none;
+  margin-bottom: 10px;
+}
+.topic-card ul li {
+  font-size: 0.84rem;
+  color: var(--text-secondary);
+  padding: 2px 0 2px 16px;
+  position: relative;
+}
+.topic-card ul li::before {
+  content: "\25B8";
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+}
+.topic-links { display: flex; flex-wrap: wrap; gap: 8px; }
+.topic-links a {
+  font-size: 0.78rem;
+  color: var(--cyan);
+  text-decoration: none;
+  padding: 3px 10px;
+  border-radius: 4px;
+  background: var(--cyan-bg);
+  transition: all 0.15s;
+}
+.topic-links a:hover { background: rgba(34,211,238,0.22); }
+
+/* ---- Resources Footer ---- */
+.resources-section {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 24px;
+  margin-top: 40px;
+}
+.resources-section h2 { font-size: 1.1rem; font-weight: 700; color: var(--accent); margin-bottom: 14px; }
+.resources-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 12px; }
+.resource-card {
+  padding: 14px;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  transition: border-color 0.15s;
+}
+.resource-card:hover { border-color: var(--accent); }
+.resource-card a { color: var(--cyan); text-decoration: none; font-weight: 600; font-size: 0.9rem; }
+.resource-card a:hover { text-decoration: underline; }
+.resource-card p { font-size: 0.8rem; color: var(--text-muted); margin-top: 4px; }
+
+/* ---- Responsive ---- */
+@media (max-width: 700px) {
+  .container { padding: 16px 12px 40px; }
+  header { padding: 12px 14px; }
+  h1 { font-size: 1.15rem; }
+  .section-heading h2 { font-size: 1.1rem; }
+  .topic-card { padding: 14px; }
+  .resources-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- ==================== HEADER ==================== -->
+<header>
+  <div class="header-row">
+    <div>
+      <h1>Pillar 6 &mdash; Low-Level Design (LLD)</h1>
+      <div class="subtitle">Object-oriented design, design patterns, hands-on coding in Java</div>
+    </div>
+    <a href="index.html" class="back-link">&larr; Back to Tracker</a>
+  </div>
+</header>
+
+<div class="container">
+
+<!-- ==================== TABLE OF CONTENTS ==================== -->
+<nav class="toc">
+  <h2>Table of Contents</h2>
+  <ul class="toc-list">
+    <li><a href="#section-solid-oop">SOLID &amp; OOP Principles</a></li>
+    <li><a href="#section-design-patterns">Design Patterns</a></li>
+    <li><a href="#section-lld-practice">LLD Practice Problems</a></li>
+    <li><a href="#section-concurrency">Concurrency in LLD</a></li>
+    <li><a href="#section-resources">Recommended Resources</a></li>
+  </ul>
+</nav>
+
+
+<!-- ================================================================ -->
+<!--  SECTION 1 — SOLID & OOP PRINCIPLES                             -->
+<!-- ================================================================ -->
+<div class="section" id="section-solid-oop">
+  <div class="section-heading">
+    <h2>SOLID &amp; OOP Principles</h2>
+    <span class="context-badge context-full-focus">Full-Focus</span>
+  </div>
+
+  <div class="tip-callout">
+    <strong>Tip:</strong> Be ready to refactor a class that violates SOLID principles live in the interview. Interviewers love giving a messy class and asking you to clean it up using SOLID.
+  </div>
+
+  <!-- Category: SOLID -->
+  <div class="category">
+    <h3 class="category-heading">SOLID</h3>
+
+    <div class="topic-card" id="topic-229">
+      <h4>SRP &mdash; Single Class Responsibility <span class="topic-id">#229</span></h4>
+      <p class="desc">A class should have only one reason to change. SRP keeps classes focused, testable, and easy to maintain.</p>
+      <ul>
+        <li>Identify the single axis of change a class owns</li>
+        <li>Extract responsibilities into collaborators when a class does too much</li>
+        <li>Common violation: a class that validates, persists, and formats output</li>
+        <li>Refactoring strategy: split by actor/stakeholder who requests changes</li>
+      </ul>
+      <div class="topic-links">
+        <a href="https://www.baeldung.com/java-single-responsibility-principle" target="_blank">Baeldung &mdash; SRP</a>
+        <a href="https://refactoring.guru/refactoring/smells/large-class" target="_blank">Refactoring Guru &mdash; Large Class</a>
+      </div>
+    </div>
+
+    <div class="topic-card" id="topic-230">
+      <h4>OCP &mdash; Open for Extension <span class="topic-id">#230</span></h4>
+      <p class="desc">Software entities should be open for extension but closed for modification. Add new behavior without editing existing code.</p>
+      <ul>
+        <li>Use polymorphism or strategy injection to extend behavior</li>
+        <li>Avoid long if-else/switch chains that grow with every new feature</li>
+        <li>Java approach: define an interface, add new implementations</li>
+        <li>Real-world example: adding a new payment method without touching PaymentProcessor</li>
+      </ul>
+      <div class="topic-links">
+        <a href="https://www.baeldung.com/java-open-closed-principle" target="_blank">Baeldung &mdash; OCP</a>
+        <a href="https://refactoring.guru/refactoring/smells/switch-statements" target="_blank">Refactoring Guru &mdash; Switch Smell</a>
+      </div>
+    </div>
+
+    <div class="topic-card" id="topic-231">
+      <h4>LSP &mdash; Substitutability <span class="topic-id">#231</span></h4>
+      <p class="desc">Subtypes must be substitutable for their base types without altering program correctness. Violated when a subclass weakens postconditions or strengthens preconditions.</p>
+      <ul>
+        <li>Classic violation: Square extending Rectangle and breaking setWidth/setHeight</li>
+        <li>Subtypes must honor the base type's behavioral contract</li>
+        <li>Throw UnsupportedOperationException = likely LSP violation</li>
+        <li>Design by contract: preconditions, postconditions, invariants</li>
+      </ul>
+      <div class="topic-links">
+        <a href="https://www.baeldung.com/java-liskov-substitution-principle" target="_blank">Baeldung &mdash; LSP</a>
+        <a href="https://docs.oracle.com/javase/tutorial/java/IandI/polymorphism.html" target="_blank">Oracle Docs &mdash; Polymorphism</a>
+      </div>
+    </div>
+
+    <div class="topic-card" id="topic-232">
+      <h4>ISP &mdash; Interface Segregation <span class="topic-id">#232</span></h4>
+      <p class="desc">No client should be forced to depend on methods it does not use. Prefer many small, role-specific interfaces over one fat interface.</p>
+      <ul>
+        <li>Fat interface anti-pattern: implementors throw UnsupportedOperationException for unused methods</li>
+        <li>Split interfaces by client role (e.g., Readable, Writable, Closeable)</li>
+        <li>Java 8+ default methods can help but don't abuse them to mask ISP violations</li>
+        <li>Interview signal: show awareness of interface granularity tradeoffs</li>
+      </ul>
+      <div class="topic-links">
+        <a href="https://www.baeldung.com/java-interface-segregation" target="_blank">Baeldung &mdash; ISP</a>
+        <a href="https://refactoring.guru/refactoring/smells/refused-bequest" target="_blank">Refactoring Guru &mdash; Refused Bequest</a>
+      </div>
+    </div>
+
+    <div class="topic-card" id="topic-233">
+      <h4>DIP &mdash; Depend on Abstractions <span class="topic-id">#233</span></h4>
+      <p class="desc">High-level modules should not depend on low-level modules; both should depend on abstractions. The cornerstone of testable, decoupled architecture.</p>
+      <ul>
+        <li>Inject dependencies via constructor, not via new keyword inside methods</li>
+        <li>Spring's @Autowired is DIP in action &mdash; know how it works under the hood</li>
+        <li>Enables mocking and unit testing of high-level business logic</li>
+        <li>Contrast with Service Locator pattern (also DIP-compliant but less explicit)</li>
+      </ul>
+      <div class="topic-links">
+        <a href="https://www.baeldung.com/java-dependency-inversion-principle" target="_blank">Baeldung &mdash; DIP</a>
+        <a href="https://docs.oracle.com/javase/tutorial/java/IandI/abstract.html" target="_blank">Oracle Docs &mdash; Abstract Classes</a>
+      </div>
+    </div>
+  </div><!-- /SOLID -->
+
+  <!-- Category: OOP Depth -->
+  <div class="category">
+    <h3 class="category-heading">OOP Depth</h3>
+
+    <div class="topic-card" id="topic-234">
+      <h4>Composition over Inheritance <span class="topic-id">#234</span></h4>
+      <p class="desc">Favor composing objects via has-a relationships over extending via is-a. Composition gives flexibility, avoids fragile base-class problems.</p>
+      <ul>
+        <li>Inheritance creates tight coupling; changes to the parent cascade down</li>
+        <li>Delegation pattern: wrapper holds a reference and forwards calls</li>
+        <li>Java example: using a List field instead of extending ArrayList</li>
+        <li>Effective Java Item 18: prefer composition over inheritance</li>
+      </ul>
+      <div class="topic-links">
+        <a href="https://www.baeldung.com/java-composition" target="_blank">Baeldung &mdash; Composition</a>
+        <a href="https://refactoring.guru/refactoring/techniques/dealing-with-generalization" target="_blank">Refactoring Guru &mdash; Generalization</a>
+      </div>
+    </div>
+
+    <div class="topic-card" id="topic-235">
+      <h4>Encapsulation in Java <span class="topic-id">#235</span></h4>
+      <p class="desc">Bundling data with the methods that operate on it while restricting direct access to internal state. The foundation of information hiding.</p>
+      <ul>
+        <li>Private fields + public getters/setters (but not blindly for every field)</li>
+        <li>Immutable objects: all fields final, no setters, defensive copies</li>
+        <li>Access modifiers hierarchy: private, default, protected, public</li>
+        <li>Encapsulation enables invariant enforcement inside the class</li>
+      </ul>
+      <div class="topic-links">
+        <a href="https://www.baeldung.com/java-encapsulation" target="_blank">Baeldung &mdash; Encapsulation</a>
+        <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/accesscontrol.html" target="_blank">Oracle Docs &mdash; Access Control</a>
+      </div>
+    </div>
+
+    <div class="topic-card" id="topic-236">
+      <h4>Polymorphism &mdash; Runtime vs Compile-time <span class="topic-id">#236</span></h4>
+      <p class="desc">Runtime polymorphism (method overriding / dynamic dispatch) vs compile-time polymorphism (method overloading). Know when and why each is used.</p>
+      <ul>
+        <li>Runtime: JVM resolves the actual method at call time via vtable lookup</li>
+        <li>Compile-time: compiler picks the overload based on static types</li>
+        <li>Interview trap: overloading is NOT true polymorphism in the OO sense</li>
+        <li>Covariant return types in Java (overriding can narrow the return type)</li>
+      </ul>
+      <div class="topic-links">
+        <a href="https://www.baeldung.com/java-polymorphism" target="_blank">Baeldung &mdash; Polymorphism</a>
+        <a href="https://docs.oracle.com/javase/tutorial/java/IandI/polymorphism.html" target="_blank">Oracle Docs &mdash; Polymorphism</a>
+      </div>
+    </div>
+
+    <div class="topic-card" id="topic-237">
+      <h4>Abstract Class vs Interface Tradeoffs <span class="topic-id">#237</span></h4>
+      <p class="desc">When to use an abstract class (shared state + partial implementation) vs an interface (pure contract, multiple inheritance of type).</p>
+      <ul>
+        <li>Java 8+ interfaces can have default and static methods, blurring the line</li>
+        <li>Abstract class: when subclasses share state (fields) or constructor logic</li>
+        <li>Interface: when unrelated classes need to share a capability (Comparable, Serializable)</li>
+        <li>A class can implement many interfaces but extend only one abstract class</li>
+        <li>Interview pattern: explain when you would choose one over the other in a design</li>
+      </ul>
+      <div class="topic-links">
+        <a href="https://www.baeldung.com/java-interface-vs-abstract-class" target="_blank">Baeldung &mdash; Interface vs Abstract</a>
+        <a href="https://docs.oracle.com/javase/tutorial/java/IandI/abstract.html" target="_blank">Oracle Docs &mdash; Abstract Classes</a>
+      </div>
+    </div>
+  </div><!-- /OOP Depth -->
+</div><!-- /section-solid-oop -->
+
+
+<!-- ================================================================ -->
+<!--  SECTION 2 — DESIGN PATTERNS                                    -->
+<!-- ================================================================ -->
+<div class="section" id="section-design-patterns">
+  <div class="section-heading">
+    <h2>Design Patterns</h2>
+    <span class="context-badge context-full-focus">Full-Focus</span>
+  </div>
+
+  <!-- Category: Creational Patterns -->
+  <div class="category">
+    <h3 class="category-heading">Creational Patterns</h3>
+
+    <div class="topic-card" id="topic-238">
+      <h4>Singleton (Thread-safe &mdash; Double-checked Locking) <span class="topic-id">#238</span></h4>
+      <p class="desc"><strong>Intent:</strong> Ensure a class has exactly one instance and provide a global access point. <strong>When to use:</strong> Database connection pools, configuration managers, caches.</p>
+      <ul>
+        <li>Double-checked locking with volatile field for thread safety</li>
+        <li>Bill Pugh approach: static inner holder class (lazy, thread-safe, no synchronization)</li>
+        <li>Enum singleton &mdash; Joshua Bloch's recommended approach</li>
+        <li>Java context: Spring beans are singletons by default (container-managed)</li>
+        <li>Pitfall: serialization can break singleton &mdash; implement readResolve()</li>
+      </ul>
+      <div class="topic-links">
+        <a href="https://refactoring.guru/design-patterns/singleton" target="_blank">Refactoring Guru &mdash; Singleton</a>
+        <a href="https://www.baeldung.com/java-singleton-double-checked-locking" target="_blank">Baeldung &mdash; Double-checked Locking</a>
+        <a href="https://sourcemaking.com/design_patterns/singleton" target="_blank">SourceMaking &mdash; Singleton</a>
+      </div>
+    </div>
+
+    <div class="topic-card" id="topic-239">
+      <h4>Builder (Lombok vs Manual) <span class="topic-id">#239</span></h4>
+      <p class="desc"><strong>Intent:</strong> Separate construction of a complex object from its representation. <strong>When to use:</strong> Objects with many optional parameters, immutable objects with fluent APIs.</p>
+      <ul>
+        <li>Manual builder: static inner Builder class with method chaining</li>
+        <li>Lombok @Builder: annotation-processor-generated builder at compile time</li>
+        <li>Ensures immutability &mdash; build() returns a fully constructed, unmodifiable object</li>
+        <li>Java context: StringBuilder, Stream.builder(), Protobuf builders all use this</li>
+        <li>Interview: know how to write a manual builder from scratch</li>
+      </ul>
+      <div class="topic-links">
+        <a href="https://refactoring.guru/design-patterns/builder" target="_blank">Refactoring Guru &mdash; Builder</a>
+        <a href="https://www.baeldung.com/java-builder-pattern" target="_blank">Baeldung &mdash; Builder Pattern</a>
+        <a href="https://sourcemaking.com/design_patterns/builder" target="_blank">SourceMaking &mdash; Builder</a>
+      </div>
+    </div>
+
+    <div class="topic-card" id="topic-240">
+      <h4>Factory Method <span class="topic-id">#240</span></h4>
+      <p class="desc"><strong>Intent:</strong> Define an interface for creating an object but let subclasses decide which class to instantiate. <strong>When to use:</strong> When the creation logic varies by context or configuration.</p>
+      <ul>
+        <li>Defers instantiation to subclasses via an abstract createXxx() method</li>
+        <li>Follows OCP: add new product types without changing existing factory code</li>
+        <li>Java context: Calendar.getInstance(), NumberFormat.getInstance()</li>
+        <li>Contrast with Simple Factory (static method, not a GoF pattern)</li>
+      </ul>
+      <div class="topic-links">
+        <a href="https://refactoring.guru/design-patterns/factory-method" target="_blank">Refactoring Guru &mdash; Factory Method</a>
+        <a href="https://www.baeldung.com/java-factory-pattern" target="_blank">Baeldung &mdash; Factory Pattern</a>
+        <a href="https://sourcemaking.com/design_patterns/factory_method" target="_blank">SourceMaking &mdash; Factory Method</a>
+      </div>
+    </div>
+
+    <div class="topic-card" id="topic-241">
+      <h4>Abstract Factory <span class="topic-id">#241</span></h4>
+      <p class="desc"><strong>Intent:</strong> Provide an interface for creating families of related objects without specifying concrete classes. <strong>When to use:</strong> Cross-platform UI toolkits, themed component sets.</p>
+      <ul>
+        <li>Factory of factories &mdash; groups related factory methods</li>
+        <li>Ensures product family consistency (e.g., all components from same theme)</li>
+        <li>Java context: DocumentBuilderFactory, TransformerFactory in javax.xml</li>
+        <li>More complex than Factory Method; use only when you have product families</li>
+      </ul>
+      <div class="topic-links">
+        <a href="https://refactoring.guru/design-patterns/abstract-factory" target="_blank">Refactoring Guru &mdash; Abstract Factory</a>
+        <a href="https://www.baeldung.com/java-abstract-factory-pattern" target="_blank">Baeldung &mdash; Abstract Factory</a>
+        <a href="https://sourcemaking.com/design_patterns/abstract_factory" target="_blank">SourceMaking &mdash; Abstract Factory</a>
+      </div>
+    </div>
+
+    <div class="topic-card" id="topic-242">
+      <h4>Prototype <span class="topic-id">#242</span></h4>
+      <p class="desc"><strong>Intent:</strong> Create new objects by cloning an existing instance (prototype). <strong>When to use:</strong> When object creation is expensive and a similar object already exists.</p>
+      <ul>
+        <li>Java's Cloneable interface and Object.clone() method</li>
+        <li>Shallow vs deep copy &mdash; critical distinction for nested objects</li>
+        <li>Copy constructor as a safer alternative to clone()</li>
+        <li>Java context: useful in game dev (cloning enemy templates), config presets</li>
+      </ul>
+      <div class="topic-links">
+        <a href="https://refactoring.guru/design-patterns/prototype" target="_blank">Refactoring Guru &mdash; Prototype</a>
+        <a href="https://www.baeldung.com/java-copy-constructor" target="_blank">Baeldung &mdash; Copy Constructor</a>
+        <a href="https://sourcemaking.com/design_patterns/prototype" target="_blank">SourceMaking &mdash; Prototype</a>
+      </div>
+    </div>
+  </div><!-- /Creational Patterns -->
+
+  <!-- Category: Structural Patterns -->
+  <div class="category">
+    <h3 class="category-heading">Structural Patterns</h3>
+
+    <div class="topic-card" id="topic-243">
+      <h4>Decorator <span class="topic-id">#243</span></h4>
+      <p class="desc"><strong>Intent:</strong> Attach additional responsibilities to an object dynamically, providing a flexible alternative to subclassing. <strong>When to use:</strong> Wrapping I/O streams, adding logging/caching layers.</p>
+      <ul>
+        <li>Wraps the original object; both share the same interface</li>
+        <li>Java context: BufferedInputStream wrapping FileInputStream</li>
+        <li>Can stack decorators: compress(encrypt(log(stream)))</li>
+        <li>Follows OCP &mdash; add behavior without modifying existing classes</li>
+      </ul>
+      <div class="topic-links">
+        <a href="https://refactoring.guru/design-patterns/decorator" target="_blank">Refactoring Guru &mdash; Decorator</a>
+        <a href="https://www.baeldung.com/java-decorator-pattern" target="_blank">Baeldung &mdash; Decorator</a>
+        <a href="https://sourcemaking.com/design_patterns/decorator" target="_blank">SourceMaking &mdash; Decorator</a>
+      </div>
+    </div>
+
+    <div class="topic-card" id="topic-244">
+      <h4>Adapter <span class="topic-id">#244</span></h4>
+      <p class="desc"><strong>Intent:</strong> Convert the interface of a class into another interface that clients expect. <strong>When to use:</strong> Integrating legacy code, third-party libraries with incompatible interfaces.</p>
+      <ul>
+        <li>Class adapter (via inheritance) vs object adapter (via composition)</li>
+        <li>Java context: Arrays.asList() adapts an array to a List interface</li>
+        <li>InputStreamReader adapts byte stream to character stream</li>
+        <li>Very common in interview LLD &mdash; know how to sketch one quickly</li>
+      </ul>
+      <div class="topic-links">
+        <a href="https://refactoring.guru/design-patterns/adapter" target="_blank">Refactoring Guru &mdash; Adapter</a>
+        <a href="https://www.baeldung.com/java-adapter-pattern" target="_blank">Baeldung &mdash; Adapter</a>
+        <a href="https://sourcemaking.com/design_patterns/adapter" target="_blank">SourceMaking &mdash; Adapter</a>
+      </div>
+    </div>
+
+    <div class="topic-card" id="topic-245">
+      <h4>Proxy (JDK Dynamic Proxy) <span class="topic-id">#245</span></h4>
+      <p class="desc"><strong>Intent:</strong> Provide a surrogate or placeholder for another object to control access. <strong>When to use:</strong> Lazy loading, access control, logging, AOP interceptors.</p>
+      <ul>
+        <li>JDK dynamic proxy: java.lang.reflect.Proxy + InvocationHandler</li>
+        <li>CGLIB proxy: subclass-based, used by Spring for non-interface beans</li>
+        <li>Spring AOP uses proxies for @Transactional, @Cacheable, etc.</li>
+        <li>Types: virtual proxy (lazy), protection proxy (access control), remote proxy (RPC)</li>
+      </ul>
+      <div class="topic-links">
+        <a href="https://refactoring.guru/design-patterns/proxy" target="_blank">Refactoring Guru &mdash; Proxy</a>
+        <a href="https://www.baeldung.com/java-dynamic-proxies" target="_blank">Baeldung &mdash; Dynamic Proxies</a>
+        <a href="https://sourcemaking.com/design_patterns/proxy" target="_blank">SourceMaking &mdash; Proxy</a>
+      </div>
+    </div>
+
+    <div class="topic-card" id="topic-246">
+      <h4>Facade <span class="topic-id">#246</span></h4>
+      <p class="desc"><strong>Intent:</strong> Provide a unified, simplified interface to a set of interfaces in a subsystem. <strong>When to use:</strong> Hiding complex subsystem interactions behind a clean API.</p>
+      <ul>
+        <li>Reduces coupling between clients and subsystem internals</li>
+        <li>Java context: SLF4J is a facade over various logging frameworks</li>
+        <li>Spring's JdbcTemplate is a facade over raw JDBC boilerplate</li>
+        <li>Not the same as Adapter (adapter changes interface; facade simplifies)</li>
+      </ul>
+      <div class="topic-links">
+        <a href="https://refactoring.guru/design-patterns/facade" target="_blank">Refactoring Guru &mdash; Facade</a>
+        <a href="https://www.baeldung.com/java-facade-pattern" target="_blank">Baeldung &mdash; Facade</a>
+        <a href="https://sourcemaking.com/design_patterns/facade" target="_blank">SourceMaking &mdash; Facade</a>
+      </div>
+    </div>
+
+    <div class="topic-card" id="topic-247">
+      <h4>Composite <span class="topic-id">#247</span></h4>
+      <p class="desc"><strong>Intent:</strong> Compose objects into tree structures to represent part-whole hierarchies. Clients treat individual objects and compositions uniformly. <strong>When to use:</strong> File systems, UI component trees, organizational hierarchies.</p>
+      <ul>
+        <li>Component interface with Leaf and Composite implementations</li>
+        <li>Composite holds a collection of children (both leaves and composites)</li>
+        <li>Java context: java.awt.Container (contains Components, which can be Containers)</li>
+        <li>Recursive structure &mdash; operations propagate through the tree</li>
+      </ul>
+      <div class="topic-links">
+        <a href="https://refactoring.guru/design-patterns/composite" target="_blank">Refactoring Guru &mdash; Composite</a>
+        <a href="https://www.baeldung.com/java-composite-pattern" target="_blank">Baeldung &mdash; Composite</a>
+        <a href="https://sourcemaking.com/design_patterns/composite" target="_blank">SourceMaking &mdash; Composite</a>
+      </div>
+    </div>
+
+    <div class="topic-card" id="topic-248">
+      <h4>Flyweight <span class="topic-id">#248</span></h4>
+      <p class="desc"><strong>Intent:</strong> Use sharing to support large numbers of fine-grained objects efficiently. <strong>When to use:</strong> When many objects share intrinsic state and differ only in extrinsic state.</p>
+      <ul>
+        <li>Separate intrinsic (shared, immutable) state from extrinsic (context-dependent) state</li>
+        <li>Flyweight factory manages a pool/cache of shared instances</li>
+        <li>Java context: Integer.valueOf() caches -128 to 127 (Integer pool)</li>
+        <li>String interning in Java is a flyweight implementation</li>
+      </ul>
+      <div class="topic-links">
+        <a href="https://refactoring.guru/design-patterns/flyweight" target="_blank">Refactoring Guru &mdash; Flyweight</a>
+        <a href="https://www.baeldung.com/java-flyweight" target="_blank">Baeldung &mdash; Flyweight</a>
+        <a href="https://sourcemaking.com/design_patterns/flyweight" target="_blank">SourceMaking &mdash; Flyweight</a>
+      </div>
+    </div>
+  </div><!-- /Structural Patterns -->
+
+  <!-- Category: Behavioral Patterns -->
+  <div class="category">
+    <h3 class="category-heading">Behavioral Patterns</h3>
+
+    <div class="topic-card" id="topic-249">
+      <h4>Strategy <span class="topic-id">#249</span></h4>
+      <p class="desc"><strong>Intent:</strong> Define a family of algorithms, encapsulate each one, and make them interchangeable at runtime. <strong>When to use:</strong> Payment processing, sorting strategies, pricing rules.</p>
+      <ul>
+        <li>Context holds a reference to a Strategy interface; swaps implementations</li>
+        <li>Eliminates conditional logic &mdash; replaces if-else chains with polymorphism</li>
+        <li>Java context: Comparator is a strategy for Collections.sort()</li>
+        <li>Lambda-friendly in Java 8+ &mdash; pass behavior as a functional interface</li>
+        <li>Closely related to OCP &mdash; add new strategies without modifying existing code</li>
+      </ul>
+      <div class="topic-links">
+        <a href="https://refactoring.guru/design-patterns/strategy" target="_blank">Refactoring Guru &mdash; Strategy</a>
+        <a href="https://www.baeldung.com/java-strategy-pattern" target="_blank">Baeldung &mdash; Strategy</a>
+        <a href="https://sourcemaking.com/design_patterns/strategy" target="_blank">SourceMaking &mdash; Strategy</a>
+      </div>
+    </div>
+
+    <div class="topic-card" id="topic-250">
+      <h4>Observer <span class="topic-id">#250</span></h4>
+      <p class="desc"><strong>Intent:</strong> Define a one-to-many dependency so that when one object changes state, all dependents are notified. <strong>When to use:</strong> Event systems, pub-sub, UI listeners.</p>
+      <ul>
+        <li>Subject maintains a list of observers and notifies them on state change</li>
+        <li>Push vs pull model &mdash; push sends data; pull lets observers query</li>
+        <li>Java context: java.util.Observer (deprecated) and PropertyChangeListener</li>
+        <li>Foundation of event-driven architectures and reactive programming</li>
+      </ul>
+      <div class="topic-links">
+        <a href="https://refactoring.guru/design-patterns/observer" target="_blank">Refactoring Guru &mdash; Observer</a>
+        <a href="https://www.baeldung.com/java-observer-pattern" target="_blank">Baeldung &mdash; Observer</a>
+        <a href="https://sourcemaking.com/design_patterns/observer" target="_blank">SourceMaking &mdash; Observer</a>
+      </div>
+    </div>
+
+    <div class="topic-card" id="topic-251">
+      <h4>Command <span class="topic-id">#251</span></h4>
+      <p class="desc"><strong>Intent:</strong> Encapsulate a request as an object, allowing parameterization, queuing, logging, and undo/redo operations. <strong>When to use:</strong> Task queues, macro recording, transactional systems.</p>
+      <ul>
+        <li>Command object encapsulates receiver + action + parameters</li>
+        <li>Invoker triggers execute(); knows nothing about the receiver</li>
+        <li>Enables undo by storing command history and calling unexecute()</li>
+        <li>Java context: Runnable is a simple command pattern (no undo)</li>
+      </ul>
+      <div class="topic-links">
+        <a href="https://refactoring.guru/design-patterns/command" target="_blank">Refactoring Guru &mdash; Command</a>
+        <a href="https://www.baeldung.com/java-command-pattern" target="_blank">Baeldung &mdash; Command</a>
+        <a href="https://sourcemaking.com/design_patterns/command" target="_blank">SourceMaking &mdash; Command</a>
+      </div>
+    </div>
+
+    <div class="topic-card" id="topic-252">
+      <h4>Chain of Responsibility <span class="topic-id">#252</span></h4>
+      <p class="desc"><strong>Intent:</strong> Pass a request along a chain of handlers until one handles it. Decouples sender from receiver. <strong>When to use:</strong> Servlet filters, logging frameworks, approval workflows.</p>
+      <ul>
+        <li>Each handler decides to process or pass to the next handler</li>
+        <li>Java context: javax.servlet.Filter chain, Spring Security filter chain</li>
+        <li>Can also allow all handlers to process (interceptor/pipeline variant)</li>
+        <li>Order of handlers matters &mdash; configure chain carefully</li>
+      </ul>
+      <div class="topic-links">
+        <a href="https://refactoring.guru/design-patterns/chain-of-responsibility" target="_blank">Refactoring Guru &mdash; Chain of Responsibility</a>
+        <a href="https://www.baeldung.com/chain-of-responsibility-pattern" target="_blank">Baeldung &mdash; Chain of Responsibility</a>
+        <a href="https://sourcemaking.com/design_patterns/chain_of_responsibility" target="_blank">SourceMaking &mdash; Chain of Responsibility</a>
+      </div>
+    </div>
+
+    <div class="topic-card" id="topic-253">
+      <h4>State Machine <span class="topic-id">#253</span></h4>
+      <p class="desc"><strong>Intent:</strong> Allow an object to alter its behavior when its internal state changes. The object appears to change its class. <strong>When to use:</strong> Order lifecycle, vending machines, document workflows.</p>
+      <ul>
+        <li>Context delegates behavior to the current State object</li>
+        <li>Each state class encapsulates transitions to other states</li>
+        <li>Eliminates complex switch/if-else state management code</li>
+        <li>Java context: Spring State Machine library; order status transitions</li>
+        <li>Common interview LLD problem: vending machine uses State pattern internally</li>
+      </ul>
+      <div class="topic-links">
+        <a href="https://refactoring.guru/design-patterns/state" target="_blank">Refactoring Guru &mdash; State</a>
+        <a href="https://www.baeldung.com/java-state-design-pattern" target="_blank">Baeldung &mdash; State Pattern</a>
+        <a href="https://sourcemaking.com/design_patterns/state" target="_blank">SourceMaking &mdash; State</a>
+      </div>
+    </div>
+
+    <div class="topic-card" id="topic-254">
+      <h4>Template Method <span class="topic-id">#254</span></h4>
+      <p class="desc"><strong>Intent:</strong> Define the skeleton of an algorithm in a superclass, letting subclasses override specific steps. <strong>When to use:</strong> Frameworks, data parsers, test fixtures with setup/teardown.</p>
+      <ul>
+        <li>Abstract class defines the template method (final) calling abstract steps</li>
+        <li>Subclasses implement the variable steps; skeleton stays unchanged</li>
+        <li>Hollywood Principle: "Don't call us, we'll call you"</li>
+        <li>Java context: HttpServlet's doGet/doPost, JUnit's setUp/tearDown</li>
+      </ul>
+      <div class="topic-links">
+        <a href="https://refactoring.guru/design-patterns/template-method" target="_blank">Refactoring Guru &mdash; Template Method</a>
+        <a href="https://www.baeldung.com/java-template-method-pattern" target="_blank">Baeldung &mdash; Template Method</a>
+        <a href="https://sourcemaking.com/design_patterns/template_method" target="_blank">SourceMaking &mdash; Template Method</a>
+      </div>
+    </div>
+
+    <div class="topic-card" id="topic-255">
+      <h4>Iterator <span class="topic-id">#255</span></h4>
+      <p class="desc"><strong>Intent:</strong> Provide a way to access elements of a collection sequentially without exposing its underlying representation. <strong>When to use:</strong> Custom collections, tree traversals, streaming data.</p>
+      <ul>
+        <li>Java's Iterable / Iterator interfaces are the canonical implementation</li>
+        <li>Enhanced for-loop (for-each) uses Iterator under the hood</li>
+        <li>Fail-fast iterators throw ConcurrentModificationException</li>
+        <li>Java context: custom Iterator for a linked list or tree structure</li>
+      </ul>
+      <div class="topic-links">
+        <a href="https://refactoring.guru/design-patterns/iterator" target="_blank">Refactoring Guru &mdash; Iterator</a>
+        <a href="https://www.baeldung.com/java-iterator" target="_blank">Baeldung &mdash; Iterator</a>
+        <a href="https://sourcemaking.com/design_patterns/iterator" target="_blank">SourceMaking &mdash; Iterator</a>
+      </div>
+    </div>
+  </div><!-- /Behavioral Patterns -->
+</div><!-- /section-design-patterns -->
+
+
+<!-- ================================================================ -->
+<!--  SECTION 3 — LLD PRACTICE PROBLEMS                              -->
+<!-- ================================================================ -->
+<div class="section" id="section-lld-practice">
+  <div class="section-heading">
+    <h2>LLD Practice Problems</h2>
+    <span class="context-badge context-full-focus">Full-Focus</span>
+  </div>
+
+  <div class="tip-callout">
+    <strong>Tip:</strong> Code these fully in Java &mdash; not just class diagrams. Focus on extensibility, not just correctness. Interviewers evaluate your use of SOLID, patterns, and clean separation of concerns.
+  </div>
+
+  <!-- Category: LLD Tier 1 — Must Code -->
+  <div class="category">
+    <h3 class="category-heading">LLD Tier 1 &mdash; Must Code</h3>
+
+    <div class="topic-card" id="topic-256">
+      <h4>Parking Lot System <span class="topic-id">#256</span></h4>
+      <p class="desc">Design a multi-floor parking lot with different vehicle types, entry/exit gates, and billing. One of the most frequently asked LLD problems.</p>
+      <ul>
+        <li><strong>Key classes:</strong> ParkingLot, Floor, ParkingSpot (Compact/Large/Handicapped), Vehicle, Ticket, EntryGate, ExitGate</li>
+        <li><strong>Design challenge:</strong> Spot allocation strategy (nearest to entry, per floor), vehicle-to-spot mapping</li>
+        <li>Use Strategy pattern for spot assignment; Observer for availability updates</li>
+        <li>Handle concurrent entry/exit with thread-safe spot reservation</li>
+        <li>Pricing: hourly rates, flat rates, per-vehicle-type &mdash; use Strategy pattern</li>
+      </ul>
+      <div class="topic-links">
+        <a href="https://www.baeldung.com/java-oop" target="_blank">Baeldung &mdash; OOP Concepts</a>
+        <a href="https://refactoring.guru/design-patterns/strategy" target="_blank">Refactoring Guru &mdash; Strategy</a>
+      </div>
+    </div>
+
+    <div class="topic-card" id="topic-257">
+      <h4>Elevator / Lift System <span class="topic-id">#257</span></h4>
+      <p class="desc">Design an elevator control system for a building with multiple elevators. Tests your ability to model state transitions and scheduling algorithms.</p>
+      <ul>
+        <li><strong>Key classes:</strong> Building, ElevatorController, Elevator, Request (internal/external), Door, Display</li>
+        <li><strong>Design challenge:</strong> Elevator scheduling algorithm (SCAN, LOOK, shortest-seek-first)</li>
+        <li>Use State pattern for elevator states: IDLE, MOVING_UP, MOVING_DOWN, DOOR_OPEN</li>
+        <li>Strategy pattern for the dispatching algorithm</li>
+        <li>Handle edge cases: overweight, emergency stop, maintenance mode</li>
+      </ul>
+      <div class="topic-links">
+        <a href="https://refactoring.guru/design-patterns/state" target="_blank">Refactoring Guru &mdash; State Pattern</a>
+        <a href="https://refactoring.guru/design-patterns/strategy" target="_blank">Refactoring Guru &mdash; Strategy Pattern</a>
+      </div>
+    </div>
+
+    <div class="topic-card" id="topic-258">
+      <h4>Library Management <span class="topic-id">#258</span></h4>
+      <p class="desc">Design a library system that manages books, members, borrowing, returns, and fines. Focuses on clean entity modeling and business rules.</p>
+      <ul>
+        <li><strong>Key classes:</strong> Library, Book, BookItem (physical copy), Member, Librarian, Loan, Fine, Catalog</li>
+        <li><strong>Design challenge:</strong> Distinguishing Book (metadata) from BookItem (physical copy); reservation and waitlist logic</li>
+        <li>Search catalog by title, author, ISBN, subject &mdash; use Catalog with search strategies</li>
+        <li>Fine calculation: per-day overdue, max cap, waiver rules</li>
+        <li>Notification system for due dates (Observer pattern)</li>
+      </ul>
+      <div class="topic-links">
+        <a href="https://refactoring.guru/design-patterns/observer" target="_blank">Refactoring Guru &mdash; Observer</a>
+        <a href="https://www.baeldung.com/java-oop" target="_blank">Baeldung &mdash; OOP Concepts</a>
+      </div>
+    </div>
+
+    <div class="topic-card" id="topic-259">
+      <h4>Chess Game <span class="topic-id">#259</span></h4>
+      <p class="desc">Design a two-player chess game. Tests inheritance hierarchies, move validation, and game state management.</p>
+      <ul>
+        <li><strong>Key classes:</strong> Game, Board, Cell, Piece (King/Queen/Rook/Bishop/Knight/Pawn), Player, Move</li>
+        <li><strong>Design challenge:</strong> Move validation per piece type; check/checkmate detection</li>
+        <li>Piece hierarchy with abstract isValidMove(Board, source, dest) method</li>
+        <li>Special moves: castling, en passant, pawn promotion</li>
+        <li>Game state: ACTIVE, CHECK, CHECKMATE, STALEMATE, RESIGNED</li>
+      </ul>
+      <div class="topic-links">
+        <a href="https://refactoring.guru/design-patterns/template-method" target="_blank">Refactoring Guru &mdash; Template Method</a>
+        <a href="https://sourcemaking.com/design_patterns/strategy" target="_blank">SourceMaking &mdash; Strategy</a>
+      </div>
+    </div>
+
+    <div class="topic-card" id="topic-260">
+      <h4>Snake and Ladder <span class="topic-id">#260</span></h4>
+      <p class="desc">Design a Snake and Ladder board game for multiple players. Simpler than chess but tests clean game-loop modeling.</p>
+      <ul>
+        <li><strong>Key classes:</strong> Game, Board, Cell, Snake, Ladder, Player, Dice</li>
+        <li><strong>Design challenge:</strong> Board initialization with snakes/ladders; turn-based game loop</li>
+        <li>Dice can be configurable (number of dice, faces per die)</li>
+        <li>Handle edge cases: snake at 99, multiple snakes/ladders in sequence</li>
+        <li>Easy to extend: power-ups, mines, multiplayer variations</li>
+      </ul>
+      <div class="topic-links">
+        <a href="https://www.baeldung.com/java-oop" target="_blank">Baeldung &mdash; OOP Concepts</a>
+        <a href="https://refactoring.guru/design-patterns" target="_blank">Refactoring Guru &mdash; Design Patterns</a>
+      </div>
+    </div>
+
+    <div class="topic-card" id="topic-261">
+      <h4>ATM Machine <span class="topic-id">#261</span></h4>
+      <p class="desc">Design an ATM system supporting withdrawal, deposit, balance inquiry, and PIN verification. Classic State pattern application.</p>
+      <ul>
+        <li><strong>Key classes:</strong> ATM, ATMState (Idle/CardInserted/PINValidation/Transaction), CashDispenser, Account, Card, Transaction</li>
+        <li><strong>Design challenge:</strong> State transitions and cash denomination dispensing (greedy algorithm)</li>
+        <li>State pattern for ATM states; Chain of Responsibility for cash dispensing</li>
+        <li>Handle: insufficient funds, card retained, daily withdrawal limits</li>
+        <li>Transaction types: Withdrawal, Deposit, BalanceInquiry, Transfer</li>
+      </ul>
+      <div class="topic-links">
+        <a href="https://refactoring.guru/design-patterns/state" target="_blank">Refactoring Guru &mdash; State Pattern</a>
+        <a href="https://refactoring.guru/design-patterns/chain-of-responsibility" target="_blank">Refactoring Guru &mdash; Chain of Responsibility</a>
+      </div>
+    </div>
+
+    <div class="topic-card" id="topic-262">
+      <h4>Tic-tac-toe / Connect Four <span class="topic-id">#262</span></h4>
+      <p class="desc">Design a generalized board game (NxN tic-tac-toe or Connect Four). Tests clean abstractions and win-condition checking.</p>
+      <ul>
+        <li><strong>Key classes:</strong> Game, Board, Cell, Player, Piece, WinConditionChecker</li>
+        <li><strong>Design challenge:</strong> Generalizing board size (NxN) and win-condition (K in a row)</li>
+        <li>Strategy pattern for win-checking algorithms (row, column, diagonal scans)</li>
+        <li>Undo support via Command pattern (optional but impressive)</li>
+        <li>Extensible to AI player: plug in a MoveStrategy (Minimax, random)</li>
+      </ul>
+      <div class="topic-links">
+        <a href="https://refactoring.guru/design-patterns/strategy" target="_blank">Refactoring Guru &mdash; Strategy</a>
+        <a href="https://refactoring.guru/design-patterns/command" target="_blank">Refactoring Guru &mdash; Command</a>
+      </div>
+    </div>
+  </div><!-- /Tier 1 -->
+
+  <!-- Category: LLD Tier 2 — Important -->
+  <div class="category">
+    <h3 class="category-heading">LLD Tier 2 &mdash; Important</h3>
+
+    <div class="topic-card" id="topic-263">
+      <h4>Hotel Management <span class="topic-id">#263</span></h4>
+      <p class="desc">Design a hotel booking and management system. Tests reservation workflows, room allocation, and billing.</p>
+      <ul>
+        <li><strong>Key classes:</strong> Hotel, Room (Single/Double/Suite), Reservation, Guest, Payment, HouseKeeping, RoomKey</li>
+        <li><strong>Design challenge:</strong> Room availability calendar, overbooking strategy, check-in/check-out flow</li>
+        <li>Search rooms by date range, type, floor preference</li>
+        <li>State pattern for room status: AVAILABLE, RESERVED, OCCUPIED, MAINTENANCE</li>
+        <li>Observer for housekeeping notifications on checkout</li>
+      </ul>
+      <div class="topic-links">
+        <a href="https://refactoring.guru/design-patterns/state" target="_blank">Refactoring Guru &mdash; State</a>
+        <a href="https://www.baeldung.com/java-oop" target="_blank">Baeldung &mdash; OOP Concepts</a>
+      </div>
+    </div>
+
+    <div class="topic-card" id="topic-264">
+      <h4>Ride-sharing LLD (Ola/Uber) <span class="topic-id">#264</span></h4>
+      <p class="desc">Design a ride-sharing service with riders, drivers, matching, trip lifecycle, and pricing. A complex, real-world system design scaled down to LLD.</p>
+      <ul>
+        <li><strong>Key classes:</strong> Rider, Driver, Trip, Location, RideRequest, PricingStrategy, DriverMatchingStrategy, Payment</li>
+        <li><strong>Design challenge:</strong> Driver-rider matching algorithm and pricing strategy (surge, flat, distance-based)</li>
+        <li>Strategy for matching: nearest driver, highest rated, ride-type preference</li>
+        <li>Trip states: REQUESTED, DRIVER_ASSIGNED, IN_PROGRESS, COMPLETED, CANCELLED</li>
+        <li>Observer pattern to notify rider of driver location updates</li>
+      </ul>
+      <div class="topic-links">
+        <a href="https://refactoring.guru/design-patterns/strategy" target="_blank">Refactoring Guru &mdash; Strategy</a>
+        <a href="https://refactoring.guru/design-patterns/observer" target="_blank">Refactoring Guru &mdash; Observer</a>
+      </div>
+    </div>
+
+    <div class="topic-card" id="topic-265">
+      <h4>Movie Ticket Booking (BookMyShow) <span class="topic-id">#265</span></h4>
+      <p class="desc">Design an online movie ticket booking system with theaters, shows, seat selection, and payment. Tests concurrency and seat locking.</p>
+      <ul>
+        <li><strong>Key classes:</strong> Theater, Screen, Show, Movie, Seat (Premium/Regular), Booking, Payment, SeatLock</li>
+        <li><strong>Design challenge:</strong> Concurrent seat selection &mdash; temporary seat locks with TTL to prevent double booking</li>
+        <li>Search: movies by city, shows by movie, available seats by show</li>
+        <li>Seat lock mechanism: optimistic locking or distributed lock with expiry</li>
+        <li>Pricing: base + seat-type premium + time-of-day surcharge</li>
+      </ul>
+      <div class="topic-links">
+        <a href="https://www.baeldung.com/java-concurrent-locks" target="_blank">Baeldung &mdash; Concurrent Locks</a>
+        <a href="https://refactoring.guru/design-patterns/strategy" target="_blank">Refactoring Guru &mdash; Strategy</a>
+      </div>
+    </div>
+
+    <div class="topic-card" id="topic-266">
+      <h4>Food Delivery (Swiggy LLD) <span class="topic-id">#266</span></h4>
+      <p class="desc">Design a food delivery platform with restaurants, menus, orders, delivery assignment, and tracking. Multi-entity coordination challenge.</p>
+      <ul>
+        <li><strong>Key classes:</strong> Restaurant, Menu, MenuItem, Cart, Order, DeliveryAgent, Customer, Payment, OrderTracker</li>
+        <li><strong>Design challenge:</strong> Order lifecycle management, delivery agent assignment, ETA estimation</li>
+        <li>Strategy for agent assignment: nearest, least-loaded, cuisine-expertise</li>
+        <li>Observer for real-time order status updates to customer</li>
+        <li>Order states: PLACED, CONFIRMED, PREPARING, OUT_FOR_DELIVERY, DELIVERED, CANCELLED</li>
+      </ul>
+      <div class="topic-links">
+        <a href="https://refactoring.guru/design-patterns/observer" target="_blank">Refactoring Guru &mdash; Observer</a>
+        <a href="https://refactoring.guru/design-patterns/state" target="_blank">Refactoring Guru &mdash; State</a>
+      </div>
+    </div>
+
+    <div class="topic-card" id="topic-267">
+      <h4>Splitwise <span class="topic-id">#267</span></h4>
+      <p class="desc">Design an expense-sharing app with groups, expenses, split strategies, and balance settlement. Tests algorithmic thinking within LLD.</p>
+      <ul>
+        <li><strong>Key classes:</strong> User, Group, Expense, Split (Equal/Exact/Percentage), BalanceSheet, Transaction</li>
+        <li><strong>Design challenge:</strong> Multiple split strategies and minimum-transaction settlement algorithm</li>
+        <li>Strategy pattern for split types: EqualSplit, ExactSplit, PercentageSplit</li>
+        <li>Balance simplification: minimize number of transactions using net-balance approach</li>
+        <li>Handle: group expenses, 1-on-1 expenses, partial settlements</li>
+      </ul>
+      <div class="topic-links">
+        <a href="https://refactoring.guru/design-patterns/strategy" target="_blank">Refactoring Guru &mdash; Strategy</a>
+        <a href="https://www.baeldung.com/java-oop" target="_blank">Baeldung &mdash; OOP Concepts</a>
+      </div>
+    </div>
+
+    <div class="topic-card" id="topic-268">
+      <h4>Vending Machine <span class="topic-id">#268</span></h4>
+      <p class="desc">Design a vending machine that accepts coins/notes, dispenses products, and returns change. The canonical State pattern problem.</p>
+      <ul>
+        <li><strong>Key classes:</strong> VendingMachine, State (Idle/HasMoney/Dispensing/OutOfStock), Product, Inventory, Coin, CashRegister</li>
+        <li><strong>Design challenge:</strong> State transitions and change-making algorithm (coin denomination selection)</li>
+        <li>State pattern is the backbone: each state handles insertCoin, selectProduct, dispense differently</li>
+        <li>Chain of Responsibility for change dispensing by denomination</li>
+        <li>Handle: insufficient funds, out of stock, exact change only mode</li>
+      </ul>
+      <div class="topic-links">
+        <a href="https://refactoring.guru/design-patterns/state" target="_blank">Refactoring Guru &mdash; State</a>
+        <a href="https://refactoring.guru/design-patterns/chain-of-responsibility" target="_blank">Refactoring Guru &mdash; Chain of Responsibility</a>
+      </div>
+    </div>
+
+    <div class="topic-card" id="topic-269">
+      <h4>Online Auction <span class="topic-id">#269</span></h4>
+      <p class="desc">Design an online auction system with listings, bidding, auto-bid, and winner determination. Tests event-driven modeling and timing.</p>
+      <ul>
+        <li><strong>Key classes:</strong> Auction, Item, Bid, User (Seller/Bidder), AuctionTimer, AutoBidRule, Notification</li>
+        <li><strong>Design challenge:</strong> Concurrent bidding, auto-bid logic, auction end timing</li>
+        <li>Observer for bid notifications to all watchers of an auction</li>
+        <li>Strategy for auction types: English (ascending), Dutch (descending), sealed-bid</li>
+        <li>Handle: reserve price, bid increment rules, snipe protection (time extension)</li>
+      </ul>
+      <div class="topic-links">
+        <a href="https://refactoring.guru/design-patterns/observer" target="_blank">Refactoring Guru &mdash; Observer</a>
+        <a href="https://refactoring.guru/design-patterns/strategy" target="_blank">Refactoring Guru &mdash; Strategy</a>
+      </div>
+    </div>
+  </div><!-- /Tier 2 -->
+
+  <!-- Category: LLD Tier 3 — Good to Have -->
+  <div class="category">
+    <h3 class="category-heading">LLD Tier 3 &mdash; Good to Have</h3>
+
+    <div class="topic-card" id="topic-270">
+      <h4>Stock Exchange Order Matching <span class="topic-id">#270</span></h4>
+      <p class="desc">Design an order matching engine for a stock exchange. Tests data-structure selection and concurrent order processing.</p>
+      <ul>
+        <li><strong>Key classes:</strong> OrderBook, Order (Buy/Sell/Limit/Market), Trade, Stock, Trader, MatchingEngine</li>
+        <li><strong>Design challenge:</strong> Price-time priority matching using sorted order books (TreeMap or priority queue)</li>
+        <li>Matching algorithm: best bid meets best ask; partial fills</li>
+        <li>Thread-safe order book with concurrent read/write access</li>
+        <li>Handle: market orders, limit orders, cancel/modify, partial execution</li>
+      </ul>
+      <div class="topic-links">
+        <a href="https://www.baeldung.com/java-treemap" target="_blank">Baeldung &mdash; TreeMap</a>
+        <a href="https://www.baeldung.com/java-concurrent-locks" target="_blank">Baeldung &mdash; Concurrent Locks</a>
+      </div>
+    </div>
+
+    <div class="topic-card" id="topic-271">
+      <h4>Traffic Light Controller <span class="topic-id">#271</span></h4>
+      <p class="desc">Design a traffic light controller for a multi-way intersection. Tests state machines and timing coordination.</p>
+      <ul>
+        <li><strong>Key classes:</strong> Intersection, TrafficLight, LightState (RED/YELLOW/GREEN), Controller, Timer, EmergencyOverride</li>
+        <li><strong>Design challenge:</strong> Coordinating multiple lights so conflicting directions are never green simultaneously</li>
+        <li>State pattern for each light; Controller manages the phase sequence</li>
+        <li>Handle: pedestrian crossing signals, emergency vehicle preemption, sensor-triggered phases</li>
+        <li>Configurable phase durations per intersection</li>
+      </ul>
+      <div class="topic-links">
+        <a href="https://refactoring.guru/design-patterns/state" target="_blank">Refactoring Guru &mdash; State</a>
+        <a href="https://sourcemaking.com/design_patterns/state" target="_blank">SourceMaking &mdash; State</a>
+      </div>
+    </div>
+
+    <div class="topic-card" id="topic-272">
+      <h4>Log Parser System <span class="topic-id">#272</span></h4>
+      <p class="desc">Design a configurable log parsing and aggregation system. Tests Chain of Responsibility and extensible architecture.</p>
+      <ul>
+        <li><strong>Key classes:</strong> LogParser, LogEntry, Filter, Aggregator, Alert, Sink (Console/File/DB), Pipeline</li>
+        <li><strong>Design challenge:</strong> Pluggable pipeline of parsers, filters, and sinks without modifying core engine</li>
+        <li>Chain of Responsibility for filter pipeline (severity, regex, time-range)</li>
+        <li>Strategy for output sinks: console, file, database, alerting</li>
+        <li>Builder pattern for constructing complex pipeline configurations</li>
+      </ul>
+      <div class="topic-links">
+        <a href="https://refactoring.guru/design-patterns/chain-of-responsibility" target="_blank">Refactoring Guru &mdash; Chain of Responsibility</a>
+        <a href="https://refactoring.guru/design-patterns/builder" target="_blank">Refactoring Guru &mdash; Builder</a>
+      </div>
+    </div>
+  </div><!-- /Tier 3 -->
+</div><!-- /section-lld-practice -->
+
+
+<!-- ================================================================ -->
+<!--  SECTION 4 — CONCURRENCY IN LLD                                 -->
+<!-- ================================================================ -->
+<div class="section" id="section-concurrency">
+  <div class="section-heading">
+    <h2>Concurrency in LLD</h2>
+    <span class="context-badge context-full-focus">Full-Focus</span>
+  </div>
+
+  <!-- Category: Concurrency Patterns -->
+  <div class="category">
+    <h3 class="category-heading">Concurrency Patterns</h3>
+
+    <div class="topic-card" id="topic-273">
+      <h4>Producer-Consumer with BlockingQueue <span class="topic-id">#273</span></h4>
+      <p class="desc">The foundational concurrency pattern where producers add items to a shared buffer and consumers remove them. BlockingQueue in Java handles synchronization internally.</p>
+      <ul>
+        <li>Use ArrayBlockingQueue (bounded) or LinkedBlockingQueue (optionally bounded)</li>
+        <li>put() blocks when full; take() blocks when empty &mdash; no manual wait/notify needed</li>
+        <li>Common in thread pool internals, message processing, and event-driven systems</li>
+        <li>Know how to implement a bounded buffer with wait/notify from scratch</li>
+        <li>Java context: ThreadPoolExecutor uses a BlockingQueue as its work queue</li>
+      </ul>
+      <div class="topic-links">
+        <a href="https://www.baeldung.com/java-blocking-queue" target="_blank">Baeldung &mdash; BlockingQueue</a>
+        <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/BlockingQueue.html" target="_blank">Oracle Docs &mdash; BlockingQueue</a>
+      </div>
+    </div>
+
+    <div class="topic-card" id="topic-274">
+      <h4>Reader-Writer Lock Pattern <span class="topic-id">#274</span></h4>
+      <p class="desc">Allows multiple concurrent readers but exclusive access for writers. Optimizes throughput when reads vastly outnumber writes.</p>
+      <ul>
+        <li>Java's ReentrantReadWriteLock: readLock() for shared, writeLock() for exclusive</li>
+        <li>Write-starving risk: many readers can indefinitely delay a waiting writer</li>
+        <li>Fair vs unfair modes &mdash; fair mode prevents starvation but reduces throughput</li>
+        <li>StampedLock (Java 8+): optimistic read locks for even better read performance</li>
+        <li>Use case: caches, configuration stores, in-memory databases</li>
+      </ul>
+      <div class="topic-links">
+        <a href="https://www.baeldung.com/java-read-write-lock" target="_blank">Baeldung &mdash; ReadWriteLock</a>
+        <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/locks/ReentrantReadWriteLock.html" target="_blank">Oracle Docs &mdash; ReentrantReadWriteLock</a>
+      </div>
+    </div>
+
+    <div class="topic-card" id="topic-275">
+      <h4>Thread-safe Singleton Variants <span class="topic-id">#275</span></h4>
+      <p class="desc">Multiple approaches to making Singleton thread-safe in Java, each with different performance and laziness characteristics.</p>
+      <ul>
+        <li>Eager initialization: static final field, simplest but not lazy</li>
+        <li>Synchronized getInstance(): lazy but high contention on every call</li>
+        <li>Double-checked locking: volatile + sync block, lazy with low contention</li>
+        <li>Bill Pugh (static inner class holder): lazy, thread-safe, no synchronization overhead</li>
+        <li>Enum singleton: immune to serialization and reflection attacks</li>
+      </ul>
+      <div class="topic-links">
+        <a href="https://www.baeldung.com/java-singleton-double-checked-locking" target="_blank">Baeldung &mdash; Double-checked Locking</a>
+        <a href="https://refactoring.guru/design-patterns/singleton" target="_blank">Refactoring Guru &mdash; Singleton</a>
+        <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/enum.html" target="_blank">Oracle Docs &mdash; Enum Types</a>
+      </div>
+    </div>
+
+    <div class="topic-card" id="topic-276">
+      <h4>Semaphore-based Rate Limiter <span class="topic-id">#276</span></h4>
+      <p class="desc">Using Semaphore to limit concurrent access to a resource. A practical concurrency primitive for rate limiting and connection pooling.</p>
+      <ul>
+        <li>Semaphore(permits): acquire() decrements, release() increments</li>
+        <li>tryAcquire(timeout) for non-blocking rate limiting with fallback</li>
+        <li>Token bucket / leaky bucket algorithms often use Semaphore internally</li>
+        <li>Java context: limiting concurrent database connections or API calls</li>
+        <li>Compare with: RateLimiter from Guava (token-bucket, time-based)</li>
+      </ul>
+      <div class="topic-links">
+        <a href="https://www.baeldung.com/java-semaphore" target="_blank">Baeldung &mdash; Semaphore</a>
+        <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Semaphore.html" target="_blank">Oracle Docs &mdash; Semaphore</a>
+      </div>
+    </div>
+
+    <div class="topic-card" id="topic-277">
+      <h4>ExecutorService Task Dispatch <span class="topic-id">#277</span></h4>
+      <p class="desc">Using Java's ExecutorService framework to manage thread pools and dispatch tasks. The standard way to handle concurrency in production Java.</p>
+      <ul>
+        <li>Executors.newFixedThreadPool(), newCachedThreadPool(), newScheduledThreadPool()</li>
+        <li>submit() returns Future; invokeAll() for batch execution</li>
+        <li>CompletableFuture for composable async pipelines (thenApply, thenCompose, allOf)</li>
+        <li>Graceful shutdown: shutdown() + awaitTermination() vs shutdownNow()</li>
+        <li>Custom ThreadPoolExecutor: core size, max size, queue type, rejection policy</li>
+      </ul>
+      <div class="topic-links">
+        <a href="https://www.baeldung.com/java-executor-service-tutorial" target="_blank">Baeldung &mdash; ExecutorService</a>
+        <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ExecutorService.html" target="_blank">Oracle Docs &mdash; ExecutorService</a>
+        <a href="https://www.baeldung.com/java-completablefuture" target="_blank">Baeldung &mdash; CompletableFuture</a>
+      </div>
+    </div>
+  </div><!-- /Concurrency Patterns -->
+</div><!-- /section-concurrency -->
+
+
+<!-- ================================================================ -->
+<!--  RECOMMENDED RESOURCES                                           -->
+<!-- ================================================================ -->
+<div class="resources-section" id="section-resources">
+  <h2>Recommended Resources</h2>
+  <div class="resources-grid">
+    <div class="resource-card">
+      <a href="https://refactoring.guru/design-patterns" target="_blank">Refactoring Guru &mdash; Design Patterns</a>
+      <p>Visual catalog of all GoF patterns with UML diagrams, real-world analogies, and code examples in multiple languages.</p>
+    </div>
+    <div class="resource-card">
+      <a href="https://www.baeldung.com/java-tutorial" target="_blank">Baeldung &mdash; Java Tutorials</a>
+      <p>Comprehensive Java tutorials covering OOP, design patterns, concurrency, Spring, and more with production-grade examples.</p>
+    </div>
+    <div class="resource-card">
+      <a href="https://sourcemaking.com/design_patterns" target="_blank">SourceMaking &mdash; Design Patterns</a>
+      <p>Pattern catalog with intent, structure, participants, and consequences. Great for quick revision before interviews.</p>
+    </div>
+    <div class="resource-card">
+      <a href="https://docs.oracle.com/javase/tutorial/" target="_blank">Oracle Java Tutorials</a>
+      <p>Official Java tutorials covering language fundamentals, OOP, generics, concurrency, and the Collections framework.</p>
+    </div>
+    <div class="resource-card">
+      <a href="https://refactoring.guru/refactoring" target="_blank">Refactoring Guru &mdash; Refactoring</a>
+      <p>Code smells and refactoring techniques. Essential for SOLID principle application and writing clean, maintainable code.</p>
+    </div>
+    <div class="resource-card">
+      <a href="https://www.baeldung.com/java-concurrency" target="_blank">Baeldung &mdash; Java Concurrency</a>
+      <p>Deep dives into threads, locks, executors, CompletableFuture, and concurrent data structures in Java.</p>
+    </div>
+  </div>
+</div>
+
+</div><!-- /container -->
+</body>
+</html>

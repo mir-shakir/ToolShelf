@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pillar 7 — Observability &amp; Operations | SDE 2 Interview Prep</title>
+<style>
+  :root {
+    --bg-primary:#1a1b2e; --bg-secondary:#232540; --bg-tertiary:#2a2d4a; --bg-hover:#32355a;
+    --text-primary:#e2e4f0; --text-secondary:#a0a3bd; --text-muted:#6b6f8a; --border:#3a3d5c;
+    --accent:#6c63ff; --green:#4ade80; --green-bg:rgba(74,222,128,0.12);
+    --orange:#fb923c; --orange-bg:rgba(251,146,60,0.12); --red:#f87171; --red-bg:rgba(248,113,113,0.12);
+    --cyan:#22d3ee; --cyan-bg:rgba(34,211,238,0.12);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, sans-serif;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* ── Sticky Header ── */
+  .page-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--bg-secondary);
+    border-bottom: 1px solid var(--border);
+    padding: 16px 24px;
+    backdrop-filter: blur(12px);
+  }
+  .page-header .back-link {
+    color: var(--accent);
+    text-decoration: none;
+    font-size: 0.85rem;
+    display: inline-block;
+    margin-bottom: 4px;
+    transition: color 0.2s;
+  }
+  .page-header .back-link:hover { color: var(--cyan); }
+  .page-header h1 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 2px;
+  }
+  .page-header .subtitle {
+    font-size: 0.88rem;
+    color: var(--text-secondary);
+  }
+
+  /* ── Container ── */
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 32px 20px 80px;
+  }
+
+  /* ── Table of Contents ── */
+  .toc {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px 28px;
+    margin-bottom: 40px;
+  }
+  .toc h2 {
+    font-size: 1.1rem;
+    color: var(--accent);
+    margin-bottom: 14px;
+    font-weight: 600;
+  }
+  .toc ul { list-style: none; }
+  .toc li { margin-bottom: 8px; }
+  .toc a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 0.92rem;
+    transition: color 0.2s;
+  }
+  .toc a:hover { color: var(--accent); }
+  .toc .toc-badge {
+    display: inline-block;
+    font-size: 0.7rem;
+    padding: 1px 8px;
+    border-radius: 10px;
+    margin-left: 8px;
+    font-weight: 600;
+    vertical-align: middle;
+  }
+  .toc .badge-light { background: var(--green-bg); color: var(--green); }
+  .toc .badge-full { background: var(--red-bg); color: var(--red); }
+  .toc .badge-both { background: var(--orange-bg); color: var(--orange); }
+
+  /* ── Section Heading ── */
+  .section-heading {
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 48px 0 8px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--accent);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .context-badge {
+    display: inline-block;
+    font-size: 0.72rem;
+    padding: 3px 12px;
+    border-radius: 12px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+  }
+  .context-light { background: var(--green-bg); color: var(--green); }
+  .context-full { background: var(--red-bg); color: var(--red); }
+  .context-both { background: var(--orange-bg); color: var(--orange); }
+
+  /* ── Tip Callout ── */
+  .tip-callout {
+    background: var(--cyan-bg);
+    border-left: 4px solid var(--cyan);
+    border-radius: 0 8px 8px 0;
+    padding: 14px 18px;
+    margin: 12px 0 24px;
+    font-size: 0.88rem;
+    color: var(--text-secondary);
+  }
+  .tip-callout strong { color: var(--cyan); }
+
+  /* ── Category Sub-heading ── */
+  .category-heading {
+    font-size: 1.08rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin: 28px 0 14px;
+    padding-left: 14px;
+    border-left: 4px solid var(--accent);
+  }
+
+  /* ── Topic Card ── */
+  .topic-card {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px 22px;
+    margin-bottom: 16px;
+    transition: border-color 0.2s, background 0.2s;
+    scroll-margin-top: 80px;
+  }
+  .topic-card:hover {
+    border-color: var(--accent);
+    background: var(--bg-hover);
+  }
+  .topic-card .topic-name {
+    font-size: 1.02rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 6px;
+  }
+  .topic-card .topic-id {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    background: var(--bg-tertiary);
+    padding: 1px 8px;
+    border-radius: 8px;
+    margin-left: 8px;
+    font-weight: 500;
+  }
+  .topic-card .topic-desc {
+    font-size: 0.88rem;
+    color: var(--text-secondary);
+    margin-bottom: 12px;
+  }
+  .topic-card ul {
+    list-style: none;
+    margin-bottom: 12px;
+  }
+  .topic-card ul li {
+    position: relative;
+    padding-left: 18px;
+    font-size: 0.86rem;
+    color: var(--text-secondary);
+    margin-bottom: 5px;
+  }
+  .topic-card ul li::before {
+    content: '\25B8';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-size: 0.8rem;
+  }
+  .topic-card .resources {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 8px;
+  }
+  .topic-card .resources a {
+    font-size: 0.78rem;
+    color: var(--accent);
+    background: rgba(108,99,255,0.1);
+    padding: 3px 10px;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: background 0.2s;
+  }
+  .topic-card .resources a:hover {
+    background: rgba(108,99,255,0.25);
+  }
+
+  /* ── Recommended Resources ── */
+  .resources-section {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 28px;
+    margin-top: 48px;
+  }
+  .resources-section h2 {
+    font-size: 1.2rem;
+    color: var(--accent);
+    margin-bottom: 18px;
+    font-weight: 700;
+  }
+  .resources-section .res-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 14px;
+  }
+  .resources-section .res-item {
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 16px;
+    transition: border-color 0.2s;
+  }
+  .resources-section .res-item:hover { border-color: var(--accent); }
+  .resources-section .res-item a {
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+  }
+  .resources-section .res-item a:hover { text-decoration: underline; }
+  .resources-section .res-item p {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    margin-top: 4px;
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 640px) {
+    .page-header { padding: 12px 16px; }
+    .page-header h1 { font-size: 1.2rem; }
+    .container { padding: 20px 14px 60px; }
+    .toc { padding: 18px 16px; }
+    .topic-card { padding: 16px; }
+    .section-heading { font-size: 1.15rem; }
+    .resources-section .res-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════ HEADER ═══════════ -->
+<header class="page-header">
+  <a href="index.html" class="back-link">&larr; Back to Tracker</a>
+  <h1>Pillar 7 &mdash; Observability &amp; Operations</h1>
+  <p class="subtitle">How you keep production healthy &mdash; increasingly tested at SDE 2 level</p>
+</header>
+
+<div class="container">
+
+  <!-- ═══════════ TABLE OF CONTENTS ═══════════ -->
+  <nav class="toc">
+    <h2>Table of Contents</h2>
+    <ul>
+      <li><a href="#sec-three-pillars">1. Three Pillars of Observability</a> <span class="toc-badge badge-light">Light</span></li>
+      <li><a href="#sec-sli-slo-sla">2. SLI / SLO / SLA</a> <span class="toc-badge badge-light">Light</span></li>
+      <li><a href="#sec-perf-profiling">3. Performance Profiling</a> <span class="toc-badge badge-full">Full-Focus</span></li>
+      <li><a href="#sec-resources">Recommended Resources</a></li>
+    </ul>
+  </nav>
+
+  <!-- ═══════════════════════════════════════════════════════
+       SECTION 1 — THREE PILLARS OF OBSERVABILITY
+       ═══════════════════════════════════════════════════════ -->
+  <h2 id="sec-three-pillars" class="section-heading">
+    Three Pillars of Observability
+    <span class="context-badge context-light">Light</span>
+  </h2>
+  <div class="tip-callout">
+    <strong>Interview tip:</strong> Interviewers expect SDE 2s to articulate how they would monitor a service from day one. Frame answers around metrics, logs, and traces as complementary signals &mdash; not substitutes. Be ready to sketch a Grafana dashboard for any system you design.
+  </div>
+
+  <!-- ── Category: Metrics ── -->
+  <h3 class="category-heading">Metrics</h3>
+
+  <!-- Topic 278 -->
+  <div class="topic-card" id="topic-278">
+    <div class="topic-name">RED Method (Rate, Errors, Duration) <span class="topic-id">#278</span></div>
+    <p class="topic-desc">A request-scoped monitoring methodology that measures the three golden signals for every microservice endpoint.</p>
+    <ul>
+      <li>Rate &mdash; requests per second your service is handling</li>
+      <li>Errors &mdash; the fraction of those requests that are failing (5xx, timeouts)</li>
+      <li>Duration &mdash; distribution of response latencies (use histograms, not averages)</li>
+      <li>Ideal for request-driven services; pairs with USE for infrastructure</li>
+      <li>Map each metric to a Prometheus counter or histogram in interviews</li>
+    </ul>
+    <div class="resources">
+      <a href="https://grafana.com/docs/grafana/latest/panels-visualizations/" target="_blank">Grafana Dashboards</a>
+      <a href="https://prometheus.io/docs/practices/instrumentation/" target="_blank">Prometheus Instrumentation</a>
+      <a href="https://sre.google/sre-book/monitoring-distributed-systems/" target="_blank">Google SRE &mdash; Monitoring</a>
+    </div>
+  </div>
+
+  <!-- Topic 279 -->
+  <div class="topic-card" id="topic-279">
+    <div class="topic-name">USE Method (Utilization, Saturation, Errors) <span class="topic-id">#279</span></div>
+    <p class="topic-desc">A resource-scoped methodology for analyzing infrastructure bottlenecks in CPUs, memory, disks, and network interfaces.</p>
+    <ul>
+      <li>Utilization &mdash; percentage of time the resource is busy (CPU%, disk I/O%)</li>
+      <li>Saturation &mdash; how much extra work is queued (run-queue length, swap usage)</li>
+      <li>Errors &mdash; count of error events (ECC errors, dropped packets)</li>
+      <li>Complementary to RED; USE targets infrastructure, RED targets application layer</li>
+      <li>In interviews, mention Brendan Gregg as the originator for credibility</li>
+    </ul>
+    <div class="resources">
+      <a href="https://www.brendangregg.com/usemethod.html" target="_blank">Brendan Gregg &mdash; USE Method</a>
+      <a href="https://prometheus.io/docs/guides/node-exporter/" target="_blank">Prometheus Node Exporter</a>
+      <a href="https://grafana.com/docs/grafana/latest/" target="_blank">Grafana Docs</a>
+    </div>
+  </div>
+
+  <!-- Topic 280 -->
+  <div class="topic-card" id="topic-280">
+    <div class="topic-name">Prometheus Data Model <span class="topic-id">#280</span></div>
+    <p class="topic-desc">Prometheus stores all data as time series &mdash; streams of timestamped values identified by a metric name plus key-value label pairs.</p>
+    <ul>
+      <li>Every time series is uniquely identified by its metric name and label set</li>
+      <li>Labels enable powerful dimensional queries (e.g., filter by service, method, status code)</li>
+      <li>High-cardinality labels (user IDs) are an anti-pattern &mdash; they explode storage</li>
+      <li>Pull-based scraping model simplifies service discovery vs. push-based agents</li>
+      <li>PromQL provides rate(), histogram_quantile(), and aggregation operators</li>
+    </ul>
+    <div class="resources">
+      <a href="https://prometheus.io/docs/concepts/data_model/" target="_blank">Prometheus Data Model</a>
+      <a href="https://prometheus.io/docs/prometheus/latest/querying/basics/" target="_blank">PromQL Basics</a>
+      <a href="https://prometheus.io/docs/practices/naming/" target="_blank">Metric Naming Best Practices</a>
+    </div>
+  </div>
+
+  <!-- Topic 281 -->
+  <div class="topic-card" id="topic-281">
+    <div class="topic-name">Gauge vs Counter vs Histogram <span class="topic-id">#281</span></div>
+    <p class="topic-desc">The three core Prometheus metric types serve fundamentally different use cases &mdash; choosing the wrong type leads to incorrect queries.</p>
+    <ul>
+      <li>Counter &mdash; monotonically increasing value (requests_total); use rate() to derive RPS</li>
+      <li>Gauge &mdash; value that goes up and down (temperature, queue depth, active connections)</li>
+      <li>Histogram &mdash; samples observations into configurable buckets (request_duration_seconds); enables percentile calculations</li>
+      <li>Summary is similar to histogram but computes quantiles client-side (cannot be aggregated across instances)</li>
+      <li>Interview trap: never use rate() on a gauge or take an average of a counter directly</li>
+    </ul>
+    <div class="resources">
+      <a href="https://prometheus.io/docs/concepts/metric_types/" target="_blank">Prometheus Metric Types</a>
+      <a href="https://prometheus.io/docs/practices/histograms/" target="_blank">Histograms &amp; Summaries</a>
+      <a href="https://www.baeldung.com/micrometer-prometheus" target="_blank">Baeldung &mdash; Micrometer + Prometheus</a>
+    </div>
+  </div>
+
+  <!-- Topic 282 -->
+  <div class="topic-card" id="topic-282">
+    <div class="topic-name">Alerting Thresholds <span class="topic-id">#282</span></div>
+    <p class="topic-desc">Designing alerts that fire on symptoms (high latency, error rate) rather than causes (CPU spike) reduces noise and improves incident response.</p>
+    <ul>
+      <li>Alert on SLO burn rate rather than static thresholds for adaptive sensitivity</li>
+      <li>Use multi-window alerting: fast burn (2%) over 1h AND slow burn (5%) over 6h</li>
+      <li>Avoid alert fatigue &mdash; every alert must have a runbook and require human action</li>
+      <li>Page for symptoms, ticket for causes, log for diagnostics</li>
+      <li>Prometheus alerting rules use the <code>for</code> clause to avoid transient spikes</li>
+    </ul>
+    <div class="resources">
+      <a href="https://sre.google/workbook/alerting-on-slos/" target="_blank">Google SRE Workbook &mdash; Alerting on SLOs</a>
+      <a href="https://prometheus.io/docs/alerting/latest/alertmanager/" target="_blank">Prometheus Alertmanager</a>
+      <a href="https://grafana.com/docs/grafana/latest/alerting/" target="_blank">Grafana Alerting</a>
+    </div>
+  </div>
+
+  <!-- ── Category: Logs ── -->
+  <h3 class="category-heading">Logs</h3>
+
+  <!-- Topic 283 -->
+  <div class="topic-card" id="topic-283">
+    <div class="topic-name">Structured Logging (JSON) <span class="topic-id">#283</span></div>
+    <p class="topic-desc">Emitting logs as structured JSON objects instead of plain text enables machine parsing, indexing, and querying at scale.</p>
+    <ul>
+      <li>Include standard fields: timestamp, level, service, traceId, spanId, message</li>
+      <li>Enables log aggregation tools (ELK, Loki) to index and filter without regex</li>
+      <li>Use MDC (Mapped Diagnostic Context) in Java/Spring to auto-attach request context</li>
+      <li>Avoid logging PII &mdash; mask sensitive fields at the logger level</li>
+      <li>Structured logs bridge the gap between logs and traces via correlation IDs</li>
+    </ul>
+    <div class="resources">
+      <a href="https://www.baeldung.com/java-structured-logging" target="_blank">Baeldung &mdash; Structured Logging in Java</a>
+      <a href="https://opentelemetry.io/docs/specs/otel/logs/" target="_blank">OpenTelemetry Logs Spec</a>
+      <a href="https://grafana.com/docs/loki/latest/" target="_blank">Grafana Loki Docs</a>
+    </div>
+  </div>
+
+  <!-- Topic 284 -->
+  <div class="topic-card" id="topic-284">
+    <div class="topic-name">Correlation IDs / Trace IDs <span class="topic-id">#284</span></div>
+    <p class="topic-desc">A unique identifier propagated across service boundaries so that every log, metric, and trace for a single request can be correlated.</p>
+    <ul>
+      <li>Generate a UUID/trace ID at the API gateway; propagate it via HTTP headers (X-Request-Id, traceparent)</li>
+      <li>Store in MDC/thread-local so every log line automatically includes it</li>
+      <li>Enables "search by traceId" in Kibana/Loki to reconstruct the full request journey</li>
+      <li>OpenTelemetry defines W3C Trace Context (traceparent header) as the standard</li>
+      <li>Critical for debugging in microservice architectures &mdash; without it, logs are isolated islands</li>
+    </ul>
+    <div class="resources">
+      <a href="https://opentelemetry.io/docs/concepts/context-propagation/" target="_blank">OTel Context Propagation</a>
+      <a href="https://www.baeldung.com/spring-cloud-sleuth" target="_blank">Baeldung &mdash; Spring Cloud Sleuth</a>
+      <a href="https://www.w3.org/TR/trace-context/" target="_blank">W3C Trace Context Spec</a>
+    </div>
+  </div>
+
+  <!-- Topic 285 -->
+  <div class="topic-card" id="topic-285">
+    <div class="topic-name">Log Levels Strategy <span class="topic-id">#285</span></div>
+    <p class="topic-desc">A disciplined log-level policy ensures that production logs are actionable without drowning operators in noise.</p>
+    <ul>
+      <li>ERROR &mdash; something failed that requires human attention (alerts trigger on this)</li>
+      <li>WARN &mdash; unexpected situation that the system handled but should be investigated</li>
+      <li>INFO &mdash; key business events (order placed, payment processed); keep minimal in production</li>
+      <li>DEBUG/TRACE &mdash; developer diagnostics; enable dynamically (Spring Boot Actuator, log level endpoint)</li>
+      <li>Interview point: explain how you would change log levels at runtime without redeploying</li>
+    </ul>
+    <div class="resources">
+      <a href="https://www.baeldung.com/spring-boot-logging" target="_blank">Baeldung &mdash; Spring Boot Logging</a>
+      <a href="https://sre.google/sre-book/monitoring-distributed-systems/" target="_blank">Google SRE &mdash; Monitoring</a>
+    </div>
+  </div>
+
+  <!-- Topic 286 -->
+  <div class="topic-card" id="topic-286">
+    <div class="topic-name">ELK / Loki Stack Overview <span class="topic-id">#286</span></div>
+    <p class="topic-desc">Centralized log aggregation stacks that collect, index, and visualize logs from distributed services for search and alerting.</p>
+    <ul>
+      <li>ELK: Elasticsearch (indexing + search) + Logstash (ingestion pipeline) + Kibana (visualization)</li>
+      <li>Loki: Grafana's log aggregation system; indexes only labels (not full text) for lower cost</li>
+      <li>Loki uses LogQL; Elasticsearch uses KQL/Lucene &mdash; know basic query syntax for interviews</li>
+      <li>Fluentd/Filebeat as log shippers that tail files and forward to the aggregation backend</li>
+      <li>Trade-off: ELK gives powerful full-text search; Loki is cheaper and integrates natively with Grafana</li>
+    </ul>
+    <div class="resources">
+      <a href="https://grafana.com/docs/loki/latest/" target="_blank">Grafana Loki Docs</a>
+      <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/index.html" target="_blank">Elasticsearch Reference</a>
+      <a href="https://www.baeldung.com/java-application-logs-to-elastic-stack" target="_blank">Baeldung &mdash; Java Logs to ELK</a>
+    </div>
+  </div>
+
+  <!-- ── Category: Traces ── -->
+  <h3 class="category-heading">Traces</h3>
+
+  <!-- Topic 287 -->
+  <div class="topic-card" id="topic-287">
+    <div class="topic-name">Distributed Tracing Concepts <span class="topic-id">#287</span></div>
+    <p class="topic-desc">Distributed tracing captures the end-to-end journey of a request across multiple services, representing it as a tree of spans.</p>
+    <ul>
+      <li>A trace is a directed acyclic graph of spans sharing the same trace ID</li>
+      <li>Each span has: operation name, start time, duration, tags/attributes, parent span ID</li>
+      <li>Root span represents the entry point (e.g., API gateway); child spans represent downstream calls</li>
+      <li>Reveals latency bottlenecks, fan-out patterns, and error propagation paths</li>
+      <li>Interview scenario: "Service A calls B and C in parallel; C calls D &mdash; draw the trace waterfall"</li>
+    </ul>
+    <div class="resources">
+      <a href="https://opentelemetry.io/docs/concepts/signals/traces/" target="_blank">OTel &mdash; Traces Concepts</a>
+      <a href="https://www.baeldung.com/spring-cloud-sleuth" target="_blank">Baeldung &mdash; Distributed Tracing</a>
+      <a href="https://sre.google/sre-book/monitoring-distributed-systems/" target="_blank">Google SRE &mdash; Monitoring</a>
+    </div>
+  </div>
+
+  <!-- Topic 288 -->
+  <div class="topic-card" id="topic-288">
+    <div class="topic-name">OpenTelemetry Instrumentation <span class="topic-id">#288</span></div>
+    <p class="topic-desc">OpenTelemetry (OTel) is the CNCF standard for generating, collecting, and exporting telemetry data &mdash; the vendor-neutral future of observability.</p>
+    <ul>
+      <li>Provides APIs and SDKs for metrics, traces, and logs in one unified framework</li>
+      <li>Auto-instrumentation via Java agent attaches to HTTP clients, JDBC, gRPC without code changes</li>
+      <li>Manual instrumentation with @WithSpan annotation or Tracer API for custom spans</li>
+      <li>OTel Collector acts as a pipeline: receives, processes (batching, sampling), and exports to backends</li>
+      <li>Export to Jaeger, Zipkin, Grafana Tempo, or any OTLP-compatible backend</li>
+    </ul>
+    <div class="resources">
+      <a href="https://opentelemetry.io/docs/instrumentation/java/" target="_blank">OTel Java Instrumentation</a>
+      <a href="https://opentelemetry.io/docs/collector/" target="_blank">OTel Collector Docs</a>
+      <a href="https://opentelemetry.io/docs/concepts/signals/" target="_blank">OTel Signals Overview</a>
+    </div>
+  </div>
+
+  <!-- Topic 289 -->
+  <div class="topic-card" id="topic-289">
+    <div class="topic-name">Jaeger / Zipkin <span class="topic-id">#289</span></div>
+    <p class="topic-desc">Popular open-source distributed tracing backends that store, query, and visualize trace data from instrumented services.</p>
+    <ul>
+      <li>Jaeger: Uber-origin, CNCF graduated; supports Cassandra/Elasticsearch as storage backends</li>
+      <li>Zipkin: Twitter-origin, mature ecosystem; uses a simpler architecture with fewer components</li>
+      <li>Both provide waterfall trace visualization, service dependency graphs, and latency analysis</li>
+      <li>Jaeger supports adaptive sampling; Zipkin uses simpler rate-based sampling</li>
+      <li>Modern trend: Grafana Tempo as a cost-effective alternative using object storage (S3)</li>
+    </ul>
+    <div class="resources">
+      <a href="https://www.jaegertracing.io/docs/latest/" target="_blank">Jaeger Documentation</a>
+      <a href="https://zipkin.io/" target="_blank">Zipkin.io</a>
+      <a href="https://grafana.com/docs/tempo/latest/" target="_blank">Grafana Tempo Docs</a>
+    </div>
+  </div>
+
+  <!-- Topic 290 -->
+  <div class="topic-card" id="topic-290">
+    <div class="topic-name">Trace Sampling Strategies <span class="topic-id">#290</span></div>
+    <p class="topic-desc">At high traffic volumes, tracing every request is impractical &mdash; sampling strategies balance observability coverage with storage and performance costs.</p>
+    <ul>
+      <li>Head-based sampling: decide at the entry point whether to trace (simple but may miss errors)</li>
+      <li>Tail-based sampling: decide after the trace completes (captures all errors/slow requests but requires buffering)</li>
+      <li>Probabilistic: sample a fixed percentage (e.g., 1%) &mdash; simple and predictable</li>
+      <li>Rate-limiting: cap traces per second to control costs</li>
+      <li>Always-sample for error traces and slow requests; probabilistic for normal traffic</li>
+    </ul>
+    <div class="resources">
+      <a href="https://opentelemetry.io/docs/concepts/sampling/" target="_blank">OTel &mdash; Sampling</a>
+      <a href="https://www.jaegertracing.io/docs/latest/sampling/" target="_blank">Jaeger Sampling</a>
+      <a href="https://opentelemetry.io/docs/collector/configuration/" target="_blank">OTel Collector Config</a>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════
+       SECTION 2 — SLI / SLO / SLA
+       ═══════════════════════════════════════════════════════ -->
+  <h2 id="sec-sli-slo-sla" class="section-heading">
+    SLI / SLO / SLA
+    <span class="context-badge context-light">Light</span>
+  </h2>
+  <div class="tip-callout">
+    <strong>Interview tip:</strong> SRE concepts are increasingly common in SDE 2 rounds. Be ready to define SLIs for any service you discuss, explain how error budgets drive release velocity, and describe what happens when an SLO is breached. Refer to the Google SRE books &mdash; interviewers notice.
+  </div>
+
+  <!-- ── Category: SLI/SLO/SLA ── -->
+  <h3 class="category-heading">SLI / SLO / SLA</h3>
+
+  <!-- Topic 291 -->
+  <div class="topic-card" id="topic-291">
+    <div class="topic-name">SLI Examples for APIs <span class="topic-id">#291</span></div>
+    <p class="topic-desc">Service Level Indicators are carefully chosen metrics that quantify how well your service is performing from the user's perspective.</p>
+    <ul>
+      <li>Availability SLI: proportion of successful requests (status != 5xx) / total requests</li>
+      <li>Latency SLI: proportion of requests completed within a threshold (e.g., p99 &lt; 300ms)</li>
+      <li>Throughput SLI: requests served per second within acceptable quality bounds</li>
+      <li>Correctness SLI: proportion of responses returning the right data (harder to measure, often via probes)</li>
+      <li>Interview pattern: "For a payment service, what SLIs would you define?" &mdash; availability + latency + correctness</li>
+    </ul>
+    <div class="resources">
+      <a href="https://sre.google/sre-book/service-level-objectives/" target="_blank">Google SRE &mdash; SLOs</a>
+      <a href="https://sre.google/workbook/implementing-slos/" target="_blank">SRE Workbook &mdash; Implementing SLOs</a>
+      <a href="https://prometheus.io/docs/practices/instrumentation/" target="_blank">Prometheus Instrumentation</a>
+    </div>
+  </div>
+
+  <!-- Topic 292 -->
+  <div class="topic-card" id="topic-292">
+    <div class="topic-name">Error Budget Concept <span class="topic-id">#292</span></div>
+    <p class="topic-desc">An error budget is the maximum allowable unreliability derived from your SLO &mdash; it quantifies how much risk you can take with deployments.</p>
+    <ul>
+      <li>If SLO is 99.9% availability, error budget is 0.1% &mdash; about 43 minutes of downtime per month</li>
+      <li>When budget is healthy, teams ship faster (more deployments, feature flags, experiments)</li>
+      <li>When budget is exhausted, freeze deployments and focus on reliability improvements</li>
+      <li>Creates a data-driven conversation between product velocity and operational stability</li>
+      <li>Interview angle: "How do you balance shipping fast with keeping services reliable?"</li>
+    </ul>
+    <div class="resources">
+      <a href="https://sre.google/sre-book/embracing-risk/" target="_blank">Google SRE &mdash; Embracing Risk</a>
+      <a href="https://sre.google/workbook/error-budget-policy/" target="_blank">SRE Workbook &mdash; Error Budget Policy</a>
+      <a href="https://sre.google/sre-book/service-level-objectives/" target="_blank">Google SRE &mdash; SLOs</a>
+    </div>
+  </div>
+
+  <!-- Topic 293 -->
+  <div class="topic-card" id="topic-293">
+    <div class="topic-name">SLO Violation Response <span class="topic-id">#293</span></div>
+    <p class="topic-desc">A well-defined escalation playbook for when your service breaches its SLO turns reliability conversations from reactive firefighting into structured process.</p>
+    <ul>
+      <li>Immediate: auto-alert on-call, open an incident channel, assess blast radius</li>
+      <li>Short-term: roll back recent changes, enable circuit breakers, scale up capacity</li>
+      <li>Post-incident: blameless postmortem documenting timeline, root cause, and action items</li>
+      <li>Policy response: if error budget is burned, freeze non-critical deployments until budget recovers</li>
+      <li>Track "time to detect" and "time to mitigate" as meta-SLIs for your incident process</li>
+    </ul>
+    <div class="resources">
+      <a href="https://sre.google/sre-book/postmortem-culture/" target="_blank">Google SRE &mdash; Postmortem Culture</a>
+      <a href="https://sre.google/workbook/error-budget-policy/" target="_blank">SRE Workbook &mdash; Error Budget Policy</a>
+      <a href="https://sre.google/sre-book/managing-incidents/" target="_blank">Google SRE &mdash; Managing Incidents</a>
+    </div>
+  </div>
+
+  <!-- Topic 294 -->
+  <div class="topic-card" id="topic-294">
+    <div class="topic-name">Toil vs Engineering Work <span class="topic-id">#294</span></div>
+    <p class="topic-desc">Toil is manual, repetitive, automatable, and tactical work that scales linearly with service growth &mdash; reducing it is a core SRE principle.</p>
+    <ul>
+      <li>Examples of toil: manually restarting pods, hand-editing configs, running routine migration scripts</li>
+      <li>Engineering work: writing automation, improving monitoring, capacity planning &mdash; work that reduces future toil</li>
+      <li>Google SRE targets &lt; 50% toil; exceeding that signals staffing or automation gaps</li>
+      <li>Measure toil by tracking time spent on repetitive operational tasks per sprint</li>
+      <li>Interview angle: "Tell me about a time you automated away a toil-heavy process"</li>
+    </ul>
+    <div class="resources">
+      <a href="https://sre.google/sre-book/eliminating-toil/" target="_blank">Google SRE &mdash; Eliminating Toil</a>
+      <a href="https://sre.google/workbook/eliminating-toil/" target="_blank">SRE Workbook &mdash; Eliminating Toil</a>
+      <a href="https://sre.google/sre-book/introduction/" target="_blank">Google SRE &mdash; Introduction</a>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════
+       SECTION 3 — PERFORMANCE PROFILING
+       ═══════════════════════════════════════════════════════ -->
+  <h2 id="sec-perf-profiling" class="section-heading">
+    Performance Profiling
+    <span class="context-badge context-full">Full-Focus</span>
+  </h2>
+  <div class="tip-callout">
+    <strong>Interview tip:</strong> Performance profiling questions test depth. Be ready to walk through a real scenario: "Your API latency spiked to 2s &mdash; how do you investigate?" Start with metrics (RED), narrow with traces, then profile the hot path. Know your tools (Async Profiler, flame graphs) and demonstrate you have actually used them.
+  </div>
+
+  <!-- ── Category: Performance ── -->
+  <h3 class="category-heading">Performance</h3>
+
+  <!-- Topic 295 -->
+  <div class="topic-card" id="topic-295">
+    <div class="topic-name">Async Profiler <span class="topic-id">#295</span></div>
+    <p class="topic-desc">A low-overhead sampling profiler for JVM applications that captures CPU, allocation, and lock profiles without the safepoint bias of traditional profilers.</p>
+    <ul>
+      <li>Uses AsyncGetCallTrace API to sample at any point, not just JVM safepoints &mdash; gives accurate CPU profiles</li>
+      <li>Supports CPU, wall-clock, allocation, and lock contention profiling modes</li>
+      <li>Can attach to a running JVM without restart: <code>asprof -d 30 -f profile.html &lt;pid&gt;</code></li>
+      <li>Generates flame graphs directly in HTML &mdash; no separate tools needed</li>
+      <li>Low overhead (typically &lt; 5%) makes it safe for production use with sampling enabled</li>
+    </ul>
+    <div class="resources">
+      <a href="https://github.com/async-profiler/async-profiler" target="_blank">Async Profiler GitHub</a>
+      <a href="https://www.baeldung.com/java-async-profiler" target="_blank">Baeldung &mdash; Async Profiler</a>
+      <a href="https://www.brendangregg.com/flamegraphs.html" target="_blank">Brendan Gregg &mdash; Flame Graphs</a>
+    </div>
+  </div>
+
+  <!-- Topic 296 -->
+  <div class="topic-card" id="topic-296">
+    <div class="topic-name">Flame Graphs Reading <span class="topic-id">#296</span></div>
+    <p class="topic-desc">Flame graphs are a visualization of profiled stack traces where the x-axis represents the proportion of samples and the y-axis represents stack depth.</p>
+    <ul>
+      <li>Width of a frame = percentage of total samples that include that function (wider = more time spent)</li>
+      <li>Y-axis is stack depth: bottom is the entry point, top is the leaf function doing actual work</li>
+      <li>X-axis ordering is alphabetical (not chronological) &mdash; a common misunderstanding</li>
+      <li>Look for "plateaus" (wide, flat tops) &mdash; these are the hot functions consuming the most CPU</li>
+      <li>Icicle graphs (inverted flame graphs) are useful for allocation profiling &mdash; top-down view</li>
+    </ul>
+    <div class="resources">
+      <a href="https://www.brendangregg.com/flamegraphs.html" target="_blank">Brendan Gregg &mdash; Flame Graphs</a>
+      <a href="https://www.baeldung.com/java-flame-graphs" target="_blank">Baeldung &mdash; Java Flame Graphs</a>
+      <a href="https://grafana.com/docs/pyroscope/latest/" target="_blank">Grafana Pyroscope</a>
+    </div>
+  </div>
+
+  <!-- Topic 297 -->
+  <div class="topic-card" id="topic-297">
+    <div class="topic-name">Thread Contention Analysis <span class="topic-id">#297</span></div>
+    <p class="topic-desc">Identifying lock contention and thread blocking is critical for diagnosing latency spikes in concurrent Java applications.</p>
+    <ul>
+      <li>Use <code>jstack</code> or thread dumps to identify threads in BLOCKED/WAITING state</li>
+      <li>Async Profiler lock mode profiles contended <code>synchronized</code> blocks and ReentrantLock waits</li>
+      <li>Common culprits: synchronized HashMap, database connection pool exhaustion, single-threaded bottlenecks</li>
+      <li>Virtual threads (Java 21) reduce contention by allowing massive concurrency without thread pools</li>
+      <li>Interview scenario: "Throughput drops under load but CPU is low" &mdash; classic sign of lock contention</li>
+    </ul>
+    <div class="resources">
+      <a href="https://www.baeldung.com/java-thread-dump" target="_blank">Baeldung &mdash; Thread Dumps</a>
+      <a href="https://www.baeldung.com/java-synchronized" target="_blank">Baeldung &mdash; Synchronized</a>
+      <a href="https://www.brendangregg.com/offcpuanalysis.html" target="_blank">Brendan Gregg &mdash; Off-CPU Analysis</a>
+    </div>
+  </div>
+
+  <!-- Topic 298 -->
+  <div class="topic-card" id="topic-298">
+    <div class="topic-name">DB Connection Pool Sizing <span class="topic-id">#298</span></div>
+    <p class="topic-desc">Correctly sizing your database connection pool is one of the highest-impact performance optimizations &mdash; too few causes queuing, too many causes DB contention.</p>
+    <ul>
+      <li>HikariCP formula: pool size = (core_count * 2) + effective_spindle_count (for spinning disks)</li>
+      <li>For SSDs/cloud databases, start with connections = 2 * CPU cores and benchmark</li>
+      <li>Monitor: active connections, idle connections, pending threads, connection wait time</li>
+      <li>Too large a pool overwhelms the DB &mdash; PostgreSQL recommends < 200 connections per instance</li>
+      <li>Use PgBouncer or ProxySQL for connection multiplexing when application pool size exceeds DB capacity</li>
+    </ul>
+    <div class="resources">
+      <a href="https://github.com/brettwooldridge/HikariCP/wiki/About-Pool-Sizing" target="_blank">HikariCP &mdash; Pool Sizing</a>
+      <a href="https://www.baeldung.com/hikaricp" target="_blank">Baeldung &mdash; HikariCP</a>
+      <a href="https://www.baeldung.com/java-connection-pooling" target="_blank">Baeldung &mdash; Connection Pooling</a>
+    </div>
+  </div>
+
+  <!-- Topic 299 -->
+  <div class="topic-card" id="topic-299">
+    <div class="topic-name">HTTP Connection Pool Tuning <span class="topic-id">#299</span></div>
+    <p class="topic-desc">HTTP client connection pools reuse TCP connections to avoid the overhead of repeated handshakes &mdash; misconfigured pools cause latency spikes or connection leaks.</p>
+    <ul>
+      <li>Key settings: maxConnections, maxConnectionsPerRoute, connectionTimeout, socketTimeout, keepAliveStrategy</li>
+      <li>Too few connections per route = serialized requests under load; too many = file descriptor exhaustion</li>
+      <li>Set idle connection eviction to prevent stale connections from causing unexpected errors</li>
+      <li>Monitor with metrics: connection create rate, reuse rate, wait time, timeout count</li>
+      <li>Spring WebClient (Reactor Netty) pool defaults may be too conservative for high-throughput services &mdash; tune pendingAcquireMaxCount</li>
+    </ul>
+    <div class="resources">
+      <a href="https://www.baeldung.com/httpclient-connection-management" target="_blank">Baeldung &mdash; HttpClient Connection Management</a>
+      <a href="https://www.baeldung.com/spring-webclient-connections" target="_blank">Baeldung &mdash; WebClient Connections</a>
+      <a href="https://prometheus.io/docs/practices/instrumentation/" target="_blank">Prometheus Instrumentation</a>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════
+       RECOMMENDED RESOURCES
+       ═══════════════════════════════════════════════════════ -->
+  <div id="sec-resources" class="resources-section">
+    <h2>Recommended Resources</h2>
+    <div class="res-grid">
+      <div class="res-item">
+        <a href="https://sre.google/books/" target="_blank">Google SRE Books (Free Online)</a>
+        <p>The definitive guides to SLIs, SLOs, error budgets, toil elimination, and incident management.</p>
+      </div>
+      <div class="res-item">
+        <a href="https://prometheus.io/docs/introduction/overview/" target="_blank">Prometheus Documentation</a>
+        <p>Official docs covering data model, PromQL, alerting rules, and best practices for metrics.</p>
+      </div>
+      <div class="res-item">
+        <a href="https://opentelemetry.io/docs/" target="_blank">OpenTelemetry Documentation</a>
+        <p>The CNCF standard for traces, metrics, and logs. Focus on Java instrumentation and the Collector.</p>
+      </div>
+      <div class="res-item">
+        <a href="https://grafana.com/docs/" target="_blank">Grafana Stack Documentation</a>
+        <p>Grafana (dashboards), Loki (logs), Tempo (traces), Mimir (metrics) &mdash; a unified observability stack.</p>
+      </div>
+      <div class="res-item">
+        <a href="https://www.baeldung.com/ops/grafana-prometheus" target="_blank">Baeldung &mdash; Grafana + Prometheus</a>
+        <p>Practical Java-focused tutorials on integrating Spring Boot with Prometheus and Grafana.</p>
+      </div>
+      <div class="res-item">
+        <a href="https://www.brendangregg.com/overview.html" target="_blank">Brendan Gregg &mdash; Performance</a>
+        <p>The authority on systems performance: USE method, flame graphs, profiling methodologies.</p>
+      </div>
+      <div class="res-item">
+        <a href="https://www.baeldung.com/java-profilers" target="_blank">Baeldung &mdash; Java Profilers</a>
+        <p>Overview of JVM profiling tools: Async Profiler, JFR, VisualVM, and when to use each.</p>
+      </div>
+      <div class="res-item">
+        <a href="https://github.com/brettwooldridge/HikariCP/wiki" target="_blank">HikariCP Wiki</a>
+        <p>Essential reading for connection pool sizing, configuration, and troubleshooting in Java services.</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
