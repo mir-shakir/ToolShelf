@@ -1,13 +1,15 @@
 
 export const RELATED_TOOLS = {
-    "json-formatter": ["base64-encoder", "hash-generator", "jwt-decoder"],
+    "json-formatter": ["text-diff", "base64-encoder", "hash-generator"],
     "base64-encoder": ["json-formatter", "hash-generator", "jwt-decoder"],
-    "text-transformer": ["json-formatter", "base64-encoder", "qr-generator"],
+    "text-transformer": ["text-diff", "json-formatter", "base64-encoder"],
     "qr-generator": ["json-formatter", "base64-encoder", "text-transformer"],
     "hash-generator": ["json-formatter", "base64-encoder", "jwt-decoder"],
-    "jwt-decoder": ["hash-generator", "base64-encoder", "uuid-v7-generator"],
-    "uuid-v7-generator": ["hash-generator", "jwt-decoder", "json-formatter"],
-    "mock-data-generator": ["json-formatter", "uuid-v7-generator", "base64-encoder"],
+    "jwt-decoder": ["epoch-converter", "hash-generator", "base64-encoder"],
+    "uuid-v7-generator": ["epoch-converter", "hash-generator", "jwt-decoder"],
+    "mock-data-generator": ["json-formatter", "uuid-v7-generator", "text-diff"],
+    "epoch-converter": ["jwt-decoder", "uuid-v7-generator", "json-formatter"],
+    "text-diff": ["json-formatter", "text-transformer", "base64-encoder"],
 };
 
 export const TOOL_LABELS = {
@@ -19,6 +21,8 @@ export const TOOL_LABELS = {
     "jwt-decoder": "JWT Decoder",
     "uuid-v7-generator": "UUID v7 Generator",
     "mock-data-generator": "Mock Data Generator",
+    "epoch-converter": "Unix Timestamp Converter",
+    "text-diff": "Text Diff Checker",
 };
 
 export function renderRelatedTools(currentTool, containerId = "related-tools") {

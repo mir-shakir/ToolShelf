@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>
+        const oldDomains = [
+            "toolshelf.onrender.com",
+            "www.toolshelf.onrender.com"
+        ];
+        const newDomain = "https://toolshelf.tech";
+        if (oldDomains.includes(window.location.hostname)) {
+            const newUrl = newDomain + window.location.pathname + window.location.search + window.location.hash;
+            window.location.replace(newUrl);
+        }
+    </script>
+
+    <!-- Primary Meta Tags -->
+    <title>Unix Timestamp Converter – Epoch to Date & Date to Epoch | ToolShelf</title>
+    <meta name="title" content="Unix Timestamp Converter – Epoch to Date & Date to Epoch | ToolShelf">
+    <meta name="description"
+        content="Free Unix timestamp / epoch converter. Convert epoch seconds, milliseconds, or microseconds to human-readable dates and back. Supports all timezones. Works offline.">
+
+    <meta name="keywords"
+        content="unix timestamp converter, epoch converter, epoch to date, date to epoch, milliseconds to date, timestamp to date, iso 8601, rfc 3339, epoch time, unix time">
+    <meta name="author" content="ToolShelf">
+    <meta name="robots" content="index, follow">
+    <meta name="language" content="English">
+    <meta name="revisit-after" content="7 days">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://toolshelf.tech/epoch-converter/">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://toolshelf.tech/epoch-converter/">
+    <meta property="og:title" content="ToolShelf – Unix Timestamp Converter">
+    <meta property="og:description"
+        content="Convert Unix epoch timestamps to human dates and back. Supports seconds, milliseconds, microseconds, and all timezones. Free, offline, no signup.">
+    <meta property="og:image" content="https://toolshelf.tech/assets/images/og-image-toolshelf.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:site_name" content="ToolShelf">
+    <meta property="og:locale" content="en_US">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://toolshelf.tech/epoch-converter/">
+    <meta property="twitter:title" content="ToolShelf – Unix Timestamp Converter">
+    <meta property="twitter:description"
+        content="Convert Unix epoch timestamps to human dates and back. Supports seconds, milliseconds, microseconds, and all timezones.">
+    <meta property="twitter:image" content="https://toolshelf.tech/assets/images/og-image-toolshelf.png">
+
+    <!-- Favicon and Icons -->
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+    <link rel="manifest" href="../manifest.json">
+    <meta name="theme-color" content="#3b82f6">
+
+    <!-- Schema.org structured data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "ToolShelf Unix Timestamp Converter",
+        "alternateName": "Epoch Converter",
+        "description": "Free online Unix timestamp / epoch converter. Convert epoch seconds, milliseconds, or microseconds to human-readable dates and back. Supports all timezones. Works offline.",
+        "url": "https://toolshelf.tech/epoch-converter/",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Web Browser",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+        "creator": { "@type": "Organization", "name": "ToolShelf" },
+        "datePublished": "2026-04-19",
+        "dateModified": "2026-04-19",
+        "inLanguage": "en-US",
+        "isAccessibleForFree": true,
+        "featureList": [
+            "Epoch to date conversion (s, ms, μs)",
+            "Date to epoch conversion",
+            "Timezone support for all IANA zones",
+            "Quick presets (Now, start of today, start of hour, etc.)",
+            "Relative time display",
+            "RFC 3339 and ISO 8601 output",
+            "Copy to clipboard",
+            "Offline functionality"
+        ]
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            { "@type": "Question", "name": "What is Unix epoch time?",
+              "acceptedAnswer": { "@type": "Answer", "text": "Unix epoch time is the number of seconds that have elapsed since 00:00:00 UTC on 1 January 1970 (the Unix epoch), not counting leap seconds. It is the most widely used timestamp format in computing." } },
+            { "@type": "Question", "name": "How do I convert milliseconds to seconds?",
+              "acceptedAnswer": { "@type": "Answer", "text": "Divide the millisecond value by 1000 and discard the remainder (floor). This tool does it automatically when you select milliseconds as the input unit." } },
+            { "@type": "Question", "name": "Why does my timestamp show the wrong time?",
+              "acceptedAnswer": { "@type": "Answer", "text": "Almost always a unit or timezone issue. Check whether the value is in seconds or milliseconds (13-digit values are usually ms) and confirm the timezone dropdown is set correctly." } },
+            { "@type": "Question", "name": "What is the difference between ISO 8601 and RFC 3339?",
+              "acceptedAnswer": { "@type": "Answer", "text": "RFC 3339 is a strict subset of ISO 8601 intended for internet date/time formats. Every RFC 3339 timestamp is valid ISO 8601, but not every ISO 8601 timestamp is valid RFC 3339." } },
+            { "@type": "Question", "name": "Does this tool work offline?",
+              "acceptedAnswer": { "@type": "Answer", "text": "Yes. All conversions run entirely in your browser. Your data never leaves your device." } },
+            { "@type": "Question", "name": "What is the Year 2038 problem?",
+              "acceptedAnswer": { "@type": "Answer", "text": "Systems that store Unix timestamps as 32-bit signed integers overflow on 19 January 2038 at 03:14:07 UTC. Modern 64-bit systems and this tool are not affected." } },
+            { "@type": "Question", "name": "Can I use this for negative timestamps (before 1970)?",
+              "acceptedAnswer": { "@type": "Answer", "text": "Yes. Negative epoch values represent dates before 1970-01-01 UTC and are supported." } },
+            { "@type": "Question", "name": "How accurate is the relative time display?",
+              "acceptedAnswer": { "@type": "Answer", "text": "It updates every second using the browser's Intl.RelativeTimeFormat API. Accuracy is limited by your system clock." } }
+        ]
+    }
+    </script>
+
+    <!-- CSS Modules -->
+    <link rel="stylesheet" href="../shared/css/variables.css">
+    <link rel="stylesheet" href="../shared/css/base.css">
+    <link rel="stylesheet" href="../shared/css/components.css">
+    <link rel="stylesheet" href="../shared/css/tool-layout.css">
+    <link rel="stylesheet" href="../shared/css/responsive.css">
+    <link rel="stylesheet" href="../shared/css/seo-content.css">
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- External Resources -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <link rel="preload" href="../shared/css/variables.css" as="style">
+    <link rel="preload" href="../shared/css/base.css" as="style">
+    <link rel="dns-prefetch" href="//fonts.googleapis.com">
+    <link rel="dns-prefetch" href="//cdnjs.cloudflare.com">
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-GBY4766X5D"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-GBY4766X5D');
+    </script>
+</head>
+
+<body>
+    <div class="app-container">
+        <header class="app-header">
+            <div class="header-container">
+                <div class="logo-section">
+                    <div class="logo-icon"><i class="fas fa-toolbox"></i></div>
+                    <a href="../" class="logo-text">ToolShelf</a>
+                </div>
+
+                <nav class="main-nav">
+                    <a href="../" class="nav-link">Home</a>
+                    <a href="../#tools" class="nav-link active">Tools</a>
+                    <a href="../blog/" class="nav-link">Blog</a>
+                    <a href="../#about" class="nav-link">About</a>
+                </nav>
+
+                <div class="tool-actions">
+                    <button class="theme-switcher-btn" id="themeSwitcher" title="Switch to dark mode" aria-label="Switch to dark mode">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                    <button class="help-btn" id="helpBtn" title="Show instructions" aria-label="Show help and instructions">
+                        <i class="fas fa-question-circle" aria-hidden="true"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="breadcrumb-container">
+                <div class="breadcrumb-wrapper">
+                    <nav class="breadcrumb">
+                        <a href="../">Home</a>
+                        <span class="breadcrumb-separator">›</span>
+                        <a href="../#tools">Tools</a>
+                        <span class="breadcrumb-separator">›</span>
+                        <span class="breadcrumb-current">Unix Timestamp Converter</span>
+                    </nav>
+
+                    <div class="tool-status">
+                        <span class="status-badge">Free</span>
+                        <span class="tool-tag">Offline</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <main class="app-main" role="main">
+            <section class="seo-content" id="seo-content">
+                <div class="seo-intro">
+                    <h1>Unix Timestamp Converter</h1>
+                    <p class="lead">Convert Unix epoch timestamps to human-readable dates and back — supports seconds, milliseconds, microseconds, and every IANA timezone. Free, offline, and private.</p>
+                </div>
+            </section>
+
+            <section class="tool-section" aria-label="Epoch converter tool">
+                <div class="epoch-panels">
+                    <!-- Left panel: Epoch → Date -->
+                    <div class="epoch-panel" id="panel-epoch-to-date">
+                        <h2>Epoch → Date</h2>
+
+                        <div class="epoch-field">
+                            <label for="epochInput">Timestamp</label>
+                            <input id="epochInput" type="text" inputmode="numeric" data-epoch-input
+                                   placeholder="e.g. 1713484800" autocomplete="off" />
+                            <div class="epoch-error" data-epoch-error role="alert" aria-live="polite"></div>
+                        </div>
+
+                        <div class="epoch-field">
+                            <span>Unit</span>
+                            <div class="epoch-radio-group" role="radiogroup" aria-label="Input unit">
+                                <label><input type="radio" name="epoch-unit" value="s" data-epoch-unit checked> seconds</label>
+                                <label><input type="radio" name="epoch-unit" value="ms" data-epoch-unit> ms</label>
+                                <label><input type="radio" name="epoch-unit" value="us" data-epoch-unit> μs</label>
+                            </div>
+                        </div>
+
+                        <div class="epoch-field">
+                            <label for="epochTz">Timezone</label>
+                            <select id="epochTz" data-epoch-tz></select>
+                        </div>
+
+                        <div class="epoch-output" aria-live="polite">
+                            <span class="epoch-output-label">UTC</span>
+                            <span class="epoch-output-value" id="epochUtc" data-epoch-utc></span>
+                            <button class="copy-btn" data-copy-target="#epochUtc" aria-label="Copy UTC">📋</button>
+
+                            <span class="epoch-output-label">Local</span>
+                            <span class="epoch-output-value" id="epochLocal" data-epoch-local></span>
+                            <button class="copy-btn" data-copy-target="#epochLocal" aria-label="Copy local">📋</button>
+
+                            <span class="epoch-output-label">ISO 8601</span>
+                            <span class="epoch-output-value" id="epochIso" data-epoch-iso></span>
+                            <button class="copy-btn" data-copy-target="#epochIso" aria-label="Copy ISO">📋</button>
+
+                            <span class="epoch-output-label">RFC 3339</span>
+                            <span class="epoch-output-value" id="epochRfc" data-epoch-rfc></span>
+                            <button class="copy-btn" data-copy-target="#epochRfc" aria-label="Copy RFC 3339">📋</button>
+
+                            <span class="epoch-output-label">Relative</span>
+                            <span class="epoch-output-value" id="epochRelative" data-epoch-relative></span>
+                            <span></span>
+                        </div>
+
+                        <button class="btn-primary" data-epoch-copy-all style="margin-top:1rem;">📋 Copy all</button>
+                    </div>
+
+                    <!-- Right panel: Date → Epoch -->
+                    <div class="epoch-panel" id="panel-date-to-epoch">
+                        <h2>Date → Epoch</h2>
+
+                        <div class="epoch-field">
+                            <label for="dateDate">Date</label>
+                            <input id="dateDate" type="date" data-date-input-date />
+                        </div>
+                        <div class="epoch-field">
+                            <label for="dateTime">Time</label>
+                            <input id="dateTime" type="time" step="1" data-date-input-time value="00:00:00" />
+                            <div class="epoch-error" data-date-error role="alert" aria-live="polite"></div>
+                        </div>
+
+                        <div class="epoch-field">
+                            <span>Output unit</span>
+                            <div class="epoch-radio-group" role="radiogroup" aria-label="Output unit">
+                                <label><input type="radio" name="date-unit" value="s" data-date-unit checked> seconds</label>
+                                <label><input type="radio" name="date-unit" value="ms" data-date-unit> ms</label>
+                            </div>
+                        </div>
+
+                        <div class="epoch-field">
+                            <label for="dateTz">Timezone</label>
+                            <select id="dateTz" data-date-tz></select>
+                        </div>
+
+                        <div class="epoch-output" aria-live="polite">
+                            <span class="epoch-output-label">Epoch</span>
+                            <span class="epoch-output-value" id="dateEpoch" data-date-epoch></span>
+                            <button class="copy-btn" data-copy-target="#dateEpoch" aria-label="Copy epoch">📋</button>
+
+                            <span class="epoch-output-label">ISO 8601</span>
+                            <span class="epoch-output-value" id="dateIso" data-date-iso></span>
+                            <button class="copy-btn" data-copy-target="#dateIso" aria-label="Copy ISO">📋</button>
+
+                            <span class="epoch-output-label">RFC 3339</span>
+                            <span class="epoch-output-value" id="dateRfc" data-date-rfc></span>
+                            <button class="copy-btn" data-copy-target="#dateRfc" aria-label="Copy RFC 3339">📋</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="epoch-presets" aria-label="Quick presets">
+                    <h3>Quick presets</h3>
+                    <div class="epoch-preset-buttons">
+                        <button data-epoch-preset="now">Now</button>
+                        <button data-epoch-preset="start-of-today">Start of today</button>
+                        <button data-epoch-preset="start-of-hour">Start of this hour</button>
+                        <button data-epoch-preset="start-of-month">Start of this month</button>
+                        <button data-epoch-preset="start-of-year">Start of this year</button>
+                        <button data-epoch-preset="-1h">1 hour ago</button>
+                        <button data-epoch-preset="-24h">24 hours ago</button>
+                        <button data-epoch-preset="-7d">7 days ago</button>
+                    </div>
+                </div>
+            </section>
+
+            <section class="seo-content" id="seo-content-extended" aria-label="About this tool">
+                <h2 id="what-is-epoch-time">What is Unix / epoch time?</h2>
+                <p>Unix epoch time (also called <em>Unix time</em>, <em>POSIX time</em>, or simply <em>epoch</em>) is a system for describing a point in time as the number of seconds that have elapsed since <strong>00:00:00 UTC on 1 January 1970</strong>, not counting leap seconds. It's the most widely used timestamp format in computing — from database timestamps and API responses to JWT <code>iat</code>/<code>exp</code> claims.</p>
+
+                <h2 id="units">Seconds vs milliseconds vs microseconds vs nanoseconds</h2>
+                <p>Epoch values appear in several precisions depending on the system:</p>
+                <table class="seo-table">
+                    <thead><tr><th>Unit</th><th>Digits (today)</th><th>Typical source</th></tr></thead>
+                    <tbody>
+                        <tr><td>Seconds (s)</td><td>10</td><td>Unix <code>date +%s</code>, most SQL <code>EXTRACT(EPOCH FROM …)</code></td></tr>
+                        <tr><td>Milliseconds (ms)</td><td>13</td><td>JavaScript <code>Date.now()</code>, Java <code>System.currentTimeMillis()</code></td></tr>
+                        <tr><td>Microseconds (μs)</td><td>16</td><td>Python <code>time.time_ns() / 1000</code>, Postgres <code>clock_timestamp()</code></td></tr>
+                        <tr><td>Nanoseconds (ns)</td><td>19</td><td>Go <code>time.Now().UnixNano()</code></td></tr>
+                    </tbody>
+                </table>
+                <p>Heuristic: a modern timestamp of length 10 is almost certainly seconds; length 13 is milliseconds. This tool auto-detects on paste.</p>
+
+                <h2 id="timezones">Timezones and epoch time</h2>
+                <p>An epoch number is absolute — it represents a single instant in time, independent of timezone. Timezones matter only when <em>rendering</em> that instant as a human-readable date. Choose the timezone dropdown above to see how the same timestamp looks in UTC versus your local zone.</p>
+
+                <h2 id="year-2038">The Year 2038 problem</h2>
+                <p>Systems that store Unix timestamps as 32-bit signed integers overflow on <strong>19 January 2038 at 03:14:07 UTC</strong>. 64-bit storage (the default on modern platforms and in this tool) is unaffected. <a href="../blog/unix-timestamp-converter-guide/">See our full guide</a> for the details.</p>
+
+                <h2 id="code-examples">Code examples</h2>
+                <h3>JavaScript</h3>
+                <pre><code class="language-javascript">// Current epoch (ms)
+Date.now()
+// Convert epoch seconds to Date
+new Date(epochSeconds * 1000)</code></pre>
+                <h3>Python</h3>
+                <pre><code class="language-python">import time, datetime
+time.time()                                    # float seconds
+datetime.datetime.fromtimestamp(ts, datetime.timezone.utc)</code></pre>
+                <h3>Java</h3>
+                <pre><code class="language-java">Instant.now().getEpochSecond();           // seconds
+Instant.ofEpochSecond(epochSeconds);      // parse</code></pre>
+                <h3>Go</h3>
+                <pre><code class="language-go">time.Now().Unix()                   // seconds
+time.Unix(epoch, 0).UTC()           // parse</code></pre>
+                <h3>SQL</h3>
+                <pre><code class="language-sql">-- Postgres
+SELECT EXTRACT(EPOCH FROM now())::bigint;
+-- MySQL
+SELECT UNIX_TIMESTAMP(NOW());</code></pre>
+                <h3>Bash</h3>
+                <pre><code class="language-bash">date +%s                  # now, seconds
+date -d @1713484800        # GNU: epoch → readable</code></pre>
+
+                <h2 id="faq">FAQ</h2>
+                <details><summary>What is Unix epoch time?</summary><p>The number of seconds since 00:00:00 UTC on 1 January 1970, not counting leap seconds.</p></details>
+                <details><summary>How do I convert milliseconds to seconds?</summary><p>Divide by 1000 and floor. This tool does it automatically — just pick the ms unit.</p></details>
+                <details><summary>Why does my timestamp show the wrong time?</summary><p>Almost always a unit or timezone issue. 13 digits = milliseconds, 10 digits = seconds. Check the TZ dropdown.</p></details>
+                <details><summary>What's the difference between ISO 8601 and RFC 3339?</summary><p>RFC 3339 is a stricter internet-friendly subset of ISO 8601.</p></details>
+                <details><summary>Does this tool work offline?</summary><p>Yes — every conversion runs in your browser. Nothing is sent to a server.</p></details>
+                <details><summary>What is the Year 2038 problem?</summary><p>32-bit signed epoch storage overflows on 19 January 2038 at 03:14:07 UTC. This tool uses 64-bit math and is unaffected.</p></details>
+                <details><summary>Can I use negative timestamps (before 1970)?</summary><p>Yes. The tool handles negative epoch values.</p></details>
+                <details><summary>How accurate is the relative time?</summary><p>It uses <code>Intl.RelativeTimeFormat</code> and ticks every second. Accuracy is limited by your system clock.</p></details>
+            </section>
+        </main>
+
+        <!-- Toast Notification -->
+        <div id="toast" class="toast" role="alert" aria-live="assertive">
+            <div class="toast-content">
+                <i class="toast-icon fas fa-check-circle" aria-hidden="true"></i>
+                <span id="toastMessage"></span>
+            </div>
+            <button class="toast-close" onclick="this.parentElement.classList.remove('show')">
+                <i class="fas fa-times" aria-hidden="true"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="../shared/js/components/help-modal.js"></script>
+    <script src="../shared/config/constants.js"></script>
+    <script src="../shared/js/core/utils.js"></script>
+    <script src="../shared/js/core/events.js"></script>
+    <script src="../shared/js/core/analytics.js"></script>
+    <script src="../shared/js/components/toast.js"></script>
+    <script src="../shared/js/components/navigation.js"></script>
+    <script src="../shared/js/components/seo-content.js"></script>
+    <script src="../shared/js/components/keyboard.js"></script>
+    <script src="../shared/js/tools/base-tool.js"></script>
+    <script src="js/epoch-converter.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            window.ToolShelf = window.ToolShelf || {};
+            try {
+                if (window.ToolShelf.Toast && !window.ToolShelf.Toast.element) {
+                    window.ToolShelf.Toast.init();
+                }
+                window.ToolShelf.currentTool = new window.ToolShelf.EpochConverter();
+                console.log('🎉 Epoch Converter initialized');
+            } catch (error) {
+                console.error('❌ Failed to initialize Epoch Converter:', error);
+            }
+        });
+    </script>
+</body>
+</html>

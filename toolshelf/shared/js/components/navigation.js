@@ -90,6 +90,14 @@ class Navigation {
         const path = window.location.pathname;
         return path.includes('text-transformer') ||
             path.includes('base64-encoder') ||
+            path.includes('json-formatter') ||
+            path.includes('hash-generator') ||
+            path.includes('jwt-decoder') ||
+            path.includes('qr-generator') ||
+            path.includes('uuid-v7-generator') ||
+            path.includes('mock-data-generator') ||
+            path.includes('epoch-converter') ||
+            path.includes('text-diff') ||
             path.includes('/tools/');
     }
 }

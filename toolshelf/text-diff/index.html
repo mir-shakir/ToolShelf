@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>
+        const oldDomains = [
+            "toolshelf.onrender.com",
+            "www.toolshelf.onrender.com"
+        ];
+        const newDomain = "https://toolshelf.tech";
+        if (oldDomains.includes(window.location.hostname)) {
+            const newUrl = newDomain + window.location.pathname + window.location.search + window.location.hash;
+            window.location.replace(newUrl);
+        }
+    </script>
+
+    <title>Text Diff Checker – Compare Text Online | ToolShelf</title>
+    <meta name="title" content="Text Diff Checker – Compare Text Online | ToolShelf">
+    <meta name="description"
+        content="Free online text diff tool. Compare two blocks of text side-by-side or in unified patch view. Ignores whitespace and case on demand. No sign-up, works offline.">
+
+    <meta name="keywords"
+        content="text diff, diff checker, compare text, text comparison, online diff, side by side diff, unified diff, patch generator, code diff">
+    <meta name="author" content="ToolShelf">
+    <meta name="robots" content="index, follow">
+    <meta name="language" content="English">
+    <meta name="revisit-after" content="7 days">
+
+    <link rel="canonical" href="https://toolshelf.tech/text-diff/">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://toolshelf.tech/text-diff/">
+    <meta property="og:title" content="ToolShelf – Text Diff Checker">
+    <meta property="og:description"
+        content="Compare two blocks of text side-by-side or in unified patch view. Free, offline, no signup.">
+    <meta property="og:image" content="https://toolshelf.tech/assets/images/og-image-toolshelf.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:site_name" content="ToolShelf">
+    <meta property="og:locale" content="en_US">
+
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://toolshelf.tech/text-diff/">
+    <meta property="twitter:title" content="ToolShelf – Text Diff Checker">
+    <meta property="twitter:description"
+        content="Compare two blocks of text side-by-side or in unified patch view. Free, offline, no signup.">
+    <meta property="twitter:image" content="https://toolshelf.tech/assets/images/og-image-toolshelf.png">
+
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+    <link rel="manifest" href="../manifest.json">
+    <meta name="theme-color" content="#3b82f6">
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "ToolShelf Text Diff Checker",
+        "alternateName": "Text Compare Tool",
+        "description": "Free online text diff tool. Compare two blocks of text side-by-side or in unified patch view. Ignores whitespace and case on demand. Works offline.",
+        "url": "https://toolshelf.tech/text-diff/",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Web Browser",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+        "creator": { "@type": "Organization", "name": "ToolShelf" },
+        "datePublished": "2026-04-19",
+        "dateModified": "2026-04-19",
+        "inLanguage": "en-US",
+        "isAccessibleForFree": true,
+        "featureList": [
+            "Line-by-line text diff",
+            "Side-by-side view",
+            "Unified (patch) view",
+            "Ignore whitespace / ignore case / trim options",
+            "Copy diff as patch",
+            "Download as .patch file",
+            "Offline functionality"
+        ]
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            { "@type": "Question", "name": "How does the diff work?",
+              "acceptedAnswer": { "@type": "Answer", "text": "It computes the longest common subsequence (LCS) between the two inputs at the line level, then derives an edit script that labels each line as equal, inserted, or deleted." } },
+            { "@type": "Question", "name": "Is my text sent to a server?",
+              "acceptedAnswer": { "@type": "Answer", "text": "No. The diff runs entirely in your browser. Nothing is uploaded." } },
+            { "@type": "Question", "name": "What is the line limit?",
+              "acceptedAnswer": { "@type": "Answer", "text": "Each side is limited to 100,000 lines, and the product of both sides is capped at 10 million to prevent your browser from freezing." } },
+            { "@type": "Question", "name": "What does ignore whitespace do?",
+              "acceptedAnswer": { "@type": "Answer", "text": "It collapses runs of whitespace and trims each line before comparing, but the original text is still rendered in the output." } },
+            { "@type": "Question", "name": "Why aren't words highlighted inside changed lines?",
+              "acceptedAnswer": { "@type": "Answer", "text": "This tool does line-level diffing only. Word-level highlighting is planned but not included in this release." } },
+            { "@type": "Question", "name": "Why isn't the diff live as I type?",
+              "acceptedAnswer": { "@type": "Answer", "text": "Line-level LCS on large inputs can freeze the UI. The tool runs on demand via the Compare button to keep the browser responsive." } },
+            { "@type": "Question", "name": "Can I export as a patch?",
+              "acceptedAnswer": { "@type": "Answer", "text": "Yes - the Copy diff as patch and Download .patch buttons produce standard unified-diff output that tools like git apply and patch accept." } },
+            { "@type": "Question", "name": "Does it support binary files?",
+              "acceptedAnswer": { "@type": "Answer", "text": "No. This tool is for plain text only." } }
+        ]
+    }
+    </script>
+
+    <link rel="stylesheet" href="../shared/css/variables.css">
+    <link rel="stylesheet" href="../shared/css/base.css">
+    <link rel="stylesheet" href="../shared/css/components.css">
+    <link rel="stylesheet" href="../shared/css/tool-layout.css">
+    <link rel="stylesheet" href="../shared/css/responsive.css">
+    <link rel="stylesheet" href="../shared/css/seo-content.css">
+    <link rel="stylesheet" href="css/style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <link rel="preload" href="../shared/css/variables.css" as="style">
+    <link rel="preload" href="../shared/css/base.css" as="style">
+    <link rel="dns-prefetch" href="//fonts.googleapis.com">
+    <link rel="dns-prefetch" href="//cdnjs.cloudflare.com">
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-GBY4766X5D"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-GBY4766X5D');
+    </script>
+</head>
+
+<body>
+    <div class="app-container">
+        <header class="app-header">
+            <div class="header-container">
+                <div class="logo-section">
+                    <div class="logo-icon"><i class="fas fa-toolbox"></i></div>
+                    <a href="../" class="logo-text">ToolShelf</a>
+                </div>
+
+                <nav class="main-nav">
+                    <a href="../" class="nav-link">Home</a>
+                    <a href="../#tools" class="nav-link active">Tools</a>
+                    <a href="../blog/" class="nav-link">Blog</a>
+                    <a href="../#about" class="nav-link">About</a>
+                </nav>
+
+                <div class="tool-actions">
+                    <button class="theme-switcher-btn" id="themeSwitcher" title="Switch to dark mode" aria-label="Switch to dark mode">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                    <button class="help-btn" id="helpBtn" title="Show instructions" aria-label="Show help and instructions">
+                        <i class="fas fa-question-circle" aria-hidden="true"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="breadcrumb-container">
+                <div class="breadcrumb-wrapper">
+                    <nav class="breadcrumb">
+                        <a href="../">Home</a>
+                        <span class="breadcrumb-separator">›</span>
+                        <a href="../#tools">Tools</a>
+                        <span class="breadcrumb-separator">›</span>
+                        <span class="breadcrumb-current">Text Diff Checker</span>
+                    </nav>
+
+                    <div class="tool-status">
+                        <span class="status-badge">Free</span>
+                        <span class="tool-tag">Offline</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <main class="app-main" role="main">
+            <section class="seo-content" id="seo-content">
+                <div class="seo-intro">
+                    <h1>Text Diff Checker</h1>
+                    <p class="lead">Compare two blocks of text and see exactly what changed. Side-by-side or unified patch view, with optional whitespace and case normalization. Runs entirely in your browser.</p>
+                </div>
+            </section>
+
+            <section class="tool-section" aria-label="Text diff tool">
+                <div class="diff-inputs">
+                    <div class="diff-panel">
+                        <label for="diffLeft">Original</label>
+                        <textarea id="diffLeft" data-input-area="left"
+                            placeholder="Paste the original text here..." aria-label="Original text"></textarea>
+                        <div class="diff-panel-stats" data-stats="left"></div>
+                    </div>
+                    <div class="diff-panel">
+                        <label for="diffRight">Changed</label>
+                        <textarea id="diffRight" data-input-area="right"
+                            placeholder="Paste the changed text here..." aria-label="Changed text"></textarea>
+                        <div class="diff-panel-stats" data-stats="right"></div>
+                    </div>
+                </div>
+
+                <div class="diff-options" role="group" aria-label="Diff options">
+                    <span>View:</span>
+                    <label><input type="radio" name="diff-view" value="side-by-side" data-view checked> Side-by-side</label>
+                    <label><input type="radio" name="diff-view" value="unified" data-view> Unified</label>
+                    <label><input type="checkbox" data-option-ignore-whitespace> Ignore whitespace</label>
+                    <label><input type="checkbox" data-option-ignore-case> Ignore case</label>
+                    <label><input type="checkbox" data-option-trim> Trim lines</label>
+                </div>
+
+                <div class="diff-actions">
+                    <button class="btn-primary" data-action="compare">Compare</button>
+                    <button data-action="swap" aria-label="Swap original and changed">Swap ⇄</button>
+                    <button data-action="clear">Clear</button>
+                </div>
+
+                <div class="diff-summary" data-diff-summary role="status" aria-live="polite"></div>
+                <div class="diff-output" data-diff-output></div>
+
+                <div class="diff-export" data-diff-export hidden>
+                    <button data-action="copy-patch">📋 Copy diff as patch</button>
+                    <button data-action="download-patch">⬇ Download .patch</button>
+                </div>
+            </section>
+
+            <section class="seo-content" id="seo-content-extended" aria-label="About this tool">
+                <h2 id="what-is-text-diff">What is a text diff?</h2>
+                <p>A text diff compares two versions of a document and highlights the differences — which lines were added, removed, or left unchanged. It's one of the most foundational tools in software engineering, used every day in code review, config auditing, and content editing.</p>
+
+                <h2 id="views">Side-by-side vs unified view</h2>
+                <p><strong>Side-by-side</strong> shows the two documents in parallel columns with added/removed lines aligned. It's easier to scan when you want to understand the <em>shape</em> of a change.</p>
+                <p><strong>Unified</strong> (a.k.a. patch view) inlines the changes with <code>+</code> and <code>-</code> prefixes and <code>@@ -a,b +c,d @@</code> hunk headers. It's the format <code>git apply</code> and <code>patch(1)</code> understand, so the output is directly usable in automation.</p>
+
+                <h2 id="how-diff-works">How LCS-based diffing works</h2>
+                <p>The classic algorithm is based on the <em>longest common subsequence</em> (LCS). Given two sequences of lines, LCS finds the longest ordering of lines that appears in both. Anything not in that common subsequence must have been inserted on one side or deleted on the other.</p>
+                <p>Example:</p>
+                <pre><code class="language-text">Original: a b c d e
+Changed:  a x c d
+LCS:      a   c d
+Edits:    -b, +x, -e</code></pre>
+                <p>Real-world diff tools (like <code>git diff</code>) use Myers' refinement for speed, but the output is conceptually the same. This tool uses plain LCS; see the FAQ for size limits.</p>
+
+                <h2 id="use-cases">Use cases</h2>
+                <ul>
+                    <li><strong>Code review</strong> — compare a snippet against the main branch before pushing.</li>
+                    <li><strong>Config drift</strong> — spot changes in YAML / JSON / TOML config files.</li>
+                    <li><strong>Contract / document redlines</strong> — track edits in legal or spec documents.</li>
+                    <li><strong>SQL schema comparison</strong> — see what's changed between two <code>pg_dump</code> outputs.</li>
+                    <li><strong>Localization QA</strong> — audit translated strings against the source language.</li>
+                </ul>
+
+                <h2 id="why-on-demand">Why this tool runs on demand, not live</h2>
+                <p>Line-level LCS has O(n·m) complexity. On large inputs, running it on every keystroke would freeze your browser. The <em>Compare</em> button is a deliberate UX trade-off — the tool stays fast and responsive even with tens of thousands of lines.</p>
+
+                <h2 id="faq">FAQ</h2>
+                <details><summary>How does the diff work?</summary><p>LCS at the line level, then an edit script (equal/insert/delete).</p></details>
+                <details><summary>Is my text sent to a server?</summary><p>No. Everything runs in your browser.</p></details>
+                <details><summary>What is the line limit?</summary><p>100,000 lines per side, with a product cap of 10 million to protect your browser.</p></details>
+                <details><summary>What does "ignore whitespace" do?</summary><p>Collapses runs of whitespace and trims lines before comparing. Original text is still rendered.</p></details>
+                <details><summary>Why aren't words highlighted inside changed lines?</summary><p>This release is line-level only; word-level diffing is on the roadmap.</p></details>
+                <details><summary>Why isn't the diff live as I type?</summary><p>Performance: LCS gets expensive fast. On-demand keeps the UI snappy.</p></details>
+                <details><summary>Can I export as a patch?</summary><p>Yes — Copy or Download produces standard unified-diff output.</p></details>
+                <details><summary>Does it support binary files?</summary><p>No. Plain text only.</p></details>
+            </section>
+        </main>
+
+        <!-- Toast Notification -->
+        <div id="toast" class="toast" role="alert" aria-live="assertive">
+            <div class="toast-content">
+                <i class="toast-icon fas fa-check-circle" aria-hidden="true"></i>
+                <span id="toastMessage"></span>
+            </div>
+            <button class="toast-close" onclick="this.parentElement.classList.remove('show')">
+                <i class="fas fa-times" aria-hidden="true"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="../shared/js/components/help-modal.js"></script>
+    <script src="../shared/config/constants.js"></script>
+    <script src="../shared/js/core/utils.js"></script>
+    <script src="../shared/js/core/events.js"></script>
+    <script src="../shared/js/core/analytics.js"></script>
+    <script src="../shared/js/components/toast.js"></script>
+    <script src="../shared/js/components/navigation.js"></script>
+    <script src="../shared/js/components/seo-content.js"></script>
+    <script src="../shared/js/components/keyboard.js"></script>
+    <script src="../shared/js/tools/base-tool.js"></script>
+    <script src="js/diff-engine.js"></script>
+    <script src="js/text-diff.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            window.ToolShelf = window.ToolShelf || {};
+            try {
+                if (window.ToolShelf.Toast && !window.ToolShelf.Toast.element) {
+                    window.ToolShelf.Toast.init();
+                }
+                window.ToolShelf.currentTool = new window.ToolShelf.TextDiff();
+                console.log('🎉 Text Diff initialized');
+            } catch (error) {
+                console.error('❌ Failed to initialize Text Diff:', error);
+            }
+        });
+    </script>
+</body>
+</html>
