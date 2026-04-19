@@ -15,6 +15,28 @@ export const BLOG_CATEGORIES = [
 
 export const blogPosts = [
     {
+        slug: 'unix-timestamp-converter-guide',
+        title: 'Unix Timestamp Converter Guide: Epoch Time, Seconds, Milliseconds & Timezones',
+        excerpt: 'A practical guide to Unix epoch time — seconds vs milliseconds, timezone pitfalls, the Year 2038 problem, and code examples in 5 languages.',
+        thumbnail: '../assets/images/unix-timestamp-converter-guide.jpg',
+        date: 'April 19, 2026',
+        readTime: '8 min read',
+        tags: ['unix', 'timestamp', 'epoch', 'backend', 'datetime'],
+        isFeatured: false,
+        category: 'backend'
+    },
+    {
+        slug: 'text-diff-explained',
+        title: 'How Text Diff Works: Side-by-Side vs Unified, LCS, and When to Use Each',
+        excerpt: 'A plain-English guide to text diff — side-by-side vs unified, how LCS works with a worked example, ignore-whitespace traps, and real-world use cases.',
+        thumbnail: '../assets/images/text-diff-explained.jpg',
+        date: 'April 19, 2026',
+        readTime: '8 min read',
+        tags: ['diff', 'algorithm', 'cs', 'tooling', 'productivity'],
+        isFeatured: false,
+        category: 'cs'
+    },
+    {
         slug: 'debugging-spring-boot-claude-code-mcp-server',
         title: 'Debugging Spring Boot with Claude Code and MCP: A Developer\'s Guide',
         excerpt: 'Learn how to embed a Model Context Protocol (MCP) server in your Spring Boot app to let Claude Code diagnose bugs directly from your IDE.',
