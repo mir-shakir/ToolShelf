@@ -15,6 +15,17 @@ export const BLOG_CATEGORIES = [
 
 export const blogPosts = [
     {
+        slug: 'senior-backend-engineer-interview-handbook',
+        title: 'The Senior Backend Engineer Interview Handbook',
+        excerpt: 'A comprehensive SDE-2/3 backend interview prep handbook covering Java, Spring Boot, microservices, distributed systems, DB internals, cloud, and observability.',
+        thumbnail: 'https://toolshelf.tech/assets/images/og-image-toolshelf.png',
+        date: 'May 11, 2026',
+        readTime: '40 min read',
+        tags: ["backend","java","spring boot","system design","microservices","distributed systems","interview prep","cloud","databases","observability"],
+        isFeatured: false,
+        category: 'backend'
+    },
+    {
         slug: 'debugging-spring-boot-claude-code-mcp-server',
         title: 'Debugging Spring Boot with Claude Code and MCP: A Developer\'s Guide',
         excerpt: 'Learn how to embed a Model Context Protocol (MCP) server in your Spring Boot app to let Claude Code diagnose bugs directly from your IDE.',
